@@ -1,11 +1,8 @@
 destination: ../../homepage/devblog.croquis.com/ko
 paginate: 3
+baseurl: /ko
+permalink: /:year/:month/:day/:title.html
 
-# This is the default format. 
-# For more see: https://github.com/mojombo/jekyll/wiki/Permalinks
-permalink: /:year/:month/:day/:title 
-
-exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 auto: true
 pygments: true
 
@@ -81,9 +78,9 @@ JB :
   # Set 'provider' to false to turn commenting off globally.
   #
   comments :
-    provider : false
-#    disqus :
-#      short_name : jekyllbootstrap
+    provider : disqus
+    disqus :
+      short_name : croquiscom-devblog
 #    livefyre :
 #      site_id : 123
 #    intensedebate :
