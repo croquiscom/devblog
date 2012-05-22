@@ -3,6 +3,9 @@ paginate: 3
 baseurl: /en
 permalink: /:year/:month/:day/:title.html
 
+# 기본 엔진인 maruku은 한글로 된 list 처리에 문제가 있다.
+markdown: rdiscount
+
 auto: true
 pygments: true
 
