@@ -1,6 +1,8 @@
 ---
 layout: post.sangmin.yoon
 title: croquis.com 개발자 블로그를 시작합니다.
+category: 인프라
+tags:
 ---
 
 안녕하세요.
