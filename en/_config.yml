@@ -1,4 +1,3 @@
-destination: ../../homepage/devblog.croquis.com/en
 paginate: 3
 baseurl: /en
 permalink: /:year/:month/:day/:title.html
