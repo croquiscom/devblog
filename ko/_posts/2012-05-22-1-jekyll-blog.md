@@ -2,7 +2,7 @@
 layout: post.sangmin.yoon
 title: Jekyll을 이용해서 블로그 만들기 (1)
 category: 인프라
-tags: jekyll, blog
+tags: [jekyll, blog]
 ---
 
 [croquis.com]에서 개발자 블로그를 만들려고 했을 때,
