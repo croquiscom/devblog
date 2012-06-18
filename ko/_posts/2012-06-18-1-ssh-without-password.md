@@ -51,7 +51,7 @@ tags: [ssh]
 개인 열쇠 생성
 --------------
 
-우선 **클라이언트에서** 개인 열쇠를 생성합니다.
+우선 **클라이언트**에서 개인 열쇠를 생성합니다.
 
 {% highlight bash %}
 $ ssh-keygen -t rsa -C "comment to key"
@@ -78,7 +78,7 @@ The key fingerprint is:
 파일 권한을 살펴보시면 id_rsa 파일이 더 한정된 권한을 갖는 것을 볼 수 있습니다.
 
 {% highlight bash %}
-git@git:~/.ssh$ ls -l
+$ ls -l
 -rw------- 1 user user 1675 Jun 18 16:19 id_rsa
 -rw-r--r-- 1 user user  396 Jun 18 16:11 id_rsa.pub
 {% endhighlight %}

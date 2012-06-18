@@ -59,3 +59,9 @@
 .vg { color: #19177C } /* Name.Variable.Global */
 .vi { color: #19177C } /* Name.Variable.Instance */
 .il { color: #666666 } /* Literal.Number.Integer.Long */
+
+.span8 p { line-height: 1.7; margin-bottom: 1.5em }
+.span8 li { line-height: 1.7 }
+.span8 h1 { border-bottom: 1px solid #eeeeee; margin: 22px 0 }
+.span8 h2 { margin: 13px 0 }
+#about-author { margin-top: 25px }
