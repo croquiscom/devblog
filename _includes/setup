@@ -1,0 +1,5 @@
+{% capture jbcache %}
+  {% assign BASE_PATH = nil %}
+  {% assign HOME_PATH = "/" %}
+  {% capture ASSET_PATH %}{{ BASE_PATH }}/assets{% endcapture %}
+{% endcapture %}{% assign jbcache = nil %}

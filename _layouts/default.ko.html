@@ -1,0 +1,56 @@
+{% include setup %}
+
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+  <meta charset='utf-8'>
+
+  <title>{{ page.title }}</title>
+  {% if page.description %}<meta name='description' content='{{ page.description }}'>{% endif %}
+  <meta name='author' content='croquis.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'>
+  <link href='{{ ASSET_PATH }}/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='{{ ASSET_PATH }}/pygment.css' rel='stylesheet' type='text/css' media='all'>
+
+  <!--[if lt IE 9]>
+    <script src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js'></script>
+    <script src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js'></script>
+  <![endif]-->
+</head>
+<body>
+
+<div class='hp-navbar'>
+  <div class='container-fluid'><div class='row'><div class='col-xs-12'>
+    <nav class='hp-nav'>
+      <a class='hp-nav-item' href='{{ BASE_PATH }}/ko/'>croquis.com developers' blog</a>
+    </nav>
+  </div></div></div>
+</div>
+
+<div class='container'>
+  {{ content }}
+</div>
+
+<div class='container-fluid'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2014 croquis.com
+      <span class='pull-right text-muted'>
+        powered by
+        <a href='http://jekyllrb.com/' target='_blank'>Jekyll</a>
+        and
+        <a href='http://getbootstrap.com/' target='_blank'>Bootstrap 3.1.1</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+{% include analytics %}
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'></script>
+<script src='//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>
+
+</body>
+</html>

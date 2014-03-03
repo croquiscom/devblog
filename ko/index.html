@@ -1,70 +1,71 @@
 ---
-layout: default
+layout: default.ko
 title: croquis.com 개발자 블로그
+paginate: 3
+paginate_path: /ko/:num/
+category: ko
 ---
-{% include JB/setup %}
+{% include setup %}
 
-<div class="post-list">
-  <ul>
-{% for post in paginator.posts %}
-  {% if post.publish != false %}
-    <li>
-      <a href="{{ BASE_PATH }}{{ post.url }}"><span class="post-title">{{ post.title }}</span></a>
-      <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-      <p class="post-preview">{{ post.content | truncateUTF8: 300 }}</p>
-      <p><a class="btn js-btn" href="{{ BASE_PATH }}{{ post.url }}">더 보기 &raquo;</a></p>
-    </li>
-  {% endif %}
-{% endfor %}
-  </ul>
+<div class='row' style='margin-top: 20px;'>
+
+<div class='col-sm-10 col-sm-offset-1'>
+  {% for post in paginator.posts %}
+  <div class='panel panel-default'>
+    <div class='panel-heading'>
+      <h2 class='posts-title'><a href='{{ BASE_PATH }}{{ post.url }}'>{{ post.title }}</a></h2>
+      <p class='posts-date'>{{ post.date | date: '%Y-%m-%d' }}</p>
+    </div>
+    <div class='panel-body'>
+      <p class='post-preview'>{{ post.content | truncateUTF8: 300 }}</p>
+      <p><a class='btn btn-default' href='{{ BASE_PATH }}{{ post.url }}'>더 보기 &raquo;</a></p>
+    </div>
+  </div>
+  {% endfor %}
 </div>
 
-<div class="pagination">
-  <ul>
-{% if paginator.previous_page %}
-    <li>
-  {% if paginator.previous_page == 1 %}
-      <a href="{{ BASE_PATH }}/">&laquo;</a>
-  {% else %}
-      <a href="{{ BASE_PATH }}/page{{paginator.previous_page}}">&laquo;</a>
-  {% endif %}
-    </li>
-{% else %}
-    <li class="disabled">
-      <a href="#">&laquo;</a>
-    </li>
-{% endif %}
+<div class='col-xs-12 text-center'>
+  {% if paginator.total_pages > 1 %}
+  <ul class='pagination'>
+    {% if paginator.previous_page %}
+      <li><a href='{{ BASE_PATH }}{{ paginator.first_page_path }}'>&laquo; 처음</a></li>
+      <li><a href='{{ BASE_PATH }}{{ paginator.previous_page_path }}'>&lt; 이전</a></li>
+    {% else %}
+      <li class='disabled'><span>&laquo; 처음</span></li>
+      <li class='disabled'><span>&lt; 이전</span></li>
+    {% endif %}
 
-{% if paginator.page == 1 %}
-    <li class="active">
-      <a href="#">1</a>
-    </li>
-{% else %}
-    <li>
-      <a href="{{ BASE_PATH }}/">1</a>
-    </li>
-{% endif %}
+    {% if paginator.page > 3 %}
+      <li class='disabled'><span>&hellip;</span></li>
+    {% endif %}
 
-{% for count in (2..paginator.total_pages) %}
-  {% if count == paginator.page %}
-    <li class="active">
-      <a href="#">{{count}}</a>
-    </li>
-  {% else %}
-    <li>
-      <a href="{{ BASE_PATH }}/page{{count}}">{{count}}</a>
-    </li>
-  {% endif %}
-{% endfor %}
+    {% for cur in (1..paginator.total_pages) %}
+      {% assign two_less = cur | minus: 2 %}
+      {% assign two_more = cur | plus: 2 %}
+      {% if paginator.page < two_less or paginator.page > two_more %}
+      {% elsif cur == paginator.page %}
+        <li class='active'><span>{{ cur }}</span></li>
+      {% elsif cur == 1 %}
+        <li><a href='{{ BASE_PATH }}/ko/'>{{ cur }}</a></li>
+      {% else %}
+        <li><a href='{{ BASE_PATH }}{{ page.paginate_path | replace: ':num', cur }}'>{{ cur }}</a></li>
+      {% endif %}
+    {% endfor %}
 
-{% if paginator.next_page %}
-    <li>
-      <a href="{{ BASE_PATH }}/page{{paginator.next_page}}">&raquo;</a>
-    </li>
-{% else %}
-    <li class="disabled">
-      <a href="#">&raquo;</a>
-    </li>
-{% endif %}
+    {% assign total_minus_2 = paginator.total_pages | minus: 2 %}
+    {% if paginator.page < total_minus_2 %}
+      <li class='disabled'><span>&hellip;</span></li>
+    {% endif %}
+
+    {% if paginator.next_page %}
+      <li><a href='{{ BASE_PATH }}{{ paginator.next_page_path }}'>다음 &gt;</a></li>
+      <li><a href='{{ BASE_PATH }}{{ paginator.last_page_path }}'>끝 &raquo;</a></li>
+    {% else %}
+      <li class='disabled'><span>다음 &gt;</span></li>
+      <li class='disabled'><span>끝 &raquo;</span></li>
+    {% endif %}
   </ul>
+  {% endif %}
+</div>
+
 </div>
