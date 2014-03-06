@@ -3,7 +3,7 @@ layout: post.ko
 title: 암호 없이 SSH 접속하기
 category: ko
 tags: [infrastructure, ssh]
-author: Sangmin Yoon
+author: sangmin.yoon
 ---
 
 이번 글에서는 SSH 서버에 암호 입력 없이 접속하는 방법에 대해서 설명하겠습니다.

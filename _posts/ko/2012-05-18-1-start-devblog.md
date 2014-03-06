@@ -3,7 +3,7 @@ layout: post.ko
 title: croquis.com 개발자 블로그를 시작합니다.
 category: ko
 tags: [infrastructure]
-author: Sangmin Yoon
+author: sangmin.yoon
 ---
 
 안녕하세요.

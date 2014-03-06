@@ -3,7 +3,7 @@ layout: post.ko
 title: '[CookieWords] 에버노트와 연동하기'
 category: ko
 tags: [cookiewords, evernote]
-author: Sangmin Yoon
+author: sangmin.yoon
 ---
 {% include setup %}
 
