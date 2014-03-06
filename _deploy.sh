@@ -4,4 +4,4 @@ TARGET=_site/devblog.croquis.com
 
 jekyll build
 cd _site
-rsync -az --delete . $SERVER:$TARGET
+rsync -az --delete --exclude .git . $SERVER:$TARGET
