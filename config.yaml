@@ -1,0 +1,24 @@
+baseurl: http://devblog.croquis.com
+title: croquis.com developers' blog
+
+defaultContentLanguage: ko
+defaultContentLanguageInSubdir: true
+
+hasCJKLanguage: true
+
+googleAnalytics: UA-48716672-3
+
+paginate: 3
+
+pygmentsuseclasses: true
+
+disqusShortname: croquiscom-devblog
+
+languages:
+  en:
+    weight: 0
+  ko:
+    weight: 0
+
+blackfriday:
+  smartypants: false

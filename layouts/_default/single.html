@@ -1,0 +1,56 @@
+{{ partial "header.html" . }}
+{{ partial "navbar.html" . }}
+
+<div class='container'>
+
+<div class='row'>
+  <div class='col-xs-12'>
+    <div class='page-header'>
+      <h1>{{ .Title }}</h1>
+    </div>
+  </div>
+
+  <div class='col-xs-12 col-sm-9'>
+    {{ .Content }}
+  </div>
+
+  <div class='col-xs-12 col-sm-3'>
+    {{ if .Params.author }}
+      <div class='post-author'>
+        <i class='glyphicon glyphicon-pencil'></i>
+        <span>{{ .Params.author }}</span>
+      </div>
+    {{ end }}
+    <div class='post-date'>
+      <i class='glyphicon glyphicon-calendar'></i>
+      <span>{{ .Date.Format "02 January 2006" }}</span>
+    </div>
+
+    {{ partial "tags.html" . }}
+  </div>
+
+  <div class='col-xs-12'>
+    <hr>
+
+    <ul class='pager'>
+      {{ if .PrevInSection }}
+        <li class='previous'><a href='{{ .PrevInSection.URL }}' title='{{ .PrevInSection.Title }}'>&larr; 이전 글</a></li>
+      {{ else }}
+        <li class='previous disabled'><a>&larr; 이전 글</a></li>
+      {{ end }}
+      {{ if .NextInSection }}
+        <li class='next'><a href='{{ .NextInSection.URL }}' title='{{ .NextInSection.Title }}'>다음 글 &rarr;</a></li>
+      {{ else }}
+        <li class='next disabled'><a>다음 글 &rarr;</a>
+      {{ end }}
+    </ul>
+    <hr>
+    <div class='text-center'>
+      {{ template "_internal/disqus.html" . }}
+    </div>
+  </div>
+</div>
+
+</div>
+
+{{ partial "footer.html" . }}

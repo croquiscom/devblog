@@ -1,0 +1,35 @@
+{{ partial "header.html" . }}
+{{ partial "navbar.html" . }}
+
+{{ $paginator := .Paginate .Data.Pages }}
+
+<div class='container'>
+
+<div class='row' style='margin-top: 20px;'>
+
+<div class='col-sm-10 col-sm-offset-1'>
+  {{ range $paginator.Pages }}
+  <div class='panel panel-default'>
+    <div class='panel-heading'>
+      <h2 class='posts-title'><a href='{{ .URL }}'>{{ .Title }}</a></h2>
+      <div>
+        <span class='posts-date'>{{ .Date.Format "02 Jan 2006" }}</span>
+        {{ if .Params.author }}
+          <span class='posts-author'>by {{ .Params.author }}</span>
+        {{ end }}
+      </div>
+    </div>
+    <div class='panel-body'>
+      {{ .Content }}
+    </div>
+  </div>
+  {{ end }}
+</div>
+
+{{ partial "pagination.html" . }}
+
+</div>
+
+</div>
+
+{{ partial "footer.html" . }}

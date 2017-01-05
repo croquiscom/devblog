@@ -1,0 +1,42 @@
+{{ $pag := $.Paginator }}
+<div class='col-xs-12 text-center'>
+  {{ if gt $pag.TotalPages 1 }}
+  <ul class='pagination'>
+    {{ if $pag.HasPrev }}
+      <li><a href='{{ $pag.First.URL }}'>&laquo; 처음</a></li>
+      <li><a href='{{ $pag.Prev.URL }}'>&lt; 이전</a></li>
+    {{ else }}
+      <li class='disabled'><span>&laquo; 처음</span></li>
+      <li class='disabled'><span>&lt; 이전</span></li>
+    {{ end }}
+
+    {{ if gt $pag.PageNumber 3 }}
+      <li class='disabled'><span>&hellip;</span></li>
+    {{ end }}
+
+    {{ range $pag.Pagers }}
+      {{ $two_less := sub .PageNumber 2 }}
+      {{ $two_more := add .PageNumber 2 }}
+      {{ if or (lt $pag.PageNumber $two_less) (gt $pag.PageNumber $two_more) }}
+      {{ else if eq . $pag }}
+        <li class='active'><span>{{ .PageNumber }}</span></li>
+      {{ else }}
+        <li><a href='{{ .URL }}'>{{ .PageNumber }}</a></li>
+      {{ end }}
+    {{ end }}
+
+    {{ $total_minus_2 := sub $pag.TotalPages 2 }}
+    {{ if lt $pag.PageNumber $total_minus_2 }}
+      <li class='disabled'><span>&hellip;</span></li>
+    {{ end }}
+
+    {{ if $pag.HasNext }}
+      <li><a href='{{ $pag.Next.URL }}'>다음 &gt;</a></li>
+      <li><a href='{{ $pag.Last.URL }}'>끝 &raquo;</a></li>
+    {{ else }}
+      <li class='disabled'><span>다음 &gt;</span></li>
+      <li class='disabled'><span>끝 &raquo;</span></li>
+    {{ end }}
+  </ul>
+  {{ end }}
+</div>
