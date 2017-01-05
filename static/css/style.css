@@ -51,6 +51,11 @@ img {
   float: right;
 }
 
+.post-original .alert {
+  font-size: small;
+  padding: 5px;
+}
+
 .post-date {
   font-weight: bold;
 }

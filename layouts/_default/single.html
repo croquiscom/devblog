@@ -11,6 +11,11 @@
   </div>
 
   <div class='col-xs-12 col-sm-9'>
+    {{ if .Params.original }}
+      <div class='post-original'>
+        <div class='alert alert-success'>원본: <a href='{{ .Params.original }}' class='alert-link'>{{ .Params.original }}</a></div>
+      </div>
+    {{ end }}
     {{ .Content }}
   </div>
 
