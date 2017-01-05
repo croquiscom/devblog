@@ -1,7 +1,0 @@
-{% if page.author == 'sangmin.yoon' %}
-Sangmin Yoon
-{% elsif page.author == 'jungsoo.park' %}
-Jungsoo Park
-{% elsif page.author == 'chudong.yeo' %}
-Chudong Yeo
-{% endif %}
