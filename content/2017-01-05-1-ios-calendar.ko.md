@@ -1,5 +1,6 @@
 ---
 title: iOS에서 년도를 구할 때 비정상적인 값이 나오는 문제
+tags: []
 date: 2017-01-05
 author: Sangmin Yoon
 original: http://sixmen.com/ko/tech/2016-12-16-1-ios-calendar/
