@@ -77,15 +77,55 @@ img {
   border-left: 5px solid transparent;
 }
 
+.posts-head {
+  height: 70px;
+  margin-top: 30px;
+  margin-bottom: 5px;
+}
+
 .posts-title {
   font-size: 30px;
+  display: block;
+  font-weight: 500;
 }
-.posts-date {
+
+.posts-title a{
+  color: #000;
+  text-decoration: none;
+}
+
+.posts-title a:hover {
+  color: #888;
+}
+
+.posts-info {
+  vertical-align: bottom;
+}
+
+.posts-date {  
+  font-size: 13px;
   color: #999999;
 }
 .posts-author {
   color: #606060;
-  float: right;
+  font-size: 13px;
+}
+
+.posts-author-img {
+  width: 25px; 
+  height: 25px; 
+  border-radius: 10%;
+  margin: 0 3px;
+}
+
+.posts-content {
+  text-decoration: none;
+  color: #000;
+}
+
+.posts-content:hover {
+  text-decoration: none;
+  color: #888;
 }
 
 .post-original .alert {

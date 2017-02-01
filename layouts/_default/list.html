@@ -6,22 +6,25 @@
 <div class='container'>
 
 <div class='row' style='margin-top: 20px;'>
-
-<div class='col-sm-10 col-sm-offset-1'>
+  
+<div class='col-md-9 col-sm-offset-0 col-xs-10 col-xs-offset-1'>
   {{ range $paginator.Pages }}
-  <div class='panel panel-default'>
-    <div class='panel-heading'>
-      <h2 class='posts-title'><a href='{{ .URL }}'>{{ .Title }}</a></h2>
-      <div>
-        <span class='posts-date'>{{ .Date.Format "02 Jan 2006" }}</span>
+  <div>
+    <div class='posts-head'>
+      <span class='posts-title'>
+        <a href='{{ .URL }}'>{{ .Title }}</a>
+      </span>
+      <div class='posts-info pull-right'>
+        <span class='posts-date'>{{ .Date.Format "02 Jan 2006" }} | </span>
         {{ if .Params.author }}
           <span class='posts-author'>by {{ .Params.author }}</span>
         {{ end }}
       </div>
     </div>
     <div class='panel-body'>
-      {{ .Summary }}
-      <a href='{{ .URL }}' class='btn btn-info'>더보기</a>
+      <a href='{{ .URL }}' class='posts-content'>
+        {{ .Summary }}
+      </a>
     </div>
   </div>
   {{ end }}
