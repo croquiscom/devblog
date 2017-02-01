@@ -208,3 +208,34 @@ img {
   border: 1px solid #4c964d;
   color: #FFF;
 }
+
+.sidemenu {
+  padding: 20px;
+}
+
+.sidemenu-recent-list {
+  padding: 0;
+}
+
+.sidemenu-recent-item {
+  color: #000;
+  list-style-type: none;
+  font-size: 13px;
+  padding: 2px;
+}
+
+.sidemenu-recent-item:hover {
+  color: #888;
+}
+
+.sidemenu-recent-tags {
+  color: #000;
+  list-style-type: none;
+  font-size: 13px;
+  padding: 2px;
+  display: inline-block;
+}
+
+.sidemenu-recent-tags:hover {
+  color: #888;
+}
