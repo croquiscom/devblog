@@ -128,6 +128,13 @@ img {
   color: #888;
 }
 
+.post-header {
+  height: 75px;
+  padding-top: 30px;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 30px;
+}
+
 .post-original .alert {
   font-size: small;
   padding: 5px;
@@ -135,6 +142,7 @@ img {
 
 .post-date {
   font-weight: bold;
+  display: inline-block;
 }
 .post-date i {
   padding: 3px 6px;
@@ -143,8 +151,22 @@ img {
 
 .post-author {
   font-weight: bold;
+  display: inline-block;
 }
 .post-author i {
+  padding: 3px 6px;
+  margin: 2px;
+}
+
+.post-tags {
+  display: inline-block;
+}
+
+.post-original {
+  display: inline-block;
+}
+
+.post-original i {
   padding: 3px 6px;
   margin: 2px;
 }
