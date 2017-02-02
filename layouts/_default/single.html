@@ -5,34 +5,36 @@
 
 <div class='row'>
   <div class='col-xs-12'>
-    <div class='page-header'>
-      <h1>{{ .Title }}</h1>
+    <div class='post-header'>
+      <div class='post-tags'>
+        {{ partial "tags.html" . }}
+      </div>
+      <div class='pull-right'>
+        {{ if .Params.author }}
+          <div class='post-author'>
+            <i class='glyphicon glyphicon-pencil'></i>
+            <span>{{ .Params.author }}</span>
+          </div>
+        {{ end }}
+        <div class='post-date'>
+          <i class='glyphicon glyphicon-calendar'></i>
+          <span>{{ .Date.Format "02 January 2006" }}</span>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class='col-xs-12 col-sm-9'>
-    {{ if .Params.original }}
-      <div class='post-original'>
-        <div class='alert alert-success'>원본: <a href='{{ .Params.original }}' class='alert-link'>{{ .Params.original }}</a></div>
-      </div>
-    {{ end }}
     {{ .Content }}
-  </div>
-
-  <div class='col-xs-12 col-sm-3'>
-    {{ if .Params.author }}
-      <div class='post-author'>
-        <i class='glyphicon glyphicon-pencil'></i>
-        <span>{{ .Params.author }}</span>
+    {{ if .Params.original }}
+      <hr>
+      <div class='post-original'>
+        원본 링크 : <a href='{{ .Params.original }}' target='_blank'>{{ .Params.original }}</a>
       </div>
     {{ end }}
-    <div class='post-date'>
-      <i class='glyphicon glyphicon-calendar'></i>
-      <span>{{ .Date.Format "02 January 2006" }}</span>
-    </div>
-
-    {{ partial "tags.html" . }}
   </div>
+  
+  {{ partial "sidebar.html" . }}
 
   <div class='col-xs-12'>
     <hr>

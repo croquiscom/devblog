@@ -1,7 +1,21 @@
 <div class='hp-navbar'>
-  <div class='container-fluid'><div class='row'><div class='col-xs-12'>
-    <nav class='hp-nav'>
-      <a class='hp-nav-item' href='{{ "/ko/" | relURL }}'>croquis.com developers' blog</a>
-    </nav>
-  </div></div></div>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container-fluid'>
+      <div class='row'>
+        <div class='hp-navbar-btns col-sm-12'>
+          <nav class='hp-nav'>
+            <img src="http://croquis.com/recruit/img/header_logo_croquis.png" class='hp-navbar-logo'>
+          </nav>
+          <div class="pull-right">
+            <a href='/'><nav class='hp-nav-item'>Blog</nav></a>
+            <a href='https://github.com/croquiscom' target='_blank'><nav class='hp-nav-item'>Github</nav></a>
+            <a href='http://croquis.com/recruit/' target='_blank'><nav class='hp-nav-item'>Jobs</nav></a>
+          </div>
+        </div>
+      </div>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>{{ .Title }}</div>
+      </div>
+    </div>
+  </div>
 </div>
