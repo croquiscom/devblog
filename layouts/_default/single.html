@@ -10,10 +10,6 @@
         {{ partial "tags.html" . }}
       </div>
       <div class='pull-right'>
-        <div class='post-original'>
-          <i class='glyphicon glyphicon-globe'></i>
-          <a href='{{ .Params.original }}' class='alert-link'>{{ .Params.original }}</a>
-        </div>
         {{ if .Params.author }}
           <div class='post-author'>
             <i class='glyphicon glyphicon-pencil'></i>
@@ -30,6 +26,12 @@
 
   <div class='col-xs-12 col-sm-9'>
     {{ .Content }}
+    {{ if .Params.original }}
+      <hr>
+      <div class='post-original'>
+        원본 링크 : <a href='{{ .Params.original }}' target='_blank'>{{ .Params.original }}</a>
+      </div>
+    {{ end }}
   </div>
   
   {{ partial "sidebar.html" . }}

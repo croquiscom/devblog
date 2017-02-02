@@ -140,11 +140,6 @@ img {
   margin-bottom: 30px;
 }
 
-.post-original .alert {
-  font-size: small;
-  padding: 5px;
-}
-
 .post-date {
   font-weight: bold;
   display: inline-block;
@@ -168,12 +163,7 @@ img {
 }
 
 .post-original {
-  display: inline-block;
-}
-
-.post-original i {
-  padding: 3px 6px;
-  margin: 2px;
+  font-size: 12px;
 }
 
 .tag_box {
@@ -287,12 +277,8 @@ img {
   }
 
   .post-header {
-    height: 140px;
+    height: 120px;
     padding-top: 15px;
-  }
-
-  .post-original {
-    margin-bottom: 5px;
   }
 }
 
@@ -316,7 +302,6 @@ img {
 
   .post-date, .post-date i,
   .post-author, .post-author i,
-  .post-original, .post-original i,
   .post-tags {
     font-size: 12px;
   }
