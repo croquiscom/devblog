@@ -259,3 +259,56 @@ img {
 .paginate-style li a:active {
   color: #000;
 }
+
+@media (max-width: 991px) {
+  .sidemenu {
+    display: none;
+  }
+
+  .posts-title {
+    font-size: 20px;
+  }
+
+  .posts-head {
+    height: 100px;
+  }
+
+  .post-header {
+    height: 140px;
+    padding-top: 15px;
+  }
+
+  .post-original {
+    margin-bottom: 5px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hp-navbar-title {
+    font-size: 22px;
+    margin-top: 25px;
+  }
+
+  .hp-nav-item {
+    font-size: 13px;
+    padding: 5px;
+    margin-top: 3px;
+  }
+
+  .hp-navbar-logo {
+    width: 48px;
+    height: 18px;
+    margin-top: 10px;
+  }
+
+  .post-date, .post-date i,
+  .post-author, .post-author i,
+  .post-original, .post-original i,
+  .post-tags {
+    font-size: 12px;
+  }
+
+  .post-tags {
+    margin-left: 3px;
+  }
+}
