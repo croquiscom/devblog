@@ -128,6 +128,11 @@ img {
   color: #888;
 }
 
+.posts-readmore {
+  font-size: 11px;
+  font-style: italic;
+}
+
 .post-header {
   height: 75px;
   padding-top: 30px;
@@ -269,8 +274,16 @@ img {
     font-size: 20px;
   }
 
+  .posts-info {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+
   .posts-head {
     height: 100px;
+    margin-bottom: 10px;
+    position: relative;
   }
 
   .post-header {

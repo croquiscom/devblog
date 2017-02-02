@@ -7,14 +7,14 @@
 
 <div class='row' style='margin-top: 20px;'>
   
-<div class='col-md-9 col-sm-offset-0 col-xs-10 col-xs-offset-1'>
+<div class='col-md-9 col-sm-offset-0 col-xs-12'>
   {{ range $paginator.Pages }}
   <div>
     <div class='posts-head'>
       <span class='posts-title'>
         <a href='{{ .URL }}'>{{ .Title }}</a>
       </span>
-      <div class='posts-info pull-right'>
+      <div class='posts-info text-right'>
         <span class='posts-date'>{{ .Date.Format "02 Jan 2006" }} | </span>
         {{ if .Params.author }}
           <span class='posts-author'>by {{ .Params.author }}</span>
@@ -24,6 +24,7 @@
     <div class='panel-body'>
       <a href='{{ .URL }}' class='posts-content'>
         {{ .Summary }}
+        <div class='posts-readmore'>&hellip; read more </div>
       </a>
     </div>
   </div>
