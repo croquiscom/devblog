@@ -239,3 +239,23 @@ img {
 .sidemenu-recent-tags:hover {
   color: #888;
 }
+
+.paginate-style {
+  list-style-type: none;
+}
+
+.paginate-style li {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 13px;
+  color: #000;
+}
+
+.paginate-style li a {
+  color: #888;
+}
+
+.paginate-style li a:hover,
+.paginate-style li a:active {
+  color: #000;
+}
