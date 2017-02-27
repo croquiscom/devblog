@@ -1,6 +1,6 @@
 ---
 title: croquis.com 개발자 블로그를 시작합니다.
-tags: []
+tags: ['Croquis']
 date: 2017-01-01
 author: Sangmin Yoon
 ---

@@ -1,6 +1,6 @@
 ---
 title: GitHub 위키 이벤트를 슬랙으로 받기
-tags: []
+tags: ['GitHub','Slack']
 date: 2017-01-06
 author: Sangmin Yoon
 ---

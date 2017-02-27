@@ -1,6 +1,6 @@
 ---
 title: Node.js로 유닉스 파이프 처리하기
-tags: []
+tags: ['Nodejs']
 date: 2017-01-15
 author: Sangmin Yoon
 original: http://sixmen.com/ko/tech/2017-01-15-1-process-unix-pipe-with-nodejs/
