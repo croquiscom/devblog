@@ -5,7 +5,7 @@
     {{ range .Params.tags }}
       <li><a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}'>
         {{ . }}
-        <span>{{ index $site_tags . | len }}</span>
+        <span>{{ index $site_tags (. | lower) | len }}</span>
       </a></li>
     {{ end }}
   </ul>
