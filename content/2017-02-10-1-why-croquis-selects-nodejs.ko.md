@@ -12,6 +12,8 @@ original: http://sixmen.com/ko/tech/2017-02-08-1-why-croquis-selects-nodejs/
 이번 글에서는 어떤 이유로 Node.js를 사용하게 되었는지 설명하려고 합니다.
 여러분들이 웹 프레임워크를 선택하시는 데 참고가 되었으면 합니다.
 
+<!--more-->
+
 ---
 
 크로크닷컴을 설립한 것은 2012년 2월입니다.

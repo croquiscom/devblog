@@ -13,6 +13,8 @@ original: http://sixmen.com/ko/tech/2017-04-07-1-croquis-stack-mithril/
 TD;DR) 크로키에서는 [Backbone](http://backbonejs.org/), [Angular](http://angular.io/)를 거쳐
 현재는 [Mithril](http://mithril.js.org/)이라는 프레임워크를 사용하고 있습니다.
 
+<!--more-->
+
 ---
 
 크로키는 현재 지그재그라는 서비스에 주력하고 있지만, 지그재그가 첫 제품은 아닙니다.
