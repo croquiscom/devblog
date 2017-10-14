@@ -1,5 +1,5 @@
 {{ $site_tags := .Site.Taxonomies.tags }}
-{{ if .Params.tags }}
+{{ if and $site_tags .Params.tags }}
   <ul class='tag_box inline'>
     <li><i class='glyphicon glyphicon-tags'></i></li>
     {{ range .Params.tags }}

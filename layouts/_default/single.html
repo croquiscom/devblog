@@ -40,13 +40,13 @@
     <hr>
 
     <ul class='pager'>
-      {{ if .PrevInSection }}
-        <li class='previous'><a href='{{ .PrevInSection.URL }}' title='{{ .PrevInSection.Title }}'>&larr; 이전 글</a></li>
+      {{ if .Next }}
+        <li class='previous'><a href='{{ .Next.URL }}' title='{{ .Next.Title }}'>&larr; 이전 글</a></li>
       {{ else }}
         <li class='previous disabled'><a>&larr; 이전 글</a></li>
       {{ end }}
-      {{ if .NextInSection }}
-        <li class='next'><a href='{{ .NextInSection.URL }}' title='{{ .NextInSection.Title }}'>다음 글 &rarr;</a></li>
+      {{ if .Prev }}
+        <li class='next'><a href='{{ .Prev.URL }}' title='{{ .Prev.Title }}'>다음 글 &rarr;</a></li>
       {{ else }}
         <li class='next disabled'><a>다음 글 &rarr;</a>
       {{ end }}
