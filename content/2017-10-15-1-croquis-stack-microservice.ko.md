@@ -3,7 +3,7 @@ title: 크로키의 스택 - 마이크로서비스
 tags: ['Croquis','Stack','마이크로서비스','Microservice']
 date: 2017-10-15
 author: Sangmin Yoon
-original: http://sixmen.com/ko/tech/2017-10-15-1-croquis-stack-microservice/
+original: http://sixmen.com/content/2017-10-15-1/2017-10-15-1-croquis-stack-microservice/
 ---
 
 지그재그 서비스는 모놀리식 아키텍처(Monolithic Architecture)에서
@@ -18,12 +18,12 @@ original: http://sixmen.com/ko/tech/2017-10-15-1-croquis-stack-microservice/
 웹 서비스를 할 계획이 없었기 때문에 단순한 API 서버만 필요했고,
 좀 더 성숙한 프레임워크(예. Rails)를 사용하는 대신 Node.js + Express 조합으로 서버를 구성하였습니다.
 
-![첫 서비스 구조](/img/ko/tech/2017-10-15-1-01.png)
+![첫 서비스 구조](/img/content/2017-10-15-1/2017-10-15-1-01.png)
 
 서비스가 알파 테스트 단계에 이르자 데이터를 살펴보고 간단한 조작을 할 수 있는 관리용 웹이 필요해졌습니다.
 그래서 기존 서버에 관리용 API를 추가해서 관리용 웹을 만들었습니다.
 
-![관리용 웹 추가](/img/ko/tech/2017-10-15-1-02.png)
+![관리용 웹 추가](/img/content/2017-10-15-1/2017-10-15-1-02.png)
 
 # 복잡해지는 구조
 
@@ -31,7 +31,7 @@ original: http://sixmen.com/ko/tech/2017-10-15-1-croquis-stack-microservice/
 그러나 2014년에 시작한 외주 프로젝트에서는 관리용 웹에 더 많은 기능이 필요했고, 서버 프로세스를 분리하기에 이르렀습니다.
 코드상으로는 대부분의 코드를 공유하고 프로세스에 따라 라우트만 다르게 설정하는 구조였습니다.
 
-![관리용 API 서버 분리](/img/ko/tech/2017-10-15-1-03.png)
+![관리용 API 서버 분리](/img/content/2017-10-15-1/2017-10-15-1-03.png)
 
 2015년 초에 지그재그 서비스 개발을 시작하였는데,
 이전 프로젝트와 달리 사용자용 API는 굉장히 적은데 비해서, 관리용 API가 많아졌습니다.
@@ -40,7 +40,7 @@ original: http://sixmen.com/ko/tech/2017-10-15-1-croquis-stack-microservice/
 이 때 디렉토리는 서버와 클라이언트로 구분하지 않고, 타겟별로 구분을 하였습니다.
 (사용자용 API + 관리용 웹[API 서버, 웹 클라이언트] + 업주용 웹[API 서버, 웹 클라이언트] )
 
-![업주용 웹 추가](/img/ko/tech/2017-10-15-1-04.png)
+![업주용 웹 추가](/img/content/2017-10-15-1/2017-10-15-1-04.png)
 
 한때는 여기에 계약 관리용 웹이 별도로 존재하기도 했습니다.
 
@@ -63,11 +63,11 @@ original: http://sixmen.com/ko/tech/2017-10-15-1-croquis-stack-microservice/
 2016년 8월에 전환 작업을 시작해서, 상품 서비스, 쇼핑몰 서비스, 사용자 서비스, 상품 검색 서비스 순으로 코드 분리를 시작합니다.
 모든 기능을 한번에 이동하기 보다는 새로 추가되는 기능 위주로 조금씩 작업했습니다.
 
-![마이크로서비스 분리 시작](/img/ko/tech/2017-10-15-1-05.png)
+![마이크로서비스 분리 시작](/img/content/2017-10-15-1/2017-10-15-1-05.png)
 
 2017년 초에 새로 생긴 서비스에 대해서는 DB 서버도 분리(별도 RDS 인스턴스)했고, 8월에는 기존 데이테베이스도 거의 분리했습니다.
 
-![DB 서버 분리](/img/ko/tech/2017-10-15-1-06.png)
+![DB 서버 분리](/img/content/2017-10-15-1/2017-10-15-1-06.png)
 
 # 현재의 상태
 
