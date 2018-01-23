@@ -1,5 +1,5 @@
 ---
-title: 'AWS의 serverless architecture #1 -  SQS, Lambda를 이용한 작업 대기열 만들기'
+title: SQS, Lambda를 이용한 작업 대기열 만들기
 tags: ['AWS Lambda','Amazon SQS','AWS','serverless architecture', 'task queue','튜토리얼']
 date: 2017-05-13
 author: Jacob Choi
