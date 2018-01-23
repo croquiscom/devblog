@@ -34,67 +34,67 @@ author: Sangmin Yoon
 
 # 사용하는 생산성 도구
 
-* 소스는 GitHub 비공개 저장소를 사용해 관리하고 있습니다.
-* 타팀과의 업무는 Taskworld를 통해 관리/진행합니다.
+* 소스는 [GitHub](https://github.com/) 비공개 저장소를 사용해 관리하고 있습니다.
+* 타팀과의 업무는 [Taskworld](https://taskworld.com/)를 통해 관리/진행합니다.
 * 개발팀 내부에서는 GitHub 이슈를 통해 업무에 대한 작업 내역을 관리합니다.
-* 회사내 커뮤니케이션은 Slack을 사용합니다.
-* 문서는 구글 문서도구 또는 GitHub 위키를 사용해 작성합니다.
+* 회사내 커뮤니케이션은 [Slack](https://slack.com/)을 사용합니다.
+* 문서는 [Google 문서](https://www.google.com/docs/about/) 또는 GitHub 위키를 사용해 작성합니다.
 
 # 키워드로 알아보는 지그재그 개발팀
 
 ## 안드로이드
 
-* Android Studio
-* Java
-* Couchbase
-* Realm
-* Kotlin
-* MVVM
-* data binding
+* [Android Studio](https://developer.android.com/studio/)
+* [Java](https://www.java.com/)
+* [Couchbase](https://www.couchbase.com/)
+* [Realm](https://realm.io/)
+* [Kotlin](https://kotlinlang.org/)
+* [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel)
+* [데이터 바인딩](https://developer.android.com/topic/libraries/data-binding/)
 
 ## iOS
 
-* Xcode
-* Swift
-* Couchbase
-* Realm
-* MVVM
+* [Xcode](https://developer.apple.com/xcode/)
+* [Swift](https://swift.org/)
+* [Couchbase](https://www.couchbase.com/)
+* [Realm](https://realm.io/)
+* [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel)
 
 ## 프론트엔드
 
-* TypeScript
-* webpack
-* Mithril
-* MVVM
-* REST API
-* GraphQL
+* [TypeScript](https://www.typescriptlang.org/)
+* [webpack](https://webpack.js.org/)
+* [Mithril](https://mithril.js.org/)
+* [MVVM](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93viewmodel)
+* [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
+* [GraphQL](http://graphql.org/)
  
 ## 백엔드
 
-* Node.js
-* TypeScript
-* Express
-* REST API
-* Apache Thrift
-* GraphQL
-* Mocha
-* Chai
-* Sinon
-* Istanbul
-* CORMO
-* Rinore
-* croquis.deployer
+* [Node.js](https://nodejs.org/)
+* [TypeScript](https://www.typescriptlang.org/)
+* [Express](http://expressjs.com/)
+* [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer)
+* [Apache Thrift](https://thrift.apache.org/)
+* [GraphQL](http://graphql.org/)
+* [Mocha](https://mochajs.org/)
+* [Chai](http://chaijs.com/)
+* [Sinon](http://sinonjs.org/)
+* [Istanbul](https://istanbul.js.org/)
+* [CORMO](http://croquiscom.github.io/cormo/)
+* [Rinore](https://github.com/croquiscom/rinore)
+* [croquis.deployer](https://github.com/croquiscom/croquis.deployer)
 
 ## 서버
 
-* AWS
-* MongoDB
-* ElasticSearch
-* Couchbase
-* NewRelic
-* Microservice Architecture
-* Serverless Architecture
-* Jenkins
-* Ansible
-* Apache Spark
-* Apache Zeppelin
+* [AWS](https://aws.amazon.com/)
+* [MongoDB](https://www.mongodb.com/)
+* [ElasticSearch](https://www.elastic.co/)
+* [Couchbase](https://www.couchbase.com/)
+* [NewRelic](https://newrelic.com/)
+* [Microservice Architecture](https://en.wikipedia.org/wiki/Microservices)
+* [Serverless Architecture](https://en.wikipedia.org/wiki/Serverless_computing)
+* [Jenkins](https://jenkins.io/)
+* [Ansible](https://www.ansible.com/)
+* [Apache Spark](https://spark.apache.org/)
+* [Apache Zeppelin](https://zeppelin.apache.org/)
