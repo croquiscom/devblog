@@ -22,3 +22,5 @@ languages:
 
 blackfriday:
   smartypants: false
+
+buildFuture: true
