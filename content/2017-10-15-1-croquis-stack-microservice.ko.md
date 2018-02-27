@@ -3,7 +3,7 @@ title: 크로키의 스택 - 마이크로서비스
 tags: ['Croquis','Stack','마이크로서비스','Microservice']
 date: 2017-10-15
 author: Sangmin Yoon
-original: http://sixmen.com/content/2017-10-15-1/2017-10-15-1-croquis-stack-microservice/
+original: http://sixmen.com/ko/tech/2017-10-15-1-croquis-stack-microservice/
 ---
 
 지그재그 서비스는 모놀리식 아키텍처(Monolithic Architecture)에서
