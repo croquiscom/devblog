@@ -3,8 +3,6 @@ body {
 }
 
 img {
-    margin-top: 5px;
-    margin-bottom: 5px;
     max-width: 100%;
 }
 
@@ -23,12 +21,26 @@ img {
 }
 
 .hp-navbar-logo {
+    margin: 5px 0px;
     position: relative;
 }
 
-.hp-navbar-logo-font {
-    color: black;
+.logo-a-tag {
     text-decoration: none !important;
+}
+
+.hp-navbar-logo-font {
+    color: #ff0060;
+    font-weight: 700;
+    line-height: 45px;
+    vertical-align: middle;
+    font-size: 16px;
+}
+
+.icon-svg {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 8px 5px;
 }
 
 .hp-navbar-top {
@@ -64,10 +76,8 @@ img {
 .hp-nav-item {
     position: relative;
     display: inline-block;
-    padding: 10px;
     font-weight: 500;
     color: #000;
-    margin-top: 3px;
 }
 
 .hp-nav-item:hover,
