@@ -3,38 +3,36 @@
 
 {{ $paginator := .Paginate .Data.Pages }}
 
-<div class='container-fluid'>
-
-<div class='row' style='margin-top: 20px;'>
-  
-<div class='col-md-9 col-sm-offset-0 col-xs-12'>
-  {{ range $paginator.Pages }}
-  <div>
-    <div class='posts-head'>
-      <span class='posts-title'>
-        <a href='{{ .URL }}'>{{ .Title }}</a>
-      </span>
-      <div class='posts-info text-right'>
-        <span class='posts-date'>{{ .Date.Format "02 Jan 2006" }} | </span>
-        {{ if .Params.author }}
-          <span class='posts-author'>by {{ .Params.author }}</span>
-        {{ end }}
+<div class='container'>
+  <div class='row' style='margin-top: 20px;'>
+    <div class='col-md-9 col-sm-offset-0 col-xs-12'>
+      {{ range $paginator.Pages }}
+      <div>
+        <div class='posts-head'>
+          <span class='posts-title'>
+            <a href='{{ .URL }}'>{{ .Title }}</a>
+          </span>
+          <div class='posts-info text-right'>
+            <span class='posts-date'>{{ .Date.Format "02 Jan 2006" }} | </span>
+            {{ if .Params.author }}
+            <span class='posts-author'>by {{ .Params.author }}</span>
+            {{ end }}
+          </div>
+        </div>
+        <div class='panel-body'>
+          <a href='{{ .URL }}' class='posts-content'>
+            {{ .Summary }}
+            <div class='posts-readmore'>&hellip; read more </div>
+          </a>
+        </div>
       </div>
+      {{ end }}
     </div>
-    <div class='panel-body'>
-      <a href='{{ .URL }}' class='posts-content'>
-        {{ .Summary }}
-        <div class='posts-readmore'>&hellip; read more </div>
-      </a>
-    </div>
+
+    {{ partial "sidebar.html" . }}
+    {{ partial "pagination.html" . }}
+
   </div>
-  {{ end }}
-</div>
-
-{{ partial "sidebar.html" . }}
-{{ partial "pagination.html" . }}
-
-</div>
 
 </div>
 

@@ -1,21 +1,33 @@
-<div class='hp-navbar'>
-  <div class='hp-navbar-bgcolor'>
-    <div class='container-fluid'>
-      <div class='row'>
-        <div class='hp-navbar-btns col-sm-12'>
-          <nav class='hp-nav'>
-            <!--<img src='/img/logo-croquis.png' class='hp-navbar-logo'>-->
-            <a href='https://zigzag.kr'><img src='/img/logo-zigzag.png' width='124' height='37' class='hp-navbar-logo'></a>
-          </nav>
-          <div class="pull-right">
-            <a href='/'><nav class='hp-nav-item'>Blog</nav></a>
-            <a href='https://github.com/croquiscom' target='_blank'><nav class='hp-nav-item'>Github</nav></a>
-            <!--
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-sm-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-zigzag.png' width='124' height='37'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='pull-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://zigzag.kr' target='_blank'>
+            <img class='icon-svg' src='/img/zigzag-icon.svg'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon-svg' src='/img/github-icon.svg'>
+          </a>
+          <!--
             <a href='https://croquis.com/recruit/' target='_blank'><nav class='hp-nav-item'>Jobs</nav></a>
-            -->
-          </div>
+          -->
         </div>
       </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
       <div class='text-center'>
         <div class='hp-navbar-title'>{{ .Title }}</div>
       </div>

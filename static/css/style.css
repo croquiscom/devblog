@@ -1,310 +1,336 @@
 body {
-  line-height: 1.8;
+    line-height: 1.8;
 }
+
 img {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  max-width: 100%;
+    max-width: 100%;
 }
 
 .hp-nav {
-  display: inline-block;
-  padding: 0;
-  margin: 0;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
 }
 
 .hp-navbar {
-  height: 150px;
-  background: url('/img/navbar-bgimg.jpg');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-
-.hp-navbar-bgcolor {
-  background-color: rgba(0,0,0,0.7); 
-  height: 100%;
+    height: 300px;
+    background: url('/img/navbar-bgimg.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .hp-navbar-logo {
-  margin-top: 10px;
+    margin: 5px 0px;
+    position: relative;
 }
 
-.hp-navbar-btns {
-  margin-top: 10px;
+.logo-a-tag {
+    text-decoration: none !important;
+}
+
+.hp-navbar-logo-font {
+    color: #ff0060;
+    font-weight: 700;
+    line-height: 45px;
+    vertical-align: middle;
+    font-size: 16px;
+}
+
+.icon-svg {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 8px 5px;
+}
+
+.hp-navbar-top {
+    height: 50px;
+    position: fixed;
+    background-color: #FFF;
+    width: 100%;
+    z-index: 100;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.hp-navbar-top-link {
+    color: #000;
+}
+
+.hp-navbar-bgcolor {
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 100%;
 }
 
 .hp-navbar-title {
-  color: #fff;
-  font-weight: 500;
-  font-size: 35px;
-  margin-top: 10px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 35px;
+    margin-top: 130px;
 }
 
 .hp-navbar-title:hover {
-  color: #cdddeb;
-  text-decoration: none;
+    color: #cdddeb;
+    text-decoration: none;
 }
 
 .hp-nav-item {
-  position: relative;
-  display: inline-block;
-  padding: 10px;
-  font-weight: 500;
-  color: #fff;
+    position: relative;
+    display: inline-block;
+    font-weight: 500;
+    color: #000;
 }
+
 .hp-nav-item:hover,
 .hp-nav-item:focus {
-  color: #cdddeb;
-  text-decoration: none;
+    color: rgb(26, 24, 24);
+    text-decoration: none;
 }
+
 .hp-nav .active {
-  color: #fff;
+    color: #fff;
 }
+
 .hp-nav .active:after {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 0;
-  margin-left: -5px;
-  vertical-align: middle;
-  content: " ";
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid;
-  border-left: 5px solid transparent;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -5px;
+    vertical-align: middle;
+    content: " ";
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid;
+    border-left: 5px solid transparent;
 }
 
 .posts-head {
-  height: 70px;
-  margin-top: 30px;
-  margin-bottom: 5px;
+    height: 70px;
+    margin-top: 30px;
+    margin-bottom: 5px;
 }
 
 .posts-title {
-  font-size: 30px;
-  display: block;
-  font-weight: 500;
+    font-size: 30px;
+    display: block;
+    font-weight: 500;
 }
 
-.posts-title a{
-  color: #000;
-  text-decoration: none;
+.posts-title a {
+    color: #000;
+    text-decoration: none;
 }
 
 .posts-title a:hover {
-  color: #888;
+    color: #888;
 }
 
 .posts-info {
-  vertical-align: bottom;
+    vertical-align: bottom;
 }
 
-.posts-date {  
-  font-size: 13px;
-  color: #999999;
+.posts-date {
+    font-size: 13px;
+    color: #999999;
 }
+
 .posts-author {
-  color: #606060;
-  font-size: 13px;
+    color: #606060;
+    font-size: 13px;
 }
 
 .posts-author-img {
-  width: 25px; 
-  height: 25px; 
-  border-radius: 10%;
-  margin: 0 3px;
+    width: 25px;
+    height: 25px;
+    border-radius: 10%;
+    margin: 0 3px;
 }
 
 .posts-content {
-  text-decoration: none;
-  color: #000;
+    text-decoration: none;
+    color: #000;
 }
 
 .posts-content:hover {
-  text-decoration: none;
-  color: #888;
+    text-decoration: none;
+    color: #888;
 }
 
 .posts-readmore {
-  font-size: 11px;
-  font-style: italic;
+    font-size: 11px;
+    font-style: italic;
 }
 
 .post-header {
-  height: 75px;
-  padding-top: 30px;
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 30px;
+    height: 75px;
+    padding-top: 30px;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 30px;
 }
 
 .post-date {
-  font-weight: bold;
-  display: inline-block;
+    font-weight: bold;
+    display: inline-block;
 }
+
 .post-date i {
-  padding: 3px 6px;
-  margin: 2px;
+    padding: 3px 6px;
+    margin: 2px;
 }
 
 .post-author {
-  font-weight: bold;
-  display: inline-block;
+    font-weight: bold;
+    display: inline-block;
 }
+
 .post-author i {
-  padding: 3px 6px;
-  margin: 2px;
+    padding: 3px 6px;
+    margin: 2px;
 }
 
 .post-tags {
-  display: inline-block;
+    display: inline-block;
 }
 
 .post-original {
-  font-size: 12px;
+    font-size: 12px;
 }
 
 .tag_box {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
+
 .tag_box li {
-  line-height: 28px;
+    line-height: 28px;
 }
+
 .tag_box li i {
-  padding: 6px 6px;
-  margin: 2px;
+    padding: 6px 6px;
+    margin: 2px;
 }
+
 .tag_box.inline li {
-  float: left;
+    float: left;
 }
+
 .tag_box a {
-  padding: 3px 6px;
-  margin: 2px;
-  background: #eee;
-  color: #555;
-  border-radius: 3px;
-  text-decoration: none;
-  border: 1px dashed #cccccc;
+    padding: 3px 6px;
+    margin: 2px;
+    background: #eee;
+    color: #555;
+    border-radius: 3px;
+    text-decoration: none;
+    border: 1px dashed #cccccc;
 }
+
 .tag_box a span {
-  vertical-align: super;
-  font-size: 0.8em;
+    vertical-align: super;
+    font-size: 0.8em;
 }
+
 .tag_box a:hover {
-  background-color: #e5e5e5;
+    background-color: #e5e5e5;
 }
+
 .tag_box a.active {
-  background: #57A957;
-  border: 1px solid #4c964d;
-  color: #FFF;
+    background: #57A957;
+    border: 1px solid #4c964d;
+    color: #FFF;
 }
 
 .sidemenu {
-  padding: 20px;
+    padding: 20px;
 }
 
 .sidemenu-recent-list {
-  padding: 0;
+    padding: 0;
 }
 
 .sidemenu-recent-item {
-  color: #000;
-  list-style-type: none;
-  font-size: 13px;
-  padding: 2px;
+    color: #000;
+    list-style-type: none;
+    font-size: 13px;
+    padding: 2px;
 }
 
 .sidemenu-recent-item:hover {
-  color: #888;
+    color: #888;
 }
 
 .sidemenu-recent-tags {
-  color: #000;
-  list-style-type: none;
-  font-size: 13px;
-  padding: 2px;
-  display: inline-block;
+    color: #000;
+    list-style-type: none;
+    font-size: 13px;
+    padding: 2px;
+    display: inline-block;
 }
 
 .sidemenu-recent-tags:hover {
-  color: #888;
+    color: #888;
 }
 
 .paginate-style {
-  list-style-type: none;
+    list-style-type: none;
 }
 
 .paginate-style li {
-  display: inline-block;
-  margin-left: 10px;
-  font-size: 13px;
-  color: #000;
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 13px;
+    color: #000;
 }
 
 .paginate-style li a {
-  color: #888;
+    color: #888;
 }
 
 .paginate-style li a:hover,
 .paginate-style li a:active {
-  color: #000;
+    color: #000;
 }
 
 @media (max-width: 991px) {
-  .sidemenu {
-    display: none;
-  }
-
-  .posts-title {
-    font-size: 20px;
-  }
-
-  .posts-info {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-  }
-
-  .posts-head {
-    height: 100px;
-    margin-bottom: 10px;
-    position: relative;
-  }
-
-  .post-header {
-    height: 120px;
-    padding-top: 15px;
-  }
+    .sidemenu {
+        display: none;
+    }
+    .posts-title {
+        font-size: 20px;
+    }
+    .posts-info {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+    .posts-head {
+        height: 100px;
+        margin-bottom: 10px;
+        position: relative;
+    }
+    .post-header {
+        height: 120px;
+        padding-top: 15px;
+    }
 }
 
 @media (max-width: 600px) {
-  .hp-navbar-title {
-    font-size: 22px;
-    margin-top: 25px;
-  }
-
-  .hp-nav-item {
-    font-size: 13px;
-    padding: 5px;
-    margin-top: 3px;
-  }
-
-  .hp-navbar-logo {
-    width: 48px;
-    height: 18px;
-    margin-top: 10px;
-  }
-
-  .post-date, .post-date i,
-  .post-author, .post-author i,
-  .post-tags {
-    font-size: 12px;
-  }
-
-  .post-tags {
-    margin-left: 3px;
-  }
+    .hp-navbar {
+        height: 200px;
+    }
+    .hp-navbar-title {
+        font-size: 28px;
+        margin-top: 100px;
+    }
+    .post-date,
+    .post-date i,
+    .post-author,
+    .post-author i,
+    .post-tags {
+        font-size: 12px;
+    }
+    .post-tags {
+        margin-left: 3px;
+    }
 }
