@@ -3,6 +3,7 @@ title: 지그재그 개발팀은...
 tags: []
 date: 2099-12-31
 author: Sangmin Yoon
+images: [/img/content/2018-01-23-1/3.jpg]
 ---
 
 지그재그에서는 최고의 개발팀을 만들기 위해 항상 노력하고 있습니다.

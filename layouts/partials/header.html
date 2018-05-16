@@ -8,6 +8,15 @@
   <meta name='author' content='croquis.com'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
+  <meta property='og:title' content='{{ .Title }}' />
+  <meta property='og:type' content='{{ if .IsPage }}article{{ else }}website{{ end }}' />
+  <meta property='og:url' content='{{ .Permalink }}' />
+  {{ with .Params.images }}
+    {{ range first 6 . }}
+  <meta property='og:image' content='{{ . | absURL }}'/>
+    {{ end }}
+  {{ end }}
+
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
   <link href='{{ "/css/style.css?body=1" | relURL }}' rel='stylesheet' type='text/css' media='all'>
   <link href='{{ "/css/syntax.css?body=1" | relURL }}' rel='stylesheet' type='text/css' media='all'>
