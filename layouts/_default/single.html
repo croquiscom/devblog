@@ -4,27 +4,27 @@
 <div class='container'>
 
 <div class='row'>
-  <div class='col-xs-12'>
+  <div class='col-12'>
     <div class='post-header'>
       <div class='post-tags'>
         {{ partial "tags.html" . }}
       </div>
-      <div class='pull-right'>
+      <div class='float-right'>
         {{ if .Params.author }}
           <div class='post-author'>
-            <i class='glyphicon glyphicon-pencil'></i>
+            <i class='fas fa-pencil-alt'></i>
             <span>{{ .Params.author }}</span>
           </div>
         {{ end }}
         <div class='post-date'>
-          <i class='glyphicon glyphicon-calendar'></i>
+          <i class='fas fa-calendar-alt'></i>
           <span>{{ .Date.Format "02 January 2006" }}</span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class='col-xs-12 col-sm-9'>
+  <div class='col-12 col-lg-9'>
     {{ .Content }}
     {{ if .Params.original }}
       <hr>
@@ -36,21 +36,24 @@
   
   {{ partial "sidebar.html" . }}
 
-  <div class='col-xs-12'>
+  <div class='col-12'>
     <hr>
 
-    <ul class='pager'>
+    <div class='float-left'>
       {{ if .Next }}
-        <li class='previous'><a href='{{ .Next.URL }}' title='{{ .Next.Title }}'>&larr; 이전 글</a></li>
+        <a class='btn btn-outline-primary' href='{{ .Next.URL }}' title='{{ .Next.Title }}'>&larr; 이전 글</a>
       {{ else }}
-        <li class='previous disabled'><a>&larr; 이전 글</a></li>
+        <a class='btn btn-outline-primary disabled'>&larr; 이전 글</a>
       {{ end }}
+    </div>
+    <div class='float-right'>
       {{ if .Prev }}
-        <li class='next'><a href='{{ .Prev.URL }}' title='{{ .Prev.Title }}'>다음 글 &rarr;</a></li>
+        <a class='btn btn-outline-primary' href='{{ .Prev.URL }}' title='{{ .Prev.Title }}'>다음 글 &rarr;</a>
       {{ else }}
-        <li class='next disabled'><a>다음 글 &rarr;</a>
+        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
       {{ end }}
-    </ul>
+    </div>
+    <div class='clearfix'></div>
     <hr>
     <div class='text-center'>
       {{ template "_internal/disqus.html" . }}

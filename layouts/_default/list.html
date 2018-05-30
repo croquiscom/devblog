@@ -5,7 +5,7 @@
 
 <div class='container'>
   <div class='row' style='margin-top: 20px;'>
-    <div class='col-md-9 col-sm-offset-0 col-xs-12'>
+    <div class='col-12 col-lg-9'>
       {{ range $paginator.Pages }}
       <div>
         <div class='posts-head'>
@@ -19,7 +19,7 @@
             {{ end }}
           </div>
         </div>
-        <div class='panel-body'>
+        <div class='card-body'>
           <a href='{{ .URL }}' class='posts-content'>
             {{ .Summary }}
             <div class='posts-readmore'>&hellip; read more </div>

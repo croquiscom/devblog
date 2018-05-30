@@ -1,7 +1,7 @@
 {{ $site_tags := .Site.Taxonomies.tags }}
 {{ if and $site_tags .Params.tags }}
   <ul class='tag_box inline'>
-    <li><i class='glyphicon glyphicon-tags'></i></li>
+    <li><i class='fas fa-tags'></i></li>
     {{ range .Params.tags }}
       <li><a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}'>
         {{ . }}
