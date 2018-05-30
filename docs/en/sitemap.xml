@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://devblog.croquis.com/en/categories/</loc>
+    <priority>0</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://devblog.croquis.com/ko/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://devblog.croquis.com/en/categories/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/en/tags/</loc>
+    <priority>0</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://devblog.croquis.com/ko/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://devblog.croquis.com/en/tags/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/en/</loc>
+    <priority>0</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://devblog.croquis.com/ko/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://devblog.croquis.com/en/"
+                />
+  </url>
+  
+</urlset>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+  <meta charset='utf-8'>
+
+  <title>Aws</title>
+  
+  <meta name='author' content='croquis.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <meta property='og:title' content='Aws' />
+  <meta property='og:type' content='website' />
+  <meta property='og:url' content='https://devblog.croquis.com/ko/tags/aws/' />
+  
+
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+  <link href='/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='/css/syntax.css?body=1' rel='stylesheet' type='text/css' media='all'>
+
+  <!--[if lt IE 9]>
+    <script src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js'></script>
+    <script src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js'></script>
+  <![endif]-->
+</head>
+<body>
+
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-sm-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-zigzag.png' width='124' height='37'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='pull-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://zigzag.kr' target='_blank'>
+            <img class='icon-svg' src='/img/zigzag-icon.svg'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon-svg' src='/img/github-icon.svg'>
+          </a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>Aws</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class='container'>
+  <div class='row' style='margin-top: 20px;'>
+    <div class='col-md-9 col-sm-offset-0 col-xs-12'>
+      
+      <div>
+        <div class='posts-head'>
+          <span class='posts-title'>
+            <a href='/ko/2017-05-13-1-aws-serverless-1/'>SQS, Lambda를 이용한 작업 대기열 만들기</a>
+          </span>
+          <div class='posts-info text-right'>
+            <span class='posts-date'>13 May 2017 | </span>
+            
+            <span class='posts-author'>by Jacob Choi</span>
+            
+          </div>
+        </div>
+        <div class='panel-body'>
+          <a href='/ko/2017-05-13-1-aws-serverless-1/' class='posts-content'>
+            <p>최근 클라우드 컴퓨팅환경이 널리 사용되면서 서버 하드웨어 대한 유지보수 및 구성을 신경 쓰지 않고, 다양한 서비스들을 위한 서버를 개발할 수 있게 되었습니다. 하지만 이런 환경을 사용함에도 auto-scaling이나 서버 로그 수집, 서비스 배포 및 관리 등 소프트웨어 스택에 관한 부분은 신경 써줘야 합니다.</p>
+
+<p>이러한 고민을 덜어주기 위해서 최근에는 serverless architecture라는 개념이 생기고 있습니다. serverless architecture에서는 소스코드와 몇 번의 클릭만으로 서비스를 위한 REST API를 만들 수 있고, 수많은 요청에 대한 확장성에 대해 고민을 할 필요가 없으며, 로그 및 다양한 모니터링 툴들을 추가적인 작업 없이 사용할 수 있습니다.</p>
+
+<p>AWS에서도 serverless architecture를 위한 다양한 서비스를 제공하고 있습니다. 이번 글에서는 간단한 작업 대기열(task queue)을 만들어보며, serverless architecture 환경을 경험해보도록 하겠습니다.</p>
+
+<p></p>
+            <div class='posts-readmore'>&hellip; read more </div>
+          </a>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class='col-sm-3 sidemenu'>
+  <h4>Recent Posts</h4>
+  <ul class="sidemenu-recent-list">
+    
+      <a href='/ko/2018-01-23-1-zigzag-devteam-is/'><li class="sidemenu-recent-item">지그재그 개발팀은...</li></a>
+    
+      <a href='/ko/2018-02-27-1-jenkins-job-styles/'><li class="sidemenu-recent-item">젠킨스 작업을 정의하는 방식들</li></a>
+    
+      <a href='/ko/2017-10-15-1-croquis-stack-microservice/'><li class="sidemenu-recent-item">크로키의 스택 - 마이크로서비스</li></a>
+    
+      <a href='/ko/2017-05-13-1-aws-serverless-1/'><li class="sidemenu-recent-item">SQS, Lambda를 이용한 작업 대기열 만들기</li></a>
+    
+  </ul>
+  <hr>
+  <h4>Tags</h4>
+  <ul class="sidemenu-recent-list">
+    
+      <a href="/ko/tags/amazon-sqs"><li class="sidemenu-recent-tags">amazon-sqs</li></a>
+    
+      <a href="/ko/tags/aws"><li class="sidemenu-recent-tags">aws</li></a>
+    
+      <a href="/ko/tags/aws-lambda"><li class="sidemenu-recent-tags">aws-lambda</li></a>
+    
+      <a href="/ko/tags/croquis"><li class="sidemenu-recent-tags">croquis</li></a>
+    
+      <a href="/ko/tags/github"><li class="sidemenu-recent-tags">github</li></a>
+    
+      <a href="/ko/tags/ios"><li class="sidemenu-recent-tags">ios</li></a>
+    
+      <a href="/ko/tags/jenkins"><li class="sidemenu-recent-tags">jenkins</li></a>
+    
+      <a href="/ko/tags/microservice"><li class="sidemenu-recent-tags">microservice</li></a>
+    
+      <a href="/ko/tags/mithril"><li class="sidemenu-recent-tags">mithril</li></a>
+    
+      <a href="/ko/tags/nodejs"><li class="sidemenu-recent-tags">nodejs</li></a>
+    
+      <a href="/ko/tags/serverless-architecture"><li class="sidemenu-recent-tags">serverless-architecture</li></a>
+    
+      <a href="/ko/tags/slack"><li class="sidemenu-recent-tags">slack</li></a>
+    
+      <a href="/ko/tags/stack"><li class="sidemenu-recent-tags">stack</li></a>
+    
+      <a href="/ko/tags/task-queue"><li class="sidemenu-recent-tags">task-queue</li></a>
+    
+      <a href="/ko/tags/typescript"><li class="sidemenu-recent-tags">typescript</li></a>
+    
+      <a href="/ko/tags/webpack"><li class="sidemenu-recent-tags">webpack</li></a>
+    
+      <a href="/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4"><li class="sidemenu-recent-tags">마이크로서비스</li></a>
+    
+      <a href="/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC"><li class="sidemenu-recent-tags">튜토리얼</li></a>
+    
+  </ul>
+</div>
+
+    
+<div class='col-xs-12 text-center'>
+  
+</div>
+
+
+  </div>
+
+</div>
+
+<div class='container'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2018 croquis.com
+      <span class='pull-right text-muted'>
+        powered by
+        <a href='https://gohugo.io/' target='_blank'>Hugo</a>
+        and
+        <a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-48716672-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+<script src='https://code.jquery.com/jquery-1.12.4.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+
+</body>
+</html>
+

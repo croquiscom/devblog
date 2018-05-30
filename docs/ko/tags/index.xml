@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on ZIGZAG 기술 블로그</title>
+    <link>https://devblog.croquis.com/ko/tags/</link>
+    <description>Recent content in Tags on ZIGZAG 기술 블로그</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 13 May 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://devblog.croquis.com/ko/tags/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Amazon Sqs</title>
+      <link>https://devblog.croquis.com/ko/tags/amazon-sqs/</link>
+      <pubDate>Sat, 13 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/amazon-sqs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Aws</title>
+      <link>https://devblog.croquis.com/ko/tags/aws/</link>
+      <pubDate>Sat, 13 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/aws/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Aws Lambda</title>
+      <link>https://devblog.croquis.com/ko/tags/aws-lambda/</link>
+      <pubDate>Sat, 13 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/aws-lambda/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Croquis</title>
+      <link>https://devblog.croquis.com/ko/tags/croquis/</link>
+      <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/croquis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Github</title>
+      <link>https://devblog.croquis.com/ko/tags/github/</link>
+      <pubDate>Fri, 06 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/github/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ios</title>
+      <link>https://devblog.croquis.com/ko/tags/ios/</link>
+      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/ios/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Jenkins</title>
+      <link>https://devblog.croquis.com/ko/tags/jenkins/</link>
+      <pubDate>Tue, 27 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/jenkins/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Microservice</title>
+      <link>https://devblog.croquis.com/ko/tags/microservice/</link>
+      <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/microservice/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Mithril</title>
+      <link>https://devblog.croquis.com/ko/tags/mithril/</link>
+      <pubDate>Tue, 11 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/mithril/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nodejs</title>
+      <link>https://devblog.croquis.com/ko/tags/nodejs/</link>
+      <pubDate>Fri, 10 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/nodejs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Serverless Architecture</title>
+      <link>https://devblog.croquis.com/ko/tags/serverless-architecture/</link>
+      <pubDate>Sat, 13 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/serverless-architecture/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Slack</title>
+      <link>https://devblog.croquis.com/ko/tags/slack/</link>
+      <pubDate>Fri, 06 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/slack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Stack</title>
+      <link>https://devblog.croquis.com/ko/tags/stack/</link>
+      <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/stack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Task Queue</title>
+      <link>https://devblog.croquis.com/ko/tags/task-queue/</link>
+      <pubDate>Sat, 13 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/task-queue/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Typescript</title>
+      <link>https://devblog.croquis.com/ko/tags/typescript/</link>
+      <pubDate>Tue, 11 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/typescript/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Webpack</title>
+      <link>https://devblog.croquis.com/ko/tags/webpack/</link>
+      <pubDate>Tue, 11 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/webpack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>마이크로서비스</title>
+      <link>https://devblog.croquis.com/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/</link>
+      <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>튜토리얼</title>
+      <link>https://devblog.croquis.com/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/</link>
+      <pubDate>Sat, 13 May 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

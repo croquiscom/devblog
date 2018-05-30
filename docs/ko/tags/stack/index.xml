@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Stack on ZIGZAG 기술 블로그</title>
+    <link>https://devblog.croquis.com/ko/tags/stack/</link>
+    <description>Recent content in Stack on ZIGZAG 기술 블로그</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 15 Oct 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://devblog.croquis.com/ko/tags/stack/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>크로키의 스택 - 마이크로서비스</title>
+      <link>https://devblog.croquis.com/ko/2017-10-15-1-croquis-stack-microservice/</link>
+      <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/2017-10-15-1-croquis-stack-microservice/</guid>
+      <description>&lt;p&gt;지그재그 서비스는 모놀리식 아키텍처(Monolithic Architecture)에서
+마이크로서비스 아키텍처(Microservice Architecture)로 전환중에 있습니다.
+이번 글에서는 그 과정을 설명하려고 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>크로키의 스택 - Mithril</title>
+      <link>https://devblog.croquis.com/ko/2017-04-07-1-croquis-stack-mithril/</link>
+      <pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/2017-04-07-1-croquis-stack-mithril/</guid>
+      <description>&lt;p&gt;이번 글에서는 크로키가 사용하는 스택 중
+클라이언트 JavaScript 프레임워크(client-side JavaScript framework)에 대해서
+소개해볼까 합니다.&lt;/p&gt;
+
+&lt;p&gt;TD;DR) 크로키에서는 &lt;a href=&#34;http://backbonejs.org/&#34;&gt;Backbone&lt;/a&gt;, &lt;a href=&#34;http://angular.io/&#34;&gt;Angular&lt;/a&gt;를 거쳐
+현재는 &lt;a href=&#34;http://mithril.js.org/&#34;&gt;Mithril&lt;/a&gt;이라는 프레임워크를 사용하고 있습니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

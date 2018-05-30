@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Microservice on ZIGZAG 기술 블로그</title>
+    <link>https://devblog.croquis.com/ko/tags/microservice/</link>
+    <description>Recent content in Microservice on ZIGZAG 기술 블로그</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 15 Oct 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://devblog.croquis.com/ko/tags/microservice/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>크로키의 스택 - 마이크로서비스</title>
+      <link>https://devblog.croquis.com/ko/2017-10-15-1-croquis-stack-microservice/</link>
+      <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/2017-10-15-1-croquis-stack-microservice/</guid>
+      <description>&lt;p&gt;지그재그 서비스는 모놀리식 아키텍처(Monolithic Architecture)에서
+마이크로서비스 아키텍처(Microservice Architecture)로 전환중에 있습니다.
+이번 글에서는 그 과정을 설명하려고 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
