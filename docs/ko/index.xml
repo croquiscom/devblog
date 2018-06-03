@@ -5,30 +5,10 @@
     <link>https://devblog.croquis.com/ko/</link>
     <description>Recent content on ZIGZAG 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 31 Dec 2099 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 30 May 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://devblog.croquis.com/ko/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>지그재그 개발팀은...</title>
-      <link>https://devblog.croquis.com/ko/2018-01-23-1-zigzag-devteam-is/</link>
-      <pubDate>Thu, 31 Dec 2099 00:00:00 +0000</pubDate>
-      
-      <guid>https://devblog.croquis.com/ko/2018-01-23-1-zigzag-devteam-is/</guid>
-      <description>&lt;p&gt;지그재그에서는 최고의 개발팀을 만들기 위해 항상 노력하고 있습니다.
-이 글에서는 지그재그 개발팀의 문화와 관심사에 대해서 소개하고 있습니다.
-지그재그 서비스에 대해서는 하단의 소개를 참고해주세요.&lt;/p&gt;
-
-&lt;p&gt;이 글을 읽고 저희 개발팀에 관심이 생기신 분은 언제든지 &lt;a href=&#34;mailto:job@zigzag.kr&#34;&gt;job@zigzag.kr&lt;/a&gt; 으로 연락주세요.
-이력서를 보내주셔도 좋고, 깃허브 주소를 보내주셔도 좋습니다.
-그 외 문의사항이나 가볍게 나누고 싶으신 이야기들은 &lt;a href=&#34;https://www.facebook.com/zigzagcareer&#34;&gt;https://www.facebook.com/zigzagcareer&lt;/a&gt; 를 통해서 문의해주시면 됩니다.
-지그재그 팀과 함께 수면 아래 숨겨진 가치를 찾아내는 멋진 경험에 동참할 팀원을 기다립니다.&lt;/p&gt;
-
-&lt;p&gt;지그재그 현재 진행중인 개발팀의 채용 공고는 &lt;a href=&#34;https://career.zigzag.kr/recruit/&#34;&gt;여기&lt;/a&gt;서 보실 수 있습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
-    </item>
     
     <item>
       <title>크로키의 스택 - REST API</title>
@@ -60,6 +40,26 @@
 문서별로 작업을 정의하는 방식이 너무 달라서 굉장히 혼란스러웠습니다.&lt;/p&gt;
 
 &lt;p&gt;이번 글에서는 저와 같이 혼란을 겪으시는 분들을 위해 젠킨스의 작업 정의 방식들에 대해서 설명하려고 합니다.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>지그재그 개발팀은...</title>
+      <link>https://devblog.croquis.com/ko/2018-01-23-1-zigzag-devteam-is/</link>
+      <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/2018-01-23-1-zigzag-devteam-is/</guid>
+      <description>&lt;p&gt;지그재그에서는 최고의 개발팀을 만들기 위해 항상 노력하고 있습니다.
+이 글에서는 지그재그 개발팀의 문화와 관심사에 대해서 소개하고 있습니다.
+지그재그 서비스에 대해서는 하단의 소개를 참고해주세요.&lt;/p&gt;
+
+&lt;p&gt;이 글을 읽고 저희 개발팀에 관심이 생기신 분은 언제든지 &lt;a href=&#34;mailto:job@zigzag.kr&#34;&gt;job@zigzag.kr&lt;/a&gt; 으로 연락주세요.
+이력서를 보내주셔도 좋고, 깃허브 주소를 보내주셔도 좋습니다.
+그 외 문의사항이나 가볍게 나누고 싶으신 이야기들은 &lt;a href=&#34;https://www.facebook.com/zigzagcareer&#34;&gt;https://www.facebook.com/zigzagcareer&lt;/a&gt; 를 통해서 문의해주시면 됩니다.
+지그재그 팀과 함께 수면 아래 숨겨진 가치를 찾아내는 멋진 경험에 동참할 팀원을 기다립니다.&lt;/p&gt;
+
+&lt;p&gt;지그재그 현재 진행중인 개발팀의 채용 공고는 &lt;a href=&#34;https://career.zigzag.kr/recruit/&#34;&gt;여기&lt;/a&gt;서 보실 수 있습니다.&lt;/p&gt;
 
 &lt;p&gt;&lt;/p&gt;</description>
     </item>

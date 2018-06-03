@@ -1,7 +1,7 @@
 ---
 title: 지그재그 개발팀은...
 tags: []
-date: 2099-12-31
+date: 2018-01-23
 author: Sangmin Yoon
 images: [/img/content/2018-01-23-1/3.jpg]
 ---
