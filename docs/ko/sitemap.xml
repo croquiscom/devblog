@@ -3,6 +3,16 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://devblog.croquis.com/ko/2018-08-23-1-check-analytics-2/</loc>
+    <lastmod>2018-08-23T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/2018-07-10-1-check-analytics-1/</loc>
+    <lastmod>2018-07-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://devblog.croquis.com/ko/2018-05-30-1-croquis-stack-rest-api/</loc>
     <lastmod>2018-05-30T00:00:00+00:00</lastmod>
   </url>
@@ -69,6 +79,12 @@
   </url>
   
   <url>
+    <loc>https://devblog.croquis.com/ko/tags/analytics/</loc>
+    <lastmod>2018-08-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://devblog.croquis.com/ko/tags/aws/</loc>
     <lastmod>2017-05-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -97,7 +113,19 @@
   
   <url>
     <loc>https://devblog.croquis.com/ko/tags/croquis/</loc>
-    <lastmod>2018-05-30T00:00:00+00:00</lastmod>
+    <lastmod>2018-08-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/data/</loc>
+    <lastmod>2018-08-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/event/</loc>
+    <lastmod>2018-08-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -116,6 +144,12 @@
   <url>
     <loc>https://devblog.croquis.com/ko/tags/jenkins/</loc>
     <lastmod>2018-02-27T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/log/</loc>
+    <lastmod>2018-08-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -197,7 +231,7 @@
   
   <url>
     <loc>https://devblog.croquis.com/ko/</loc>
-    <lastmod>2018-05-30T00:00:00+00:00</lastmod>
+    <lastmod>2018-08-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
     <xhtml:link
                 rel="alternate"
@@ -209,6 +243,12 @@
                 hreflang="ko"
                 href="https://devblog.croquis.com/ko/"
                 />
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/%EB%A1%9C%EA%B7%B8/</loc>
+    <lastmod>2018-08-23T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
