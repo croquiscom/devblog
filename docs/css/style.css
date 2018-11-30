@@ -323,7 +323,7 @@ img {
     }
     .hp-navbar-title {
         font-size: 150%;
-        margin-top: 100px;
+        padding-top: 100px;
     }
     .post-date,
     .post-date i,
@@ -335,4 +335,10 @@ img {
     .post-tags {
         margin-left: 3px;
     }
+}
+
+blockquote {
+    margin-left: 30px;
+    margin-right: 30px;
+    font-size: 90%;
 }

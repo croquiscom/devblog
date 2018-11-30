@@ -22,9 +22,7 @@
 &lt;p&gt;GitHub는 슬랙과의 연동이 잘 되어 있어서 GitHub에서의 활동을
 슬랙을 통해 파악하고 대응하고 있습니다.
 하지만 아쉽게도 GitHub 위키 이벤트는 처리하지 않습니다.
-그래서 자체적으로 GitHub 위키 이벤트를 슬랙으로 알려주는 서비스를 만들었습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+그래서 자체적으로 GitHub 위키 이벤트를 슬랙으로 알려주는 서비스를 만들었습니다.&lt;/p&gt;</description>
     </item>
     
   </channel>

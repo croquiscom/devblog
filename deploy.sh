@@ -5,4 +5,4 @@ TARGET=hp/devblog.croquis.com
 ./build.sh
 
 cd docs
-rsync --iconv=UTF-8-MAC,UTF-8 -az --delete . $SERVER:$TARGET
+rsync -az --delete . $SERVER:$TARGET

@@ -20,9 +20,7 @@
 &lt;a href=&#34;http://expressjs.com/&#34;&gt;Express&lt;/a&gt;를 사용하고 있습니다.&lt;/p&gt;
 
 &lt;p&gt;이번 글에서는 어떤 이유로 Node.js를 사용하게 되었는지 설명하려고 합니다.
-여러분들이 웹 프레임워크를 선택하시는 데 참고가 되었으면 합니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+여러분들이 웹 프레임워크를 선택하시는 데 참고가 되었으면 합니다.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -33,9 +31,7 @@
       <guid>https://devblog.croquis.com/ko/2017-01-15-1-process-unix-pipe-with-nodejs/</guid>
       <description>&lt;p&gt;크로키에서는 로그를 JSON 문자열로 만들어 일자별(혹은 시간별)로 묶은 후
 gzip으로 압축해서 저장하고 있습니다.
-그런데 이미 만들어진 로그를 수정해야 하는 일이 생겼습니다.&lt;/p&gt;
-
-&lt;p&gt;&lt;/p&gt;</description>
+그런데 이미 만들어진 로그를 수정해야 하는 일이 생겼습니다.&lt;/p&gt;</description>
     </item>
     
   </channel>
