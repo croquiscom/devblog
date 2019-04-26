@@ -171,3 +171,25 @@ line box가 400px로 늘어나서 위치가 달라졌습니다!<br/>
 </div>
 그럼 line-height가 아니라 height가 400px로 늘어나면 어떻게 될까요?<br/>
 안타깝지만 height는 line box에 영향을 주지 않기 때문에 line box는 300px로 유지됩니다.<br/>
+<br/>
+{{< highlight html >}}
+<div class="block-container" style="height: 300px; line-height: 400px;">
+  <div class="box small top"></div>
+  <div class="box big top"></div>
+  <div class="box small bottom"></div>
+  <div class="box medium bottom"></div>
+</div>
+{{< /highlight >}}
+<div class="block-container" style="height: 300px; line-height: 400px; margin-bottom: 100px;">
+  <div class="box small top"></div>
+  <div class="box big top"></div>
+  <div class="box small bottom"></div>
+  <div class="box medium bottom"></div>
+</div>
+마지막으로 height를 300px, line-height를 400px로 지정한 예제입니다.<br/>
+line-height에 의해 line box는 400px이 되었지만 height는 300px이어서 요소들이 밖으로 삐져나온 것을 볼 수 있습니다.<br/>
+<br/>
+오늘은 vertical-align 속성 중 가장 쉬운(?) top과 bottom에 대해서 정리해봤습니다.<br/>
+vertical-align을 이용한 수직정렬에서 최상단과 하단은 부모 요소의 높이가 아니라 line box라는 점 꼭 기억하셨으면 좋겠습니다.<br/>
+추후에 시간이 된다면 vertical-align의 다른 속성들(middle, text-top, text-bottom...)에 대해서도 정리해보겠습니다.<br/>
+긴 글 읽어주셔서 감사합니다 :)
