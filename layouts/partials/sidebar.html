@@ -1,15 +1,19 @@
 <div class='col-lg-3 sidemenu'>
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
-    {{ range first 4 .Site.Pages}}
-      <a href='{{ .URL }}'><li class="sidemenu-recent-item">{{ .Title }}</li></a>
+    {{ range first 4 .Site.RegularPages}}
+    <a href='{{ .RelPermalink }}'>
+      <li class="sidemenu-recent-item">{{ .Title }}</li>
+    </a>
     {{ end }}
   </ul>
   <hr>
   <h4>Tags</h4>
   <ul class="sidemenu-recent-list">
     {{ range $name, $taxonomy := .Site.Taxonomies.tags }}
-      <a href="/ko/tags/{{ $name | urlize }}"><li class="sidemenu-recent-tags">{{ $name }}</li></a>
+    <a href="/ko/tags/{{ $name | urlize }}">
+      <li class="sidemenu-recent-tags">{{ $name }}</li>
+    </a>
     {{ end }}
   </ul>
 </div>

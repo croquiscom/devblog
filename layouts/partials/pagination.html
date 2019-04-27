@@ -3,31 +3,31 @@
   {{ if gt $pag.TotalPages 1 }}
   <ul class='paginate-style'>
     {{ if $pag.HasPrev }}
-      <li><a href='{{ $pag.First.URL }}'>&laquo;</a></li>
+    <li><a href='{{ $pag.First.URL }}'>&laquo;</a></li>
     {{ end }}
 
     {{ if gt $pag.PageNumber 3 }}
-      <li class='disabled'><span>&hellip;</span></li>
+    <li class='disabled'><span>&hellip;</span></li>
     {{ end }}
 
     {{ range $pag.Pagers }}
-      {{ $two_less := sub .PageNumber 2 }}
-      {{ $two_more := add .PageNumber 2 }}
-      {{ if or (lt $pag.PageNumber $two_less) (gt $pag.PageNumber $two_more) }}
-      {{ else if eq . $pag }}
-        <li>{{ .PageNumber }}</li>
-      {{ else }}
-        <li><a href='{{ .URL }}'>{{ .PageNumber }}</a></li>
-      {{ end }}
+    {{ $two_less := sub .PageNumber 2 }}
+    {{ $two_more := add .PageNumber 2 }}
+    {{ if or (lt $pag.PageNumber $two_less) (gt $pag.PageNumber $two_more) }}
+    {{ else if eq . $pag }}
+    <li>{{ .PageNumber }}</li>
+    {{ else }}
+    <li><a href='{{ .URL }}'>{{ .PageNumber }}</a></li>
+    {{ end }}
     {{ end }}
 
     {{ $total_minus_2 := sub $pag.TotalPages 2 }}
     {{ if lt $pag.PageNumber $total_minus_2 }}
-      <li class='disabled'><span>&hellip;</span></li>
+    <li class='disabled'><span>&hellip;</span></li>
     {{ end }}
 
     {{ if $pag.HasNext }}
-      <li><a href='{{ $pag.Last.URL }}'>&raquo;</a></li>
+    <li><a href='{{ $pag.Last.URL }}'>&raquo;</a></li>
     {{ end }}
   </ul>
   {{ end }}

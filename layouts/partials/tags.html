@@ -1,12 +1,14 @@
 {{ $site_tags := .Site.Taxonomies.tags }}
 {{ if and $site_tags .Params.tags }}
-  <ul class='tag_box inline'>
-    <li><i class='fas fa-tags'></i></li>
-    {{ range .Params.tags }}
-      <li><a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}'>
-        {{ . }}
-        <span>{{ index $site_tags ( replace (. | lower ) " " "-" ) | len }}</span>
-      </a></li>
-    {{ end }}
-  </ul>
+<ul class='tag_box inline'>
+  <li><i class='fas fa-tags'></i></li>
+  {{ range .Params.tags }}
+  <li>
+    <a href='{{ "/tags/" | relLangURL }}{{ . | urlize }}'>
+      {{ . }}
+      <span>{{ index $site_tags ( replace (. | lower ) " " "-" ) | len }}</span>
+    </a>
+  </li>
+  {{ end }}
+</ul>
 {{ end }}
