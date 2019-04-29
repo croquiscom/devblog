@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Serverless Architecture on ZIGZAG 기술 블로그</title>
+    <title>serverless architecture on ZIGZAG 기술 블로그</title>
     <link>https://devblog.croquis.com/ko/tags/serverless-architecture/</link>
-    <description>Recent content in Serverless Architecture on ZIGZAG 기술 블로그</description>
+    <description>Recent content in serverless architecture on ZIGZAG 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Sat, 13 May 2017 00:00:00 +0000</lastBuildDate>
     
