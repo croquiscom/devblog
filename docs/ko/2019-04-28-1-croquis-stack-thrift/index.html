@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+  <meta charset='utf-8'>
+
+  <title>크로키의 스택 - Thrift</title>
+  
+  <meta name='author' content='croquis.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <meta property='og:title' content='크로키의 스택 - Thrift' />
+  <meta property='og:type' content='article' />
+  <meta property='og:url' content='https://devblog.croquis.com/ko/2019-04-28-1-croquis-stack-thrift/' />
+  
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link href='/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='/css/syntax.css?body=1' rel='stylesheet' type='text/css' media='all'>
+</head>
+
+<body>
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-zigzag.png' width='124' height='37'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='float-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://zigzag.kr' target='_blank'>
+            <img class='icon-svg' src='/img/zigzag-icon.svg'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon-svg' src='/img/github-icon.svg'>
+          </a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>크로키의 스택 - Thrift</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='container'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='post-header'>
+        <div class='post-tags'>
+          
+
+<ul class='tag_box inline'>
+  <li><i class='fas fa-tags'></i></li>
+  
+  <li>
+    <a href='/ko/tags/croquis'>
+      Croquis
+      <span>8</span>
+    </a>
+  </li>
+  
+  <li>
+    <a href='/ko/tags/stack'>
+      Stack
+      <span>4</span>
+    </a>
+  </li>
+  
+  <li>
+    <a href='/ko/tags/thrift'>
+      Thrift
+      <span>1</span>
+    </a>
+  </li>
+  
+  <li>
+    <a href='/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4'>
+      마이크로서비스
+      <span>2</span>
+    </a>
+  </li>
+  
+  <li>
+    <a href='/ko/tags/microservice'>
+      Microservice
+      <span>2</span>
+    </a>
+  </li>
+  
+</ul>
+
+        </div>
+        <div class='float-right'>
+          
+          <div class='post-author'>
+            <i class='fas fa-pencil-alt'></i>
+            <span>Sangmin Yoon</span>
+          </div>
+          
+          <div class='post-date'>
+            <i class='fas fa-calendar-alt'></i>
+            <span>28 April 2019</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-12 col-lg-9'>
+      <p>2016년 중반 마이크로서비스로의 전환을 결정했습니다.
+마이크로서비스는 이론상 다른 서비스에 영향을 주지 않고 내부 기술을 바꿀 수 있습니다.
+하지만 마이크로서비스 간의 통신 방법은 한번 결정하면 쉽게 바뀌기 어려울 것 같아서 가장 많이 고민했습니다.
+그리고 Thrift를 선택했습니다.
+이번 글에서는 그 이유와 이후의 상황에 관해 설명하겠습니다.</p>
+
+<p>마이크로서비스에 대한 글들을 찾아보면 대부분은 통신 방법도 REST API를 많이 얘기하고 있습니다.
+(예. <a href="https://www.nginx.com/blog/introduction-to-microservices/">Introduction to Microservices | NGINX</a>)
+그러나 <a href='/ko/2018-05-30-1-croquis-stack-rest-api/'>이전 글</a>에서
+썼듯이 REST API에 불편함을 느끼고 있었습니다. 특히 마이크로서비스 간에는 REST로 표현하기 어려운 더 다양한 API가 필요해질 것 같았습니다.
+그래서 대안을 찾아봤습니다.</p>
+
+<p>그 당시 고려했던 대안은 <a href="https://thrift.apache.org/">Thrift</a>, <a href="https://avro.apache.org/">Avro</a>, <a href="https://developers.google.com/protocol-buffers/">Protocol Buffers</a>였던 것으로 기억합니다.
+지금 시점에 괜찮아 보이는 <a href="https://grpc.io/">gRPC</a>는 이상하게 당시 고려대상에서 벗어나 있었던 것 같습니다.
+아마 RPC 보다는 데이터 직렬화 쪽을 더 중점적으로 생각했던 것 같습니다.
+데이터- 특히 배열 -를 JSON으로 만들면 크기가 매우 크기 때문에 데이터 크기가 줄어드는 게 매력적으로 다가왔습니다.</p>
+
+<p>그중에서 Thrift를 선택한 건 다음과 같은 이유가 있었던 것 같습니다.</p>
+
+<ol>
+<li>Avro 방식보다는 Thrift / Protocol Buffers 방식이 더 작은 사이즈를 만들 것 같았습니다.</li>
+<li>Protocol Buffers는 JavaScript를 잘 지원하는 듯이 보이지 않았습니다. (공식 문서의 튜토리얼에 없음)</li>
+<li>VCNC에서 Thrift를 쓰고 있다는 글을 봐서 어느 정도 검증이 됐으리라 봤습니다.</li>
+</ol>
+
+<p>그렇게 Thrift를 마이크로서비스 간의 통신에 적용하는 작업을 시작했는데 생각만큼 잘 동작하지는 않았습니다.</p>
+
+<ol>
+<li>JavaScript를 지원하지만, 막상 해보니 클리어언트 JavaScript 용이었고, Node.js에 어울리는 코드를 만들어주지 않았습니다. TypeScript 지원을 포함해 몇 가지 수정을 가해서 사용하고 있습니다. (<a href="https://github.com/croquiscom/thrift/tree/croquis-171130">https://github.com/croquiscom/thrift/tree/croquis-171130</a>)</li>
+<li>TCP 소켓 통신을 통해 요청마다 연결을 만들어야 하는 낭비를 없애기를 기대했는데, 오토 스케일링과 어울리지 않아서 결국 HTTP 통신을 했습니다.</li>
+</ol>
+
+<p>몇 가지 문제가 있긴 하지만, 오랜 시간에 걸쳐 안정화되어 현재 수백개의 Thrift API가 존재하고 있습니다.</p>
+
+<p>크로키닷컴만의 특이한 규칙이 하나 있다면 Read API에서 모든 필드 요청을 피하기 위해서 받기를 원하는 필드를 지정할 수 있도록 구성되어 있다는 것입니다.
+Update API도 하나로 여러 요구 사항에 대응하기 위해 업데이트를 할 필드를 같이 주도록 했습니다.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-thrift" data-lang="thrift"><span class="c">/// 지그재그 공지사항
+</span><span class="c"></span><span class="kd">struct</span><span class="w"> </span><span class="nc">ZigzagNotice</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="c">/// 레코드 ID
+</span><span class="c"></span><span class="w">  </span><span class="mi">1</span><span class="p">:</span><span class="w"> </span><span class="k">optional</span><span class="w"> </span><span class="kt">i32</span><span class="w"> </span><span class="n">id</span><span class="w">
+</span><span class="w">  </span><span class="c">/// 공지사항 내용
+</span><span class="c"></span><span class="w">  </span><span class="mi">2</span><span class="p">:</span><span class="w"> </span><span class="k">optional</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">contents</span><span class="w">
+</span><span class="w">  </span><span class="c">/// 공지 날짜
+</span><span class="c"></span><span class="w">  </span><span class="mi">3</span><span class="p">:</span><span class="w"> </span><span class="k">optional</span><span class="w"> </span><span class="kt">i32</span><span class="w"> </span><span class="n">date</span><span class="w">
+</span><span class="w">  </span><span class="c">/// 배포 대상 OS 타입 (0:common,1:none,2:iOS,3:Android)
+</span><span class="c"></span><span class="w">  </span><span class="mi">4</span><span class="p">:</span><span class="w"> </span><span class="k">optional</span><span class="w"> </span><span class="kt">i32</span><span class="w"> </span><span class="n">os</span><span class="w">
+</span><span class="w">  </span><span class="c">/// 공지사항에 필요한 링크 URL
+</span><span class="c"></span><span class="w">  </span><span class="mi">5</span><span class="p">:</span><span class="w"> </span><span class="k">optional</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">link</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="kd">service</span><span class="w"> </span><span class="nc">ZigzagNoticeService</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="cm">/**
+</span><span class="cm">   * 해당 레코드 ID의 공지사항을 반환한다.
+</span><span class="cm">   *
+</span><span class="cm">   * fields는 ZigzagNotice의 구조체 필드 ID로 빈 경우 레코드 ID만 반환한다.
+</span><span class="cm">   */</span><span class="w">
+</span><span class="w">  </span><span class="n">ZigzagNotice</span><span class="w"> </span><span class="nf">getZigzagNotice</span><span class="o">(</span><span class="mi">1</span><span class="p">:</span><span class="w"> </span><span class="kt">i32</span><span class="w"> </span><span class="n">notice_id</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="w"> </span><span class="kt">list</span><span class="p">&lt;</span><span class="kt">i32</span><span class="p">&gt;</span><span class="w"> </span><span class="n">fields</span><span class="p">)</span><span class="w">
+</span><span class="w">
+</span><span class="w">  </span><span class="cm">/**
+</span><span class="cm">   * 해당 레코드 ID의 공지사항을 업데이트 한다.
+</span><span class="cm">   *
+</span><span class="cm">   * fields는 ZigzagNotice의 구조체 필드 ID로 정의된 필드의 값만 업데이트 된다.
+</span><span class="cm">   */</span><span class="w">
+</span><span class="w">  </span><span class="kt">void</span><span class="w"> </span><span class="nf">updateZigzagNotice</span><span class="o">(</span><span class="mi">1</span><span class="p">:</span><span class="w"> </span><span class="kt">i32</span><span class="w"> </span><span class="n">notice_id</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">:</span><span class="w"> </span><span class="n">ZigzagNotice</span><span class="w"> </span><span class="n">notice</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">:</span><span class="w"> </span><span class="kt">list</span><span class="p">&lt;</span><span class="kt">i32</span><span class="p">&gt;</span><span class="w"> </span><span class="n">fields</span><span class="p">)</span><span class="w">
+</span><span class="w"></span><span class="p">}</span></code></pre></div>
+
+<p>이렇게 1년 이상 Thrift를 사용해왔지만 여러 가지 불편함이 발생했습니다.</p>
+
+<ol>
+<li>라이브러리가 활발하게 개발되지 않고 있습니다. 특히 JavaScript/Node.js 쪽은 큰 변화가 없습니다.</li>
+<li>TypeScript와 잘 어울리지 않았습니다.</li>
+<li>API 추가/변경 시마다 코드를 생성해야 하는 것이 생각보다 불편했습니다.</li>
+</ol>
+
+<p>그래서 2017년 말에 GraphQL을 살펴보기 시작해서 현재는 새로 작성하는 모든 API를 GraphQL로 만들고 있습니다.
+다음번에는 크로키닷컴에서 GraphQL을 적용하는 과정에 관해서 설명하겠습니다.</p>
+      
+      <hr>
+      <div class='post-original'>
+        원본 링크 : <a href='http://sixmen.com/ko/tech/2019-04-28-1-croquis-stack-thrift/' target='_blank'>http://sixmen.com/ko/tech/2019-04-28-1-croquis-stack-thrift/</a>
+      </div>
+      
+    </div>
+
+    <div class='col-lg-3 sidemenu'>
+  <h4>Recent Posts</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2019-04-26-1-vertical-align-line-box/'>
+      <li class="sidemenu-recent-item">Vertical-Align(1) - Line Box</li>
+    </a>
+    
+    <a href='/ko/2019-04-28-1-croquis-stack-thrift/'>
+      <li class="sidemenu-recent-item">크로키의 스택 - Thrift</li>
+    </a>
+    
+    <a href='/ko/2019-04-27-1-make-slack-bot-using-botkit/'>
+      <li class="sidemenu-recent-item">BotKit을 이용한 슬랙 봇 만들기</li>
+    </a>
+    
+    <a href='/ko/2018-11-30-1-aws-abuse-report/'>
+      <li class="sidemenu-recent-item">AWS Abuse Report</li>
+    </a>
+    
+  </ul>
+  <hr>
+  <h4>Tags</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href="/ko/tags/amazon-sqs/">
+      <li class="sidemenu-recent-tags">amazon-sqs</li>
+    </a>
+    
+    <a href="/ko/tags/analytics/">
+      <li class="sidemenu-recent-tags">analytics</li>
+    </a>
+    
+    <a href="/ko/tags/aws/">
+      <li class="sidemenu-recent-tags">aws</li>
+    </a>
+    
+    <a href="/ko/tags/aws-lambda/">
+      <li class="sidemenu-recent-tags">aws-lambda</li>
+    </a>
+    
+    <a href="/ko/tags/botkit/">
+      <li class="sidemenu-recent-tags">botkit</li>
+    </a>
+    
+    <a href="/ko/tags/croquis/">
+      <li class="sidemenu-recent-tags">croquis</li>
+    </a>
+    
+    <a href="/ko/tags/css/">
+      <li class="sidemenu-recent-tags">css</li>
+    </a>
+    
+    <a href="/ko/tags/data/">
+      <li class="sidemenu-recent-tags">data</li>
+    </a>
+    
+    <a href="/ko/tags/event/">
+      <li class="sidemenu-recent-tags">event</li>
+    </a>
+    
+    <a href="/ko/tags/front-end/">
+      <li class="sidemenu-recent-tags">front-end</li>
+    </a>
+    
+    <a href="/ko/tags/github/">
+      <li class="sidemenu-recent-tags">github</li>
+    </a>
+    
+    <a href="/ko/tags/ios/">
+      <li class="sidemenu-recent-tags">ios</li>
+    </a>
+    
+    <a href="/ko/tags/jenkins/">
+      <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/log/">
+      <li class="sidemenu-recent-tags">log</li>
+    </a>
+    
+    <a href="/ko/tags/microservice/">
+      <li class="sidemenu-recent-tags">microservice</li>
+    </a>
+    
+    <a href="/ko/tags/mithril/">
+      <li class="sidemenu-recent-tags">mithril</li>
+    </a>
+    
+    <a href="/ko/tags/nodejs/">
+      <li class="sidemenu-recent-tags">nodejs</li>
+    </a>
+    
+    <a href="/ko/tags/rest-api/">
+      <li class="sidemenu-recent-tags">rest-api</li>
+    </a>
+    
+    <a href="/ko/tags/serverless-architecture/">
+      <li class="sidemenu-recent-tags">serverless-architecture</li>
+    </a>
+    
+    <a href="/ko/tags/slack/">
+      <li class="sidemenu-recent-tags">slack</li>
+    </a>
+    
+    <a href="/ko/tags/stack/">
+      <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/task-queue/">
+      <li class="sidemenu-recent-tags">task-queue</li>
+    </a>
+    
+    <a href="/ko/tags/thrift/">
+      <li class="sidemenu-recent-tags">thrift</li>
+    </a>
+    
+    <a href="/ko/tags/typescript/">
+      <li class="sidemenu-recent-tags">typescript</li>
+    </a>
+    
+    <a href="/ko/tags/vertical-align/">
+      <li class="sidemenu-recent-tags">vertical-align</li>
+    </a>
+    
+    <a href="/ko/tags/webpack/">
+      <li class="sidemenu-recent-tags">webpack</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A1%9C%EA%B7%B8/">
+      <li class="sidemenu-recent-tags">로그</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/">
+      <li class="sidemenu-recent-tags">마이크로서비스</li>
+    </a>
+    
+    <a href="/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/">
+      <li class="sidemenu-recent-tags">튜토리얼</li>
+    </a>
+    
+  </ul>
+</div>
+
+    <div class='col-12'>
+      <hr>
+
+      <div class='float-left'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2019-04-27-1-make-slack-bot-using-botkit/' title='BotKit을 이용한 슬랙 봇 만들기'>&larr; 이전 글</a>
+        
+      </div>
+      <div class='float-right'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2019-04-26-1-vertical-align-line-box/' title='Vertical-Align(1) - Line Box'>다음 글 &rarr;</a>
+        
+      </div>
+      <div class='clearfix'></div>
+      <hr>
+      <div class='text-center'>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "croquiscom-devblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='container'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2018 croquis.com
+      <span class='float-right text-muted'>
+        powered by
+        <a href='https://gohugo.io/' target='_blank'>Hugo</a>
+        and
+        <a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-48716672-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+  integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+  integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

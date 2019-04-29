@@ -38,20 +38,74 @@
     </item>
     
     <item>
+      <title>Croquis</title>
+      <link>https://devblog.croquis.com/ko/tags/croquis/</link>
+      <pubDate>Sun, 28 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/croquis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Microservice</title>
+      <link>https://devblog.croquis.com/ko/tags/microservice/</link>
+      <pubDate>Sun, 28 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/microservice/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Stack</title>
+      <link>https://devblog.croquis.com/ko/tags/stack/</link>
+      <pubDate>Sun, 28 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/stack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Thrift</title>
+      <link>https://devblog.croquis.com/ko/tags/thrift/</link>
+      <pubDate>Sun, 28 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/thrift/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>마이크로서비스</title>
+      <link>https://devblog.croquis.com/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/</link>
+      <pubDate>Sun, 28 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Botkit</title>
+      <link>https://devblog.croquis.com/ko/tags/botkit/</link>
+      <pubDate>Sat, 27 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/botkit/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Slack</title>
+      <link>https://devblog.croquis.com/ko/tags/slack/</link>
+      <pubDate>Sat, 27 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/slack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>AWS</title>
       <link>https://devblog.croquis.com/ko/tags/aws/</link>
       <pubDate>Thu, 23 Aug 2018 00:00:00 +0000</pubDate>
       
       <guid>https://devblog.croquis.com/ko/tags/aws/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Croquis</title>
-      <link>https://devblog.croquis.com/ko/tags/croquis/</link>
-      <pubDate>Thu, 23 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://devblog.croquis.com/ko/tags/croquis/</guid>
       <description></description>
     </item>
     
@@ -110,38 +164,11 @@
     </item>
     
     <item>
-      <title>Stack</title>
-      <link>https://devblog.croquis.com/ko/tags/stack/</link>
-      <pubDate>Wed, 30 May 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://devblog.croquis.com/ko/tags/stack/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Jenkins</title>
       <link>https://devblog.croquis.com/ko/tags/jenkins/</link>
       <pubDate>Tue, 27 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>https://devblog.croquis.com/ko/tags/jenkins/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Microservice</title>
-      <link>https://devblog.croquis.com/ko/tags/microservice/</link>
-      <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://devblog.croquis.com/ko/tags/microservice/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>마이크로서비스</title>
-      <link>https://devblog.croquis.com/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/</link>
-      <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://devblog.croquis.com/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/</guid>
       <description></description>
     </item>
     
@@ -232,15 +259,6 @@
       <pubDate>Fri, 06 Jan 2017 00:00:00 +0000</pubDate>
       
       <guid>https://devblog.croquis.com/ko/tags/github/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Slack</title>
-      <link>https://devblog.croquis.com/ko/tags/slack/</link>
-      <pubDate>Fri, 06 Jan 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://devblog.croquis.com/ko/tags/slack/</guid>
       <description></description>
     </item>
     

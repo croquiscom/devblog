@@ -15,7 +15,7 @@
       <div>
         <div class='posts-head'>
           <span class='posts-title'>
-            <a href='{{ .URL }}'>{{ .Title }}</a>
+            <a href='{{ .RelPermalink }}'>{{ .Title }}</a>
           </span>
           <div class='posts-info text-right'>
             <span class='posts-date'>{{ .Date.Format "02 Jan 2006" }} | </span>
@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class='card-body'>
-          <a href='{{ .URL }}' class='posts-content'>
+          <a href='{{ .RelPermalink }}' class='posts-content'>
             {{ .Summary }}
             <div class='posts-readmore'>&hellip; read more </div>
           </a>

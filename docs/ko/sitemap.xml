@@ -58,6 +58,58 @@
   </url>
   
   <url>
+    <loc>https://devblog.croquis.com/ko/tags/croquis/</loc>
+    <lastmod>2019-04-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/microservice/</loc>
+    <lastmod>2019-04-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/stack/</loc>
+    <lastmod>2019-04-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/thrift/</loc>
+    <lastmod>2019-04-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/</loc>
+    <lastmod>2019-04-28T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/2019-04-28-1-croquis-stack-thrift/</loc>
+    <lastmod>2019-04-28T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/2019-04-27-1-make-slack-bot-using-botkit/</loc>
+    <lastmod>2019-04-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/botkit/</loc>
+    <lastmod>2019-04-27T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/slack/</loc>
+    <lastmod>2019-04-27T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://devblog.croquis.com/ko/tags/aws/</loc>
     <lastmod>2018-08-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -66,12 +118,6 @@
   <url>
     <loc>https://devblog.croquis.com/ko/2018-11-30-1-aws-abuse-report/</loc>
     <lastmod>2018-08-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://devblog.croquis.com/ko/tags/croquis/</loc>
-    <lastmod>2018-08-23T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -121,12 +167,6 @@
   </url>
   
   <url>
-    <loc>https://devblog.croquis.com/ko/tags/stack/</loc>
-    <lastmod>2018-05-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>https://devblog.croquis.com/ko/2018-05-30-1-croquis-stack-rest-api/</loc>
     <lastmod>2018-05-30T00:00:00+00:00</lastmod>
   </url>
@@ -145,18 +185,6 @@
   <url>
     <loc>https://devblog.croquis.com/ko/2018-01-23-1-zigzag-devteam-is/</loc>
     <lastmod>2018-01-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://devblog.croquis.com/ko/tags/microservice/</loc>
-    <lastmod>2017-10-15T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://devblog.croquis.com/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/</loc>
-    <lastmod>2017-10-15T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -252,12 +280,6 @@
   <url>
     <loc>https://devblog.croquis.com/ko/2017-01-06-1-github-wiki-to-slack/</loc>
     <lastmod>2017-01-06T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://devblog.croquis.com/ko/tags/slack/</loc>
-    <lastmod>2017-01-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
