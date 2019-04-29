@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://devblog.croquis.com/ko/2019-04-29-1-vertical-align-line-box/</loc>
+    <lastmod>2019-04-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://devblog.croquis.com/ko/tags/</loc>
     <lastmod>2019-04-29T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -16,11 +21,6 @@
                 hreflang="ko"
                 href="https://devblog.croquis.com/ko/tags/"
                 />
-  </url>
-  
-  <url>
-    <loc>https://devblog.croquis.com/ko/2019-04-29-1-vertical-align-line-box/</loc>
-    <lastmod>2019-04-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
