@@ -3,6 +3,61 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://devblog.croquis.com/ko/tags/</loc>
+    <lastmod>2019-04-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://devblog.croquis.com/en/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://devblog.croquis.com/ko/tags/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/2019-04-29-1-vertical-align-line-box/</loc>
+    <lastmod>2019-04-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/</loc>
+    <lastmod>2019-04-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://devblog.croquis.com/en/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="ko"
+                href="https://devblog.croquis.com/ko/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/css/</loc>
+    <lastmod>2019-04-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/front-end/</loc>
+    <lastmod>2019-04-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/vertical-align/</loc>
+    <lastmod>2019-04-29T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://devblog.croquis.com/ko/tags/croquis/</loc>
     <lastmod>2019-04-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -21,41 +76,9 @@
   </url>
   
   <url>
-    <loc>https://devblog.croquis.com/ko/tags/</loc>
-    <lastmod>2019-04-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://devblog.croquis.com/en/tags/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://devblog.croquis.com/ko/tags/"
-                />
-  </url>
-  
-  <url>
     <loc>https://devblog.croquis.com/ko/tags/thrift/</loc>
     <lastmod>2019-04-28T00:00:00+00:00</lastmod>
     <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://devblog.croquis.com/ko/</loc>
-    <lastmod>2019-04-28T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-    <xhtml:link
-                rel="alternate"
-                hreflang="en"
-                href="https://devblog.croquis.com/en/"
-                />
-    <xhtml:link
-                rel="alternate"
-                hreflang="ko"
-                href="https://devblog.croquis.com/ko/"
-                />
   </url>
   
   <url>
