@@ -4,14 +4,14 @@
 <head>
   <meta charset='utf-8'>
 
-  <title>iOS에서 년도를 구할 때 비정상적인 값이 나오는 문제</title>
+  <title>GraphQL</title>
   
   <meta name='author' content='croquis.com'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
-  <meta property='og:title' content='iOS에서 년도를 구할 때 비정상적인 값이 나오는 문제' />
-  <meta property='og:type' content='article' />
-  <meta property='og:url' content='https://devblog.croquis.com/ko/2017-01-05-1-ios-calendar/' />
+  <meta property='og:title' content='GraphQL' />
+  <meta property='og:type' content='website' />
+  <meta property='og:url' content='https://devblog.croquis.com/ko/tags/graphql/' />
   
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
@@ -50,88 +50,42 @@
   <div class='hp-navbar-bgcolor'>
     <div class='container'>
       <div class='text-center'>
-        <div class='hp-navbar-title'>iOS에서 년도를 구할 때 비정상적인 값이 나오는 문제</div>
+        <div class='hp-navbar-title'>GraphQL</div>
       </div>
     </div>
   </div>
 </div>
 
+
+
 <div class='container'>
-
-  <div class='row'>
-    <div class='col-12'>
-      <div class='post-header'>
-        <div class='post-tags'>
-          
-
-<ul class='tag_box inline'>
-  <li><i class='fas fa-tags'></i></li>
-  
-  <li>
-    <a href='/ko/tags/ios'>
-      iOS
-      <span>1</span>
-    </a>
-  </li>
-  
-</ul>
-
-        </div>
-        <div class='float-right'>
-          
-          <div class='post-author'>
-            <i class='fas fa-pencil-alt'></i>
-            <span>Sangmin Yoon</span>
-          </div>
-          
-          <div class='post-date'>
-            <i class='fas fa-calendar-alt'></i>
-            <span>05 January 2017</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
+  <div class='row' style='margin-top: 20px;'>
     <div class='col-12 col-lg-9'>
-      <p>지그재그 앱을 사용하는 사용자를 분석할 때 사용하기 위해서
-최근 업데이트에 나이를 입력받는 화면이 추가되었습니다.</p>
-
-<p>입력은 나이를 받지만 나이는 매년 달라지기 때문에 고정된 값인 태어난 년도로 변환하여 저장하고 있습니다.
-그런데 대부분은 정상적인 년도가 들어오는데 일부 사용자의 태어난 년도가 10이하 또는 2500이상인 문제가 있었습니다.</p>
-
-<p>처음에는 사용자가 게임등을 위해 핸드폰의 시간을 변경해서 발생했다고 생각했습니다.
-하지만 값이 너무 튀었고, 또 그렇게 값이 다양하지는 않았습니다.</p>
-
-<p>그러던 중에 값이 이상한 경우는 모두 iOS라는 사실을 깨달았습니다.
-그래도 짐작가는 것은 없던 차에 값이 2500~2600사이라는 것을 보고 혹시나 해서 'ios year 2500'이라는
-검색어로 검색을 해봤습니다. 그랬더니 <a href="http://forums.imore.com/general-apple-news-discussion/262432-my-ipad-my-set-year-2558-a.html">my iPad my set year is 2558 BE?</a>라는
-문서가 딱 처음에 나왔습니다.</p>
-
-<p>결론적으로 iOS는 그레고리언 달력 외에도 일본력과 불교력을 지원합니다.
-올해가 일본력으로 헤이세이 28년이기 때문에 나이를 20으로 입력하면 태어난 년도가 9가 됩니다.
-불기로는 올해가 2560년이고 태어난 20살은 태어난 년도가 2541이 됩니다.</p>
-
-<p>이것을 깨닫고 다시 태어난 년도가 이상한 사용자의 사용언어를 살펴보니 일본력은 일본어 사용자,
-불교력은 태국어등 사용자로 나왔습니다.
-지극히 한국과 한국어에 특화된 지그재그 서비스라고 생각하고 있었는데 드물지만 외국어 사용자가 있다는 사실이 놀라웠습니다.</p>
-
-<p>기술적으로는</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">let</span> <span class="nv">calendar</span> <span class="p">=</span> <span class="n">Calendar</span><span class="p">.</span><span class="n">current</span> <span class="c1">// &lt;--</span>
-<span class="kd">let</span> <span class="nv">components</span> <span class="p">=</span> <span class="n">calendar</span><span class="p">.</span><span class="n">dateComponents</span><span class="p">([.</span><span class="n">year</span><span class="p">],</span> <span class="n">from</span><span class="p">:</span> <span class="n">Date</span><span class="p">())</span>
-<span class="kd">let</span> <span class="nv">currentYear</span> <span class="p">=</span> <span class="n">components</span><span class="p">.</span><span class="n">year</span> <span class="p">??</span> <span class="mi">2016</span></code></pre></div>
-
-<p>로 되어 있던 것을</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">let</span> <span class="nv">calendar</span> <span class="p">=</span> <span class="n">Calendar</span><span class="p">(</span><span class="n">identifier</span><span class="p">:</span> <span class="p">.</span><span class="n">gregorian</span><span class="p">)</span></code></pre></div>
-
-<p>로 변경했더니 사용자가 설정한 캘린더와 상관없이 기대한 값이 반환되었습니다.</p>
-
-<p>혹시 유사한 증상이 있을 경우 한번 의심해보시면 좋을 것 같습니다.</p>
+      <div class='alert alert-info'>
+        <i class='fas fa-info-circle'></i>
+        <a href='/ko/2018-01-23-1-zigzag-devteam-is/' class='alert-link'>지그재그 개발팀 소개</a>
+        <i class='fas fa-angle-double-right'></i>
+      </div>
       
-      <hr>
-      <div class='post-original'>
-        원본 링크 : <a href='http://sixmen.com/ko/tech/2016-12-16-1-ios-calendar/' target='_blank'>http://sixmen.com/ko/tech/2016-12-16-1-ios-calendar/</a>
+      <div>
+        <div class='posts-head'>
+          <span class='posts-title'>
+            <a href='/ko/2019-05-22-1-croquis-stack-graphql/'>크로키의 스택 - GraphQL</a>
+          </span>
+          <div class='posts-info text-right'>
+            <span class='posts-date'>22 May 2019 | </span>
+            
+            <span class='posts-author'>by Sangmin Yoon</span>
+            
+          </div>
+        </div>
+        <div class='card-body'>
+          <a href='/ko/2019-05-22-1-croquis-stack-graphql/' class='posts-content'>
+            <p>현재 크로키는 API를 <a href="https://graphql.org/">GraphQL</a>로 만들고 있습니다.
+아직 많은 부분에 대해서 연구 중이어서 현재 상황만 간단하게 정리해 보겠습니다.</p>
+            <div class='posts-readmore'>&hellip; read more </div>
+          </a>
+        </div>
       </div>
       
     </div>
@@ -283,45 +237,11 @@
     
   </ul>
 </div>
+    
+<div class='col-12 text-center'>
+  
+</div>
 
-    <div class='col-12'>
-      <hr>
-
-      <div class='float-left'>
-        
-        <a class='btn btn-outline-primary' href='/ko/2017-01-01-1-start-devblog/' title='croquis.com 개발자 블로그를 시작합니다.'>&larr; 이전 글</a>
-        
-      </div>
-      <div class='float-right'>
-        
-        <a class='btn btn-outline-primary' href='/ko/2017-01-06-1-github-wiki-to-slack/' title='GitHub 위키 이벤트를 슬랙으로 받기'>다음 글 &rarr;</a>
-        
-      </div>
-      <div class='clearfix'></div>
-      <hr>
-      <div class='text-center'>
-        <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
-    
-    
-    
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "croquiscom-devblog" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-      </div>
-    </div>
   </div>
 
 </div>
