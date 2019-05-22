@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+  <meta charset='utf-8'>
+
+  <title>크로키의 스택 - GraphQL</title>
+  
+  <meta name='author' content='croquis.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <meta property='og:title' content='크로키의 스택 - GraphQL' />
+  <meta property='og:type' content='article' />
+  <meta property='og:url' content='https://devblog.croquis.com/ko/2019-05-22-1-croquis-stack-graphql/' />
+  
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link href='/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='/css/syntax.css?body=1' rel='stylesheet' type='text/css' media='all'>
+</head>
+
+<body>
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-zigzag.png' width='124' height='37'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='float-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://zigzag.kr' target='_blank'>
+            <img class='icon-svg' src='/img/zigzag-icon.svg'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon-svg' src='/img/github-icon.svg'>
+          </a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>크로키의 스택 - GraphQL</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class='container'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='post-header'>
+        <div class='post-tags'>
+          
+
+<ul class='tag_box inline'>
+  <li><i class='fas fa-tags'></i></li>
+  
+  <li>
+    <a href='/ko/tags/croquis'>
+      Croquis
+      <span>9</span>
+    </a>
+  </li>
+  
+  <li>
+    <a href='/ko/tags/stack'>
+      Stack
+      <span>5</span>
+    </a>
+  </li>
+  
+  <li>
+    <a href='/ko/tags/graphql'>
+      GraphQL
+      <span>1</span>
+    </a>
+  </li>
+  
+  <li>
+    <a href='/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4'>
+      마이크로서비스
+      <span>3</span>
+    </a>
+  </li>
+  
+  <li>
+    <a href='/ko/tags/microservice'>
+      Microservice
+      <span>3</span>
+    </a>
+  </li>
+  
+</ul>
+
+        </div>
+        <div class='float-right'>
+          
+          <div class='post-author'>
+            <i class='fas fa-pencil-alt'></i>
+            <span>Sangmin Yoon</span>
+          </div>
+          
+          <div class='post-date'>
+            <i class='fas fa-calendar-alt'></i>
+            <span>22 May 2019</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-12 col-lg-9'>
+      <p>현재 크로키는 API를 <a href="https://graphql.org/">GraphQL</a>로 만들고 있습니다.
+아직 많은 부분에 대해서 연구 중이어서 현재 상황만 간단하게 정리해 보겠습니다.</p>
+
+<p>Thrift를 1년 정도 쓴 시점부터 여러 가지 불편함을 느끼고 대안을 찾다가 GraphQL을 선택했습니다.
+GraphQL 생태계가 Node.js를 중심으로 발전하고 있어서 크게 망설이지 않고 정할 수 있었던 것 같습니다.</p>
+
+<p>외부에 영향을 주지 않는 기능 중 N+1 문제를 가지고 있는 기능을 하나 선택해 변환을 해봤습니다.
+조금 생각은 해야 하지만 충분히 기존 API에 성능이 떨어지지 않고 사용은 더 편하게 할 수 있는 것을 확인하고 조금씩 확대해나갔습니다.</p>
+
+<p>1년 이상 진행하면서 정리된 API 스펙은 <a href="https://github.com/croquiscom/style-guide/blob/master/API/GraphQL.md">스타일 가이드 저장소</a>에서 공개하고 있습니다.</p>
+
+<h2 id="스키마-정의">스키마 정의</h2>
+
+<p>처음에는 GraphQLObjectType을 써서 정의했습니다.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="p">{</span> <span class="nx">GraphQLInt</span><span class="p">,</span> <span class="nx">GraphQLNonNull</span><span class="p">,</span> <span class="nx">GraphQLObjectType</span><span class="p">,</span> <span class="nx">GraphQLString</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;graphql&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">type</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">GraphQLObjectType</span><span class="p">({</span>
+  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Shop&#39;</span><span class="p">,</span>
+  <span class="nx">fields</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">id</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">type</span>: <span class="kt">new</span> <span class="nx">GraphQLNonNull</span><span class="p">(</span><span class="nx">GraphQLInt</span><span class="p">),</span>
+    <span class="p">},</span>
+    <span class="nx">name</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">type</span>: <span class="kt">new</span> <span class="nx">GraphQLNonNull</span><span class="p">(</span><span class="nx">GraphQLString</span><span class="p">),</span>
+    <span class="p">},</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="p">{</span>
+      <span class="nx">type</span>: <span class="kt">new</span> <span class="nx">GraphQLNonNull</span><span class="p">(</span><span class="nx">GraphQLString</span><span class="p">),</span>
+    <span class="p">},</span>
+  <span class="p">},</span>
+<span class="p">});</span></code></pre></div>
+
+<p>그러다가 타입이 많아지면 보기가 힘들어서 스키마 문자열을 통해 정의하는 것으로 변경해 봤습니다.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="p">{</span> <span class="nx">makeExecutableSchema</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;graphql-tools&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">typeDefs</span> <span class="o">=</span> <span class="sb">`
+</span><span class="sb">type Shop {
+</span><span class="sb">  id: ID!
+</span><span class="sb">  name: String!
+</span><span class="sb">  url: String!
+</span><span class="sb">}
+</span><span class="sb">`</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">resolvers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">Query</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">shop</span>: <span class="kt">ShopService.shop</span><span class="p">,</span>
+  <span class="p">},</span>
+<span class="p">};</span>
+
+<span class="kr">const</span> <span class="nx">schema</span> <span class="o">=</span> <span class="nx">makeExecutableSchema</span><span class="p">({</span>
+  <span class="nx">typeDefs</span><span class="o">:</span> <span class="p">[</span><span class="nx">typeDefs</span><span class="p">],</span>
+  <span class="nx">resolvers</span><span class="o">:</span> <span class="p">[</span><span class="nx">resolvers</span><span class="p">],</span>
+<span class="p">});</span></code></pre></div>
+
+<p>현재는 resolver 구현에도 타입 체킹이 되고, DB 모델과 통일시키기 위해 <a href="https://typegraphql.ml/">type-graphql</a>을 적용했습니다.
+다만 현재 <a href="https://github.com/19majkel94/type-graphql/issues/254">퍼포먼스 이슈</a> 때문에
+<a href="https://github.com/croquiscom/type-graphql/tree/croquis-190305">수정한 버전</a>을 사용하고 있습니다.</p>
+
+<div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="p">{</span> <span class="nx">Field</span><span class="p">,</span> <span class="nx">ID</span><span class="p">,</span> <span class="nx">ObjectType</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;type-graphql&#39;</span><span class="p">;</span>
+
+<span class="kd">@ObjectType</span><span class="p">()</span>
+<span class="kr">export</span> <span class="kr">class</span> <span class="nx">Shop</span> <span class="p">{</span>
+  <span class="kd">@Field</span><span class="p">((</span><span class="nx">type</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">ID</span><span class="p">,</span> <span class="p">{</span> <span class="nx">nullable</span>: <span class="kt">false</span> <span class="p">})</span>
+  <span class="nx">id</span>: <span class="kt">string</span><span class="p">;</span>
+
+  <span class="kd">@Field</span><span class="p">((</span><span class="nx">type</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">String</span><span class="p">,</span> <span class="p">{</span> <span class="nx">nullable</span>: <span class="kt">false</span> <span class="p">})</span>
+  <span class="nx">name</span>: <span class="kt">string</span><span class="p">;</span>
+
+  <span class="kd">@Field</span><span class="p">((</span><span class="nx">type</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">String</span><span class="p">,</span> <span class="p">{</span> <span class="nx">nullable</span>: <span class="kt">false</span> <span class="p">})</span>
+  <span class="nx">url</span>: <span class="kt">string</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<h2 id="클라이언트-호출-코드">클라이언트 호출 코드</h2>
+
+<p>클라어인트에서는 <a href="https://www.apollographql.com/">apollo 툴</a>을 사용해 코드를 생성해 호출하고 있습니다.</p>
+
+<p><strong><em>안드로이드</em></strong>
+<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="n">LoginInput</span> <span class="n">input</span> <span class="o">=</span> <span class="n">LoginInput</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">email</span><span class="o">(</span><span class="n">email</span><span class="o">).</span><span class="na">password</span><span class="o">(</span><span class="n">password</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
+<span class="n">apolloClient</span><span class="o">.</span><span class="na">mutate</span><span class="o">(</span>
+    <span class="n">LoginMutation</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">input</span><span class="o">(</span><span class="n">input</span><span class="o">).</span><span class="na">build</span><span class="o">()</span>
+<span class="o">).</span><span class="na">enqueue</span><span class="o">(</span><span class="k">new</span> <span class="n">ApolloCall</span><span class="o">.</span><span class="na">Callback</span><span class="o">&lt;</span><span class="n">LoginMutation</span><span class="o">.</span><span class="na">Data</span><span class="o">&gt;()</span> <span class="o">{</span>
+    <span class="o">...</span>
+<span class="o">});</span></code></pre></div></p>
+
+<p><strong><em>iOS</em></strong>
+<div class="highlight"><pre class="chroma"><code class="language-swift" data-lang="swift"><span class="kd">let</span> <span class="nv">input</span> <span class="p">=</span> <span class="n">LoginInput</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="n">password</span><span class="p">)</span>
+<span class="n">apolloClient</span><span class="p">.</span><span class="n">perform</span><span class="p">(</span><span class="n">mutation</span><span class="p">:</span> <span class="n">LoginMutation</span><span class="p">(</span><span class="n">input</span><span class="p">:</span> <span class="n">input</span><span class="p">))</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="k">in</span>
+    <span class="p">...</span>
+<span class="p">}</span></code></pre></div></p>
+
+<p><strong><em>웹</em></strong>
+<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">// api.ts (apollo-tooling 위에 자체 스크립트로 생성한 파일)
+</span><span class="c1"></span><span class="k">import</span> <span class="o">*</span> <span class="nx">as</span> <span class="nx">types</span> <span class="nx">from</span> <span class="s1">&#39;./types&#39;</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="kr">async</span> <span class="kd">function</span> <span class="nx">login</span><span class="p">(</span><span class="nx">variable</span><span class="o">:</span> <span class="nx">types</span><span class="p">.</span><span class="nx">LoginVariables</span><span class="p">,</span> <span class="nx">options</span><span class="o">?:</span> <span class="nx">GqlRequestOptions</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">const</span> <span class="nx">query</span> <span class="o">=</span> <span class="s1">&#39;mutation Login($input: LoginInput!) { login(input: $input) }&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="kr">await</span> <span class="nx">request</span><span class="o">&lt;</span><span class="nx">types</span><span class="p">.</span><span class="nx">Login</span><span class="p">,</span> <span class="nx">types</span><span class="p">.</span><span class="nx">LoginVariables</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">query</span><span class="p">,</span> <span class="nx">variable</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// LoginView.ts
+</span><span class="c1"></span><span class="kr">async</span> <span class="nx">login</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kr">await</span> <span class="nx">api</span><span class="p">.</span><span class="nx">login</span><span class="p">({</span>
+    <span class="nx">input</span><span class="o">:</span> <span class="p">{</span> <span class="nx">email</span><span class="p">,</span> <span class="nx">password</span> <span class="p">},</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+</code></pre></div></p>
+
+<h2 id="마무리하며">마무리하며</h2>
+
+<p>전환을 시작한 이후로 많은 GraphQL API를 만들었지만, 기존 API는 손대지 못하고 거의 그대로 사용하고 있습니다.
+그걸 보면서 진작에 GraphQL로 전환했으면 두 번 작업하는 일이 줄어들었을 터라는 생각이 듭니다.
+하지만 초반에 적용했으면 아직 안정화되지 않은 생태계로 인해 고생했을 것 같습니다.</p>
+
+<p>웹 기술을 TypeScript로, GraphQL로, React로 전환할 때마다, 이 방향이 맞는지, 이 시기가 적당한지 고민이 됩니다.
+서비스를 이어가는 와중에 기술 부채를 털어낼 적절한 시기를 놓치지 않도록 계속 노력하고 있습니다.</p>
+
+<p>차후에도 GraphQL을 사용하면서 의미가 있는 부분이 있으면 공개하도록 하겠습니다.</p>
+      
+      <hr>
+      <div class='post-original'>
+        원본 링크 : <a href='http://sixmen.com/ko/tech/2019-05-22-1-croquis-stack-graphql/' target='_blank'>http://sixmen.com/ko/tech/2019-05-22-1-croquis-stack-graphql/</a>
+      </div>
+      
+    </div>
+
+    <div class='col-lg-3 sidemenu'>
+  <h4>Recent Posts</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2019-05-22-1-croquis-stack-graphql/'>
+      <li class="sidemenu-recent-item">크로키의 스택 - GraphQL</li>
+    </a>
+    
+    <a href='/ko/2019-04-29-1-vertical-align-line-box/'>
+      <li class="sidemenu-recent-item">(HTML/CSS) Vertical-Align(1) - Line Box</li>
+    </a>
+    
+    <a href='/ko/2019-04-28-1-croquis-stack-thrift/'>
+      <li class="sidemenu-recent-item">크로키의 스택 - Thrift</li>
+    </a>
+    
+    <a href='/ko/2019-04-27-1-make-slack-bot-using-botkit/'>
+      <li class="sidemenu-recent-item">BotKit을 이용한 슬랙 봇 만들기</li>
+    </a>
+    
+  </ul>
+  <hr>
+  <h4>Tags</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href="/ko/tags/amazon-sqs/">
+      <li class="sidemenu-recent-tags">amazon-sqs</li>
+    </a>
+    
+    <a href="/ko/tags/analytics/">
+      <li class="sidemenu-recent-tags">analytics</li>
+    </a>
+    
+    <a href="/ko/tags/aws/">
+      <li class="sidemenu-recent-tags">aws</li>
+    </a>
+    
+    <a href="/ko/tags/aws-lambda/">
+      <li class="sidemenu-recent-tags">aws-lambda</li>
+    </a>
+    
+    <a href="/ko/tags/botkit/">
+      <li class="sidemenu-recent-tags">botkit</li>
+    </a>
+    
+    <a href="/ko/tags/croquis/">
+      <li class="sidemenu-recent-tags">croquis</li>
+    </a>
+    
+    <a href="/ko/tags/css/">
+      <li class="sidemenu-recent-tags">css</li>
+    </a>
+    
+    <a href="/ko/tags/data/">
+      <li class="sidemenu-recent-tags">data</li>
+    </a>
+    
+    <a href="/ko/tags/event/">
+      <li class="sidemenu-recent-tags">event</li>
+    </a>
+    
+    <a href="/ko/tags/front-end/">
+      <li class="sidemenu-recent-tags">front-end</li>
+    </a>
+    
+    <a href="/ko/tags/github/">
+      <li class="sidemenu-recent-tags">github</li>
+    </a>
+    
+    <a href="/ko/tags/graphql/">
+      <li class="sidemenu-recent-tags">graphql</li>
+    </a>
+    
+    <a href="/ko/tags/ios/">
+      <li class="sidemenu-recent-tags">ios</li>
+    </a>
+    
+    <a href="/ko/tags/jenkins/">
+      <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/log/">
+      <li class="sidemenu-recent-tags">log</li>
+    </a>
+    
+    <a href="/ko/tags/microservice/">
+      <li class="sidemenu-recent-tags">microservice</li>
+    </a>
+    
+    <a href="/ko/tags/mithril/">
+      <li class="sidemenu-recent-tags">mithril</li>
+    </a>
+    
+    <a href="/ko/tags/nodejs/">
+      <li class="sidemenu-recent-tags">nodejs</li>
+    </a>
+    
+    <a href="/ko/tags/rest-api/">
+      <li class="sidemenu-recent-tags">rest-api</li>
+    </a>
+    
+    <a href="/ko/tags/serverless-architecture/">
+      <li class="sidemenu-recent-tags">serverless-architecture</li>
+    </a>
+    
+    <a href="/ko/tags/slack/">
+      <li class="sidemenu-recent-tags">slack</li>
+    </a>
+    
+    <a href="/ko/tags/stack/">
+      <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/task-queue/">
+      <li class="sidemenu-recent-tags">task-queue</li>
+    </a>
+    
+    <a href="/ko/tags/thrift/">
+      <li class="sidemenu-recent-tags">thrift</li>
+    </a>
+    
+    <a href="/ko/tags/typescript/">
+      <li class="sidemenu-recent-tags">typescript</li>
+    </a>
+    
+    <a href="/ko/tags/vertical-align/">
+      <li class="sidemenu-recent-tags">vertical-align</li>
+    </a>
+    
+    <a href="/ko/tags/webpack/">
+      <li class="sidemenu-recent-tags">webpack</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A1%9C%EA%B7%B8/">
+      <li class="sidemenu-recent-tags">로그</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/">
+      <li class="sidemenu-recent-tags">마이크로서비스</li>
+    </a>
+    
+    <a href="/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/">
+      <li class="sidemenu-recent-tags">튜토리얼</li>
+    </a>
+    
+  </ul>
+</div>
+
+    <div class='col-12'>
+      <hr>
+
+      <div class='float-left'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2019-04-29-1-vertical-align-line-box/' title='(HTML/CSS) Vertical-Align(1) - Line Box'>&larr; 이전 글</a>
+        
+      </div>
+      <div class='float-right'>
+        
+        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
+        
+      </div>
+      <div class='clearfix'></div>
+      <hr>
+      <div class='text-center'>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "croquiscom-devblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='container'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2018 croquis.com
+      <span class='float-right text-muted'>
+        powered by
+        <a href='https://gohugo.io/' target='_blank'>Hugo</a>
+        and
+        <a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-48716672-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+  integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+  integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

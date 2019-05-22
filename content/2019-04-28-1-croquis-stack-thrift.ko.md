@@ -1,4 +1,4 @@
- ---
+---
 title: 크로키의 스택 - Thrift
 tags: ['Croquis','Stack','Thrift','마이크로서비스','Microservice']
 date: 2019-04-28

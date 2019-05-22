@@ -5,10 +5,20 @@
     <link>https://devblog.croquis.com/ko/tags/stack/</link>
     <description>Recent content in Stack on ZIGZAG 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 28 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 May 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://devblog.croquis.com/ko/tags/stack/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>크로키의 스택 - GraphQL</title>
+      <link>https://devblog.croquis.com/ko/2019-05-22-1-croquis-stack-graphql/</link>
+      <pubDate>Wed, 22 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/2019-05-22-1-croquis-stack-graphql/</guid>
+      <description>&lt;p&gt;현재 크로키는 API를 &lt;a href=&#34;https://graphql.org/&#34;&gt;GraphQL&lt;/a&gt;로 만들고 있습니다.
+아직 많은 부분에 대해서 연구 중이어서 현재 상황만 간단하게 정리해 보겠습니다.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>크로키의 스택 - Thrift</title>
