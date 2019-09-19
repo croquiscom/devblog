@@ -5,24 +5,42 @@
     <link>https://devblog.croquis.com/ko/tags/</link>
     <description>Recent content in Tags on ZIGZAG 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 22 May 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 Sep 2019 02:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://devblog.croquis.com/ko/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Android</title>
+      <link>https://devblog.croquis.com/ko/tags/android/</link>
+      <pubDate>Thu, 19 Sep 2019 02:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/android/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Croquis</title>
       <link>https://devblog.croquis.com/ko/tags/croquis/</link>
-      <pubDate>Wed, 22 May 2019 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 19 Sep 2019 02:00:00 +0000</pubDate>
       
       <guid>https://devblog.croquis.com/ko/tags/croquis/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>iOS</title>
+      <link>https://devblog.croquis.com/ko/tags/ios/</link>
+      <pubDate>Thu, 19 Sep 2019 02:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/ios/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>GraphQL</title>
       <link>https://devblog.croquis.com/ko/tags/graphql/</link>
-      <pubDate>Wed, 22 May 2019 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 19 Sep 2019 01:00:00 +0000</pubDate>
       
       <guid>https://devblog.croquis.com/ko/tags/graphql/</guid>
       <description></description>
@@ -268,15 +286,6 @@
       <pubDate>Fri, 06 Jan 2017 00:00:00 +0000</pubDate>
       
       <guid>https://devblog.croquis.com/ko/tags/github/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>iOS</title>
-      <link>https://devblog.croquis.com/ko/tags/ios/</link>
-      <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
-      
-      <guid>https://devblog.croquis.com/ko/tags/ios/</guid>
       <description></description>
     </item>
     
