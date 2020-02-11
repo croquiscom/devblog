@@ -29,17 +29,17 @@
         <nav class='hp-nav'>
           <span>
             <a href='/' class='logo-a-tag'>
-              <img class='hp-navbar-logo' src='/img/logo-zigzag.png' width='124' height='37'>
+              <img class='hp-navbar-logo' src='/img/logo-zigzag.png'>
               <span class='hp-navbar-logo-font'>기술 블로그</span>
             </a>
           </span>
         </nav>
         <div class='float-right hp-navbar-top-link'>
           <a class='hp-nav-item' href='https://zigzag.kr' target='_blank'>
-            <img class='icon-svg' src='/img/zigzag-icon.svg'>
+            <img class='icon' src='/img/zigzag-icon.png'>
           </a>
           <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
-            <img class='icon-svg' src='/img/github-icon.svg'>
+            <img class='icon' src='/img/github-icon.svg'>
           </a>
           
         </div>
@@ -59,6 +59,7 @@
 
 
 
+
 <div class='container'>
   <div class='row' style='margin-top: 20px;'>
     <div class='col-12 col-lg-9'>
@@ -71,30 +72,21 @@
       <div>
         <div class='posts-head'>
           <span class='posts-title'>
-            <a href='/ko/2019-04-27-1-make-slack-bot-using-botkit/'>BotKit을 이용한 슬랙 봇 만들기</a>
+            <a href='/ko/2018-05-30-1-croquis-stack-rest-api/'>크로키의 스택 - REST API</a>
           </span>
           <div class='posts-info text-right'>
-            <span class='posts-date'>27 Apr 2019 | </span>
+            <span class='posts-date'>30 May 2018 | </span>
             
             <span class='posts-author'>by Sangmin Yoon</span>
             
           </div>
         </div>
         <div class='card-body'>
-          <a href='/ko/2019-04-27-1-make-slack-bot-using-botkit/' class='posts-content'>
-            <p>크로키닷컴을 시작하고 비교적 초기부터 ChatOps를 해보고 싶었습니다.
-GitHub의 글을 보고 도입하고 싶다는 생각이 들었던 거로 기억합니다.
-당연하게 <a href="https://hubot.github.com/">Hubot</a>을 이용해 채팅봇을 설정했습니다.</p>
-
-<p>초기에는 HipChat에 Hubot을 붙였고, 2014년 중반 Slack으로 전환했습니다.
-봇을 활용하려는 시도는 여러 번 했지만 대부분 장난 수준을 벗어나지 못했고(예. 점심 메뉴 보여주고 임의로 고르기),
-그나마 조금 복잡했던 것이 Box, Dropbox, Evernote에서 변경된 내용을 인식해 특정 채널에 알려주는 기능이었습니다.</p>
-
-<p>그렇게 방치하다가 2019년에 들어와 개발팀 인원도 늘어나서 다시 한번 제대로 채팅봇을 만들자는 얘기가 나왔습니다.
-이전에 작업해서 익숙한 Hubot을 다시 사용할까 했는데 아무래도 소스 기반이 CoffeeScript인게 마음에 걸렸습니다.
-여러 가지를 찾아보다가 <a href="https://botkit.ai/">Botkit</a>을 사용하기로 결정했습니다.</p>
-
-<p>이번 글에서는 Botkit을 이용해 슬랙 봇을 만드는 방법을 설명합니다.</p>
+          <a href='/ko/2018-05-30-1-croquis-stack-rest-api/' class='posts-content'>
+            <p>크로키가 클라이언트-서버 아키텍처를 가진 첫 번째 서비스 개발을 시작한 것은 2012년이었습니다.
+클라이언트에서 서버와 통신할 방법이 필요했는데 당시의 대세는 REST API였습니다.
+저도 거기에 공감했기 때문에 REST API를 만들어 클라이언트를 구현했습니다.
+그 후로 모든 서비스는 기본적으로 REST API로 클라이언트와 서버가 통신하고 있습니다.</p>
             <div class='posts-readmore'>&hellip; read more </div>
           </a>
         </div>
@@ -103,21 +95,27 @@ GitHub의 글을 보고 도입하고 싶다는 생각이 들었던 거로 기억
       <div>
         <div class='posts-head'>
           <span class='posts-title'>
-            <a href='/ko/2018-11-30-1-aws-abuse-report/'>AWS Abuse Report</a>
+            <a href='/ko/2018-02-27-1-jenkins-job-styles/'>젠킨스 작업을 정의하는 방식들</a>
           </span>
           <div class='posts-info text-right'>
-            <span class='posts-date'>23 Aug 2018 | </span>
+            <span class='posts-date'>27 Feb 2018 | </span>
             
             <span class='posts-author'>by Sangmin Yoon</span>
             
           </div>
         </div>
         <div class='card-body'>
-          <a href='/ko/2018-11-30-1-aws-abuse-report/' class='posts-content'>
-            <p>28일 오전, 한참 작업을 하다가 11시가 조금 넘은 시간에 문득 핸드폰을 들여다봤습니다.
-평상시 메일은 몰아서 처리하는 편인데(시급한 일이 메일로 오는 경우는 드물어서) 이날은 왠지 메일에 눈이 갔습니다.
-AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아니었고 Maintenance 알림 메일인가 하고 넘어가려는 순간
-불안한 단어 <strong>Abuse</strong>가 눈에 들어왔습니다.</p>
+          <a href='/ko/2018-02-27-1-jenkins-job-styles/' class='posts-content'>
+            <p>오늘날의 소프트웨어 개발에 있어서 지속적 통합(continuous integration)은
+필수라고 할 수 있습니다.
+저도 당연히 동의하면서 오래전부터 도입하려고 했지만, 급한 일에 밀려 실제로 도입한 것은
+지그재그 서비스를 오픈하고 나서도 2년이나 지난 작년 여름무렵입니다.</p>
+
+<p>여러가지 고민한 끝에 CI에 <a href="https://jenkins.io/">젠킨스</a>를 사용하기로 결정했습니다.
+그런데 서비스에 적용하기 위해서 각종 문서를 찾아보는데
+문서별로 작업을 정의하는 방식이 너무 달라서 굉장히 혼란스러웠습니다.</p>
+
+<p>이번 글에서는 저와 같이 혼란을 겪으시는 분들을 위해 젠킨스의 작업 정의 방식들에 대해서 설명하려고 합니다.</p>
             <div class='posts-readmore'>&hellip; read more </div>
           </a>
         </div>
@@ -126,18 +124,73 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
       <div>
         <div class='posts-head'>
           <span class='posts-title'>
-            <a href='/ko/2018-08-23-1-check-analytics-2/'>분석용 이벤트 로그 점검/정리하기 2</a>
+            <a href='/ko/2018-01-23-1-zigzag-devteam-is/'>지그재그 개발팀은...</a>
           </span>
           <div class='posts-info text-right'>
-            <span class='posts-date'>23 Aug 2018 | </span>
+            <span class='posts-date'>23 Jan 2018 | </span>
             
-            <span class='posts-author'>by Hyungjun Oh</span>
+            <span class='posts-author'>by Sangmin Yoon</span>
             
           </div>
         </div>
         <div class='card-body'>
-          <a href='/ko/2018-08-23-1-check-analytics-2/' class='posts-content'>
-            <p>안녕하세요! 저는 개발팀의 오형준입니다. 앞선 글에서 데이터팀의 지형님께서 ‘분석용 이벤트 로그 점검/정리하기’라는 Task가 어떤 Task이며, 왜 중요한지에 대해 다루었다면, 이번 글에서는 이번 Task의 프로세스, 앱개발팀과 데이터팀 간의 협업 방식, 각 팀의 업무 방식 등에 대해 다루어 보려합니다!</p>
+          <a href='/ko/2018-01-23-1-zigzag-devteam-is/' class='posts-content'>
+            <p>지그재그에서는 최고의 개발팀을 만들기 위해 항상 노력하고 있습니다.
+이 글에서는 지그재그 개발팀의 문화와 관심사에 대해서 소개하고 있습니다.
+지그재그 서비스에 대해서는 하단의 소개를 참고해주세요.</p>
+
+<p>이 글을 읽고 저희 개발팀에 관심이 생기신 분은 언제든지 <a href="mailto:job@zigzag.kr">job@zigzag.kr</a> 으로 연락주세요.
+이력서를 보내주셔도 좋고, 깃허브 주소를 보내주셔도 좋습니다.
+그 외 문의사항이나 가볍게 나누고 싶으신 이야기들은 <a href="https://www.facebook.com/zigzagcareer">https://www.facebook.com/zigzagcareer</a> 를 통해서 문의해주시면 됩니다.
+지그재그 팀과 함께 수면 아래 숨겨진 가치를 찾아내는 멋진 경험에 동참할 팀원을 기다립니다.</p>
+
+<p>지그재그 현재 진행중인 개발팀의 채용 공고는 <a href="https://career.zigzag.kr/recruit/">여기</a>서 보실 수 있습니다.</p>
+            <div class='posts-readmore'>&hellip; read more </div>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <div class='posts-head'>
+          <span class='posts-title'>
+            <a href='/ko/2017-10-15-1-croquis-stack-microservice/'>크로키의 스택 - 마이크로서비스</a>
+          </span>
+          <div class='posts-info text-right'>
+            <span class='posts-date'>15 Oct 2017 | </span>
+            
+            <span class='posts-author'>by Sangmin Yoon</span>
+            
+          </div>
+        </div>
+        <div class='card-body'>
+          <a href='/ko/2017-10-15-1-croquis-stack-microservice/' class='posts-content'>
+            <p>지그재그 서비스는 모놀리식 아키텍처(Monolithic Architecture)에서
+마이크로서비스 아키텍처(Microservice Architecture)로 전환중에 있습니다.
+이번 글에서는 그 과정을 설명하려고 합니다.</p>
+            <div class='posts-readmore'>&hellip; read more </div>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <div class='posts-head'>
+          <span class='posts-title'>
+            <a href='/ko/2017-05-13-1-aws-serverless-1/'>SQS, Lambda를 이용한 작업 대기열 만들기</a>
+          </span>
+          <div class='posts-info text-right'>
+            <span class='posts-date'>13 May 2017 | </span>
+            
+            <span class='posts-author'>by Jacob Choi</span>
+            
+          </div>
+        </div>
+        <div class='card-body'>
+          <a href='/ko/2017-05-13-1-aws-serverless-1/' class='posts-content'>
+            <p>최근 클라우드 컴퓨팅환경이 널리 사용되면서 서버 하드웨어 대한 유지보수 및 구성을 신경 쓰지 않고, 다양한 서비스들을 위한 서버를 개발할 수 있게 되었습니다. 하지만 이런 환경을 사용함에도 auto-scaling이나 서버 로그 수집, 서비스 배포 및 관리 등 소프트웨어 스택에 관한 부분은 신경 써줘야 합니다.</p>
+
+<p>이러한 고민을 덜어주기 위해서 최근에는 serverless architecture라는 개념이 생기고 있습니다. serverless architecture에서는 소스코드와 몇 번의 클릭만으로 서비스를 위한 REST API를 만들 수 있고, 수많은 요청에 대한 확장성에 대해 고민을 할 필요가 없으며, 로그 및 다양한 모니터링 툴들을 추가적인 작업 없이 사용할 수 있습니다.</p>
+
+<p>AWS에서도 serverless architecture를 위한 다양한 서비스를 제공하고 있습니다. 이번 글에서는 간단한 작업 대기열(task queue)을 만들어보며, serverless architecture 환경을 경험해보도록 하겠습니다.</p>
             <div class='posts-readmore'>&hellip; read more </div>
           </a>
         </div>
@@ -341,29 +394,12 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
     <li><a href='/ko/page/5/'>5</a></li>
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     
 
     
-    
-    <li class='disabled'><span>&hellip;</span></li>
-    
-
-    
-    <li><a href='/ko/page/8/'>&raquo;</a></li>
+    <li><a href='/ko/page/5/'>&raquo;</a></li>
     
   </ul>
   
@@ -377,7 +413,7 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
   <hr>
   <footer>
     <p>
-      &copy; 2012-2018 croquis.com
+      &copy; 2012-2020 croquis.com
       <span class='float-right text-muted'>
         powered by
         <a href='https://gohugo.io/' target='_blank'>Hugo</a>
