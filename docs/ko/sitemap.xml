@@ -3,25 +3,32 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://devblog.croquis.com/ko/tags/android/</loc>
-    <lastmod>2019-09-19T02:00:00+00:00</lastmod>
+    <loc>https://devblog.croquis.com/ko/tags/aws/</loc>
+    <lastmod>2020-02-11T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/aws-batch/</loc>
+    <lastmod>2020-02-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://devblog.croquis.com/ko/tags/croquis/</loc>
-    <lastmod>2019-09-19T02:00:00+00:00</lastmod>
+    <lastmod>2020-02-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://devblog.croquis.com/ko/2019-09-19-2-mobile-dev-in-croquis/</loc>
-    <lastmod>2019-09-19T02:00:00+00:00</lastmod>
+    <loc>https://devblog.croquis.com/ko/tags/stack/</loc>
+    <lastmod>2020-02-11T00:00:00+00:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://devblog.croquis.com/ko/tags/</loc>
-    <lastmod>2019-09-19T02:00:00+00:00</lastmod>
+    <lastmod>2020-02-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
     <xhtml:link
                 rel="alternate"
@@ -37,7 +44,7 @@
   
   <url>
     <loc>https://devblog.croquis.com/ko/</loc>
-    <lastmod>2019-09-19T02:00:00+00:00</lastmod>
+    <lastmod>2020-02-11T00:00:00+00:00</lastmod>
     <priority>0</priority>
     <xhtml:link
                 rel="alternate"
@@ -49,6 +56,22 @@
                 hreflang="ko"
                 href="https://devblog.croquis.com/ko/"
                 />
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/2020-02-11-1-croquis-stack-aws-batch/</loc>
+    <lastmod>2020-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/android/</loc>
+    <lastmod>2019-09-19T02:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/2019-09-19-2-mobile-dev-in-croquis/</loc>
+    <lastmod>2019-09-19T02:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -70,12 +93,6 @@
   
   <url>
     <loc>https://devblog.croquis.com/ko/tags/microservice/</loc>
-    <lastmod>2019-05-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://devblog.croquis.com/ko/tags/stack/</loc>
     <lastmod>2019-05-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
@@ -139,12 +156,6 @@
   <url>
     <loc>https://devblog.croquis.com/ko/tags/slack/</loc>
     <lastmod>2019-04-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://devblog.croquis.com/ko/tags/aws/</loc>
-    <lastmod>2018-08-23T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

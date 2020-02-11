@@ -5,10 +5,46 @@
     <link>https://devblog.croquis.com/ko/tags/</link>
     <description>Recent content in Tags on ZIGZAG 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 19 Sep 2019 02:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 11 Feb 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://devblog.croquis.com/ko/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>AWS</title>
+      <link>https://devblog.croquis.com/ko/tags/aws/</link>
+      <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/aws/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AWS Batch</title>
+      <link>https://devblog.croquis.com/ko/tags/aws-batch/</link>
+      <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/aws-batch/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Croquis</title>
+      <link>https://devblog.croquis.com/ko/tags/croquis/</link>
+      <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/croquis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Stack</title>
+      <link>https://devblog.croquis.com/ko/tags/stack/</link>
+      <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/tags/stack/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Android</title>
@@ -16,15 +52,6 @@
       <pubDate>Thu, 19 Sep 2019 02:00:00 +0000</pubDate>
       
       <guid>https://devblog.croquis.com/ko/tags/android/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Croquis</title>
-      <link>https://devblog.croquis.com/ko/tags/croquis/</link>
-      <pubDate>Thu, 19 Sep 2019 02:00:00 +0000</pubDate>
-      
-      <guid>https://devblog.croquis.com/ko/tags/croquis/</guid>
       <description></description>
     </item>
     
@@ -52,15 +79,6 @@
       <pubDate>Wed, 22 May 2019 00:00:00 +0000</pubDate>
       
       <guid>https://devblog.croquis.com/ko/tags/microservice/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Stack</title>
-      <link>https://devblog.croquis.com/ko/tags/stack/</link>
-      <pubDate>Wed, 22 May 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://devblog.croquis.com/ko/tags/stack/</guid>
       <description></description>
     </item>
     
@@ -124,15 +142,6 @@
       <pubDate>Sat, 27 Apr 2019 00:00:00 +0000</pubDate>
       
       <guid>https://devblog.croquis.com/ko/tags/slack/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>AWS</title>
-      <link>https://devblog.croquis.com/ko/tags/aws/</link>
-      <pubDate>Thu, 23 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>https://devblog.croquis.com/ko/tags/aws/</guid>
       <description></description>
     </item>
     
