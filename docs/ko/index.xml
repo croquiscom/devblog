@@ -5,10 +5,20 @@
     <link>https://devblog.croquis.com/ko/</link>
     <description>Recent content on ZIGZAG 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 11 Feb 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Feb 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://devblog.croquis.com/ko/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>TypeScript에서의 환경 설정 관리</title>
+      <link>https://devblog.croquis.com/ko/2020-02-15-1-configuration-in-typescript/</link>
+      <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/2020-02-15-1-configuration-in-typescript/</guid>
+      <description>&lt;p&gt;응용프로그램을 작성하다 보면 여러 가지 환경 설정(configuration)이 필요합니다.
+이번 글에서는 TypeScript에서 환경 설정을 관리하는 저희의 방법을 설명합니다.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>크로키의 스택 - AWS Batch</title>
