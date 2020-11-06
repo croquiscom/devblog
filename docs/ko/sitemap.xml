@@ -3,8 +3,19 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://devblog.croquis.com/ko/tags/github/</loc>
+    <lastmod>2020-11-06T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/2020-11-06-1-using-github-actions/</loc>
+    <lastmod>2020-11-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://devblog.croquis.com/ko/tags/</loc>
-    <lastmod>2020-02-15T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
     <xhtml:link
                 rel="alternate"
@@ -19,19 +30,8 @@
   </url>
   
   <url>
-    <loc>https://devblog.croquis.com/ko/tags/typescript/</loc>
-    <lastmod>2020-02-15T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://devblog.croquis.com/ko/2020-02-15-1-configuration-in-typescript/</loc>
-    <lastmod>2020-02-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://devblog.croquis.com/ko/</loc>
-    <lastmod>2020-02-15T00:00:00+00:00</lastmod>
+    <lastmod>2020-11-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
     <xhtml:link
                 rel="alternate"
@@ -43,6 +43,17 @@
                 hreflang="ko"
                 href="https://devblog.croquis.com/ko/"
                 />
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/tags/typescript/</loc>
+    <lastmod>2020-02-15T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://devblog.croquis.com/ko/2020-02-15-1-configuration-in-typescript/</loc>
+    <lastmod>2020-02-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -318,12 +329,6 @@
   <url>
     <loc>https://devblog.croquis.com/ko/2017-01-15-1-process-unix-pipe-with-nodejs/</loc>
     <lastmod>2017-01-15T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://devblog.croquis.com/ko/tags/github/</loc>
-    <lastmod>2017-01-06T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
