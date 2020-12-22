@@ -1,8 +1,5 @@
 #!/bin/bash
-SERVER=croquis@homepage.croquis.com
-TARGET=hp/devblog.croquis.com
 
 ./build.sh
 
-cd docs
-rsync -az --delete . $SERVER:$TARGET
+aws --profile croquis s3 sync docs s3://website.s.croquis.com/devblog --delete --cache-control max-age=0
