@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>React on 카카오스타일 기술 블로그</title>
+    <link>https://devblog.croquis.com/ko/tags/react/</link>
+    <description>Recent content in React on 카카오스타일 기술 블로그</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Thu, 29 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/react/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>React 프로젝트 컴포넌트 구성</title>
+      <link>https://devblog.croquis.com/ko/2021-07-29-1-react-component-organization/</link>
+      <pubDate>Thu, 29 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/2021-07-29-1-react-component-organization/</guid>
+      <description>&lt;p&gt;프로젝트가 시작된지 얼마 되지 않은 경우에 소스는 비교적 일관성을 가지고 있습니다. 하지만 시간이 지남에 따라 여러 사람이 참여하고, 비슷한 새로운 프로젝트가 만들어지면서 점점 일관성이 떨어지게 됩니다. (문서나 리뷰 과정이 있으면 비교적 낫지만, 완전히 방지하기는 어려운 것 같습니다) 또한 새로운 기술이 생기면서 (예를 들어 React Hook) 기존에 설정한 구조가 전혀 적합하지 않게 되는 경우가 생깁니다.&lt;/p&gt;
+&lt;p&gt;그런 의미에서 주기적으로 프로젝트 구성에 관한 가이드를 주기적으로 점검하고 갱신할 필요성이 있습니다. 이번 글에서는 2021년 7월 현재 React 프로젝트의 컴포넌트 구성에 대한 가이드를 설명하려고 합니다. (항상 예외 상황이 있기 마련이고, 이에 따른 변형을 허용하기에 가이드라는 용어를 쓰고 있습니다.)&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

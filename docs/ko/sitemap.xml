@@ -2,17 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://devblog.croquis.com/ko/2021-07-01-1-welcome-kakaostyle/</loc>
-    <lastmod>2021-07-01T00:00:00+00:00</lastmod>
+    <loc>https://devblog.croquis.com/ko/tags/react/</loc>
+    <lastmod>2021-07-29T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://devblog.croquis.com/ko/tags/github/</loc>
-    <lastmod>2020-11-06T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://devblog.croquis.com/ko/2020-11-06-1-using-github-actions/</loc>
-    <lastmod>2020-11-06T00:00:00+00:00</lastmod>
+    <loc>https://devblog.croquis.com/ko/2021-07-29-1-react-component-organization/</loc>
+    <lastmod>2021-07-29T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devblog.croquis.com/ko/tags/</loc>
-    <lastmod>2020-11-06T00:00:00+00:00</lastmod>
+    <lastmod>2021-07-29T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -25,7 +22,7 @@
                 />
   </url><url>
     <loc>https://devblog.croquis.com/ko/</loc>
-    <lastmod>2020-11-06T00:00:00+00:00</lastmod>
+    <lastmod>2021-07-29T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -36,6 +33,15 @@
                 hreflang="ko"
                 href="https://devblog.croquis.com/ko/"
                 />
+  </url><url>
+    <loc>https://devblog.croquis.com/ko/2021-07-01-1-welcome-kakaostyle/</loc>
+    <lastmod>2021-07-01T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devblog.croquis.com/ko/tags/github/</loc>
+    <lastmod>2020-11-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devblog.croquis.com/ko/2020-11-06-1-using-github-actions/</loc>
+    <lastmod>2020-11-06T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devblog.croquis.com/ko/tags/typescript/</loc>
     <lastmod>2020-02-15T00:00:00+00:00</lastmod>
