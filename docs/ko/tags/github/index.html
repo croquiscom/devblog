@@ -6,7 +6,7 @@
 
   <title>GitHub</title>
   
-  <meta name='author' content='croquis.com'>
+  <meta name='author' content='kakaostyle.com'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
   <meta property='og:title' content='GitHub' />
@@ -28,19 +28,18 @@
         <nav class='hp-nav'>
           <span>
             <a href='/' class='logo-a-tag'>
-              <img class='hp-navbar-logo' src='/img/logo-zigzag.png'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
               <span class='hp-navbar-logo-font'>기술 블로그</span>
             </a>
           </span>
         </nav>
         <div class='float-right hp-navbar-top-link'>
-          <a class='hp-nav-item' href='https://zigzag.kr' target='_blank'>
-            <img class='icon' src='/img/zigzag-icon.png'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
           </a>
           <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
             <img class='icon' src='/img/github-icon.svg'>
           </a>
-          
         </div>
       </div>
     </div>
@@ -64,7 +63,7 @@
     <div class='col-12 col-lg-9'>
       <div class='alert alert-info'>
         <i class='fas fa-info-circle'></i>
-        <a href='/ko/2018-01-23-1-zigzag-devteam-is/' class='alert-link'>지그재그 개발팀 소개</a>
+        <a href='/ko/2018-01-23-1-zigzag-devteam-is/' class='alert-link'>카카오스타일 개발팀 소개</a>
         <i class='fas fa-angle-double-right'></i>
       </div>
       
@@ -84,20 +83,16 @@
           <a href='/ko/2020-11-06-1-using-github-actions/' class='posts-content'>
             <p>규모가 커지면 커질 수록 자동화된 워크플로우는 필수라고 생각합니다.
 하지만 부끄럽게도 크로키닷컴은 잘 구축된 편은 아닙니다.</p>
-
 <p>유닛 테스트는 초기부터 있었지만 그걸 PR, 머지마다 자동으로 수행하지는 못했습니다.
 그러다가 2017년 중반 겨우 Jenkins를 세팅해서 자동 테스트만은 수행했습니다. 하지만 그게 워크플로우와 잘 어우러지지 못했습니다.
 2019년에는 CodeBuild로 전환을 했고 비로서 PR 생성시 자동 테스트를 수행해 실패하면 머지를 할 수 없도록 구성이 됐습니다.</p>
-
 <p>그럭저럭 아쉬운 대로 쓰고는 있었지만 매 테스트마다 수십분씩 걸리고 수정도 어려웠습니다.
 가장 대중적으로 널리 쓰이는 Jenkins, 저희가 만든 OSS에 연결해 둔 <a href="https://travis-ci.com/">Travis CI</a>, <a href="https://circleci.com/">CircleCI</a>등을
 계속 두드려봤지만 썩 마음에 드는게 없었습니다.</p>
-
 <p>가장 방해가 되던건 저희가 마이크로서비스 아키텍처로 서비스들이 잘게 쪼개져 있는데, 저장소는 단일 저장소(monorepo)라는 점이였습니다.
 그러나 사람이 늘면서 도저히 단일 저장소로는 감당이 안 되어 저장소를 분리하기 시작했고, 분리된 저장소에서
 새로운 자동화 시스템을 고민하는데 그 때 눈에 띈 것이 <a href="https://github.com/features/actions">GitHub Actions</a>였습니다.
 작성이 쉬우면서도 확장성이 좋아서 그 뒤로 여러가지 워크플로우에 GitHub Actions를 사용하고 있습니다.</p>
-
 <p>이번 글에서는 현재 저희 팀이 세팅한 GitHub Actions의 workflow 파일을 공유하려고 합니다.
 이 내용이 독자분들에게 도움이 됐으면 합니다.</p>
             <div class='posts-readmore'>&hellip; read more </div>
@@ -121,7 +116,6 @@
           <a href='/ko/2017-01-06-1-github-wiki-to-slack/' class='posts-content'>
             <p>현재 크로키닷컴은 프로젝트 관리를 GitHub로만 하고 있습니다.
 이슈도 GitHub 이슈로 관리하고, 문서도 GitHub 위키를 사용하고 있습니다.</p>
-
 <p>GitHub는 슬랙과의 연동이 잘 되어 있어서 GitHub에서의 활동을
 슬랙을 통해 파악하고 대응하고 있습니다.
 하지만 아쉽게도 GitHub 위키 이벤트는 처리하지 않습니다.
@@ -137,6 +131,10 @@
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2021-07-01-1-welcome-kakaostyle/'>
+      <li class="sidemenu-recent-item">카카오스타일 기술 블로그입니다</li>
+    </a>
+    
     <a href='/ko/2020-11-06-1-using-github-actions/'>
       <li class="sidemenu-recent-item">GitHub Actions 활용하기</li>
     </a>
@@ -147,10 +145,6 @@
     
     <a href='/ko/2020-02-11-1-croquis-stack-aws-batch/'>
       <li class="sidemenu-recent-item">크로키의 스택 - AWS Batch</li>
-    </a>
-    
-    <a href='/ko/2019-09-19-2-mobile-dev-in-croquis/'>
-      <li class="sidemenu-recent-item">Mobile Dev. in Croquis</li>
     </a>
     
   </ul>
@@ -301,7 +295,7 @@
   <hr>
   <footer>
     <p>
-      &copy; 2012-2020 croquis.com
+      &copy; 2012-2021 kakaostyle.com
       <span class='float-right text-muted'>
         powered by
         <a href='https://gohugo.io/' target='_blank'>Hugo</a>
@@ -325,7 +319,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

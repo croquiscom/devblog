@@ -6,7 +6,7 @@
 
   <title>(HTML/CSS) Vertical-Align(1) - Line Box</title>
   
-  <meta name='author' content='croquis.com'>
+  <meta name='author' content='kakaostyle.com'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
   <meta property='og:title' content='(HTML/CSS) Vertical-Align(1) - Line Box' />
@@ -28,19 +28,18 @@
         <nav class='hp-nav'>
           <span>
             <a href='/' class='logo-a-tag'>
-              <img class='hp-navbar-logo' src='/img/logo-zigzag.png'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
               <span class='hp-navbar-logo-font'>기술 블로그</span>
             </a>
           </span>
         </nav>
         <div class='float-right hp-navbar-top-link'>
-          <a class='hp-nav-item' href='https://zigzag.kr' target='_blank'>
-            <img class='icon' src='/img/zigzag-icon.png'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
           </a>
           <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
             <img class='icon' src='/img/github-icon.svg'>
           </a>
-          
         </div>
       </div>
     </div>
@@ -111,57 +110,32 @@
       <p>안녕하세요 지그재그에서 프론트엔드 개발을 하고 있는 태재영입니다.
 프론트엔드 개발자에게 중앙 정렬을 어떻게 하냐고 물어보면 inline 요소는 text-align 속성을 center로 지정하고, block 요소는 margin 속성을 auto로 지정한다고 대답할 겁니다.
 그런데 좌우가 아니라 위아래 수직 정렬을 어떻게 하겠냐고 물어보면 대답을 선뜻 못하거나 굉장히 다양한 답변들이 나옵니다.
-그 여러 방법들 중에 개발자들이 사용하면서도 &quot;왜 되는거지?&quot;라고 의구심을 많이 품게 되는 vertical-align에 대해서 자세히 써보려고 합니다.</p>
-
-<style>
-.block-container {
-  border: 1px solid lightgray;
-}
-.box {
-  display: inline-block;
-  width: 100px;
-  margin-right: 10px;
-  background-color: darkgray;
-}
-.small { height: 100px; }
-.medium { height: 200px; }
-.big { height: 300px; }
-.top { vertical-align: top; }
-.bottom { vertical-align: bottom; }
-</style>
-
-<p>벤더사들의 구현에 따라 달라질 수 있지만 <a href="https://www.w3.org/TR/CSS2/visudet.html#propdef-vertical-align">표준 명세서</a>에서는 vertical-align에 대한 설명을 이렇게 시작합니다.
-<div class="card">
-    <div class="card-body">
-        이 속성은 line box 안에서 inline-level 요소에 의해 생성되는 박스들의 수직 위치에 영향을 미칩니다.
-    </div>
-</div></p>
-
+그 여러 방법들 중에 개발자들이 사용하면서도 &ldquo;왜 되는거지?&ldquo;라고 의구심을 많이 품게 되는 vertical-align에 대해서 자세히 써보려고 합니다.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>벤더사들의 구현에 따라 달라질 수 있지만 <a href="https://www.w3.org/TR/CSS2/visudet.html#propdef-vertical-align">표준 명세서</a>에서는 vertical-align에 대한 설명을 이렇게 시작합니다.</p>
+<!-- raw HTML omitted -->
 <p>inline-level 요소는 한 줄에 나열할 수 있는 요소들을 말합니다.
 display 속성을 inline, inline-block, inline-table 등으로 지정해서 만들 수 있는데요.
 이 요소들에 의해서 만들어진 가상의 박스들은 곧 해당 요소의 크기를 나타냅니다.</p>
-
 <p>간단한 예를 들자면 아래처럼 css가 적용된 요소의 박스 크기는 100*100px입니다.
-<div class="highlight"><pre class="chroma"><code class="language-css" data-lang="css"><span class="p">.</span><span class="nc">box</span> <span class="p">{</span>
-  <span class="k">display</span><span class="p">:</span> <span class="kc">inline</span><span class="o">-</span><span class="kc">block</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="p">.</span><span class="nc">box</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">inline-block</span><span class="p">;</span>
   <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
   <span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
 <span class="p">}</span></code></pre></div></p>
-
 <p>inline은 inline-block와 다르게 width/height가 아니라 폰트 매트릭스에 따른 계산이 필요하므로 추후에 다루겠습니다.</p>
-
 <p>아무튼 각 줄마다 이런 inline-level 박스들을 가지고 있는 박스를 line box라고 하는데요.
 이 line box를 이해하면 vertical-align에 적용 가능한 값들 중 top/bottom을 완벽하게 이해할 수 있습니다.
 왜냐하면 top은 line box의 최상단에, bottom은 line box의 최하단에 정렬시켜주기 때문인데요.
 그렇다면 line-box는 어떻게 계산되는 걸까요?</p>
-
 <p>많은 조건들이 있지만 첫 번째로 inline-level 요소들의 높이를 계산해서 가장 큰 값을 가져옵니다.
 아래의 예시를 보시죠!
-<div class="highlight"><pre class="chroma"><code class="language-css" data-lang="css"><span class="p">.</span><span class="nc">block-container</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="p">.</span><span class="nc">block-container</span> <span class="p">{</span>
   <span class="k">border</span><span class="p">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="kc">solid</span> <span class="kc">lightgray</span><span class="p">;</span>
 <span class="p">}</span>
 <span class="p">.</span><span class="nc">box</span> <span class="p">{</span>
-  <span class="k">display</span><span class="p">:</span> <span class="kc">inline</span><span class="o">-</span><span class="kc">block</span><span class="p">;</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">inline-block</span><span class="p">;</span>
   <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
   <span class="k">margin-right</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
   <span class="k">background-color</span><span class="p">:</span> <span class="kc">darkgray</span><span class="p">;</span>
@@ -170,125 +144,75 @@ display 속성을 inline, inline-block, inline-table 등으로 지정해서 만�
 <span class="p">.</span><span class="nc">big</span> <span class="p">{</span> <span class="k">height</span><span class="p">:</span> <span class="mi">300</span><span class="kt">px</span><span class="p">;</span> <span class="p">}</span>
 <span class="p">.</span><span class="nc">top</span> <span class="p">{</span> <span class="k">vertical-align</span><span class="p">:</span> <span class="kc">top</span><span class="p">;</span> <span class="p">}</span>
 <span class="p">.</span><span class="nc">bottom</span> <span class="p">{</span> <span class="k">vertical-align</span><span class="p">:</span> <span class="kc">bottom</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
-<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;block-container&#34;</span><span class="p">&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;block-container&#34;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box small top&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box big top&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box small bottom&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></div>
-<div class="block-container">
-  <div class="box small top"></div>
-  <div class="box big top"></div>
-  <div class="box small bottom"></div>
-</div></p>
-
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></div></p>
+<!-- raw HTML omitted -->
 <p>높이가 300px인 박스 한 개와 100px인 박스 두 개를 만들었습니다.
 그리고 작은 박스 두 개에 각각 top과 bottom을 줬는데요.
 보시다시피 가장 큰 inline-level 요소인 300px 박스를 기준으로 최상단과 하단에 배치됩니다.
 큰 박스에는 top을 줬지만 line box와 높이가 같으므로 위치의 변화는 없습니다.
-<br/><br/></p>
-
-<p><div class="highlight"><pre class="chroma"><code class="language-css" data-lang="css"><span class="p">.</span><span class="nc">medium</span> <span class="p">{</span> <span class="k">height</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
-<div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;block-container&#34;</span><span class="p">&gt;</span>
+<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="p">.</span><span class="nc">medium</span> <span class="p">{</span> <span class="k">height</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span> <span class="p">}</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;block-container&#34;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box small top&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box big top&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box small bottom&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box medium bottom&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></div>
-<div class="block-container">
-  <div class="box small top"></div>
-  <div class="box big top"></div>
-  <div class="box small bottom"></div>
-  <div class="box medium bottom"></div>
-</div></p>
-
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></div></p>
+<!-- raw HTML omitted -->
 <p>높이가 200px인 박스를 추가했지만 여전히 가장 큰 높이는 300px이므로, 높이가 300px인 line box를 기준으로 수직정렬됩니다.</p>
-
 <p>그럼 inline-level 요소들의 높이보다 더 크게 line box를 만드려면 어떻게 해야 할까요?
-<a href="https://www.w3.org/TR/CSS2/visudet.html#strut">strut</a>에 대한 설명을 보면 그 답을 알 수 있습니다.
-<div class="card">
-    <div class="card-body">
-        컨텐츠가 inline-level 요소로 구성된 블록 컨테이너 요소에서 'line-height'는 line box의 최소 높이를 지정합니다.
-        최소 높이는 baseline 위의 최소 높이와 그 아래의 최소 깊이로 구성되며, 각 line box들의 시작이 font/line-height 속성을 가지고 width 0인 inline box인 것과 같습니다.
-        우리는 이 가상의 박스를 &quot;strut&quot;라고 부릅니다.
-    </div>
-</div></p>
-
+<a href="https://www.w3.org/TR/CSS2/visudet.html#strut">strut</a>에 대한 설명을 보면 그 답을 알 수 있습니다.</p>
+<!-- raw HTML omitted -->
 <p>조금 풀어 써보자면 width가 0이어서 layout에는 영향을 주지 않는 가상의 박스가 있는데 이를 strut라고 하고,
 이 strut는 부모 block 요소로부터 font/line-height를 상속받아 inline-level 요소처럼 line box에 영향을 미친다는 뜻입니다.
 line-height가 100px로 지정된 block요소는 100px, font-size가 15px에 line-height가 5로 지정되었다면 75px 높이를 가지는 strut를 만들 수 있죠!
-<br/><br/></p>
-
-<p><div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;block-container&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;line-height: 300px;&#34;</span><span class="p">&gt;</span>
+<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;block-container&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;line-height: 300px;&#34;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box small top&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box big top&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box small bottom&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box medium bottom&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></div>
-<div class="block-container" style="line-height: 300px;">
-  <div class="box small top"></div>
-  <div class="box big top"></div>
-  <div class="box small bottom"></div>
-  <div class="box medium bottom"></div>
-</div></p>
-
+<!-- raw HTML omitted -->
 <p>먼저 line-height를 300px로 지정한 화면입니다.
 기존과 마찬가지로 line box의 높이가 300px이므로 별다른 변화는 없습니다.
-<br/><br/></p>
-
-<p><div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;block-container&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;line-height: 400px;&#34;</span><span class="p">&gt;</span>
+<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;block-container&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;line-height: 400px;&#34;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box small top&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box big top&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box small bottom&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box medium bottom&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></div>
-<div class="block-container" style="line-height: 400px;">
-  <div class="box small top"></div>
-  <div class="box big top"></div>
-  <div class="box small bottom"></div>
-  <div class="box medium bottom"></div>
-</div></p>
-
+<!-- raw HTML omitted -->
 <p>line-height를 400px로 지정한 화면입니다.
 line box가 400px로 늘어나서 위치가 달라졌습니다!
-<br/><br/></p>
-
-<p><div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;block-container&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;height: 400px;&#34;</span><span class="p">&gt;</span>
+<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;block-container&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;height: 400px;&#34;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box small top&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box big top&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box small bottom&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box medium bottom&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></div>
-<div class="block-container" style="height: 400px;">
-  <div class="box small top"></div>
-  <div class="box big top"></div>
-  <div class="box small bottom"></div>
-  <div class="box medium bottom"></div>
-</div></p>
-
+<!-- raw HTML omitted -->
 <p>그럼 line-height가 아니라 height를 400px로 늘리면 어떻게 될까요?
 안타깝지만 height는 line box에 영향을 주지 않기 때문에 line box는 300px로 유지됩니다.
-<br/><br/></p>
-
-<p><div class="highlight"><pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;block-container&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;height: 300px; line-height: 400px;&#34;</span><span class="p">&gt;</span>
+<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;block-container&#34;</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;height: 300px; line-height: 400px;&#34;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box small top&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box big top&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box small bottom&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;box medium bottom&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code></pre></div>
-<div class="block-container" style="height: 300px; line-height: 400px; margin-bottom: calc(100px + 1rem);">
-  <div class="box small top"></div>
-  <div class="box big top"></div>
-  <div class="box small bottom"></div>
-  <div class="box medium bottom"></div>
-</div></p>
-
+<!-- raw HTML omitted -->
 <p>마지막으로 height를 300px, line-height를 400px로 지정한 예제입니다.
 line-height에 의해 line box는 400px이 되었지만 height는 300px이어서 요소들이 밖으로 삐져나온 것을 볼 수 있습니다.</p>
-
 <p>오늘은 vertical-align 속성 중 가장 쉬운(?) top과 bottom에 대해서 정리해봤습니다.
 vertical-align을 이용한 수직정렬에서 최상단과 하단은 부모 요소의 높이가 아니라 line box라는 점 꼭 기억하셨으면 좋겠습니다.
-추후에 시간이 된다면 vertical-align의 다른 속성들(middle, text-top, text-bottom...)에 대해서도 정리해보겠습니다.</p>
-
+추후에 시간이 된다면 vertical-align의 다른 속성들(middle, text-top, text-bottom&hellip;)에 대해서도 정리해보겠습니다.</p>
 <p>긴 글 읽어주셔서 감사합니다 :)</p>
       
     </div>
@@ -296,6 +220,10 @@ vertical-align을 이용한 수직정렬에서 최상단과 하단은 부모 요
     <div class='col-lg-3 sidemenu'>
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2021-07-01-1-welcome-kakaostyle/'>
+      <li class="sidemenu-recent-item">카카오스타일 기술 블로그입니다</li>
+    </a>
     
     <a href='/ko/2020-11-06-1-using-github-actions/'>
       <li class="sidemenu-recent-item">GitHub Actions 활용하기</li>
@@ -307,10 +235,6 @@ vertical-align을 이용한 수직정렬에서 최상단과 하단은 부모 요
     
     <a href='/ko/2020-02-11-1-croquis-stack-aws-batch/'>
       <li class="sidemenu-recent-item">크로키의 스택 - AWS Batch</li>
-    </a>
-    
-    <a href='/ko/2019-09-19-2-mobile-dev-in-croquis/'>
-      <li class="sidemenu-recent-item">Mobile Dev. in Croquis</li>
     </a>
     
   </ul>
@@ -495,7 +419,7 @@ vertical-align을 이용한 수직정렬에서 최상단과 하단은 부모 요
   <hr>
   <footer>
     <p>
-      &copy; 2012-2020 croquis.com
+      &copy; 2012-2021 kakaostyle.com
       <span class='float-right text-muted'>
         powered by
         <a href='https://gohugo.io/' target='_blank'>Hugo</a>
@@ -519,7 +443,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

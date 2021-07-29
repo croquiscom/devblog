@@ -1,15 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Croquis on ZIGZAG 기술 블로그</title>
+    <title>Croquis on 카카오스타일 기술 블로그</title>
     <link>https://devblog.croquis.com/ko/tags/croquis/</link>
-    <description>Recent content in Croquis on ZIGZAG 기술 블로그</description>
+    <description>Recent content in Croquis on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 11 Feb 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://devblog.croquis.com/ko/tags/croquis/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 11 Feb 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/croquis/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>크로키의 스택 - AWS Batch</title>
       <link>https://devblog.croquis.com/ko/2020-02-11-1-croquis-stack-aws-batch/</link>
@@ -78,7 +74,6 @@
       
       <guid>https://devblog.croquis.com/ko/2018-07-10-1-check-analytics-1/</guid>
       <description>&lt;p&gt;지그재그는 누적 다운로드 수 1,100만, MAU 200만을 넘어가고 있는 여성 쇼핑몰 모음 앱 서비스입니다. 그렇기 때문에 매일같이 지그재그에 쌓여가는 이용자들의 데이터 로그들도 어마어마하죠.&lt;/p&gt;
-
 &lt;p&gt;이와 같은 로그들은 이용자들이 각자 자신에게 맞는 쇼핑몰/상품을 더 쉽게, 편하게 찾을 수 있도록 도와주는 개인화 알고리즘의 핵심 자원이면서, 이용자들이 앱의 각 기능들을 잘 활용하고 있는지 파악하기 위한 사용성 분석에도 필수적입니다. 또한 서비스 운영에 영향을 줄 수 있는 각종 이상 현상을 실시간으로 탐지하며 대응할 수 있게 도와주죠. 이를 위해 지그재그에서는 불필요한 로그/개인정보를 수집하지 않으면서도 앞선 목적에 부합하는 로그만 효율적으로 쌓아나가기 위해 노력하고 있습니다.&lt;/p&gt;</description>
     </item>
     
@@ -114,7 +109,6 @@
       <description>&lt;p&gt;이번 글에서는 크로키가 사용하는 스택 중
 클라이언트 JavaScript 프레임워크(client-side JavaScript framework)에 대해서
 소개해볼까 합니다.&lt;/p&gt;
-
 &lt;p&gt;TD;DR) 크로키에서는 &lt;a href=&#34;http://backbonejs.org/&#34;&gt;Backbone&lt;/a&gt;, &lt;a href=&#34;http://angular.io/&#34;&gt;Angular&lt;/a&gt;를 거쳐
 현재는 &lt;a href=&#34;http://mithril.js.org/&#34;&gt;Mithril&lt;/a&gt;이라는 프레임워크를 사용하고 있습니다.&lt;/p&gt;</description>
     </item>
@@ -127,7 +121,6 @@
       <guid>https://devblog.croquis.com/ko/2017-02-10-1-why-croquis-selects-nodejs/</guid>
       <description>&lt;p&gt;현재 크로키에서는 서버용 웹 프레임워크로 &lt;a href=&#34;http://nodejs.org/&#34;&gt;Node.js&lt;/a&gt; 위에서
 &lt;a href=&#34;http://expressjs.com/&#34;&gt;Express&lt;/a&gt;를 사용하고 있습니다.&lt;/p&gt;
-
 &lt;p&gt;이번 글에서는 어떤 이유로 Node.js를 사용하게 되었는지 설명하려고 합니다.
 여러분들이 웹 프레임워크를 선택하시는 데 참고가 되었으면 합니다.&lt;/p&gt;</description>
     </item>
@@ -139,10 +132,8 @@
       
       <guid>https://devblog.croquis.com/ko/2017-01-01-1-start-devblog/</guid>
       <description>&lt;p&gt;안녕하세요.&lt;/p&gt;
-
 &lt;p&gt;&lt;a href=&#34;https://zigzag.kr/&#34;&gt;지그재그&lt;/a&gt;라는 여성 쇼핑몰 서비스를
 운영하고 있는 croquis.com의 개발팀입니다.&lt;/p&gt;
-
 &lt;p&gt;방치되어 있던 개발자 블로그를 다시 시작하려고 합니다.
 기대해주세요~&lt;/p&gt;</description>
     </item>

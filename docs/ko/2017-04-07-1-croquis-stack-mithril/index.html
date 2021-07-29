@@ -6,7 +6,7 @@
 
   <title>크로키의 스택 - Mithril</title>
   
-  <meta name='author' content='croquis.com'>
+  <meta name='author' content='kakaostyle.com'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
   <meta property='og:title' content='크로키의 스택 - Mithril' />
@@ -28,19 +28,18 @@
         <nav class='hp-nav'>
           <span>
             <a href='/' class='logo-a-tag'>
-              <img class='hp-navbar-logo' src='/img/logo-zigzag.png'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
               <span class='hp-navbar-logo-font'>기술 블로그</span>
             </a>
           </span>
         </nav>
         <div class='float-right hp-navbar-top-link'>
-          <a class='hp-nav-item' href='https://zigzag.kr' target='_blank'>
-            <img class='icon' src='/img/zigzag-icon.png'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
           </a>
           <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
             <img class='icon' src='/img/github-icon.svg'>
           </a>
-          
         </div>
       </div>
     </div>
@@ -111,87 +110,62 @@
       <p>이번 글에서는 크로키가 사용하는 스택 중
 클라이언트 JavaScript 프레임워크(client-side JavaScript framework)에 대해서
 소개해볼까 합니다.</p>
-
 <p>TD;DR) 크로키에서는 <a href="http://backbonejs.org/">Backbone</a>, <a href="http://angular.io/">Angular</a>를 거쳐
 현재는 <a href="http://mithril.js.org/">Mithril</a>이라는 프레임워크를 사용하고 있습니다.</p>
-
-<hr />
-
+<hr>
 <p>크로키는 현재 지그재그라는 서비스에 주력하고 있지만, 지그재그가 첫 제품은 아닙니다.
 창업 후 여러 제품을 만들었는데 모두 네이티브 모바일 앱이 기본이였고,
 일반 사용자를 위한 웹 서비스는 없었습니다.
 그렇다고 전혀 웹 어플리케이션을 개발하지 않는 것은 아니고,
 크로키 내부 직원이나 한정된 외부 사용자를 위한 웹 어플리케이션은 꾸준히 개발해왔습니다.</p>
-
-<hr />
-
+<hr>
 <p>2012년 초, 처음 개발하던 iOS 앱(쿠키단어장)은 Vanilla JS와 UIWebView로 시작했습니다.
 (1주일 정도 개발하다가 JavaScript에서 <a href="http://coffeescript.org/">CoffeeScript</a>로 전환했습니다.)
 하지만 2주 정도 개발하다가 한계를 느껴 네이티브로 전환했습니다.</p>
-
-<hr />
-
+<hr>
 <p>2012년 여름 개발을 시작한 두번째 제품(Teamable)은 모바일 웹 앱으로 시작했습니다.
 그때 서버쪽에서 HTML 렌더링을 하기 보다는 클라이언트에서 렌더링을 하는 구조로 가져가기로 했습니다.
 각각의 장단점을 생각해보고 결정한 것이지만, 서버쪽에서 할 일을 클라이언트에 맡김으로써 서버 비용이
 줄어든다는 생각이 컸던 것으로 기억합니다. (사실 몇명쓰지도 않는 서비스에서 아무 차이도 없지만)</p>
-
 <p>이때 선택한 클라이언트 JavaScript 프레임워크는 Backbone이였습니다. (당시 0.9.2)
 당시에도 Angular는 있었던 것 같은데, 제가 접하는 범위에서는 Backbone이 대세였습니다.</p>
-
 <p>얼마 후 웹 앱이 아니라 모바일 앱을 만드는 방향으로 전환했고,
 잠시 Apache Cordova(PhoneGap)을 시도해봤지만 결국은 네이티브 모바일 앱으로 전환했습니다.
 하지만 그때까지 개발된 JavaScript 클라이언트 소스는 간이 관리 사이트에서 계속 사용됐습니다.</p>
-
-<hr />
-
+<hr>
 <p>2013년 4월부터는 두번째 제품을 바탕으로 외주를 받은 세번째 제품의 개발을 시작했습니다.
 여기에 한정된 외부 사용자를 위한 관리 사이트가 필요했고, 자연스럽게 Backbone을 사용했습니다.
 (그리고 Bootstrap을 사용하기 시작했습니다.)</p>
-
 <p>이때부터 SPA에 대한 관점이 정리된 것 같습니다.
 저희는 모바일 앱이 기본이다보니 서버쪽은 여기에 데이터를 제공하는 API 위주로 개발이 이뤄졌습니다.
 그리고 SPA는 이 API를 동일하게 써서 개발할 수 있다는 장점이 있었습니다.
 SPA의 단점은 무시할 만 했습니다.
 (SEO - 로그인이 필요한 사이트로 검색 엔진 연동 자체가 의미 없음, 큰 파일 크기로 인한 로딩 속도 - 한정된 사용자에게는 별로 이슈 안 됨)</p>
-
-<hr />
-
+<hr>
 <p>2014년이 되어 세번째 제품의 2014년 버전 개발에 들어갔습니다.</p>
-
 <p>2013년 버전에서 Backbone으로 만든 관리 사이트가 점점 커지면서 소스 관리에 한계를 느꼈고(파일도 단순히 concat으로 합치고 있었습니다)
 다른 프레임워크를 찾게 되었고 그때 선택한 것이 Angular였습니다. (당시 1.2)
 <a href="http://yeoman.io/">Yeoman</a>을 통해 Angular를 프레임워크로 쓰고, <a href="https://gruntjs.com/">Grunt</a>를 빌드 툴로 쓰는 프로젝트를 생성해
 새로 관리 사이트를 만들었습니다.</p>
-
 <p>기존 기능이 계속 유지됐으면 코드를 완전히 재작성하는게 쉽지 않았을 수도 있지만,
 2013년 버전과 2014년 버전의 요구 사항이 많이 달랐기에 과감하게 처음부터 작성을 했습니다.</p>
-
-<hr />
-
+<hr>
 <p>그렇게 2014년에는 Angular를 써서 원하는 결과물을 만들 수 있었습니다.
 하지만 쓰면 쓸 수록 Angular는 저와 맞지 않는 다는 생각이 들었습니다.
 보통 Angular에 속도에 많은 이슈가 있어서 <a href="https://facebook.github.io/react/">React</a>,
 <a href="https://vuejs.org/">Vue</a>등으로 넘어가는 경우가 많은데,
 저는 라이브러리/프레임워크의 복잡도가 문제였습니다.
 저는 어떤 라이브러리/프레임워크를 사용할 때 내부 코드를 종종 살펴보는데 Angular는 쓸데없이 복잡하다는 생각이 들었습니다.</p>
-
 <p>2014년 말, 2015년 초에는 React 얘기가 많이 나오기 시작하던 시기로 Angular와 React의 비교 글들이 많이 있었던 걸로 기억합니다.
 그러던 와중에 Hacker News인가의 댓글로 Mithril이라는 프레임워크를 알게됐고, 소개글이 마음에 들었습니다.
 다른 프레임워크에 비해서 속도가 빠르다는 얘기도 있었지만, 그 부분은 크게 문제가 되는 부분이 아니였고, 크기가 작다는 것이 마음에 들었습니다.</p>
-
 <p>2015년 초에 시작한 지그재그 서비스의 내부 관리 사이트을 Mithril로 시작해서 그 후 작성한 모든 웹 어플리케이션은 Mithril을 사용하고 있습니다.</p>
-
-<hr />
-
+<hr>
 <p>2017년 4월 현재도 Mithril을 사용하고 있고, 올해 1.0으로 올라가면서 구조도 안정화됐습니다.
 Mithril을 사용하면서 Grunt에서 <a href="http://gulpjs.com/">gulp</a>로 넘어갔다가 최근에는 <a href="https://webpack.js.org/">webpack</a>으로 전환했습니다.
 언어는 여전히 CoffeeScript가 주요언어지만, <a href="https://www.typescriptlang.org/">TypeScript</a>로의 전환을 시작했습니다.</p>
-
 <p>최근에는 <a href="https://vuejs.org/">Vue</a>가 꽤나 이슈가 되고 있는데 저는 계속 Mithril을 사용할 것 같습니다.</p>
-
 <p>마지막으로 많은 프레임워크에 혼란을 겪으시는 분들을 위해 제가 생각하는 선택 기준을 말씀드리겠습니다.</p>
-
 <ol>
 <li>Angular: Spring 처럼 틀이 갖춰져 있어서, 잘 모르는 사람이 어느 정도 이상의 품질을 갖춘 제품을 만들고 싶을 때</li>
 <li>React: 좋은 구조를 가진 제품을 만들고 싶고, 빠르게 발전하는 트랜드를 따라갈 자신이 있을 때</li>
@@ -210,6 +184,10 @@ Mithril을 사용하면서 Grunt에서 <a href="http://gulpjs.com/">gulp</a>로 
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2021-07-01-1-welcome-kakaostyle/'>
+      <li class="sidemenu-recent-item">카카오스타일 기술 블로그입니다</li>
+    </a>
+    
     <a href='/ko/2020-11-06-1-using-github-actions/'>
       <li class="sidemenu-recent-item">GitHub Actions 활용하기</li>
     </a>
@@ -220,10 +198,6 @@ Mithril을 사용하면서 Grunt에서 <a href="http://gulpjs.com/">gulp</a>로 
     
     <a href='/ko/2020-02-11-1-croquis-stack-aws-batch/'>
       <li class="sidemenu-recent-item">크로키의 스택 - AWS Batch</li>
-    </a>
-    
-    <a href='/ko/2019-09-19-2-mobile-dev-in-croquis/'>
-      <li class="sidemenu-recent-item">Mobile Dev. in Croquis</li>
     </a>
     
   </ul>
@@ -408,7 +382,7 @@ Mithril을 사용하면서 Grunt에서 <a href="http://gulpjs.com/">gulp</a>로 
   <hr>
   <footer>
     <p>
-      &copy; 2012-2020 croquis.com
+      &copy; 2012-2021 kakaostyle.com
       <span class='float-right text-muted'>
         powered by
         <a href='https://gohugo.io/' target='_blank'>Hugo</a>
@@ -432,7 +406,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

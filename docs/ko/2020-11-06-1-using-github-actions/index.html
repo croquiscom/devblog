@@ -6,7 +6,7 @@
 
   <title>GitHub Actions 활용하기</title>
   
-  <meta name='author' content='croquis.com'>
+  <meta name='author' content='kakaostyle.com'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
   <meta property='og:title' content='GitHub Actions 활용하기' />
@@ -28,19 +28,18 @@
         <nav class='hp-nav'>
           <span>
             <a href='/' class='logo-a-tag'>
-              <img class='hp-navbar-logo' src='/img/logo-zigzag.png'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
               <span class='hp-navbar-logo-font'>기술 블로그</span>
             </a>
           </span>
         </nav>
         <div class='float-right hp-navbar-top-link'>
-          <a class='hp-nav-item' href='https://zigzag.kr' target='_blank'>
-            <img class='icon' src='/img/zigzag-icon.png'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
           </a>
           <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
             <img class='icon' src='/img/github-icon.svg'>
           </a>
-          
         </div>
       </div>
     </div>
@@ -96,357 +95,336 @@
     <div class='col-12 col-lg-9'>
       <p>규모가 커지면 커질 수록 자동화된 워크플로우는 필수라고 생각합니다.
 하지만 부끄럽게도 크로키닷컴은 잘 구축된 편은 아닙니다.</p>
-
 <p>유닛 테스트는 초기부터 있었지만 그걸 PR, 머지마다 자동으로 수행하지는 못했습니다.
 그러다가 2017년 중반 겨우 Jenkins를 세팅해서 자동 테스트만은 수행했습니다. 하지만 그게 워크플로우와 잘 어우러지지 못했습니다.
 2019년에는 CodeBuild로 전환을 했고 비로서 PR 생성시 자동 테스트를 수행해 실패하면 머지를 할 수 없도록 구성이 됐습니다.</p>
-
 <p>그럭저럭 아쉬운 대로 쓰고는 있었지만 매 테스트마다 수십분씩 걸리고 수정도 어려웠습니다.
 가장 대중적으로 널리 쓰이는 Jenkins, 저희가 만든 OSS에 연결해 둔 <a href="https://travis-ci.com/">Travis CI</a>, <a href="https://circleci.com/">CircleCI</a>등을
 계속 두드려봤지만 썩 마음에 드는게 없었습니다.</p>
-
 <p>가장 방해가 되던건 저희가 마이크로서비스 아키텍처로 서비스들이 잘게 쪼개져 있는데, 저장소는 단일 저장소(monorepo)라는 점이였습니다.
 그러나 사람이 늘면서 도저히 단일 저장소로는 감당이 안 되어 저장소를 분리하기 시작했고, 분리된 저장소에서
 새로운 자동화 시스템을 고민하는데 그 때 눈에 띈 것이 <a href="https://github.com/features/actions">GitHub Actions</a>였습니다.
 작성이 쉬우면서도 확장성이 좋아서 그 뒤로 여러가지 워크플로우에 GitHub Actions를 사용하고 있습니다.</p>
-
 <p>이번 글에서는 현재 저희 팀이 세팅한 GitHub Actions의 workflow 파일을 공유하려고 합니다.
 이 내용이 독자분들에게 도움이 됐으면 합니다.</p>
-
 <h2 id="테스트-자동화">테스트 자동화</h2>
-
 <p>PR이나 머지 완료시 테스트를 수행합니다.</p>
-
-<pre><code class="language-yaml">name: 테스트 실행
-
-# PR이 만들어졌거나 master 브랜치에 머지되어 올라갈 때 수행합니다.
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - &quot;**&quot;
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      # MySQL 데몬을 띄웁니다.
-      # service container를 쓸 수도 있습니다.
-      - name: Setup MySQL
-        uses: mirromutth/mysql-action@v1.1
-        with:
-          host port: 7777
-          container port: 3306
-          mysql version: '5.7'
-          mysql database: testdb
-          mysql user: 'croquis_test'
-          mysql password: 'test_password'
-
-      # 소스를 가져옵니다.
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      # 실행 속도를 빠르게 하기 위해 설치된 Node 모듈을 캐시하도록 설정합니다.
-      - name: Cache node modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      # Node 14.x를 사용합니다.
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-
-      # 모듈을 설치합니다.
-      - name: Install packages
-        run: npm ci
-
-      # 테스트를 수행합니다.
-      - name: Run unit test
-        run: npm run test
-
-      # 중간에 실패한 경우 슬랙으로 알려줍니다.
-      # GitHub 저장소나 조직의 Secrets 항목에 슬랙 Webhook URL을 등록해야 합니다.
-      - name: Notify failure
-        uses: 8398a7/action-slack@v3
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        with:
-          status: ${{ job.status }}
-          username: github-actions
-          channel: '#github'
-        if: failure()
-</code></pre>
-
-<h2 id="문서-빌드-후-업로드">문서 빌드 후 업로드</h2>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">테스트 실행</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># PR이 만들어졌거나 master 브랜치에 머지되어 올라갈 때 수행합니다.</span><span class="w">
+</span><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">master</span><span class="w">
+</span><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;**&#34;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">test</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="c"># MySQL 데몬을 띄웁니다.</span><span class="w">
+</span><span class="w">      </span><span class="c"># service container를 쓸 수도 있습니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Setup MySQL</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">mirromutth/mysql-action@v1.1</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">host port</span><span class="p">:</span><span class="w"> </span><span class="m">7777</span><span class="w">
+</span><span class="w">          </span><span class="nt">container port</span><span class="p">:</span><span class="w"> </span><span class="m">3306</span><span class="w">
+</span><span class="w">          </span><span class="nt">mysql version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;5.7&#39;</span><span class="w">
+</span><span class="w">          </span><span class="nt">mysql database</span><span class="p">:</span><span class="w"> </span><span class="l">testdb</span><span class="w">
+</span><span class="w">          </span><span class="nt">mysql user</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;croquis_test&#39;</span><span class="w">
+</span><span class="w">          </span><span class="nt">mysql password</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;test_password&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 소스를 가져옵니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Checkout code</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v2</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 실행 속도를 빠르게 하기 위해 설치된 Node 모듈을 캐시하도록 설정합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Cache node modules</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/cache@v2</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">~/.npm</span><span class="w">
+</span><span class="w">          </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">${{ runner.os }}-node-${{ hashFiles(&#39;**/package-lock.json&#39;) }}</span><span class="w">
+</span><span class="w">          </span><span class="nt">restore-keys</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">            </span><span class="w">            </span><span class="l">${{ runner.os }}-node-</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># Node 14.x를 사용합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Use Node.js</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/setup-node@v1</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;14.x&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 모듈을 설치합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Install packages</span><span class="w">
+</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">npm ci</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 테스트를 수행합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Run unit test</span><span class="w">
+</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">npm run test</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 중간에 실패한 경우 슬랙으로 알려줍니다.</span><span class="w">
+</span><span class="w">      </span><span class="c"># GitHub 저장소나 조직의 Secrets 항목에 슬랙 Webhook URL을 등록해야 합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Notify failure</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">8398a7/action-slack@v3</span><span class="w">
+</span><span class="w">        </span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">SLACK_WEBHOOK_URL</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.SLACK_WEBHOOK_URL }}</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="l">${{ job.status }}</span><span class="w">
+</span><span class="w">          </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">github-actions</span><span class="w">
+</span><span class="w">          </span><span class="nt">channel</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;#github&#39;</span><span class="w">
+</span><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">failure()</span><span class="w">
+</span></code></pre></div><h2 id="문서-빌드-후-업로드">문서 빌드 후 업로드</h2>
 <p>현재 <a href="https://docusaurus.io/">Docusaurus</a>를 사용해 코드와 같은 저장소에서 문서를 작성하고 있습니다.
 이를 자동으로 문서 공유 웹사이트에 올립니다.</p>
-
 <p>PR시에도 문서를 생성해 별도 경로로 올립니다.
 잘 구성하면 하나의 step으로 만들 수도 있을 것 같은데 빠르게 구현하느라 if를 써서 별도 step으로 구현했습니다.</p>
-
-<pre><code class="language-yaml">name: 문서 빌드
-
-# PR이 만들어졌거나 master 브랜치에 머지되어 올라갈 때 수행합니다.
-on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - &quot;**&quot;
-
-env:
-  # 마이크로서비스 이름입니다.
-  SERVICE: user
-  BRANCH: ${{ github.head_ref }}
-  # 문서 업로드를 위한 AWS Access Key / Secret Key를 Secrets에 등록해둡니다.
-  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_UPLOAD_DOC_ACCESS_KEY }}
-  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_UPLOAD_DOC_SECRET_KEY }}
-
-jobs:
-  doc:
-    runs-on: ubuntu-latest
-
-    steps:
-      # 소스를 가져옵니다.
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      # 실행 속도를 빠르게 하기 위해 설치된 Node 모듈을 캐시하도록 설정합니다.
-      - name: Cache node modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      # Node 14.x를 사용합니다.
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-
-      # 모듈을 설치합니다.
-      - name: Install packages
-        run: npm ci
-
-      # 문서를 빌드합니다. (PR인 경우)
-      - name: Build documentation (PR)
-        # Docusaurus가 문서를 절대 경로로 생성하기 때문에 경로를 알려줘야 합니다.
-        run: npm run doc /branches/${SERVICE}/${BRANCH}/
-        if: github.ref != 'refs/heads/master'
-
-      # 문서를 업로드합니다. (PR인 경우)
-      - name: Upload documentation (PR)
-        run: |
-          aws s3 sync out-doc s3://doc.mysite.com/branches/${SERVICE}/${BRANCH} --delete --cache-control max-age=0
-        if: github.ref != 'refs/heads/master'
-
-      # 생성된 주소를 커밋 상태에 설정해서 바로 열어볼 수 있도록 합니다. (PR인 경우)
-      - name: Set documentation url status (PR)
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.repos.createCommitStatus({
-              context: 'documentaion',
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: context.eventName === 'pull_request' ? context.payload.pull_request.head.sha : context.sha,
-              state: 'success',
-              target_url: `https://doc.mysite.com/branches/${process.env.SERVICE}/${process.env.BRANCH}/index.html`,
-            });
-        if: github.ref != 'refs/heads/master'
-
-      # 문서를 빌드합니다. (주 브랜치에 푸시한 경우)
-      - name: Build documentation (master)
-        run: npm run doc /${SERVICE}/
-        if: github.ref == 'refs/heads/master'
-
-      # 문서를 업로드합니다. (주 브랜치에 푸시한 경우)
-      - name: Upload documentation (master)
-        run: |
-          aws s3 sync out-doc s3://doc.mysite.com/${SERVICE} --delete --cache-control max-age=0
-        if: github.ref == 'refs/heads/master'
-
-      # 생성된 주소를 커밋 상태에 설정해서 바로 열어볼 수 있도록 합니다. (주 브랜치에 푸시한 경우)
-      - name: Set documentaion url status (master)
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.repos.createCommitStatus({
-              context: 'documentaion',
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              sha: context.eventName === 'pull_request' ? context.payload.pull_request.head.sha : context.sha,
-              state: 'success',
-              target_url: `https://doc.mysite.com/${process.env.SERVICE}/index.html`,
-            });
-        if: github.ref == 'refs/heads/master'
-
-      # 중간에 실패한 경우 슬랙으로 알려줍니다.
-      # 저장소나 조직의 Secrets 항목에 슬랙 Webhook URL을 등록해야 합니다.
-      - name: Notify failure
-        uses: 8398a7/action-slack@v3
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        with:
-          status: ${{ job.status }}
-          username: github-actions
-          channel: '#github'
-        if: failure()
-</code></pre>
-
-<h2 id="웹-클라이언트-배포">웹 클라이언트 배포</h2>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">문서 빌드</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># PR이 만들어졌거나 master 브랜치에 머지되어 올라갈 때 수행합니다.</span><span class="w">
+</span><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="l">master</span><span class="w">
+</span><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span>- <span class="s2">&#34;**&#34;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="c"># 마이크로서비스 이름입니다.</span><span class="w">
+</span><span class="w">  </span><span class="nt">SERVICE</span><span class="p">:</span><span class="w"> </span><span class="l">user</span><span class="w">
+</span><span class="w">  </span><span class="nt">BRANCH</span><span class="p">:</span><span class="w"> </span><span class="l">${{ github.head_ref }}</span><span class="w">
+</span><span class="w">  </span><span class="c"># 문서 업로드를 위한 AWS Access Key / Secret Key를 Secrets에 등록해둡니다.</span><span class="w">
+</span><span class="w">  </span><span class="nt">AWS_ACCESS_KEY_ID</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.AWS_UPLOAD_DOC_ACCESS_KEY }}</span><span class="w">
+</span><span class="w">  </span><span class="nt">AWS_SECRET_ACCESS_KEY</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.AWS_UPLOAD_DOC_SECRET_KEY }}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">doc</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="c"># 소스를 가져옵니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Checkout code</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v2</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 실행 속도를 빠르게 하기 위해 설치된 Node 모듈을 캐시하도록 설정합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Cache node modules</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/cache@v2</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">~/.npm</span><span class="w">
+</span><span class="w">          </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">${{ runner.os }}-node-${{ hashFiles(&#39;**/package-lock.json&#39;) }}</span><span class="w">
+</span><span class="w">          </span><span class="nt">restore-keys</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">            </span><span class="w">            </span><span class="l">${{ runner.os }}-node-</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># Node 14.x를 사용합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Use Node.js</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/setup-node@v1</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;14.x&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 모듈을 설치합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Install packages</span><span class="w">
+</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">npm ci</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 문서를 빌드합니다. (PR인 경우)</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Build documentation (PR)</span><span class="w">
+</span><span class="w">        </span><span class="c"># Docusaurus가 문서를 절대 경로로 생성하기 때문에 경로를 알려줘야 합니다.</span><span class="w">
+</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">npm run doc /branches/${SERVICE}/${BRANCH}/</span><span class="w">
+</span><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">github.ref != &#39;refs/heads/master&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 문서를 업로드합니다. (PR인 경우)</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Upload documentation (PR)</span><span class="w">
+</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">          </span><span class="w">          </span><span class="l">aws s3 sync out-doc s3://doc.mysite.com/branches/${SERVICE}/${BRANCH} --delete --cache-control max-age=0</span><span class="w">
+</span><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">github.ref != &#39;refs/heads/master&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 생성된 주소를 커밋 상태에 설정해서 바로 열어볼 수 있도록 합니다. (PR인 경우)</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Set documentation url status (PR)</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/github-script@v3</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">github-token</span><span class="p">:</span><span class="w"> </span><span class="l">${{secrets.GITHUB_TOKEN}}</span><span class="w">
+</span><span class="w">          </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">            github.repos.createCommitStatus({
+</span><span class="sd">              context: &#39;documentaion&#39;,
+</span><span class="sd">              owner: context.repo.owner,
+</span><span class="sd">              repo: context.repo.repo,
+</span><span class="sd">              sha: context.eventName === &#39;pull_request&#39; ? context.payload.pull_request.head.sha : context.sha,
+</span><span class="sd">              state: &#39;success&#39;,
+</span><span class="sd">              target_url: `https://doc.mysite.com/branches/${process.env.SERVICE}/${process.env.BRANCH}/index.html`,
+</span><span class="sd">            });</span><span class="w">            
+</span><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">github.ref != &#39;refs/heads/master&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 문서를 빌드합니다. (주 브랜치에 푸시한 경우)</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Build documentation (master)</span><span class="w">
+</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">npm run doc /${SERVICE}/</span><span class="w">
+</span><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">github.ref == &#39;refs/heads/master&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 문서를 업로드합니다. (주 브랜치에 푸시한 경우)</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Upload documentation (master)</span><span class="w">
+</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">          </span><span class="w">          </span><span class="l">aws s3 sync out-doc s3://doc.mysite.com/${SERVICE} --delete --cache-control max-age=0</span><span class="w">
+</span><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">github.ref == &#39;refs/heads/master&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 생성된 주소를 커밋 상태에 설정해서 바로 열어볼 수 있도록 합니다. (주 브랜치에 푸시한 경우)</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Set documentaion url status (master)</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/github-script@v3</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">github-token</span><span class="p">:</span><span class="w"> </span><span class="l">${{secrets.GITHUB_TOKEN}}</span><span class="w">
+</span><span class="w">          </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">            github.repos.createCommitStatus({
+</span><span class="sd">              context: &#39;documentaion&#39;,
+</span><span class="sd">              owner: context.repo.owner,
+</span><span class="sd">              repo: context.repo.repo,
+</span><span class="sd">              sha: context.eventName === &#39;pull_request&#39; ? context.payload.pull_request.head.sha : context.sha,
+</span><span class="sd">              state: &#39;success&#39;,
+</span><span class="sd">              target_url: `https://doc.mysite.com/${process.env.SERVICE}/index.html`,
+</span><span class="sd">            });</span><span class="w">            
+</span><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">github.ref == &#39;refs/heads/master&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 중간에 실패한 경우 슬랙으로 알려줍니다.</span><span class="w">
+</span><span class="w">      </span><span class="c"># 저장소나 조직의 Secrets 항목에 슬랙 Webhook URL을 등록해야 합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Notify failure</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">8398a7/action-slack@v3</span><span class="w">
+</span><span class="w">        </span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">SLACK_WEBHOOK_URL</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.SLACK_WEBHOOK_URL }}</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">status</span><span class="p">:</span><span class="w"> </span><span class="l">${{ job.status }}</span><span class="w">
+</span><span class="w">          </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l">github-actions</span><span class="w">
+</span><span class="w">          </span><span class="nt">channel</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;#github&#39;</span><span class="w">
+</span><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">failure()</span><span class="w">
+</span></code></pre></div><h2 id="웹-클라이언트-배포">웹 클라이언트 배포</h2>
 <p>현재 웹 클라이언트는 S3에 올려 운영하고 있습니다.
 빌드해서 S3에 올리는 workflow입니다.</p>
-
-<pre><code class="language-yaml">name: '백오피스 사이트 배포'
-
-# 배포는 GitHub Actions 화면에서 수동으로 실행시켜야 합니다.
-on:
-  workflow_dispatch:
-
-jobs:
-  release:
-    runs-on: ubuntu-latest
-
-    steps:
-      # 소스를 가져옵니다.
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      # 실행 속도를 빠르게 하기 위해 설치된 Node 모듈을 캐시하도록 설정합니다.
-      - name: Cache node modules
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      # Node 14.x를 사용합니다.
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-
-      # 모듈을 설치합니다.
-      - name: Install packages
-        run: npm ci
-
-      # 결과물을 만듭니다.
-      - name: Build
-        run: npm run build
-
-      # S3에 결과물을 업로드합니다.
-      - name: Deploy
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_DEPLOY_FRONT_ACCESS_KEY }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_DEPLOY_FRONT_SECRET_KEY }}
-        run: |
-          aws s3 sync dist s3://backoffice.website.mysite.com/
-
-      # 배포가 성공한 경우 알립니다.
-      # Secrets 항목에 슬랙 Webhook URL을 등록해야 합니다.
-      - name: Slack notification success
-        uses: Ilshidur/action-slack@2.1.0
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_USERNAME: ${{ github.actor }}
-          SLACK_CHANNEL: release
-        with:
-          args: '{{ GITHUB_REF }}({{ GITHUB_SHA }}): 백오피스 사이트를 배포했습니다.'
-
-      # 배포가 실패한 경우 알립니다.
-      # Secrets 항목에 슬랙 Webhook URL을 등록해야 합니다.
-      - name: Slack notification failure
-        uses: Ilshidur/action-slack@2.1.0
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_USERNAME: ${{ github.actor }}
-          SLACK_CHANNEL: release
-        with:
-          args: '{{ GITHUB_REF }}({{ GITHUB_SHA }}): 백오피스 사이트 배포에 실패했습니다.'
-        if: failure()
-</code></pre>
-
-<h2 id="출시-후보-준비">출시 후보 준비</h2>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;백오피스 사이트 배포&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># 배포는 GitHub Actions 화면에서 수동으로 실행시켜야 합니다.</span><span class="w">
+</span><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">workflow_dispatch</span><span class="p">:</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">release</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="c"># 소스를 가져옵니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Checkout code</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v2</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 실행 속도를 빠르게 하기 위해 설치된 Node 모듈을 캐시하도록 설정합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Cache node modules</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/cache@v2</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">~/.npm</span><span class="w">
+</span><span class="w">          </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">${{ runner.os }}-node-${{ hashFiles(&#39;**/package-lock.json&#39;) }}</span><span class="w">
+</span><span class="w">          </span><span class="nt">restore-keys</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">            </span><span class="w">            </span><span class="l">${{ runner.os }}-node-</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># Node 14.x를 사용합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Use Node.js</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/setup-node@v1</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;14.x&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 모듈을 설치합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Install packages</span><span class="w">
+</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">npm ci</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 결과물을 만듭니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Build</span><span class="w">
+</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">npm run build</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># S3에 결과물을 업로드합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy</span><span class="w">
+</span><span class="w">        </span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">AWS_ACCESS_KEY_ID</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.AWS_DEPLOY_FRONT_ACCESS_KEY }}</span><span class="w">
+</span><span class="w">          </span><span class="nt">AWS_SECRET_ACCESS_KEY</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.AWS_DEPLOY_FRONT_SECRET_KEY }}</span><span class="w">
+</span><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">          </span><span class="w">          </span><span class="l">aws s3 sync dist s3://backoffice.website.mysite.com/</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 배포가 성공한 경우 알립니다.</span><span class="w">
+</span><span class="w">      </span><span class="c"># Secrets 항목에 슬랙 Webhook URL을 등록해야 합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Slack notification success</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">Ilshidur/action-slack@2.1.0</span><span class="w">
+</span><span class="w">        </span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">SLACK_WEBHOOK</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.SLACK_WEBHOOK_URL }}</span><span class="w">
+</span><span class="w">          </span><span class="nt">SLACK_USERNAME</span><span class="p">:</span><span class="w"> </span><span class="l">${{ github.actor }}</span><span class="w">
+</span><span class="w">          </span><span class="nt">SLACK_CHANNEL</span><span class="p">:</span><span class="w"> </span><span class="l">release</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;{{ GITHUB_REF }}({{ GITHUB_SHA }}): 백오피스 사이트를 배포했습니다.&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 배포가 실패한 경우 알립니다.</span><span class="w">
+</span><span class="w">      </span><span class="c"># Secrets 항목에 슬랙 Webhook URL을 등록해야 합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Slack notification failure</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">Ilshidur/action-slack@2.1.0</span><span class="w">
+</span><span class="w">        </span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">SLACK_WEBHOOK</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.SLACK_WEBHOOK_URL }}</span><span class="w">
+</span><span class="w">          </span><span class="nt">SLACK_USERNAME</span><span class="p">:</span><span class="w"> </span><span class="l">${{ github.actor }}</span><span class="w">
+</span><span class="w">          </span><span class="nt">SLACK_CHANNEL</span><span class="p">:</span><span class="w"> </span><span class="l">release</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;{{ GITHUB_REF }}({{ GITHUB_SHA }}): 백오피스 사이트 배포에 실패했습니다.&#39;</span><span class="w">
+</span><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">failure()</span><span class="w">
+</span></code></pre></div><h2 id="출시-후보-준비">출시 후보 준비</h2>
 <p>현재 저희는 개발 브랜치로 작업을 하다가 특정 시점에 출시 후보(Release Candidate)를 준비해서 최종 검증 후 출시를 하는 프로세스를 해보고 있습니다.
 이를 자동으로 준비하는 workflow입니다.</p>
-
 <p>이 workflow는 기본 브랜치 기준으로 실행되므로 개발 브랜치가 기본 브랜치여야 합니다.</p>
-
-<pre><code class="language-yaml">name: 출시 후보 준비
-
-# 새벽에 출시를 위한 후보 브랜치를 준비합니다.
-on:
-  schedule:
-    - cron: '0 19 * * WED' # 목요일 새벽 4시
-
-jobs:
-  create_rc:
-    runs-on: ubuntu-latest
-
-    steps:
-      # RC 브랜치를 생성합니다.
-      - name: Create RC branch
-        uses: peterjgrainger/action-create-branch@v2.0.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          branch: 'rc'
-
-      # RC 브랜치를 가지고 출시용 PR을 생성합니다.
-      # JavaScript 코드로 GitHub API를 자유롭게 사용할 수 있는 github-script 모듈을 사용합니다.
-      - name: Create PR
-        id: cpr
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          result-encoding: string
-          script: |
-            const target = new Date(); // UTC 기준 수요일 저녁
-            const month_start = new Date(target.getFullYear(), target.getMonth(), 1);
-            const month_week = Math.ceil(( ( (target - month_start) / 86400000) + 1)/7); // 주차 계산
-            const title = `${target.getFullYear()}년 ${target.getMonth() + 1}월 ${month_week}주`;
-            try {
-              // rc에서 main으로의 PR을 생성합니다.
-              const result = await github.pulls.create({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                title,
-                head: 'rc',
-                base: 'main',
-              });
-              return `${context.repo.repo} 저장소에 대해 ${title} RC PR을 생성했습니다. ${result.data.html_url}`;
-            } catch (error) {
-              return `${context.repo.repo} 저장소에 대해 변경 내용이 없어서 RC PR을 생성하지 않았습니다.`;
-            }
-
-      # 슬랙 채널에 내용을 공유합니다.
-      - name: Slack notification success
-        uses: Ilshidur/action-slack@2.1.0
-        env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_USERNAME: ${{ github.actor }}
-          SLACK_CHANNEL: 'release'
-        with:
-          args: ${{ steps.cpr.outputs.result }}
-</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">출시 후보 준비</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="c"># 새벽에 출시를 위한 후보 브랜치를 준비합니다.</span><span class="w">
+</span><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">schedule</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span>- <span class="nt">cron</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;0 19 * * WED&#39;</span><span class="w"> </span><span class="c"># 목요일 새벽 4시</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+</span><span class="w">  </span><span class="nt">create_rc</span><span class="p">:</span><span class="w">
+</span><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
+</span><span class="w">
+</span><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span><span class="w">      </span><span class="c"># RC 브랜치를 생성합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Create RC branch</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peterjgrainger/action-create-branch@v2.0.1</span><span class="w">
+</span><span class="w">        </span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">GITHUB_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.GITHUB_TOKEN }}</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">branch</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;rc&#39;</span><span class="w">
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># RC 브랜치를 가지고 출시용 PR을 생성합니다.</span><span class="w">
+</span><span class="w">      </span><span class="c"># JavaScript 코드로 GitHub API를 자유롭게 사용할 수 있는 github-script 모듈을 사용합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Create PR</span><span class="w">
+</span><span class="w">        </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l">cpr</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/github-script@v3</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">github-token</span><span class="p">:</span><span class="w"> </span><span class="l">${{secrets.GITHUB_TOKEN}}</span><span class="w">
+</span><span class="w">          </span><span class="nt">result-encoding</span><span class="p">:</span><span class="w"> </span><span class="l">string</span><span class="w">
+</span><span class="w">          </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span><span class="sd">            const target = new Date(); // UTC 기준 수요일 저녁
+</span><span class="sd">            const month_start = new Date(target.getFullYear(), target.getMonth(), 1);
+</span><span class="sd">            const month_week = Math.ceil(( ( (target - month_start) / 86400000) + 1)/7); // 주차 계산
+</span><span class="sd">            const title = `${target.getFullYear()}년 ${target.getMonth() + 1}월 ${month_week}주`;
+</span><span class="sd">            try {
+</span><span class="sd">              // rc에서 main으로의 PR을 생성합니다.
+</span><span class="sd">              const result = await github.pulls.create({
+</span><span class="sd">                owner: context.repo.owner,
+</span><span class="sd">                repo: context.repo.repo,
+</span><span class="sd">                title,
+</span><span class="sd">                head: &#39;rc&#39;,
+</span><span class="sd">                base: &#39;main&#39;,
+</span><span class="sd">              });
+</span><span class="sd">              return `${context.repo.repo} 저장소에 대해 ${title} RC PR을 생성했습니다. ${result.data.html_url}`;
+</span><span class="sd">            } catch (error) {
+</span><span class="sd">              return `${context.repo.repo} 저장소에 대해 변경 내용이 없어서 RC PR을 생성하지 않았습니다.`;
+</span><span class="sd">            }</span><span class="w">            
+</span><span class="w">
+</span><span class="w">      </span><span class="c"># 슬랙 채널에 내용을 공유합니다.</span><span class="w">
+</span><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Slack notification success</span><span class="w">
+</span><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">Ilshidur/action-slack@2.1.0</span><span class="w">
+</span><span class="w">        </span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">SLACK_WEBHOOK</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.SLACK_WEBHOOK_URL }}</span><span class="w">
+</span><span class="w">          </span><span class="nt">SLACK_USERNAME</span><span class="p">:</span><span class="w"> </span><span class="l">${{ github.actor }}</span><span class="w">
+</span><span class="w">          </span><span class="nt">SLACK_CHANNEL</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;release&#39;</span><span class="w">
+</span><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span><span class="w">          </span><span class="nt">args</span><span class="p">:</span><span class="w"> </span><span class="l">${{ steps.cpr.outputs.result }}</span><span class="w">
+</span></code></pre></div>
       
       <hr>
       <div class='post-original'>
@@ -459,6 +437,10 @@ jobs:
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2021-07-01-1-welcome-kakaostyle/'>
+      <li class="sidemenu-recent-item">카카오스타일 기술 블로그입니다</li>
+    </a>
+    
     <a href='/ko/2020-11-06-1-using-github-actions/'>
       <li class="sidemenu-recent-item">GitHub Actions 활용하기</li>
     </a>
@@ -469,10 +451,6 @@ jobs:
     
     <a href='/ko/2020-02-11-1-croquis-stack-aws-batch/'>
       <li class="sidemenu-recent-item">크로키의 스택 - AWS Batch</li>
-    </a>
-    
-    <a href='/ko/2019-09-19-2-mobile-dev-in-croquis/'>
-      <li class="sidemenu-recent-item">Mobile Dev. in Croquis</li>
     </a>
     
   </ul>
@@ -621,7 +599,7 @@ jobs:
       </div>
       <div class='float-right'>
         
-        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
+        <a class='btn btn-outline-primary' href='/ko/2021-07-01-1-welcome-kakaostyle/' title='카카오스타일 기술 블로그입니다'>다음 글 &rarr;</a>
         
       </div>
       <div class='clearfix'></div>
@@ -657,7 +635,7 @@ jobs:
   <hr>
   <footer>
     <p>
-      &copy; 2012-2020 croquis.com
+      &copy; 2012-2021 kakaostyle.com
       <span class='float-right text-muted'>
         powered by
         <a href='https://gohugo.io/' target='_blank'>Hugo</a>
@@ -681,7 +659,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

@@ -1,15 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>REST API on ZIGZAG 기술 블로그</title>
+    <title>REST API on 카카오스타일 기술 블로그</title>
     <link>https://devblog.croquis.com/ko/tags/rest-api/</link>
-    <description>Recent content in REST API on ZIGZAG 기술 블로그</description>
+    <description>Recent content in REST API on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 30 May 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://devblog.croquis.com/ko/tags/rest-api/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 30 May 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/rest-api/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>크로키의 스택 - REST API</title>
       <link>https://devblog.croquis.com/ko/2018-05-30-1-croquis-stack-rest-api/</link>

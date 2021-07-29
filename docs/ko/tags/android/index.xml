@@ -1,15 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Android on ZIGZAG 기술 블로그</title>
+    <title>Android on 카카오스타일 기술 블로그</title>
     <link>https://devblog.croquis.com/ko/tags/android/</link>
-    <description>Recent content in Android on ZIGZAG 기술 블로그</description>
+    <description>Recent content in Android on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 19 Sep 2019 02:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://devblog.croquis.com/ko/tags/android/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Thu, 19 Sep 2019 02:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/android/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mobile Dev. in Croquis</title>
       <link>https://devblog.croquis.com/ko/2019-09-19-2-mobile-dev-in-croquis/</link>

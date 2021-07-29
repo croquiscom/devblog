@@ -2,15 +2,15 @@
 <html lang='ko'>
 
 <head>
-	<meta name="generator" content="Hugo 0.55.4" />
+	<meta name="generator" content="Hugo 0.86.0" />
   <meta charset='utf-8'>
 
-  <title>ZIGZAG 기술 블로그</title>
+  <title>카카오스타일 기술 블로그</title>
   
-  <meta name='author' content='croquis.com'>
+  <meta name='author' content='kakaostyle.com'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
-  <meta property='og:title' content='ZIGZAG 기술 블로그' />
+  <meta property='og:title' content='카카오스타일 기술 블로그' />
   <meta property='og:type' content='website' />
   <meta property='og:url' content='https://devblog.croquis.com/ko/' />
   
@@ -29,19 +29,18 @@
         <nav class='hp-nav'>
           <span>
             <a href='/' class='logo-a-tag'>
-              <img class='hp-navbar-logo' src='/img/logo-zigzag.png'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
               <span class='hp-navbar-logo-font'>기술 블로그</span>
             </a>
           </span>
         </nav>
         <div class='float-right hp-navbar-top-link'>
-          <a class='hp-nav-item' href='https://zigzag.kr' target='_blank'>
-            <img class='icon' src='/img/zigzag-icon.png'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
           </a>
           <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
             <img class='icon' src='/img/github-icon.svg'>
           </a>
-          
         </div>
       </div>
     </div>
@@ -51,7 +50,7 @@
   <div class='hp-navbar-bgcolor'>
     <div class='container'>
       <div class='text-center'>
-        <div class='hp-navbar-title'>ZIGZAG 기술 블로그</div>
+        <div class='hp-navbar-title'>카카오스타일 기술 블로그</div>
       </div>
     </div>
   </div>
@@ -65,8 +64,35 @@
     <div class='col-12 col-lg-9'>
       <div class='alert alert-info'>
         <i class='fas fa-info-circle'></i>
-        <a href='/ko/2018-01-23-1-zigzag-devteam-is/' class='alert-link'>지그재그 개발팀 소개</a>
+        <a href='/ko/2018-01-23-1-zigzag-devteam-is/' class='alert-link'>카카오스타일 개발팀 소개</a>
         <i class='fas fa-angle-double-right'></i>
+      </div>
+      
+      <div>
+        <div class='posts-head'>
+          <span class='posts-title'>
+            <a href='/ko/2018-01-23-1-zigzag-devteam-is/'>지그재그 개발팀은...</a>
+          </span>
+          <div class='posts-info text-right'>
+            <span class='posts-date'>23 Jan 2018 | </span>
+            
+            <span class='posts-author'>by Sangmin Yoon</span>
+            
+          </div>
+        </div>
+        <div class='card-body'>
+          <a href='/ko/2018-01-23-1-zigzag-devteam-is/' class='posts-content'>
+            <p>지그재그에서는 최고의 개발팀을 만들기 위해 항상 노력하고 있습니다.
+이 글에서는 지그재그 개발팀의 문화와 관심사에 대해서 소개하고 있습니다.
+지그재그 서비스에 대해서는 하단의 소개를 참고해주세요.</p>
+<p>이 글을 읽고 저희 개발팀에 관심이 생기신 분은 언제든지 <a href="mailto:job@zigzag.kr">job@zigzag.kr</a> 으로 연락주세요.
+이력서를 보내주셔도 좋고, 깃허브 주소를 보내주셔도 좋습니다.
+그 외 문의사항이나 가볍게 나누고 싶으신 이야기들은 <a href="https://www.facebook.com/zigzagcareer">https://www.facebook.com/zigzagcareer</a> 를 통해서 문의해주시면 됩니다.
+지그재그 팀과 함께 수면 아래 숨겨진 가치를 찾아내는 멋진 경험에 동참할 팀원을 기다립니다.</p>
+<p>지그재그 현재 진행중인 개발팀의 채용 공고는 <a href="https://career.zigzag.kr/recruit/">여기</a>서 보실 수 있습니다.</p>
+            <div class='posts-readmore'>&hellip; read more </div>
+          </a>
+        </div>
       </div>
       
       <div>
@@ -106,9 +132,7 @@
         <div class='card-body'>
           <a href='/ko/2017-05-13-1-aws-serverless-1/' class='posts-content'>
             <p>최근 클라우드 컴퓨팅환경이 널리 사용되면서 서버 하드웨어 대한 유지보수 및 구성을 신경 쓰지 않고, 다양한 서비스들을 위한 서버를 개발할 수 있게 되었습니다. 하지만 이런 환경을 사용함에도 auto-scaling이나 서버 로그 수집, 서비스 배포 및 관리 등 소프트웨어 스택에 관한 부분은 신경 써줘야 합니다.</p>
-
 <p>이러한 고민을 덜어주기 위해서 최근에는 serverless architecture라는 개념이 생기고 있습니다. serverless architecture에서는 소스코드와 몇 번의 클릭만으로 서비스를 위한 REST API를 만들 수 있고, 수많은 요청에 대한 확장성에 대해 고민을 할 필요가 없으며, 로그 및 다양한 모니터링 툴들을 추가적인 작업 없이 사용할 수 있습니다.</p>
-
 <p>AWS에서도 serverless architecture를 위한 다양한 서비스를 제공하고 있습니다. 이번 글에서는 간단한 작업 대기열(task queue)을 만들어보며, serverless architecture 환경을 경험해보도록 하겠습니다.</p>
             <div class='posts-readmore'>&hellip; read more </div>
           </a>
@@ -131,11 +155,9 @@
           <a href='/ko/2017-04-11-1-webpack-setup-tutorial-with-typescript-and-mithril/' class='posts-content'>
             <p>클라이언트 JavaScript 개발 환경은 빠르게 변화하고 있습니다.
 다양한 관련 기술 중 빌드 툴 쪽에서 최근 가장 주목 받는 것은 <a href="https://webpack.js.org/">webpack</a>이라고 할 수 있습니다.</p>
-
 <p>webpack 전체는 굉장히 방대하기 때문에 한번에 이해하기가 쉽지 않습니다.
 인터넷에 이미 잘 구성된 설정파일이 많긴 하지만,
 기본적인 설정에 대해서 알아두면 많은 도움이 됩니다.</p>
-
 <p>이번 글에서는 크로키에서 사용하는 <a href="https://www.typescriptlang.org/">TypeScript</a>,
 <a href="https://mithril.js.org/">Mithril</a> 환경에 맞는 webpack 설정을 갖추는 과정을
 단계별로 설명합니다.</p>
@@ -161,33 +183,8 @@
             <p>이번 글에서는 크로키가 사용하는 스택 중
 클라이언트 JavaScript 프레임워크(client-side JavaScript framework)에 대해서
 소개해볼까 합니다.</p>
-
 <p>TD;DR) 크로키에서는 <a href="http://backbonejs.org/">Backbone</a>, <a href="http://angular.io/">Angular</a>를 거쳐
 현재는 <a href="http://mithril.js.org/">Mithril</a>이라는 프레임워크를 사용하고 있습니다.</p>
-            <div class='posts-readmore'>&hellip; read more </div>
-          </a>
-        </div>
-      </div>
-      
-      <div>
-        <div class='posts-head'>
-          <span class='posts-title'>
-            <a href='/ko/2017-02-10-1-why-croquis-selects-nodejs/'>크로키가 Node.js를 선택한 이유</a>
-          </span>
-          <div class='posts-info text-right'>
-            <span class='posts-date'>10 Feb 2017 | </span>
-            
-            <span class='posts-author'>by Sangmin Yoon</span>
-            
-          </div>
-        </div>
-        <div class='card-body'>
-          <a href='/ko/2017-02-10-1-why-croquis-selects-nodejs/' class='posts-content'>
-            <p>현재 크로키에서는 서버용 웹 프레임워크로 <a href="http://nodejs.org/">Node.js</a> 위에서
-<a href="http://expressjs.com/">Express</a>를 사용하고 있습니다.</p>
-
-<p>이번 글에서는 어떤 이유로 Node.js를 사용하게 되었는지 설명하려고 합니다.
-여러분들이 웹 프레임워크를 선택하시는 데 참고가 되었으면 합니다.</p>
             <div class='posts-readmore'>&hellip; read more </div>
           </a>
         </div>
@@ -199,6 +196,10 @@
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2021-07-01-1-welcome-kakaostyle/'>
+      <li class="sidemenu-recent-item">카카오스타일 기술 블로그입니다</li>
+    </a>
+    
     <a href='/ko/2020-11-06-1-using-github-actions/'>
       <li class="sidemenu-recent-item">GitHub Actions 활용하기</li>
     </a>
@@ -209,10 +210,6 @@
     
     <a href='/ko/2020-02-11-1-croquis-stack-aws-batch/'>
       <li class="sidemenu-recent-item">크로키의 스택 - AWS Batch</li>
-    </a>
-    
-    <a href='/ko/2019-09-19-2-mobile-dev-in-croquis/'>
-      <li class="sidemenu-recent-item">Mobile Dev. in Croquis</li>
     </a>
     
   </ul>
@@ -411,7 +408,7 @@
   <hr>
   <footer>
     <p>
-      &copy; 2012-2020 croquis.com
+      &copy; 2012-2021 kakaostyle.com
       <span class='float-right text-muted'>
         powered by
         <a href='https://gohugo.io/' target='_blank'>Hugo</a>
@@ -435,7 +432,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

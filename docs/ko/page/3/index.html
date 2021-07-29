@@ -2,15 +2,15 @@
 <html lang='ko'>
 
 <head>
-	<meta name="generator" content="Hugo 0.55.4" />
+	<meta name="generator" content="Hugo 0.86.0" />
   <meta charset='utf-8'>
 
-  <title>ZIGZAG 기술 블로그</title>
+  <title>카카오스타일 기술 블로그</title>
   
-  <meta name='author' content='croquis.com'>
+  <meta name='author' content='kakaostyle.com'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
-  <meta property='og:title' content='ZIGZAG 기술 블로그' />
+  <meta property='og:title' content='카카오스타일 기술 블로그' />
   <meta property='og:type' content='website' />
   <meta property='og:url' content='https://devblog.croquis.com/ko/' />
   
@@ -29,19 +29,18 @@
         <nav class='hp-nav'>
           <span>
             <a href='/' class='logo-a-tag'>
-              <img class='hp-navbar-logo' src='/img/logo-zigzag.png'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
               <span class='hp-navbar-logo-font'>기술 블로그</span>
             </a>
           </span>
         </nav>
         <div class='float-right hp-navbar-top-link'>
-          <a class='hp-nav-item' href='https://zigzag.kr' target='_blank'>
-            <img class='icon' src='/img/zigzag-icon.png'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
           </a>
           <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
             <img class='icon' src='/img/github-icon.svg'>
           </a>
-          
         </div>
       </div>
     </div>
@@ -51,7 +50,7 @@
   <div class='hp-navbar-bgcolor'>
     <div class='container'>
       <div class='text-center'>
-        <div class='hp-navbar-title'>ZIGZAG 기술 블로그</div>
+        <div class='hp-navbar-title'>카카오스타일 기술 블로그</div>
       </div>
     </div>
   </div>
@@ -65,8 +64,31 @@
     <div class='col-12 col-lg-9'>
       <div class='alert alert-info'>
         <i class='fas fa-info-circle'></i>
-        <a href='/ko/2018-01-23-1-zigzag-devteam-is/' class='alert-link'>지그재그 개발팀 소개</a>
+        <a href='/ko/2018-01-23-1-zigzag-devteam-is/' class='alert-link'>카카오스타일 개발팀 소개</a>
         <i class='fas fa-angle-double-right'></i>
+      </div>
+      
+      <div>
+        <div class='posts-head'>
+          <span class='posts-title'>
+            <a href='/ko/2018-11-30-1-aws-abuse-report/'>AWS Abuse Report</a>
+          </span>
+          <div class='posts-info text-right'>
+            <span class='posts-date'>23 Aug 2018 | </span>
+            
+            <span class='posts-author'>by Sangmin Yoon</span>
+            
+          </div>
+        </div>
+        <div class='card-body'>
+          <a href='/ko/2018-11-30-1-aws-abuse-report/' class='posts-content'>
+            <p>28일 오전, 한참 작업을 하다가 11시가 조금 넘은 시간에 문득 핸드폰을 들여다봤습니다.
+평상시 메일은 몰아서 처리하는 편인데(시급한 일이 메일로 오는 경우는 드물어서) 이날은 왠지 메일에 눈이 갔습니다.
+AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아니었고 Maintenance 알림 메일인가 하고 넘어가려는 순간
+불안한 단어 <strong>Abuse</strong>가 눈에 들어왔습니다.</p>
+            <div class='posts-readmore'>&hellip; read more </div>
+          </a>
+        </div>
       </div>
       
       <div>
@@ -104,7 +126,6 @@
         <div class='card-body'>
           <a href='/ko/2018-07-10-1-check-analytics-1/' class='posts-content'>
             <p>지그재그는 누적 다운로드 수 1,100만, MAU 200만을 넘어가고 있는 여성 쇼핑몰 모음 앱 서비스입니다. 그렇기 때문에 매일같이 지그재그에 쌓여가는 이용자들의 데이터 로그들도 어마어마하죠.</p>
-
 <p>이와 같은 로그들은 이용자들이 각자 자신에게 맞는 쇼핑몰/상품을 더 쉽게, 편하게 찾을 수 있도록 도와주는 개인화 알고리즘의 핵심 자원이면서, 이용자들이 앱의 각 기능들을 잘 활용하고 있는지 파악하기 위한 사용성 분석에도 필수적입니다. 또한 서비스 운영에 영향을 줄 수 있는 각종 이상 현상을 실시간으로 탐지하며 대응할 수 있게 도와주죠. 이를 위해 지그재그에서는 불필요한 로그/개인정보를 수집하지 않으면서도 앞선 목적에 부합하는 로그만 효율적으로 쌓아나가기 위해 노력하고 있습니다.</p>
             <div class='posts-readmore'>&hellip; read more </div>
           </a>
@@ -152,41 +173,10 @@
 필수라고 할 수 있습니다.
 저도 당연히 동의하면서 오래전부터 도입하려고 했지만, 급한 일에 밀려 실제로 도입한 것은
 지그재그 서비스를 오픈하고 나서도 2년이나 지난 작년 여름무렵입니다.</p>
-
 <p>여러가지 고민한 끝에 CI에 <a href="https://jenkins.io/">젠킨스</a>를 사용하기로 결정했습니다.
 그런데 서비스에 적용하기 위해서 각종 문서를 찾아보는데
 문서별로 작업을 정의하는 방식이 너무 달라서 굉장히 혼란스러웠습니다.</p>
-
 <p>이번 글에서는 저와 같이 혼란을 겪으시는 분들을 위해 젠킨스의 작업 정의 방식들에 대해서 설명하려고 합니다.</p>
-            <div class='posts-readmore'>&hellip; read more </div>
-          </a>
-        </div>
-      </div>
-      
-      <div>
-        <div class='posts-head'>
-          <span class='posts-title'>
-            <a href='/ko/2018-01-23-1-zigzag-devteam-is/'>지그재그 개발팀은...</a>
-          </span>
-          <div class='posts-info text-right'>
-            <span class='posts-date'>23 Jan 2018 | </span>
-            
-            <span class='posts-author'>by Sangmin Yoon</span>
-            
-          </div>
-        </div>
-        <div class='card-body'>
-          <a href='/ko/2018-01-23-1-zigzag-devteam-is/' class='posts-content'>
-            <p>지그재그에서는 최고의 개발팀을 만들기 위해 항상 노력하고 있습니다.
-이 글에서는 지그재그 개발팀의 문화와 관심사에 대해서 소개하고 있습니다.
-지그재그 서비스에 대해서는 하단의 소개를 참고해주세요.</p>
-
-<p>이 글을 읽고 저희 개발팀에 관심이 생기신 분은 언제든지 <a href="mailto:job@zigzag.kr">job@zigzag.kr</a> 으로 연락주세요.
-이력서를 보내주셔도 좋고, 깃허브 주소를 보내주셔도 좋습니다.
-그 외 문의사항이나 가볍게 나누고 싶으신 이야기들은 <a href="https://www.facebook.com/zigzagcareer">https://www.facebook.com/zigzagcareer</a> 를 통해서 문의해주시면 됩니다.
-지그재그 팀과 함께 수면 아래 숨겨진 가치를 찾아내는 멋진 경험에 동참할 팀원을 기다립니다.</p>
-
-<p>지그재그 현재 진행중인 개발팀의 채용 공고는 <a href="https://career.zigzag.kr/recruit/">여기</a>서 보실 수 있습니다.</p>
             <div class='posts-readmore'>&hellip; read more </div>
           </a>
         </div>
@@ -198,6 +188,10 @@
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2021-07-01-1-welcome-kakaostyle/'>
+      <li class="sidemenu-recent-item">카카오스타일 기술 블로그입니다</li>
+    </a>
+    
     <a href='/ko/2020-11-06-1-using-github-actions/'>
       <li class="sidemenu-recent-item">GitHub Actions 활용하기</li>
     </a>
@@ -208,10 +202,6 @@
     
     <a href='/ko/2020-02-11-1-croquis-stack-aws-batch/'>
       <li class="sidemenu-recent-item">크로키의 스택 - AWS Batch</li>
-    </a>
-    
-    <a href='/ko/2019-09-19-2-mobile-dev-in-croquis/'>
-      <li class="sidemenu-recent-item">Mobile Dev. in Croquis</li>
     </a>
     
   </ul>
@@ -409,7 +399,7 @@
   <hr>
   <footer>
     <p>
-      &copy; 2012-2020 croquis.com
+      &copy; 2012-2021 kakaostyle.com
       <span class='float-right text-muted'>
         powered by
         <a href='https://gohugo.io/' target='_blank'>Hugo</a>
@@ -433,7 +423,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

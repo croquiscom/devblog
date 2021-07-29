@@ -6,7 +6,7 @@
 
   <title>Node.js로 유닉스 파이프 처리하기</title>
   
-  <meta name='author' content='croquis.com'>
+  <meta name='author' content='kakaostyle.com'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
   <meta property='og:title' content='Node.js로 유닉스 파이프 처리하기' />
@@ -28,19 +28,18 @@
         <nav class='hp-nav'>
           <span>
             <a href='/' class='logo-a-tag'>
-              <img class='hp-navbar-logo' src='/img/logo-zigzag.png'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
               <span class='hp-navbar-logo-font'>기술 블로그</span>
             </a>
           </span>
         </nav>
         <div class='float-right hp-navbar-top-link'>
-          <a class='hp-nav-item' href='https://zigzag.kr' target='_blank'>
-            <img class='icon' src='/img/zigzag-icon.png'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
           </a>
           <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
             <img class='icon' src='/img/github-icon.svg'>
           </a>
-          
         </div>
       </div>
     </div>
@@ -97,60 +96,43 @@
       <p>크로키에서는 로그를 JSON 문자열로 만들어 일자별(혹은 시간별)로 묶은 후
 gzip으로 압축해서 저장하고 있습니다.
 그런데 이미 만들어진 로그를 수정해야 하는 일이 생겼습니다.</p>
-
 <p>예를 들면</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="p">{</span><span class="s2">&#34;date&#34;</span><span class="o">:</span><span class="s2">&#34;Fri Jan 15 2016 00:00:01 GMT+0000 (UTC)&#34;</span><span class="p">,</span><span class="s2">&#34;path&#34;</span><span class="o">:</span><span class="s2">&#34;/foobar&#34;</span><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="p">{</span><span class="s2">&#34;date&#34;</span><span class="o">:</span><span class="s2">&#34;Fri Jan 15 2016 00:00:01 GMT+0000 (UTC)&#34;</span><span class="p">,</span><span class="s2">&#34;path&#34;</span><span class="o">:</span><span class="s2">&#34;/foobar&#34;</span><span class="p">}</span>
 <span class="p">{</span><span class="s2">&#34;date&#34;</span><span class="o">:</span><span class="s2">&#34;Fri Jan 15 2016 00:00:03 GMT+0000 (UTC)&#34;</span><span class="p">,</span><span class="s2">&#34;path&#34;</span><span class="o">:</span><span class="s2">&#34;/croquis&#34;</span><span class="p">}</span>
-<span class="p">{</span><span class="s2">&#34;date&#34;</span><span class="o">:</span><span class="s2">&#34;Fri Jan 15 2016 00:00:10 GMT+0000 (UTC)&#34;</span><span class="p">,</span><span class="s2">&#34;path&#34;</span><span class="o">:</span><span class="s2">&#34;/awesome&#34;</span><span class="p">}</span>
-</code></pre></div>
-
+<span class="p">{</span><span class="s2">&#34;date&#34;</span><span class="o">:</span><span class="s2">&#34;Fri Jan 15 2016 00:00:10 GMT+0000 (UTC)&#34;</span><span class="p">,</span><span class="s2">&#34;path&#34;</span><span class="o">:</span><span class="s2">&#34;/awesome&#34;</span><span class="p">}</span></code></pre></div>
 <p>였던 데이터를</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="p">{</span><span class="s2">&#34;date&#34;</span><span class="o">:</span><span class="s2">&#34;2016-01-15T00:00:01.000Z&#34;</span><span class="p">,</span><span class="s2">&#34;path&#34;</span><span class="o">:</span><span class="s2">&#34;/foobar&#34;</span><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="p">{</span><span class="s2">&#34;date&#34;</span><span class="o">:</span><span class="s2">&#34;2016-01-15T00:00:01.000Z&#34;</span><span class="p">,</span><span class="s2">&#34;path&#34;</span><span class="o">:</span><span class="s2">&#34;/foobar&#34;</span><span class="p">}</span>
 <span class="p">{</span><span class="s2">&#34;date&#34;</span><span class="o">:</span><span class="s2">&#34;2016-01-15T00:00:03.000Z&#34;</span><span class="p">,</span><span class="s2">&#34;path&#34;</span><span class="o">:</span><span class="s2">&#34;/croquis&#34;</span><span class="p">}</span>
-<span class="p">{</span><span class="s2">&#34;date&#34;</span><span class="o">:</span><span class="s2">&#34;2016-01-15T00:00:10.000Z&#34;</span><span class="p">,</span><span class="s2">&#34;path&#34;</span><span class="o">:</span><span class="s2">&#34;/awesome&#34;</span><span class="p">}</span>
-</code></pre></div>
-
+<span class="p">{</span><span class="s2">&#34;date&#34;</span><span class="o">:</span><span class="s2">&#34;2016-01-15T00:00:10.000Z&#34;</span><span class="p">,</span><span class="s2">&#34;path&#34;</span><span class="o">:</span><span class="s2">&#34;/awesome&#34;</span><span class="p">}</span></code></pre></div>
 <p>처럼 바꿔야 했습니다.</p>
-
 <p>로그 전체를 읽어와서 줄별로 변환하고 다시 기록하면 되는 일이지만
 로그가 커서 잘 동작하지 않았습니다.</p>
-
 <p>그래서 유닉스의 파이프 형태로 처리하기로 했습니다.</p>
-
 <p>위의 작업을 하는 Node.js 프로그램은 다음과 같습니다.</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">const</span> <span class="nx">byline</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;byline&#39;</span><span class="p">);</span>
-<span class="k">const</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">byline</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">stdin</span><span class="p">);</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">byline</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;byline&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">byline</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">stdin</span><span class="p">);</span>
 <span class="nx">stream</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">line</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">line</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">line</span><span class="p">);</span>
   <span class="nx">data</span><span class="p">.</span><span class="nx">date</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">date</span><span class="p">).</span><span class="nx">toISOString</span><span class="p">();</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">));</span>
-<span class="p">});</span>
-</code></pre></div>
-
+<span class="p">});</span></code></pre></div>
 <p><a href="https://github.com/jahewson/node-byline">byline</a>은 스트림을 줄별로 처리할 수 있게 해주는 모듈입니다.
 줄별로 들어온 JSON 문자열을 파싱하고 원하는 처리를 한 후 다시 쓰기만 하는 단순한 코드입니다.
 이 프로그램을 유닉스 파이프라인에 넣으면 원하는 결과를 얻을 수 있습니다.</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ gunzip -c original/01.data.gz <span class="p">|</span> node convert.js <span class="p">|</span> gzip &gt; converted/01.data.gz</code></pre></div>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ gunzip -c original/01.data.gz <span class="p">|</span> node convert.js <span class="p">|</span> gzip &gt; converted/01.data.gz</code></pre></div>
 <h3 id="보너스">보너스</h3>
-
 <p>이 작업을 순수히 Node.js만 가지고도 할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">zlib</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;zlib&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">byline</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;byline&#39;</span><span class="p">);</span>
 
-<div class="highlight"><pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">const</span> <span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;fs&#39;</span><span class="p">);</span>
-<span class="k">const</span> <span class="nx">stream</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;stream&#39;</span><span class="p">);</span>
-<span class="k">const</span> <span class="nx">zlib</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;zlib&#39;</span><span class="p">);</span>
-<span class="k">const</span> <span class="nx">byline</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;byline&#39;</span><span class="p">);</span>
-
-<span class="k">class</span> <span class="nx">Convert</span> <span class="k">extends</span> <span class="nx">stream</span><span class="p">.</span><span class="nx">Transform</span> <span class="p">{</span>
+<span class="kr">class</span> <span class="nx">Convert</span> <span class="kr">extends</span> <span class="nx">stream</span><span class="p">.</span><span class="nx">Transform</span> <span class="p">{</span>
   <span class="nx">constructor</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">super</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
+    <span class="kr">super</span><span class="p">(</span><span class="nx">options</span><span class="p">);</span>
   <span class="p">}</span>
-  <span class="nx">_transform</span><span class="p">(</span><span class="nx">line</span><span class="p">,</span> <span class="nx">encoding</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">line</span><span class="p">);</span>
+  <span class="mi">_</span><span class="nx">transform</span><span class="p">(</span><span class="nx">line</span><span class="p">,</span> <span class="nx">encoding</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">line</span><span class="p">);</span>
     <span class="nx">data</span><span class="p">.</span><span class="nx">date</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">date</span><span class="p">).</span><span class="nx">toISOString</span><span class="p">();</span>
     <span class="nx">callback</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;\n&#39;</span><span class="p">);</span>
   <span class="p">}</span>
@@ -161,16 +143,12 @@ gzip으로 압축해서 저장하고 있습니다.
   <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">byline</span><span class="p">())</span>
   <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="k">new</span> <span class="nx">Convert</span><span class="p">())</span>
   <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">zlib</span><span class="p">.</span><span class="nx">createGzip</span><span class="p">())</span>
-  <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="s1">&#39;converted/01.data.gz&#39;</span><span class="p">));</span>
-</code></pre></div>
-
+  <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">fs</span><span class="p">.</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="s1">&#39;converted/01.data.gz&#39;</span><span class="p">));</span></code></pre></div>
 <p>하지만 파이프의 특성상 하나의 프로그램이 하나의 작업만
 할 수록 응용하기가 편해집니다.
 예를 들어 파일이 로컬에 있는게 아니고 S3에 있다면
 유닉스 파이프로는 다음과 같이 바꾸면 됩니다.</p>
-
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash">$ aws s3 cp s3://mybucket/stream.txt - <span class="p">|</span> gunzip <span class="p">|</span> node convert.js <span class="p">|</span> gzip &gt; converted/01.data.gz</code></pre></div>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash">$ aws s3 cp s3://mybucket/stream.txt - <span class="p">|</span> gunzip <span class="p">|</span> node convert.js <span class="p">|</span> gzip &gt; converted/01.data.gz</code></pre></div>
 <p>Node.js로도 작성할 수 있지만 훨씬 많은 코드를 작성해야겠죠.</p>
       
       <hr>
@@ -184,6 +162,10 @@ gzip으로 압축해서 저장하고 있습니다.
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2021-07-01-1-welcome-kakaostyle/'>
+      <li class="sidemenu-recent-item">카카오스타일 기술 블로그입니다</li>
+    </a>
+    
     <a href='/ko/2020-11-06-1-using-github-actions/'>
       <li class="sidemenu-recent-item">GitHub Actions 활용하기</li>
     </a>
@@ -194,10 +176,6 @@ gzip으로 압축해서 저장하고 있습니다.
     
     <a href='/ko/2020-02-11-1-croquis-stack-aws-batch/'>
       <li class="sidemenu-recent-item">크로키의 스택 - AWS Batch</li>
-    </a>
-    
-    <a href='/ko/2019-09-19-2-mobile-dev-in-croquis/'>
-      <li class="sidemenu-recent-item">Mobile Dev. in Croquis</li>
     </a>
     
   </ul>
@@ -382,7 +360,7 @@ gzip으로 압축해서 저장하고 있습니다.
   <hr>
   <footer>
     <p>
-      &copy; 2012-2020 croquis.com
+      &copy; 2012-2021 kakaostyle.com
       <span class='float-right text-muted'>
         powered by
         <a href='https://gohugo.io/' target='_blank'>Hugo</a>
@@ -406,7 +384,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

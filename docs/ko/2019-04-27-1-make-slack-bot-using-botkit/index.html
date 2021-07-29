@@ -6,7 +6,7 @@
 
   <title>BotKit을 이용한 슬랙 봇 만들기</title>
   
-  <meta name='author' content='croquis.com'>
+  <meta name='author' content='kakaostyle.com'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
   <meta property='og:title' content='BotKit을 이용한 슬랙 봇 만들기' />
@@ -28,19 +28,18 @@
         <nav class='hp-nav'>
           <span>
             <a href='/' class='logo-a-tag'>
-              <img class='hp-navbar-logo' src='/img/logo-zigzag.png'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
               <span class='hp-navbar-logo-font'>기술 블로그</span>
             </a>
           </span>
         </nav>
         <div class='float-right hp-navbar-top-link'>
-          <a class='hp-nav-item' href='https://zigzag.kr' target='_blank'>
-            <img class='icon' src='/img/zigzag-icon.png'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
           </a>
           <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
             <img class='icon' src='/img/github-icon.svg'>
           </a>
-          
         </div>
       </div>
     </div>
@@ -104,48 +103,32 @@
       <p>크로키닷컴을 시작하고 비교적 초기부터 ChatOps를 해보고 싶었습니다.
 GitHub의 글을 보고 도입하고 싶다는 생각이 들었던 거로 기억합니다.
 당연하게 <a href="https://hubot.github.com/">Hubot</a>을 이용해 채팅봇을 설정했습니다.</p>
-
 <p>초기에는 HipChat에 Hubot을 붙였고, 2014년 중반 Slack으로 전환했습니다.
 봇을 활용하려는 시도는 여러 번 했지만 대부분 장난 수준을 벗어나지 못했고(예. 점심 메뉴 보여주고 임의로 고르기),
 그나마 조금 복잡했던 것이 Box, Dropbox, Evernote에서 변경된 내용을 인식해 특정 채널에 알려주는 기능이었습니다.</p>
-
 <p>그렇게 방치하다가 2019년에 들어와 개발팀 인원도 늘어나서 다시 한번 제대로 채팅봇을 만들자는 얘기가 나왔습니다.
 이전에 작업해서 익숙한 Hubot을 다시 사용할까 했는데 아무래도 소스 기반이 CoffeeScript인게 마음에 걸렸습니다.
 여러 가지를 찾아보다가 <a href="https://botkit.ai/">Botkit</a>을 사용하기로 결정했습니다.</p>
-
 <p>이번 글에서는 Botkit을 이용해 슬랙 봇을 만드는 방법을 설명합니다.</p>
-
 <h1 id="슬랙-앱-생성">슬랙 앱 생성</h1>
-
 <p>Hubot은 <a href="https://slack.com/apps/A0F7XDU93-hubot">슬랙 앱</a>이 있어서 설정이 편했는데,
 Botkit은 슬랙 앱을 만들어야 합니다.</p>
-
 <p>Botkit은 AI 봇을 만들어 여러 업체에 제공하기 위한 솔루션인 듯 여러 팀을 다룰 수 있도록 구성되어 있고,
 <a href="https://botkit.ai/docs/provisioning/slack-events-api.html">Botkit 슬랙 앱 설정 문서</a>도
 내용이 많습니다. 하지만 내부적으로 사용하는 용도로는 그렇게까지 필요하지 않습니다.</p>
-
 <p>우선 <a href="https://api.slack.com/apps">Your Apps</a>에 가서 새 앱 생성을 합니다.</p>
-
-<p><img src="/img/content/2019-04-27-1/2019-04-27-1-01.png" alt="Create a Slack App" /></p>
-
+<p><img src="/img/content/2019-04-27-1/2019-04-27-1-01.png" alt="Create a Slack App"></p>
 <p>그리고 Bot Users 메뉴에서 Bot User를 추가합니다.</p>
-
-<p><img src="/img/content/2019-04-27-1/2019-04-27-1-02.png" alt="Add Bot User" /></p>
-
-<p>마지막으로 Install App에서 'Install App to Workspace'를 누르고 Authorize를 선택하면 Bot User Access Token을 얻을 수 있습니다.</p>
-
-<p><img src="/img/content/2019-04-27-1/2019-04-27-1-03.png" alt="Installed App Settings" /></p>
-
+<p><img src="/img/content/2019-04-27-1/2019-04-27-1-02.png" alt="Add Bot User"></p>
+<p>마지막으로 Install App에서 &lsquo;Install App to Workspace&rsquo;를 누르고 Authorize를 선택하면 Bot User Access Token을 얻을 수 있습니다.</p>
+<p><img src="/img/content/2019-04-27-1/2019-04-27-1-03.png" alt="Installed App Settings"></p>
 <h1 id="bot-만들기">Bot 만들기</h1>
-
 <p><a href="https://github.com/howdyai/botkit-starter-slack">Botkit Starter Kit for Slack Bots</a>가 있지만,
 이 역시 저희 용도에는 너무 복잡해서 처음부터 만들기로 했습니다.</p>
-
 <p>필요한 패키지는 <a href="https://www.npmjs.com/package/botkit">botkit</a>, <a href="https://www.npmjs.com/package/dotenv">dotenv</a> 뿐입니다.
 그리고 TypeScript로 만들기 위해 typescript와 ts-node를 추가합니다.</p>
-
 <p><strong><em>package.json</em></strong>
-<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
   <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;bot&#34;</span><span class="p">,</span>
   <span class="nt">&#34;scripts&#34;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&#34;start&#34;</span><span class="p">:</span> <span class="s2">&#34;ts-node app.ts&#34;</span>
@@ -160,16 +143,12 @@ Botkit은 슬랙 앱을 만들어야 합니다.</p>
     <span class="nt">&#34;@types/dotenv&#34;</span><span class="p">:</span> <span class="s2">&#34;^6.1.1&#34;</span>
   <span class="p">}</span>
 <span class="p">}</span></code></pre></div></p>
-
 <p>Access Token은 소스 관리가 되지 않는 .env 파일에 기록합니다.</p>
-
 <p><strong><em>.env</em></strong>
-<div class="highlight"><pre class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">SLACK_BOT_TOKEN</span><span class="o">=</span>xoxb-276777......</code></pre></div></p>
-
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">SLACK_BOT_TOKEN</span><span class="o">=</span>xoxb-276777......</code></pre></div></p>
 <p>TypeScript 컴파일 설정도 만들어줍니다.</p>
-
 <p><strong><em>tsconfig.json</em></strong>
-<div class="highlight"><pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
   <span class="nt">&#34;compilerOptions&#34;</span><span class="p">:</span> <span class="p">{</span>
     <span class="nt">&#34;noImplicitAny&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
     <span class="nt">&#34;noImplicitThis&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
@@ -185,12 +164,10 @@ Botkit은 슬랙 앱을 만들어야 합니다.</p>
     <span class="p">]</span>
   <span class="p">}</span>
 <span class="p">}</span></code></pre></div></p>
-
 <p>마지막으로 다음과 같이 봇 코드를 작성합니다.</p>
-
 <p><strong><em>app.ts</em></strong>
-<div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="nx">Botkit</span> <span class="nx">from</span> <span class="s1">&#39;botkit&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">dotenv</span> <span class="nx">from</span> <span class="s1">&#39;dotenv&#39;</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="nx">Botkit</span> <span class="kr">from</span> <span class="s1">&#39;botkit&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">dotenv</span> <span class="kr">from</span> <span class="s1">&#39;dotenv&#39;</span><span class="p">;</span>
 
 <span class="nx">dotenv</span><span class="p">.</span><span class="nx">config</span><span class="p">();</span>
 
@@ -208,42 +185,34 @@ Botkit은 슬랙 앱을 만들어야 합니다.</p>
     <span class="nx">bot</span><span class="p">.</span><span class="nx">say</span><span class="p">({</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;봇이 배포되었습니다! 😄&#39;</span><span class="p">,</span> <span class="nx">channel</span><span class="o">:</span> <span class="s1">&#39;Cxxxxx&#39;</span> <span class="p">});</span>
   <span class="p">}</span>
 <span class="p">});</span></code></pre></div></p>
-
 <p><code>npm start</code>를 하면 봇이 구동되고 지정한 채널에 메시지가 표시됩니다.</p>
-
 <h1 id="봇-스킬-추가">봇 스킬 추가</h1>
-
 <p>봇 동작을 기술할 스크립트는 Botkit Starter Kit에 맞춰 스킬이라고 부르기로 했습니다.</p>
-
 <p>스킬 추가는 파일을 추가하기만 하면 되는 구조로 작성했습니다.</p>
-
 <p><strong><em>skill/index.ts</em></strong>
-<div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="p">{</span> <span class="nx">SlackController</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;botkit&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">fs</span> <span class="nx">from</span> <span class="s1">&#39;fs&#39;</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="p">{</span> <span class="nx">SlackController</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;botkit&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">fs</span> <span class="kr">from</span> <span class="s1">&#39;fs&#39;</span><span class="p">;</span>
 
 <span class="kr">export</span> <span class="kr">const</span> <span class="nx">loadSkills</span> <span class="o">=</span> <span class="p">(</span><span class="nx">controller</span>: <span class="kt">SlackController</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="nx">fs</span><span class="p">.</span><span class="nx">readdirSync</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">).</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">filename</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
     <span class="k">if</span> <span class="p">(</span><span class="nx">filename</span> <span class="o">!==</span> <span class="s1">&#39;index.ts&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">filename</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;.disabled.&#39;</span><span class="p">))</span> <span class="p">{</span>
-      <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./&#39;</span> <span class="o">+</span> <span class="nx">filename</span><span class="p">).</span><span class="k">default</span><span class="p">(</span><span class="nx">controller</span><span class="p">);</span>
+      <span class="kr">require</span><span class="p">(</span><span class="s1">&#39;./&#39;</span> <span class="o">+</span> <span class="nx">filename</span><span class="p">).</span><span class="k">default</span><span class="p">(</span><span class="nx">controller</span><span class="p">);</span>
     <span class="p">}</span>
   <span class="p">});</span>
 <span class="p">};</span></code></pre></div></p>
-
 <p><strong><em>app.ts</em></strong>
-<div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="p">...</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="p">...</span>
 
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">loadSkills</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;./skill&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">loadSkills</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;./skill&#39;</span><span class="p">;</span>
 
 <span class="p">...</span>
 
 <span class="nx">loadSkills</span><span class="p">(</span><span class="nx">controller</span><span class="p">);</span></code></pre></div></p>
-
 <p>다음은 Botkit Starter Kit for Slack Bots에서 가져온 스킬 샘플입니다.
 봇에게 color나 question이라는 단어를 포함해 1:1 메시지(direct_message)를 보내거나 언급하면 동작합니다.</p>
-
 <p><strong><em>skill/sample-conversation.ts</em></strong>
-<div class="highlight"><pre class="chroma"><code class="language-typescript" data-lang="typescript"><span class="c1">// copied from https://github.com/howdyai/botkit-starter-slack/blob/master/skills/sample_conversations.js
-</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">SlackController</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;botkit&#39;</span><span class="p">;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="c1">// copied from https://github.com/howdyai/botkit-starter-slack/blob/master/skills/sample_conversations.js
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">SlackController</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;botkit&#39;</span><span class="p">;</span>
 
 <span class="kr">export</span> <span class="k">default</span> <span class="p">(</span><span class="nx">controller</span>: <span class="kt">SlackController</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
   <span class="nx">controller</span><span class="p">.</span><span class="nx">hears</span><span class="p">([</span><span class="s1">&#39;color&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;direct_message&#39;</span><span class="p">,</span> <span class="s1">&#39;direct_mention&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -289,9 +258,7 @@ Botkit은 슬랙 앱을 만들어야 합니다.</p>
     <span class="p">});</span>
   <span class="p">});</span>
 <span class="p">};</span></code></pre></div></p>
-
 <h1 id="마무리">마무리</h1>
-
 <p>원래 봇을 통해 의도했던 ChatOps는 아직 시작하지 못했지만, 회사 행정에 도움 되는 기능부터 하나씩 스킬을 늘려가고 있습니다.
 다음번에는 <a href="https://api.slack.com/messaging/interactivity">인터랙티브 메시지</a>를 만드는 방법을 소개하도록 하겠습니다.</p>
       
@@ -306,6 +273,10 @@ Botkit은 슬랙 앱을 만들어야 합니다.</p>
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2021-07-01-1-welcome-kakaostyle/'>
+      <li class="sidemenu-recent-item">카카오스타일 기술 블로그입니다</li>
+    </a>
+    
     <a href='/ko/2020-11-06-1-using-github-actions/'>
       <li class="sidemenu-recent-item">GitHub Actions 활용하기</li>
     </a>
@@ -316,10 +287,6 @@ Botkit은 슬랙 앱을 만들어야 합니다.</p>
     
     <a href='/ko/2020-02-11-1-croquis-stack-aws-batch/'>
       <li class="sidemenu-recent-item">크로키의 스택 - AWS Batch</li>
-    </a>
-    
-    <a href='/ko/2019-09-19-2-mobile-dev-in-croquis/'>
-      <li class="sidemenu-recent-item">Mobile Dev. in Croquis</li>
     </a>
     
   </ul>
@@ -504,7 +471,7 @@ Botkit은 슬랙 앱을 만들어야 합니다.</p>
   <hr>
   <footer>
     <p>
-      &copy; 2012-2020 croquis.com
+      &copy; 2012-2021 kakaostyle.com
       <span class='float-right text-muted'>
         powered by
         <a href='https://gohugo.io/' target='_blank'>Hugo</a>
@@ -528,7 +495,6 @@ if (!doNotTrack) {
 	ga('send', 'pageview');
 }
 </script>
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

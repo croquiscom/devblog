@@ -1,14 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ZIGZAG 기술 블로그</title>
+    <title>카카오스타일 기술 블로그</title>
     <link>https://devblog.croquis.com/ko/</link>
-    <description>Recent content on ZIGZAG 기술 블로그</description>
+    <description>Recent content on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 06 Nov 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://devblog.croquis.com/ko/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Fri, 06 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>카카오스타일 기술 블로그입니다</title>
+      <link>https://devblog.croquis.com/ko/2021-07-01-1-welcome-kakaostyle/</link>
+      <pubDate>Thu, 01 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/2021-07-01-1-welcome-kakaostyle/</guid>
+      <description>&lt;p&gt;안녕하세요. 오랫만의 글인데 기술 글이 아니여서 죄송합니다.
+2021년 7월 1일부로 지그재그를 운영하는 크로키닷컴은 카카오스타일로 거듭나게 되었습니다.
+더 커진 규모에 걸맞게 더 양질의 기술 공유를 하도록 노력하겠습니다.
+많은 기대부탁드립니다.&lt;/p&gt;</description>
+    </item>
     
     <item>
       <title>GitHub Actions 활용하기</title>
@@ -18,20 +26,16 @@
       <guid>https://devblog.croquis.com/ko/2020-11-06-1-using-github-actions/</guid>
       <description>&lt;p&gt;규모가 커지면 커질 수록 자동화된 워크플로우는 필수라고 생각합니다.
 하지만 부끄럽게도 크로키닷컴은 잘 구축된 편은 아닙니다.&lt;/p&gt;
-
 &lt;p&gt;유닛 테스트는 초기부터 있었지만 그걸 PR, 머지마다 자동으로 수행하지는 못했습니다.
 그러다가 2017년 중반 겨우 Jenkins를 세팅해서 자동 테스트만은 수행했습니다. 하지만 그게 워크플로우와 잘 어우러지지 못했습니다.
 2019년에는 CodeBuild로 전환을 했고 비로서 PR 생성시 자동 테스트를 수행해 실패하면 머지를 할 수 없도록 구성이 됐습니다.&lt;/p&gt;
-
 &lt;p&gt;그럭저럭 아쉬운 대로 쓰고는 있었지만 매 테스트마다 수십분씩 걸리고 수정도 어려웠습니다.
 가장 대중적으로 널리 쓰이는 Jenkins, 저희가 만든 OSS에 연결해 둔 &lt;a href=&#34;https://travis-ci.com/&#34;&gt;Travis CI&lt;/a&gt;, &lt;a href=&#34;https://circleci.com/&#34;&gt;CircleCI&lt;/a&gt;등을
 계속 두드려봤지만 썩 마음에 드는게 없었습니다.&lt;/p&gt;
-
 &lt;p&gt;가장 방해가 되던건 저희가 마이크로서비스 아키텍처로 서비스들이 잘게 쪼개져 있는데, 저장소는 단일 저장소(monorepo)라는 점이였습니다.
 그러나 사람이 늘면서 도저히 단일 저장소로는 감당이 안 되어 저장소를 분리하기 시작했고, 분리된 저장소에서
 새로운 자동화 시스템을 고민하는데 그 때 눈에 띈 것이 &lt;a href=&#34;https://github.com/features/actions&#34;&gt;GitHub Actions&lt;/a&gt;였습니다.
 작성이 쉬우면서도 확장성이 좋아서 그 뒤로 여러가지 워크플로우에 GitHub Actions를 사용하고 있습니다.&lt;/p&gt;
-
 &lt;p&gt;이번 글에서는 현재 저희 팀이 세팅한 GitHub Actions의 workflow 파일을 공유하려고 합니다.
 이 내용이 독자분들에게 도움이 됐으면 합니다.&lt;/p&gt;</description>
     </item>
@@ -94,7 +98,7 @@
       <description>&lt;p&gt;안녕하세요 지그재그에서 프론트엔드 개발을 하고 있는 태재영입니다.
 프론트엔드 개발자에게 중앙 정렬을 어떻게 하냐고 물어보면 inline 요소는 text-align 속성을 center로 지정하고, block 요소는 margin 속성을 auto로 지정한다고 대답할 겁니다.
 그런데 좌우가 아니라 위아래 수직 정렬을 어떻게 하겠냐고 물어보면 대답을 선뜻 못하거나 굉장히 다양한 답변들이 나옵니다.
-그 여러 방법들 중에 개발자들이 사용하면서도 &amp;quot;왜 되는거지?&amp;quot;라고 의구심을 많이 품게 되는 vertical-align에 대해서 자세히 써보려고 합니다.&lt;/p&gt;</description>
+그 여러 방법들 중에 개발자들이 사용하면서도 &amp;ldquo;왜 되는거지?&amp;ldquo;라고 의구심을 많이 품게 되는 vertical-align에 대해서 자세히 써보려고 합니다.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -119,15 +123,12 @@
       <description>&lt;p&gt;크로키닷컴을 시작하고 비교적 초기부터 ChatOps를 해보고 싶었습니다.
 GitHub의 글을 보고 도입하고 싶다는 생각이 들었던 거로 기억합니다.
 당연하게 &lt;a href=&#34;https://hubot.github.com/&#34;&gt;Hubot&lt;/a&gt;을 이용해 채팅봇을 설정했습니다.&lt;/p&gt;
-
 &lt;p&gt;초기에는 HipChat에 Hubot을 붙였고, 2014년 중반 Slack으로 전환했습니다.
 봇을 활용하려는 시도는 여러 번 했지만 대부분 장난 수준을 벗어나지 못했고(예. 점심 메뉴 보여주고 임의로 고르기),
 그나마 조금 복잡했던 것이 Box, Dropbox, Evernote에서 변경된 내용을 인식해 특정 채널에 알려주는 기능이었습니다.&lt;/p&gt;
-
 &lt;p&gt;그렇게 방치하다가 2019년에 들어와 개발팀 인원도 늘어나서 다시 한번 제대로 채팅봇을 만들자는 얘기가 나왔습니다.
 이전에 작업해서 익숙한 Hubot을 다시 사용할까 했는데 아무래도 소스 기반이 CoffeeScript인게 마음에 걸렸습니다.
 여러 가지를 찾아보다가 &lt;a href=&#34;https://botkit.ai/&#34;&gt;Botkit&lt;/a&gt;을 사용하기로 결정했습니다.&lt;/p&gt;
-
 &lt;p&gt;이번 글에서는 Botkit을 이용해 슬랙 봇을 만드는 방법을 설명합니다.&lt;/p&gt;</description>
     </item>
     
@@ -159,7 +160,6 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
       
       <guid>https://devblog.croquis.com/ko/2018-07-10-1-check-analytics-1/</guid>
       <description>&lt;p&gt;지그재그는 누적 다운로드 수 1,100만, MAU 200만을 넘어가고 있는 여성 쇼핑몰 모음 앱 서비스입니다. 그렇기 때문에 매일같이 지그재그에 쌓여가는 이용자들의 데이터 로그들도 어마어마하죠.&lt;/p&gt;
-
 &lt;p&gt;이와 같은 로그들은 이용자들이 각자 자신에게 맞는 쇼핑몰/상품을 더 쉽게, 편하게 찾을 수 있도록 도와주는 개인화 알고리즘의 핵심 자원이면서, 이용자들이 앱의 각 기능들을 잘 활용하고 있는지 파악하기 위한 사용성 분석에도 필수적입니다. 또한 서비스 운영에 영향을 줄 수 있는 각종 이상 현상을 실시간으로 탐지하며 대응할 수 있게 도와주죠. 이를 위해 지그재그에서는 불필요한 로그/개인정보를 수집하지 않으면서도 앞선 목적에 부합하는 로그만 효율적으로 쌓아나가기 위해 노력하고 있습니다.&lt;/p&gt;</description>
     </item>
     
@@ -185,11 +185,9 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
 필수라고 할 수 있습니다.
 저도 당연히 동의하면서 오래전부터 도입하려고 했지만, 급한 일에 밀려 실제로 도입한 것은
 지그재그 서비스를 오픈하고 나서도 2년이나 지난 작년 여름무렵입니다.&lt;/p&gt;
-
 &lt;p&gt;여러가지 고민한 끝에 CI에 &lt;a href=&#34;https://jenkins.io/&#34;&gt;젠킨스&lt;/a&gt;를 사용하기로 결정했습니다.
 그런데 서비스에 적용하기 위해서 각종 문서를 찾아보는데
 문서별로 작업을 정의하는 방식이 너무 달라서 굉장히 혼란스러웠습니다.&lt;/p&gt;
-
 &lt;p&gt;이번 글에서는 저와 같이 혼란을 겪으시는 분들을 위해 젠킨스의 작업 정의 방식들에 대해서 설명하려고 합니다.&lt;/p&gt;</description>
     </item>
     
@@ -202,12 +200,10 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
       <description>&lt;p&gt;지그재그에서는 최고의 개발팀을 만들기 위해 항상 노력하고 있습니다.
 이 글에서는 지그재그 개발팀의 문화와 관심사에 대해서 소개하고 있습니다.
 지그재그 서비스에 대해서는 하단의 소개를 참고해주세요.&lt;/p&gt;
-
 &lt;p&gt;이 글을 읽고 저희 개발팀에 관심이 생기신 분은 언제든지 &lt;a href=&#34;mailto:job@zigzag.kr&#34;&gt;job@zigzag.kr&lt;/a&gt; 으로 연락주세요.
 이력서를 보내주셔도 좋고, 깃허브 주소를 보내주셔도 좋습니다.
 그 외 문의사항이나 가볍게 나누고 싶으신 이야기들은 &lt;a href=&#34;https://www.facebook.com/zigzagcareer&#34;&gt;https://www.facebook.com/zigzagcareer&lt;/a&gt; 를 통해서 문의해주시면 됩니다.
 지그재그 팀과 함께 수면 아래 숨겨진 가치를 찾아내는 멋진 경험에 동참할 팀원을 기다립니다.&lt;/p&gt;
-
 &lt;p&gt;지그재그 현재 진행중인 개발팀의 채용 공고는 &lt;a href=&#34;https://career.zigzag.kr/recruit/&#34;&gt;여기&lt;/a&gt;서 보실 수 있습니다.&lt;/p&gt;</description>
     </item>
     
@@ -229,9 +225,7 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
       
       <guid>https://devblog.croquis.com/ko/2017-05-13-1-aws-serverless-1/</guid>
       <description>&lt;p&gt;최근 클라우드 컴퓨팅환경이 널리 사용되면서 서버 하드웨어 대한 유지보수 및 구성을 신경 쓰지 않고, 다양한 서비스들을 위한 서버를 개발할 수 있게 되었습니다. 하지만 이런 환경을 사용함에도 auto-scaling이나 서버 로그 수집, 서비스 배포 및 관리 등 소프트웨어 스택에 관한 부분은 신경 써줘야 합니다.&lt;/p&gt;
-
 &lt;p&gt;이러한 고민을 덜어주기 위해서 최근에는 serverless architecture라는 개념이 생기고 있습니다. serverless architecture에서는 소스코드와 몇 번의 클릭만으로 서비스를 위한 REST API를 만들 수 있고, 수많은 요청에 대한 확장성에 대해 고민을 할 필요가 없으며, 로그 및 다양한 모니터링 툴들을 추가적인 작업 없이 사용할 수 있습니다.&lt;/p&gt;
-
 &lt;p&gt;AWS에서도 serverless architecture를 위한 다양한 서비스를 제공하고 있습니다. 이번 글에서는 간단한 작업 대기열(task queue)을 만들어보며, serverless architecture 환경을 경험해보도록 하겠습니다.&lt;/p&gt;</description>
     </item>
     
@@ -243,11 +237,9 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
       <guid>https://devblog.croquis.com/ko/2017-04-11-1-webpack-setup-tutorial-with-typescript-and-mithril/</guid>
       <description>&lt;p&gt;클라이언트 JavaScript 개발 환경은 빠르게 변화하고 있습니다.
 다양한 관련 기술 중 빌드 툴 쪽에서 최근 가장 주목 받는 것은 &lt;a href=&#34;https://webpack.js.org/&#34;&gt;webpack&lt;/a&gt;이라고 할 수 있습니다.&lt;/p&gt;
-
 &lt;p&gt;webpack 전체는 굉장히 방대하기 때문에 한번에 이해하기가 쉽지 않습니다.
 인터넷에 이미 잘 구성된 설정파일이 많긴 하지만,
 기본적인 설정에 대해서 알아두면 많은 도움이 됩니다.&lt;/p&gt;
-
 &lt;p&gt;이번 글에서는 크로키에서 사용하는 &lt;a href=&#34;https://www.typescriptlang.org/&#34;&gt;TypeScript&lt;/a&gt;,
 &lt;a href=&#34;https://mithril.js.org/&#34;&gt;Mithril&lt;/a&gt; 환경에 맞는 webpack 설정을 갖추는 과정을
 단계별로 설명합니다.&lt;/p&gt;</description>
@@ -262,7 +254,6 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
       <description>&lt;p&gt;이번 글에서는 크로키가 사용하는 스택 중
 클라이언트 JavaScript 프레임워크(client-side JavaScript framework)에 대해서
 소개해볼까 합니다.&lt;/p&gt;
-
 &lt;p&gt;TD;DR) 크로키에서는 &lt;a href=&#34;http://backbonejs.org/&#34;&gt;Backbone&lt;/a&gt;, &lt;a href=&#34;http://angular.io/&#34;&gt;Angular&lt;/a&gt;를 거쳐
 현재는 &lt;a href=&#34;http://mithril.js.org/&#34;&gt;Mithril&lt;/a&gt;이라는 프레임워크를 사용하고 있습니다.&lt;/p&gt;</description>
     </item>
@@ -275,7 +266,6 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
       <guid>https://devblog.croquis.com/ko/2017-02-10-1-why-croquis-selects-nodejs/</guid>
       <description>&lt;p&gt;현재 크로키에서는 서버용 웹 프레임워크로 &lt;a href=&#34;http://nodejs.org/&#34;&gt;Node.js&lt;/a&gt; 위에서
 &lt;a href=&#34;http://expressjs.com/&#34;&gt;Express&lt;/a&gt;를 사용하고 있습니다.&lt;/p&gt;
-
 &lt;p&gt;이번 글에서는 어떤 이유로 Node.js를 사용하게 되었는지 설명하려고 합니다.
 여러분들이 웹 프레임워크를 선택하시는 데 참고가 되었으면 합니다.&lt;/p&gt;</description>
     </item>
@@ -299,7 +289,6 @@ gzip으로 압축해서 저장하고 있습니다.
       <guid>https://devblog.croquis.com/ko/2017-01-06-1-github-wiki-to-slack/</guid>
       <description>&lt;p&gt;현재 크로키닷컴은 프로젝트 관리를 GitHub로만 하고 있습니다.
 이슈도 GitHub 이슈로 관리하고, 문서도 GitHub 위키를 사용하고 있습니다.&lt;/p&gt;
-
 &lt;p&gt;GitHub는 슬랙과의 연동이 잘 되어 있어서 GitHub에서의 활동을
 슬랙을 통해 파악하고 대응하고 있습니다.
 하지만 아쉽게도 GitHub 위키 이벤트는 처리하지 않습니다.
@@ -314,7 +303,6 @@ gzip으로 압축해서 저장하고 있습니다.
       <guid>https://devblog.croquis.com/ko/2017-01-05-1-ios-calendar/</guid>
       <description>&lt;p&gt;지그재그 앱을 사용하는 사용자를 분석할 때 사용하기 위해서
 최근 업데이트에 나이를 입력받는 화면이 추가되었습니다.&lt;/p&gt;
-
 &lt;p&gt;입력은 나이를 받지만 나이는 매년 달라지기 때문에 고정된 값인 태어난 년도로 변환하여 저장하고 있습니다.
 그런데 대부분은 정상적인 년도가 들어오는데 일부 사용자의 태어난 년도가 10이하 또는 2500이상인 문제가 있었습니다.&lt;/p&gt;</description>
     </item>
@@ -326,10 +314,8 @@ gzip으로 압축해서 저장하고 있습니다.
       
       <guid>https://devblog.croquis.com/ko/2017-01-01-1-start-devblog/</guid>
       <description>&lt;p&gt;안녕하세요.&lt;/p&gt;
-
 &lt;p&gt;&lt;a href=&#34;https://zigzag.kr/&#34;&gt;지그재그&lt;/a&gt;라는 여성 쇼핑몰 서비스를
 운영하고 있는 croquis.com의 개발팀입니다.&lt;/p&gt;
-
 &lt;p&gt;방치되어 있던 개발자 블로그를 다시 시작하려고 합니다.
 기대해주세요~&lt;/p&gt;</description>
     </item>

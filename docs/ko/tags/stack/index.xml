@@ -1,15 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Stack on ZIGZAG 기술 블로그</title>
+    <title>Stack on 카카오스타일 기술 블로그</title>
     <link>https://devblog.croquis.com/ko/tags/stack/</link>
-    <description>Recent content in Stack on ZIGZAG 기술 블로그</description>
+    <description>Recent content in Stack on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 11 Feb 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="https://devblog.croquis.com/ko/tags/stack/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Tue, 11 Feb 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/stack/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>크로키의 스택 - AWS Batch</title>
       <link>https://devblog.croquis.com/ko/2020-02-11-1-croquis-stack-aws-batch/</link>
@@ -76,7 +72,6 @@
       <description>&lt;p&gt;이번 글에서는 크로키가 사용하는 스택 중
 클라이언트 JavaScript 프레임워크(client-side JavaScript framework)에 대해서
 소개해볼까 합니다.&lt;/p&gt;
-
 &lt;p&gt;TD;DR) 크로키에서는 &lt;a href=&#34;http://backbonejs.org/&#34;&gt;Backbone&lt;/a&gt;, &lt;a href=&#34;http://angular.io/&#34;&gt;Angular&lt;/a&gt;를 거쳐
 현재는 &lt;a href=&#34;http://mithril.js.org/&#34;&gt;Mithril&lt;/a&gt;이라는 프레임워크를 사용하고 있습니다.&lt;/p&gt;</description>
     </item>
