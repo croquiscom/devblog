@@ -2,7 +2,7 @@
 title: React 프로젝트 컴포넌트 구성
 tags: ['React']
 date: 2021-07-29
-author: Sangmin Yoon
+author: Simon(윤상민)
 original: http://sixmen.com/ko/tech/2021-07-29-1-react-component-organization/
 ---
 

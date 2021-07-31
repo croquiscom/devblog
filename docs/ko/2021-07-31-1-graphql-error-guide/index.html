@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+  <meta charset='utf-8'>
+
+  <title>GraphQL 에러 처리 규칙</title>
+  
+  <meta name='author' content='kakaostyle.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <meta property='og:title' content='GraphQL 에러 처리 규칙' />
+  <meta property='og:type' content='article' />
+  <meta property='og:url' content='https://devblog.croquis.com/ko/2021-07-31-1-graphql-error-guide/' />
+  
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link href='/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='/css/syntax.css?body=1' rel='stylesheet' type='text/css' media='all'>
+</head>
+
+<body>
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='float-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon' src='/img/github-icon.svg'>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>GraphQL 에러 처리 규칙</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class='container'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='post-header'>
+        <div class='post-tags'>
+          
+
+<ul class='tag_box inline'>
+  <li><i class='fas fa-tags'></i></li>
+  
+  <li>
+    <a href='/ko/tags/graphql'>
+      GraphQL
+      <span>3</span>
+    </a>
+  </li>
+  
+</ul>
+
+        </div>
+        <div class='float-right'>
+          
+          <div class='post-author'>
+            <i class='fas fa-pencil-alt'></i>
+            <span>Simon(윤상민)</span>
+          </div>
+          
+          <div class='post-date'>
+            <i class='fas fa-calendar-alt'></i>
+            <span>31 July 2021</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-12 col-lg-9'>
+      <p>Java로 코드를 작성해보신 분이라면 throws에 의해 컴파일 에러가 발생했을 때 뭔지는 잘 모르겠고 IDE가 제시한 대로 catch로 감싸고 넘어간 경험이 누구에게나 있을 것이라 생각합니다. 그만큼 예외 상황은 잘 이해하고 적절히 처리하기는 쉽지 않은 것 같습니다. 오늘은 카카오스타일이 사용하고 있는 GraphQL에서 에러를 어떻게 전달하고 처리하고 있는지 설명하려고 합니다.</p>
+<h2 id="graphql-에러-형식">GraphQL 에러 형식</h2>
+<p>GraphQL은 다음과 같은 데이터를 반환합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;data&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;root_field&#34;</span><span class="p">:</span> <span class="err">...</span>
+  <span class="p">},</span>
+  <span class="nt">&#34;errors&#34;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span> <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;error message&#34;</span><span class="p">,</span> <span class="nt">&#34;locations&#34;</span><span class="p">:</span> <span class="p">[],</span> <span class="nt">&#34;path&#34;</span><span class="p">:</span> <span class="p">[]</span> <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div><p>GraphQL을 처음 접했을 때는 errors가 배열이라는 것을 이해하지 못했습니다. 그래서 다음과 같이 API를 설계하는 실수를 하기도 합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="kd">type</span><span class="w"> </span><span class="nc">Mutation</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="py">authenticate</span><span class="p">(</span><span class="kd">input</span><span class="p">:</span><span class="w"> </span><span class="nc">AuthenticateInput</span><span class="p">!):</span><span class="w"> </span><span class="nc">AuthenticateResult</span><span class="p">!</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span><span class="w">
+</span><span class="w"></span><span class="nc">type</span><span class="w"> </span><span class="py">AuthenticateResult</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="w">  </span><span class="py">success</span><span class="p">:</span><span class="w"> </span><span class="nc">Boolean</span><span class="p">!</span><span class="w">
+</span><span class="w">  </span><span class="py">user_id</span><span class="p">:</span><span class="w"> </span><span class="nc">ID</span><span class="w">
+</span><span class="w">  </span><span class="py">error_code</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="w">
+</span><span class="w"></span><span class="p">}</span><span class="w">
+</span></code></pre></div><p>errors가 배열인 이유는 명확합니다. GraphQL은 여러 데이터를 한번에 요청할 수 있는데, 그 중 일부 데이터만 반환하는 것이 가능합니다. 반환에 실패에 한 경우 그 이유(데이터 없음, 권한 없음등)를 반환해야 하는데 그 이유가 여러가지 일 수 있는 것이죠.</p>
+<p>현재 카카오스타일은 에러 발생시 errors에 데이터를 채워서 반환합니다. 다만 에러가 여러개인 경우 적절한 처리방법을 알지 못해 첫번째 에러만 유의미하게 처리합니다. API에 따라 null을 반환할 수도 있기 때문에 data 필드가 null인 것을 에러로 처리하지는 않고 errors 배열에 데이터가 하나 이상있으면 에러로 처리합니다. 반대로 errors 배열에 데이터가 있으면 data 필드에 값이 있어도 에러로 처리하고 있습니다.</p>
+<h2 id="message-필드와-에러-코드">message 필드와 에러 코드</h2>
+<p>사용자에게는 사용자 친화적인 에러 메시지를 표시해줘야 합니다. 이 메시지를 어디서 관리해야 하는지도 쟁점입니다.</p>
+<p>같은 상황이여도 사용자마다 다른 메시지가 필요할 수도 있고, UI 이슈라고 보면 클라이언트에서 관리하는게 맞을 것 같기도 합니다만, 클라이언트는 수정이 어렵다라는 이슈가 있습니다. (특히 앱인 경우) 또한 에러 상황마다 일일이 분기 처리를 해야 합니다. 테이블로 메시지를 관리할 수도 있습니다만 어떤 에러 메시지는 고정 메시지가 아닐 수도 있습니다. (예, xxx 상품은 구매할 수 없습니다)</p>
+<p>이런 이유로 에러 메시지는 서버가 관리하고 있습니다. 클라이언트는 대부분의 경우 서버가 보내주는 에러 메시지를 맥락에 대한 이해없이 그대로 보여주는 식으로 동작합니다. 다만 이 경우 다국어 처리에 대한 고민이 필요합니다. 클라이언트가 에러 메시지를 처리하면 클라이언트 언어를 인식해서 적절한 메시지를 표시할 수 있지만, 서버는 클라이언트에게서 언어 정보를 받아서 요청별로 에러 메시지를 다르게 구성하는 처리를 해야 합니다.</p>
+<p>일부 에러 상황은 클라이언트가 특별히 처리를 해야 할 수도 있습니다. (예를 들어 로그인이 안 되어 있다는 에러를 만난 경우 로그인 페이지로 이동) 이런 경우 사용자 친화적인 메시지를 보고 처리하는 것은 무리기 때문에 (특히 언어마다 메시지가 다르다면) 에러 코드도 같이 보내야 합니다.</p>
+<p>GraphQL 에러 형식에서 message 필드에는 사용자 친화적인 메시지를 담고 있습니다. 에러 코드에 대한 표준은 없기 때문에 extensions에 담아서 반환해야 합니다. 다음은 이 형식에 따른 에러 메시지 예입니다</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+  <span class="nt">&#34;errors&#34;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;로그인을 해주세요.&#34;</span><span class="p">,</span>
+      <span class="nt">&#34;extensions&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;code&#34;</span><span class="p">:</span> <span class="s2">&#34;auth_not_logged_in&#34;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="nt">&#34;data&#34;</span><span class="p">:</span> <span class="kc">null</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="추가-정보">추가 정보</h2>
+<p>에러 메시지와 에러 코드만 있어도 대부분은 문제가 없지만 추가 정보가 필요한 경우가 있습니다. 이런 정보는 extensions에 담고 있습니다.</p>
+<p>에러가 발생할 경우 로그에는 주어진 에러 코드로 에러를 기록합니다. 에러 코드가 있다고 모두 오류 상황은 아니고 프로세스상 일상적으로 발생할 수 밖에 없는 에러가 있기도 합니다. 사용자에게는 에러를 반환하는 것이 맞지만, 모니터링에서는 에러로 취급하지 않을 에러인 경우 ignorable 란 필드를 true 로 설정하고 있습니다.</p>
+<p>어떤 클라이언트/상황에서는 단순히 에러 메시지가 아니라 더 많은 정보를 표시하고 싶을 수도 있습니다. (예를 들어 에러 팝업 타이틀이나, 아이콘, 닫기 버튼 메시지등) 이런 경우를 위해 <code>contents?: { type: string; title: string; message: string; link_title?: string; link_url?: string };</code> 와 같이 스키마를 정해서 소통하는 API도 있습니다. (전반적으로 적용해도 될 것 같지만 아직 표준화가 덜 됐습니다)</p>
+<p>어떤 에러는 부가적인 정보가 필요한 경우가 있습니다. 예를 들어 소셜 로그인시 이미 해당 이메일의 계정이 존재할 수 있습니다. 이메일이 같다고 무조건 로그인을 시키면 안 되고, 대신 사용자에게 이메일이 이미 사용중이니 해당 계정으로 로그인을 시도하도록 유도하기로 했고, 이를 위해 마스킹된 이메일 문자열을 email 필드에 담아서 반환하도록 했습니다.</p>
+<h2 id="http-상태-코드">HTTP 상태 코드</h2>
+<p>GraphQL 스펙은 전달 방식에 대해 정의하고 있지 않지만 일반적으로는 HTTP 프로토콜을 사용합니다. 이때 HTTP 상태 코드를 사용할지 여부도 쟁점입니다.</p>
+<p>처음 GraphQL 서빙을 위해 사용했던 <a href="https://www.npmjs.com/package/express-graphql">express-graphql</a>는 에러시 500 에러를 반환했습니다. 그 다음으로 사용한 <a href="https://www.npmjs.com/package/apollo-server-express">apollo-server-express</a>는 에러 상황에서도 200을 반환해서 약간의 혼란이 있었습니다.</p>
+<p>현재 논의가 진행 중인 <a href="https://github.com/graphql/graphql-over-http">스펙</a>에서는 2xx이 아닌 에러를 반환하는 것으로 진행되고 있습니다만 (부분 성공의 경우는 200이여야 합니다) 카카오스타일에서는 현재 무조건 200을 반환하는 것으로 정했습니다.</p>
+<p>GraphQL 문법에 어긋나는 경우에만 400 에러 등을 반환하고, 내부 리졸버를 정상적으로 수행한 경우에는 200입니다. 비지니스 로직의 실패는 HTTP 상태 코드가 아닌 errors 필드를 보고 판단하게 됩니다.</p>
+<p>다만 앞으로 바뀔 여지가 있기에 HTTP 상태 코드를 의존하지 않는 형태로 클라이언트를 작성하고 있습니다.</p>
+      
+      <hr>
+      <div class='post-original'>
+        원본 링크 : <a href='http://sixmen.com/ko/tech/2021-07-31-1-graphql-error-guide/' target='_blank'>http://sixmen.com/ko/tech/2021-07-31-1-graphql-error-guide/</a>
+      </div>
+      
+    </div>
+
+    <div class='col-lg-3 sidemenu'>
+  <h4>Recent Posts</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2021-07-31-1-graphql-error-guide/'>
+      <li class="sidemenu-recent-item">GraphQL 에러 처리 규칙</li>
+    </a>
+    
+    <a href='/ko/2021-07-29-1-react-component-organization/'>
+      <li class="sidemenu-recent-item">React 프로젝트 컴포넌트 구성</li>
+    </a>
+    
+    <a href='/ko/2021-07-01-1-welcome-kakaostyle/'>
+      <li class="sidemenu-recent-item">카카오스타일 기술 블로그입니다</li>
+    </a>
+    
+    <a href='/ko/2020-11-06-1-using-github-actions/'>
+      <li class="sidemenu-recent-item">GitHub Actions 활용하기</li>
+    </a>
+    
+  </ul>
+  <hr>
+  <h4>Tags</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href="/ko/tags/amazon-sqs/">
+      <li class="sidemenu-recent-tags">amazon-sqs</li>
+    </a>
+    
+    <a href="/ko/tags/analytics/">
+      <li class="sidemenu-recent-tags">analytics</li>
+    </a>
+    
+    <a href="/ko/tags/android/">
+      <li class="sidemenu-recent-tags">android</li>
+    </a>
+    
+    <a href="/ko/tags/aws/">
+      <li class="sidemenu-recent-tags">aws</li>
+    </a>
+    
+    <a href="/ko/tags/aws-batch/">
+      <li class="sidemenu-recent-tags">aws-batch</li>
+    </a>
+    
+    <a href="/ko/tags/aws-lambda/">
+      <li class="sidemenu-recent-tags">aws-lambda</li>
+    </a>
+    
+    <a href="/ko/tags/botkit/">
+      <li class="sidemenu-recent-tags">botkit</li>
+    </a>
+    
+    <a href="/ko/tags/croquis/">
+      <li class="sidemenu-recent-tags">croquis</li>
+    </a>
+    
+    <a href="/ko/tags/css/">
+      <li class="sidemenu-recent-tags">css</li>
+    </a>
+    
+    <a href="/ko/tags/data/">
+      <li class="sidemenu-recent-tags">data</li>
+    </a>
+    
+    <a href="/ko/tags/event/">
+      <li class="sidemenu-recent-tags">event</li>
+    </a>
+    
+    <a href="/ko/tags/front-end/">
+      <li class="sidemenu-recent-tags">front-end</li>
+    </a>
+    
+    <a href="/ko/tags/github/">
+      <li class="sidemenu-recent-tags">github</li>
+    </a>
+    
+    <a href="/ko/tags/graphql/">
+      <li class="sidemenu-recent-tags">graphql</li>
+    </a>
+    
+    <a href="/ko/tags/ios/">
+      <li class="sidemenu-recent-tags">ios</li>
+    </a>
+    
+    <a href="/ko/tags/jenkins/">
+      <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/log/">
+      <li class="sidemenu-recent-tags">log</li>
+    </a>
+    
+    <a href="/ko/tags/microservice/">
+      <li class="sidemenu-recent-tags">microservice</li>
+    </a>
+    
+    <a href="/ko/tags/mithril/">
+      <li class="sidemenu-recent-tags">mithril</li>
+    </a>
+    
+    <a href="/ko/tags/nodejs/">
+      <li class="sidemenu-recent-tags">nodejs</li>
+    </a>
+    
+    <a href="/ko/tags/react/">
+      <li class="sidemenu-recent-tags">react</li>
+    </a>
+    
+    <a href="/ko/tags/rest-api/">
+      <li class="sidemenu-recent-tags">rest-api</li>
+    </a>
+    
+    <a href="/ko/tags/serverless-architecture/">
+      <li class="sidemenu-recent-tags">serverless-architecture</li>
+    </a>
+    
+    <a href="/ko/tags/slack/">
+      <li class="sidemenu-recent-tags">slack</li>
+    </a>
+    
+    <a href="/ko/tags/stack/">
+      <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/task-queue/">
+      <li class="sidemenu-recent-tags">task-queue</li>
+    </a>
+    
+    <a href="/ko/tags/thrift/">
+      <li class="sidemenu-recent-tags">thrift</li>
+    </a>
+    
+    <a href="/ko/tags/typescript/">
+      <li class="sidemenu-recent-tags">typescript</li>
+    </a>
+    
+    <a href="/ko/tags/vertical-align/">
+      <li class="sidemenu-recent-tags">vertical-align</li>
+    </a>
+    
+    <a href="/ko/tags/webpack/">
+      <li class="sidemenu-recent-tags">webpack</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A1%9C%EA%B7%B8/">
+      <li class="sidemenu-recent-tags">로그</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/">
+      <li class="sidemenu-recent-tags">마이크로서비스</li>
+    </a>
+    
+    <a href="/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/">
+      <li class="sidemenu-recent-tags">튜토리얼</li>
+    </a>
+    
+  </ul>
+</div>
+
+    <div class='col-12'>
+      <hr>
+
+      <div class='float-left'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2021-07-29-1-react-component-organization/' title='React 프로젝트 컴포넌트 구성'>&larr; 이전 글</a>
+        
+      </div>
+      <div class='float-right'>
+        
+        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
+        
+      </div>
+      <div class='clearfix'></div>
+      <hr>
+      <div class='text-center'>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "croquiscom-devblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='container'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2021 kakaostyle.com
+      <span class='float-right text-muted'>
+        powered by
+        <a href='https://gohugo.io/' target='_blank'>Hugo</a>
+        and
+        <a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-48716672-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+  integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+  integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

@@ -5,7 +5,16 @@
     <link>https://devblog.croquis.com/ko/tags/graphql/</link>
     <description>Recent content in GraphQL on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 19 Sep 2019 01:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/graphql/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 31 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/graphql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GraphQL 에러 처리 규칙</title>
+      <link>https://devblog.croquis.com/ko/2021-07-31-1-graphql-error-guide/</link>
+      <pubDate>Sat, 31 Jul 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/2021-07-31-1-graphql-error-guide/</guid>
+      <description>&lt;p&gt;Java로 코드를 작성해보신 분이라면 throws에 의해 컴파일 에러가 발생했을 때 뭔지는 잘 모르겠고 IDE가 제시한 대로 catch로 감싸고 넘어간 경험이 누구에게나 있을 것이라 생각합니다. 그만큼 예외 상황은 잘 이해하고 적절히 처리하기는 쉽지 않은 것 같습니다. 오늘은 카카오스타일이 사용하고 있는 GraphQL에서 에러를 어떻게 전달하고 처리하고 있는지 설명하려고 합니다.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>GraphQL in depth (serverside)</title>
       <link>https://devblog.croquis.com/ko/2019-09-19-1-graphql-in-depth-serverside/</link>
