@@ -175,7 +175,7 @@ config 모듈은 필요한 기능을 제공했지만, 오타 등의 이유로 �
 
 <span class="kr">export</span> <span class="k">default</span> <span class="nx">Config</span><span class="p">;</span></code></pre></div>
 <p>처음 정의 시 port의 타입이 달랐는데(string vs number) 이제는 다음과 같은 컴파일 오류가 발생합니다.</p>
-<pre><code>config/test.ts(5,3): error TS2322: Type '{ host: string; port: string; }' is not assignable to type 'DeepPartial&lt;{ host: string; port: number; user: string; password: string; }&gt;'.
+<pre tabindex="0"><code>config/test.ts(5,3): error TS2322: Type '{ host: string; port: string; }' is not assignable to type 'DeepPartial&lt;{ host: string; port: number; user: string; password: string; }&gt;'.
   Types of property 'port' are incompatible.
     Type 'string' is not assignable to type 'number | undefined'.
 </code></pre><p>저희는 이런 식으로 설정을 정의해서 잘 사용하고 있습니다. 다만 아쉬운 점이 아예 없지는 않습니다.
@@ -213,6 +213,10 @@ lodash의 merge를 사용하기 때문에 default 설정에서 정의한 값을 
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2022-01-13-1-frontend-state-management/'>
+      <li class="sidemenu-recent-item">프론트엔드 상태 관리에 대한 여정</li>
+    </a>
+    
     <a href='/ko/2021-12-16-1-server-driven-ui/'>
       <li class="sidemenu-recent-item">Server Driven UI 설계를 통한 UI 유연화</li>
     </a>
@@ -223,10 +227,6 @@ lodash의 merge를 사용하기 때문에 default 설정에서 정의한 값을 
     
     <a href='/ko/2021-07-29-1-react-component-organization/'>
       <li class="sidemenu-recent-item">React 프로젝트 컴포넌트 구성</li>
-    </a>
-    
-    <a href='/ko/2021-07-01-1-welcome-kakaostyle/'>
-      <li class="sidemenu-recent-item">카카오스타일 기술 블로그입니다</li>
     </a>
     
   </ul>
@@ -282,6 +282,10 @@ lodash의 merge를 사용하기 때문에 default 설정에서 정의한 값을 
       <li class="sidemenu-recent-tags">front-end</li>
     </a>
     
+    <a href="/ko/tags/frontend/">
+      <li class="sidemenu-recent-tags">frontend</li>
+    </a>
+    
     <a href="/ko/tags/github/">
       <li class="sidemenu-recent-tags">github</li>
     </a>
@@ -296,6 +300,10 @@ lodash의 merge를 사용하기 때문에 default 설정에서 정의한 값을 
     
     <a href="/ko/tags/jenkins/">
       <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/jotai/">
+      <li class="sidemenu-recent-tags">jotai</li>
     </a>
     
     <a href="/ko/tags/log/">

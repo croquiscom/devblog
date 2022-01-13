@@ -121,7 +121,7 @@
 서버가 API 응답에 UI 정보를 담아 클라이언트에 제공하고,
 클라이언트가 API 응답에 따라 화면을 렌더링한다면 서버에서 API 응답을 변경하는 것만으로 클라이언트의 화면 구성을 동적으로 변경할 수 있을 것입니다.</p>
 <p>예를 들어 사용자에게 홈 화면을 제공하는 경우, 서버가 제공하는 REST API <code>screen</code>을 통해 <code>home</code> 화면에 대한 UI 정보를 얻을 수 있습니다.</p>
-<pre><code>GET /screen/home
+<pre tabindex="0"><code>GET /screen/home
 </code></pre><p>이 API는 홈 화면을 구성하는 UI 요소 리스트를 JSON 포맷으로 응답합니다.
 따라서 클라이언트는 응답의 <code>data</code> 리스트를 순회하며 각각의 <code>type</code>에 해당하는 UI 요소를 화면에 그려주면 됩니다.</p>
 <p><img src="/img/content/2021-12-16-1/2021-12-16-1-01.png" alt="2021-12-16-1-01.png"></p>
@@ -437,6 +437,10 @@ UI를 구성하기 위한 클라이언트 작업도 필요했습니다.
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2022-01-13-1-frontend-state-management/'>
+      <li class="sidemenu-recent-item">프론트엔드 상태 관리에 대한 여정</li>
+    </a>
+    
     <a href='/ko/2021-12-16-1-server-driven-ui/'>
       <li class="sidemenu-recent-item">Server Driven UI 설계를 통한 UI 유연화</li>
     </a>
@@ -447,10 +451,6 @@ UI를 구성하기 위한 클라이언트 작업도 필요했습니다.
     
     <a href='/ko/2021-07-29-1-react-component-organization/'>
       <li class="sidemenu-recent-item">React 프로젝트 컴포넌트 구성</li>
-    </a>
-    
-    <a href='/ko/2021-07-01-1-welcome-kakaostyle/'>
-      <li class="sidemenu-recent-item">카카오스타일 기술 블로그입니다</li>
     </a>
     
   </ul>
@@ -506,6 +506,10 @@ UI를 구성하기 위한 클라이언트 작업도 필요했습니다.
       <li class="sidemenu-recent-tags">front-end</li>
     </a>
     
+    <a href="/ko/tags/frontend/">
+      <li class="sidemenu-recent-tags">frontend</li>
+    </a>
+    
     <a href="/ko/tags/github/">
       <li class="sidemenu-recent-tags">github</li>
     </a>
@@ -520,6 +524,10 @@ UI를 구성하기 위한 클라이언트 작업도 필요했습니다.
     
     <a href="/ko/tags/jenkins/">
       <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/jotai/">
+      <li class="sidemenu-recent-tags">jotai</li>
     </a>
     
     <a href="/ko/tags/log/">
@@ -607,7 +615,7 @@ UI를 구성하기 위한 클라이언트 작업도 필요했습니다.
       </div>
       <div class='float-right'>
         
-        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
+        <a class='btn btn-outline-primary' href='/ko/2022-01-13-1-frontend-state-management/' title='프론트엔드 상태 관리에 대한 여정'>다음 글 &rarr;</a>
         
       </div>
       <div class='clearfix'></div>
