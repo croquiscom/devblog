@@ -7,6 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/jotai/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Jotai 레시피</title>
+      <link>https://devblog.croquis.com/ko/2022-01-13-2-jotai-recipe/</link>
+      <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.croquis.com/ko/2022-01-13-2-jotai-recipe/</guid>
+      <description>&lt;p&gt;이번 글에서는 카카오스타일에서 Jotai를 어떤 식으로 사용하고 있는지 여러가지 패턴에 대해 설명하려고 합니다.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>프론트엔드 상태 관리에 대한 여정</title>
       <link>https://devblog.croquis.com/ko/2022-01-13-1-frontend-state-management/</link>
       <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>

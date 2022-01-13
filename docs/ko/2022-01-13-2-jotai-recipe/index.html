@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+  <meta charset='utf-8'>
+
+  <title>Jotai 레시피</title>
+  
+  <meta name='author' content='kakaostyle.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <meta property='og:title' content='Jotai 레시피' />
+  <meta property='og:type' content='article' />
+  <meta property='og:url' content='https://devblog.croquis.com/ko/2022-01-13-2-jotai-recipe/' />
+  
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link href='/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='/css/syntax.css?body=1' rel='stylesheet' type='text/css' media='all'>
+</head>
+
+<body>
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='float-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon' src='/img/github-icon.svg'>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>Jotai 레시피</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class='container'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='post-header'>
+        <div class='post-tags'>
+          
+
+<ul class='tag_box inline'>
+  <li><i class='fas fa-tags'></i></li>
+  
+  <li>
+    <a href='/ko/tags/frontend'>
+      Frontend
+      <span>2</span>
+    </a>
+  </li>
+  
+  <li>
+    <a href='/ko/tags/jotai'>
+      Jotai
+      <span>2</span>
+    </a>
+  </li>
+  
+</ul>
+
+        </div>
+        <div class='float-right'>
+          
+          <div class='post-author'>
+            <i class='fas fa-pencil-alt'></i>
+            <span>Simon(윤상민)</span>
+          </div>
+          
+          <div class='post-date'>
+            <i class='fas fa-calendar-alt'></i>
+            <span>13 January 2022</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-12 col-lg-9'>
+      <p>이번 글에서는 카카오스타일에서 Jotai를 어떤 식으로 사용하고 있는지 여러가지 패턴에 대해 설명하려고 합니다.</p>
+<h2 id="상태-정의하고-사용하기">상태 정의하고 사용하기</h2>
+<p><a href="https://jotai.org/">Jotai</a>의 기본 사용법은 간단합니다. <a href="https://ko.reactjs.org/docs/hooks-reference.html#usestate">useState</a>로 정의하던 상태가 있으면,
+<a href="https://jotai.org/docs/api/core#atom">atom</a> 메소드로 정의하고 <a href="https://jotai.org/docs/api/core#use-atom">useAtom</a>을 써서 사용하면 됩니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">atom</span><span class="p">,</span> <span class="nx">useAtom</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;jotai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">FC</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">count_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">App</span>: <span class="kt">FC</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useAtom</span><span class="p">(</span><span class="nx">count_atom</span><span class="p">);</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;{</span><span class="nx">count</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="nx">setCount</span><span class="p">(</span><span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)}&gt;</span><span class="nx">Inc</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div><p>위 예제에서는 useState와 다른게 없지만, 하위 컴포넌트에서 해당 상태에 접근해야 할 경우 차이가 발생합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">atom</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;jotai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">useAtomValue</span><span class="p">,</span> <span class="nx">useUpdateAtom</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;jotai/utils&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">FC</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">count_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">Counter</span>: <span class="kt">FC</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">count</span> <span class="o">=</span> <span class="nx">useAtomValue</span><span class="p">(</span><span class="nx">count_atom</span><span class="p">);</span>
+  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;{</span><span class="nx">count</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;;</span>
+<span class="p">};</span>
+
+<span class="kr">const</span> <span class="nx">IncButton</span>: <span class="kt">FC</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">setCount</span> <span class="o">=</span> <span class="nx">useUpdateAtom</span><span class="p">(</span><span class="nx">count_atom</span><span class="p">);</span>
+  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="nx">setCount</span><span class="p">((</span><span class="nx">count</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)}&gt;</span><span class="nx">Inc</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;;</span>
+<span class="p">};</span>
+
+<span class="kr">const</span> <span class="nx">App</span>: <span class="kt">FC</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">Counter</span> <span class="p">/&gt;</span>
+      <span class="p">&lt;</span><span class="nt">IncButton</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div><p><a href="https://jotai.org/docs/utils/use-atom-value">useAtomValue</a>와 <a href="https://jotai.org/docs/utils/use-update-atom">useUpdateAtom</a>은
+읽기나 쓰기 중 하나만 필요할 때 사용가능한 유틸리티 함수입니다.
+쓰기 함수는 useState의 setState 처럼 이전 상태를 받아 이용할 수 있습니다.</p>
+<h2 id="파생-atom">파생 atom</h2>
+<p>원시 atom의 값에서 파생된 atom을 정의할 수도 있습니다. MobX나 Vue의 computed 속성과 비슷합니다.
+useMemo와 같이 의존한 atom의 값이 바뀐 경우에만 재계산을 합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">const</span> <span class="nx">email_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">password_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">button_enabled_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">((</span><span class="kr">get</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kr">get</span><span class="p">(</span><span class="nx">email_atom</span><span class="p">).</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="kr">get</span><span class="p">(</span><span class="nx">password_atom</span><span class="p">).</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div><blockquote>
+<p><a href="https://github.com/pmndrs/jotai/issues/619">같은 Provider가 제공한 atom의 값만 얻을 수 있습니다.</a></p>
+</blockquote>
+<h2 id="액션-atom">액션 atom</h2>
+<p>쓰기 전용 atom을 통해 비즈니스 로직을 정의할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// 전화번호 인증 과정 중 전화번호 입력 필드 값이 바뀔 때 호출한다
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">updateMobileTelAtom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">(</span><span class="kr">get</span><span class="p">,</span> <span class="kr">set</span><span class="p">,</span> <span class="nx">value</span>: <span class="kt">string</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// 인증 과정이 완료된 경우 전화번호를 변경할 수 없다
+</span><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="kr">get</span><span class="p">(</span><span class="nx">authenticated_atom</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="c1">// 전화번호 표시에서 -등 기타 문자는 제거한다
+</span><span class="c1"></span>  <span class="kr">set</span><span class="p">(</span><span class="nx">mobile_tel_atom</span><span class="p">,</span> <span class="nx">value</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/[^0-9]/g</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">));</span>
+  <span class="c1">// 인증 번호 입력 시간을 초기화한다
+</span><span class="c1"></span>  <span class="kr">set</span><span class="p">(</span><span class="nx">remain_time_atom</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div><p>대부분의 로직은 서버 API 호출을 필요로 하는 경우가 많습니다. 이 경우 응답을 기다리는, 즉 비동기 동작이 필요합니다.
+Redux에서는 <a href="https://redux.js.org/usage/writing-logic-thunks">thunk</a> 같은 미들웨어가 필요하지만, Jotai에서는 자연스럽게 정의할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// 전화번호 인증 토큰을 발송한다
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">sendAuthenticationTokenAtom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kr">async</span> <span class="p">(</span><span class="kr">get</span><span class="p">,</span> <span class="kr">set</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="c1">// 중복 발송을 막는다
+</span><span class="c1"></span>  <span class="k">if</span> <span class="p">(</span><span class="kr">get</span><span class="p">(</span><span class="nx">submitting_atom</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="kr">set</span><span class="p">(</span><span class="nx">submitting_atom</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="s1">&#39;/sendAuthenticationToken&#39;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">mobile_tel</span>: <span class="kt">get</span><span class="p">(</span><span class="nx">mobile_tel_atom</span><span class="p">)</span> <span class="p">});</span>
+    <span class="kr">set</span><span class="p">(</span><span class="nx">submitting_atom</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="c1">// 이전 에러 메시지를 초기화한다
+</span><span class="c1"></span>    <span class="kr">set</span><span class="p">(</span><span class="nx">authentication_error_atom</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">);</span>
+    <span class="c1">// 토큰 입력을 초기화한다
+</span><span class="c1"></span>    <span class="kr">set</span><span class="p">(</span><span class="nx">token_atom</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+    <span class="c1">// 입력 시간을 2분으로 초기화한다
+</span><span class="c1"></span>    <span class="kr">set</span><span class="p">(</span><span class="nx">remain_time_atom</span><span class="p">,</span> <span class="mi">120</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">error</span>: <span class="kt">any</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kr">set</span><span class="p">(</span><span class="nx">submitting_atom</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="nx">alert</span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div><h2 id="디렉토리-구조">디렉토리 구조</h2>
+<p>값과 액션이 사실 같은 atom이지만, 편의상 구분하고 있습니다.
+이 둘을 묶은 용어를 고민하다가, Redux, MobX 등에서 쓰는 store라고 부르기로 했습니다. (ViewModel이라고 부를까도 고민했습니다.)</p>
+<p>MobX에서 값과 액션을 한 클래스로 만들면 파일을 나누기가 어려운데 반해, Jotai는 atom의 모음이다 보니 나누기가 편리합니다.
+값은 atoms 디렉토리, 액션은 actions 디렉토리에 둡니다. atoms는 연관성이 높은 것들을 한 파일로 묶고, 액션은 보통 길이가 길기 때문에 액션 별로 파일을 만들고 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// src/components/model/detail/store/index.ts
+</span><span class="c1"></span><span class="kr">export</span> <span class="o">*</span> <span class="kr">from</span> <span class="s1">&#39;./atoms&#39;</span><span class="p">;</span>
+<span class="kr">export</span> <span class="o">*</span> <span class="kr">from</span> <span class="s1">&#39;./actions&#39;</span><span class="p">;</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// src/components/model/detail/store/atoms/index.ts
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">atom</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;jotai&#39;</span><span class="p">;</span>
+
+<span class="kr">export</span> <span class="o">*</span> <span class="kr">from</span> <span class="s1">&#39;./orderer&#39;</span><span class="p">;</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">submitting_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// src/components/model/detail/store/atoms/orderer.ts
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">atom</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;jotai&#39;</span><span class="p">;</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">orderer_email_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">orderer_mobile_tel_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">orderer_name_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// src/components/model/detail/store/actions/index.ts
+</span><span class="c1"></span><span class="kr">export</span> <span class="o">*</span> <span class="kr">from</span> <span class="s1">&#39;./purchase&#39;</span><span class="p">;</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// src/components/model/detail/store/actions/purchase.ts
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">atom</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;jotai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span>
+  <span class="nx">orderer_email_atom</span><span class="p">,</span>
+  <span class="p">...</span>
+<span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;../atoms&#39;</span><span class="p">;</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">purchaseAtom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kr">async</span> <span class="p">(</span><span class="kr">get</span><span class="p">,</span> <span class="kr">set</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">orderer_email</span> <span class="o">=</span> <span class="kr">get</span><span class="p">(</span><span class="nx">orderer_email_atom</span><span class="p">);</span>
+  <span class="p">...</span>
+<span class="p">});</span>
+</code></pre></div><h2 id="provider와-초기값">Provider와 초기값</h2>
+<p>atom의 값은 글로벌에 존재하는 atom에 저장되는 것이 아니라 Context와 비슷하게 컴포넌트 트리 상에 저장됩니다.
+<a href="https://jotai.org/docs/api/core#provider">Provider</a>를 사용하면 atom이 저장될 Context를 제공할 수 있습니다.
+(즉 참조하는 Provider가 다르면 같은 atom을 use해도 값이 다릅니다) Provider를 지정하지 않으면 기본 저장소가 사용됩니다.</p>
+<p><a href="https://www.notion.so/React-4d3def2180fe4989b39b643b22b7d899">컴포넌트 구성 아티클</a>에서 설명했듯이 페이지와 내부 구성 컴포넌트가 분리되어 있는데,
+스토리북에서도 정상 동작하도록 내부 컴포넌트쪽에 Provider 선언을 두고 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// Jotai 적용 전
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">ProfileAddress</span>: <span class="kt">FC</span><span class="o">&lt;</span><span class="p">{</span><span class="nx">address1</span>: <span class="kt">string</span><span class="p">;</span> <span class="nx">address2</span>: <span class="kt">string</span><span class="p">}</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">address1</span><span class="p">,</span> <span class="nx">setAddress1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">address1</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">address2</span><span class="p">,</span> <span class="nx">setAddress2</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">address2</span><span class="p">);</span>
+  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;;</span>
+<span class="p">};</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">ProfileAddress</span><span class="p">;</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// Jotai 적용 후
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">address1_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">address2_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+
+<span class="kr">const</span> <span class="nx">ProfileAddress</span>: <span class="kt">FC</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">address1</span><span class="p">,</span> <span class="nx">setAddress1</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useAtom</span><span class="p">(</span><span class="nx">address1_atom</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">address2</span><span class="p">,</span> <span class="nx">setAddress2</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useAtom</span><span class="p">(</span><span class="nx">address2_atom</span><span class="p">);</span>
+  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;;</span>
+<span class="p">};</span>
+
+<span class="kr">const</span> <span class="nx">ProfileAddressWithProvider</span>: <span class="kt">FC</span><span class="o">&lt;</span><span class="p">{</span> <span class="nx">address1</span>: <span class="kt">string</span><span class="p">;</span> <span class="nx">address2</span>: <span class="kt">string</span> <span class="p">}</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">Provider</span>
+      <span class="na">initialValues</span><span class="o">=</span><span class="p">{[</span>
+        <span class="p">[</span><span class="nx">address1_atom</span><span class="p">,</span> <span class="nx">props</span><span class="p">.</span><span class="nx">address1</span><span class="p">],</span>
+        <span class="p">[</span><span class="nx">address2_atom</span><span class="p">,</span> <span class="nx">props</span><span class="p">.</span><span class="nx">address2</span><span class="p">],</span>
+      <span class="p">]</span> <span class="kr">as</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="p">[</span><span class="nx">Atom</span><span class="p">&lt;</span><span class="nt">unknown</span><span class="p">&gt;,</span> <span class="kt">unknown</span><span class="p">]</span><span class="o">&gt;</span><span class="p">}</span>
+    <span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">ProfileAddress</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">Provider</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">ProfileAddressWithProvider</span><span class="p">;</span>
+</code></pre></div><p>위와 같이 외부에서 Props로 받아 온 값을 initialValues로 atom에 넣어주면 이후 Props 참조 없이, atom에서 값을 읽을 수 있습니다.</p>
+<p>디렉토리 구조에서 설명했듯이 atom 정의는 하위 디렉토리에서 하고 있습니다.
+이런 atom을 초기화하는 코드도 atom 정의와 같이 있는 것이 바람직하기 때문에, 초기화 내용을 분리해 store/atoms/index.ts 에 만들고 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// store/atoms/index.ts
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">Atom</span><span class="p">,</span> <span class="nx">atom</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;jotai&#39;</span><span class="p">;</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">address1_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">address2_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+
+<span class="kr">export</span> <span class="kd">function</span> <span class="nx">getInitialValues</span><span class="p">(</span>
+  <span class="nx">address1</span>: <span class="kt">string</span><span class="p">,</span>
+  <span class="nx">address2</span>: <span class="kt">string</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="p">[</span><span class="nx">Atom</span><span class="p">&lt;</span><span class="nt">unknown</span><span class="p">&gt;,</span> <span class="kt">unknown</span><span class="p">]</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span>
+    <span class="p">[</span><span class="nx">address1_atom</span><span class="p">,</span> <span class="nx">address1</span><span class="p">],</span>
+    <span class="p">[</span><span class="nx">address2_atom</span><span class="p">,</span> <span class="nx">address2</span><span class="p">],</span>
+  <span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="onmount과-localstorage">onMount과 localStorage</h2>
+<p>atom에 고정된 값 대신 처음 사용되는 시점에 값을 정해지도록 할 수 있습니다.
+예를 들어 atom 값을 localStorage에서 가져와 초기화 시키고 싶을 수 있습니다.
+이 경우 <a href="https://jotai.org/docs/api/core#on-mount">onMount</a>를 사용하면 됩니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">const</span> <span class="nx">toolip_seen_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">&lt;</span><span class="nt">boolean</span><span class="p">&gt;(</span><span class="kc">true</span><span class="p">);</span>
+<span class="nx">toolip_seen_atom</span><span class="p">.</span><span class="nx">onMount</span> <span class="o">=</span> <span class="p">(</span><span class="kr">set</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">set</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;toolip_seen&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;true&#39;</span><span class="p">);</span>
+<span class="p">};</span>
+</code></pre></div><p>그런데 위 코드로는 atom 값을 갱신했을 때 localStorage에 반영되지 않습니다.
+쓰기시 커스텀 동작을 하면서, 저장도 하고 싶은 경우, 저장용 atom을 분리해야 합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">const</span> <span class="nx">toolip_seen_base_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">&lt;</span><span class="nt">boolean</span><span class="p">&gt;(</span><span class="kc">true</span><span class="p">);</span>
+<span class="nx">toolip_seen_base_atom</span><span class="p">.</span><span class="nx">onMount</span> <span class="o">=</span> <span class="p">(</span><span class="kr">set</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">set</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">getItem</span><span class="p">(</span><span class="s1">&#39;toolip_seen&#39;</span><span class="p">)</span> <span class="o">===</span> <span class="s1">&#39;true&#39;</span><span class="p">);</span>
+<span class="p">};</span>
+<span class="kr">const</span> <span class="nx">toolip_seen_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span>
+  <span class="p">(</span><span class="kr">get</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="kr">get</span><span class="p">(</span><span class="nx">toolip_seen_base_atom</span><span class="p">),</span>
+  <span class="p">(</span><span class="nx">_</span><span class="p">,</span> <span class="kr">set</span><span class="p">,</span> <span class="nx">seen</span>: <span class="kt">boolean</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kr">set</span><span class="p">(</span><span class="nx">toolip_seen_base_atom</span><span class="p">,</span> <span class="nx">seen</span><span class="p">);</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">localStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="s1">&#39;toolip_seen&#39;</span><span class="p">,</span> <span class="nx">seen</span> <span class="o">?</span> <span class="s1">&#39;true&#39;</span> <span class="o">:</span> <span class="s1">&#39;false&#39;</span><span class="p">);</span>
+  <span class="p">},</span>
+<span class="p">);</span>
+</code></pre></div><p>같은 역할을 하는 것으로 <a href="https://jotai.org/docs/utils/atom-with-storage">atomWithStorage</a> 유틸리티 함수가 있는데,
+일부 환경에서 오동작을 하는 듯 해서 사용하지 못하고 있습니다. (Promise를 사용해 비동기적으로 동작하는 부분을 의심하고 있습니다.)</p>
+<h2 id="atom-조합-및-분리">atom 조합 및 분리</h2>
+<p>개별 atom도 사용하지만, 그 값을 합친 것도 필요한 경우가 있습니다. 파생 atom으로 이를 구현할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">atom</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;jotai&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">orderer_email_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">orderer_mobile_tel_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">orderer_name_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">orderer_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">((</span><span class="kr">get</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="nx">email</span>: <span class="kt">get</span><span class="p">(</span><span class="nx">orderer_email_atom</span><span class="p">),</span>
+  <span class="nx">mobile_tel</span>: <span class="kt">get</span><span class="p">(</span><span class="nx">orderer_mobile_tel_atom</span><span class="p">),</span>
+  <span class="nx">name</span>: <span class="kt">get</span><span class="p">(</span><span class="nx">orderer_name_atom</span><span class="p">),</span>
+<span class="p">}));</span>
+</code></pre></div><p>반대로 atom이 전체 값을 가지고 있는데, 그 중 일부만 필요한 경우도 있습니다.
+<a href="https://jotai.org/docs/utils/select-atom">selectAtom</a>을 사용하면 됩니다. 원본 atom의 값을 바꿀 일이 없을 때 사용하면 편리합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">atom</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;jotai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">selectAtom</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;jotai/utils&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">order_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">&lt;</span><span class="nt">Order</span><span class="p">&gt;(...);</span>
+<span class="kr">const</span> <span class="nx">ordered_product_atom</span> <span class="o">=</span> <span class="nx">selectAtom</span><span class="p">&lt;</span><span class="nt">OrderProduct</span><span class="p">&gt;(</span><span class="nx">order_atom</span><span class="p">,</span> <span class="p">(</span><span class="nx">order</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">order</span><span class="p">.</span><span class="nx">product</span><span class="p">);</span>
+</code></pre></div><h2 id="immer">immer</h2>
+<p>atom이 복잡한 객체일 때, 일부 속성만 편하게 갱신하기 위해서 <a href="https://immerjs.github.io/immer/">immer</a>를 사용할 수 있습니다.
+도움을 주는 <a href="https://jotai.org/docs/integrations/immer">유틸리티 모듈</a>도 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// immer를 사용하지 않는 경우
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">selected_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="o">&lt;</span><span class="p">{</span> <span class="p">[</span><span class="nx">key</span>: <span class="kt">string</span><span class="p">]</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">}</span><span class="o">&gt;</span><span class="p">({</span> <span class="nx">apple</span>: <span class="kt">true</span><span class="p">,</span> <span class="nx">banana</span>: <span class="kt">false</span> <span class="p">});</span>
+<span class="kr">const</span> <span class="nx">setSelectedAtom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">(</span><span class="kr">get</span><span class="p">,</span> <span class="kr">set</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="p">{</span> <span class="nx">fruit</span>: <span class="kt">string</span><span class="p">;</span> <span class="nx">checked</span>: <span class="kt">boolean</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">selected</span> <span class="o">=</span> <span class="kr">get</span><span class="p">(</span><span class="nx">selected_atom</span><span class="p">);</span>
+  <span class="kr">set</span><span class="p">(</span><span class="nx">selected_atom</span><span class="p">,</span> <span class="p">{</span> <span class="p">...</span><span class="nx">selected</span><span class="p">,</span> <span class="p">...{</span> <span class="p">[</span><span class="nx">value</span><span class="p">.</span><span class="nx">fruit</span><span class="p">]</span><span class="o">:</span> <span class="nx">value</span><span class="p">.</span><span class="nx">checked</span> <span class="p">}</span> <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="c1">// immer를 사용하는 경우
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">produce</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;immer&#39;</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">selected_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="o">&lt;</span><span class="p">{</span> <span class="p">[</span><span class="nx">key</span>: <span class="kt">string</span><span class="p">]</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">}</span><span class="o">&gt;</span><span class="p">({</span> <span class="nx">apple</span>: <span class="kt">true</span><span class="p">,</span> <span class="nx">banana</span>: <span class="kt">false</span> <span class="p">});</span>
+<span class="kr">const</span> <span class="nx">setSelectedAtom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">(</span><span class="kr">get</span><span class="p">,</span> <span class="kr">set</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="p">{</span> <span class="nx">fruit</span>: <span class="kt">string</span><span class="p">;</span> <span class="nx">checked</span>: <span class="kt">boolean</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">set</span><span class="p">(</span>
+    <span class="nx">selected_atom</span><span class="p">,</span>
+    <span class="nx">produce</span><span class="p">(</span><span class="kr">get</span><span class="p">(</span><span class="nx">selected_atom</span><span class="p">),</span> <span class="p">(</span><span class="nx">draft</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">draft</span><span class="p">[</span><span class="nx">value</span><span class="p">.</span><span class="nx">fruit</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">.</span><span class="nx">checked</span><span class="p">;</span>
+    <span class="p">}),</span>
+  <span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// immer 연동 모듈을 사용하는 경우
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">atomWithImmer</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;jotai/immer&#39;</span><span class="p">;</span>
+<span class="kr">const</span> <span class="nx">selected_atom</span> <span class="o">=</span> <span class="nx">atomWithImmer</span><span class="o">&lt;</span><span class="p">{</span> <span class="p">[</span><span class="nx">key</span>: <span class="kt">string</span><span class="p">]</span><span class="o">:</span> <span class="kr">boolean</span> <span class="p">}</span><span class="o">&gt;</span><span class="p">({</span> <span class="nx">apple</span>: <span class="kt">true</span><span class="p">,</span> <span class="nx">banana</span>: <span class="kt">false</span> <span class="p">});</span>
+<span class="kr">const</span> <span class="nx">setSelectedAtom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">(</span><span class="kr">get</span><span class="p">,</span> <span class="kr">set</span><span class="p">,</span> <span class="nx">value</span><span class="o">:</span> <span class="p">{</span> <span class="nx">fruit</span>: <span class="kt">string</span><span class="p">;</span> <span class="nx">checked</span>: <span class="kt">boolean</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">set</span><span class="p">(</span><span class="nx">selected_atom</span><span class="p">,</span> <span class="p">(</span><span class="nx">draft</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">draft</span><span class="p">[</span><span class="nx">value</span><span class="p">.</span><span class="nx">fruit</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">.</span><span class="nx">checked</span><span class="p">;</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div><h2 id="공용-컴포넌트">공용 컴포넌트</h2>
+<p>여러 페이지에서 사용하는 공통 컴포넌트가 있을 수 있습니다.
+그리고 그 컴포넌트가 제공하는 상태를 atom으로 정의해 부모가 읽을 수 있도록 만들 수 있습니다.
+이때 부모가 읽을 수 있도록 공용 컴포넌트에 Provider를 별도로 두지 않았습니다.
+다만 Provider가 별도로 존재하지 않으므로 인스턴스를 여러개 만들 수는 없습니다. (Input 컴포넌트 같은 것은 불가능)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// common/EditReceiverView/index.tsx
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">receiver_name_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">receiver_mobile_tel_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">receiver_postcode_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">receiver_address1_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="kr">const</span> <span class="nx">receiver_address2_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+
+<span class="kr">export</span> <span class="kr">const</span> <span class="nx">receiver_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">((</span><span class="kr">get</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span>
+  <span class="nx">name</span>: <span class="kt">get</span><span class="p">(</span><span class="nx">receiver_name_atom</span><span class="p">),</span>
+  <span class="nx">mobile_tel</span>: <span class="kt">get</span><span class="p">(</span><span class="nx">receiver_mobile_tel_atom</span><span class="p">),</span>
+  <span class="nx">postcode</span>: <span class="kt">get</span><span class="p">(</span><span class="nx">receiver_postcode_atom</span><span class="p">),</span>
+  <span class="nx">address1</span>: <span class="kt">get</span><span class="p">(</span><span class="nx">receiver_address1_atom</span><span class="p">),</span>
+  <span class="nx">address2</span>: <span class="kt">get</span><span class="p">(</span><span class="nx">receiver_address2_atom</span><span class="p">),</span>
+<span class="p">}));</span>
+
+<span class="kr">export</span> <span class="kd">function</span> <span class="nx">getInitialValues</span><span class="p">(</span>
+  <span class="nx">default_receiver</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">name</span>: <span class="kt">string</span><span class="p">;</span>
+    <span class="nx">mobile_tel</span>: <span class="kt">string</span><span class="p">;</span>
+    <span class="nx">postcode</span>: <span class="kt">string</span><span class="p">;</span>
+    <span class="nx">address1</span>: <span class="kt">string</span><span class="p">;</span>
+    <span class="nx">address2</span>: <span class="kt">string</span> <span class="o">|</span> <span class="kc">null</span><span class="p">;</span>
+  <span class="p">}</span> <span class="o">|</span> <span class="kc">null</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="p">[</span><span class="nx">Atom</span><span class="p">&lt;</span><span class="nt">unknown</span><span class="p">&gt;,</span> <span class="kt">unknown</span><span class="p">]</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span>
+    <span class="p">[</span><span class="nx">receiver_name_atom</span><span class="p">,</span> <span class="nx">default_receiver</span><span class="o">?</span><span class="p">.</span><span class="nx">name</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">],</span>
+    <span class="p">[</span><span class="nx">receiver_mobile_tel_atom</span><span class="p">,</span> <span class="nx">default_receiver</span><span class="o">?</span><span class="p">.</span><span class="nx">mobile_tel</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">],</span>
+    <span class="p">[</span><span class="nx">receiver_postcode_atom</span><span class="p">,</span> <span class="nx">default_receiver</span><span class="o">?</span><span class="p">.</span><span class="nx">postcode</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">],</span>
+    <span class="p">[</span><span class="nx">receiver_address1_atom</span><span class="p">,</span> <span class="nx">default_receiver</span><span class="o">?</span><span class="p">.</span><span class="nx">address1</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">],</span>
+    <span class="p">[</span><span class="nx">receiver_address2_atom</span><span class="p">,</span> <span class="nx">default_receiver</span><span class="o">?</span><span class="p">.</span><span class="nx">address2</span> <span class="o">??</span> <span class="s1">&#39;&#39;</span><span class="p">],</span>
+  <span class="p">];</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">EditReceiverView</span>: <span class="kt">FC</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="p">[</span><span class="nx">receiver_name</span><span class="p">,</span> <span class="nx">setReceiverName</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useAtom</span><span class="p">(</span><span class="nx">receiver_name_atom</span><span class="p">);</span>
+  <span class="p">...</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">Input</span>
+        <span class="na">label</span><span class="o">=</span><span class="s">&#39;받는 분&#39;</span>
+        <span class="na">type</span><span class="o">=</span><span class="s">&#39;text&#39;</span>
+        <span class="na">placeholder</span><span class="o">=</span><span class="s">&#39;이름을 입력해주세요&#39;</span>
+        <span class="na">value</span><span class="o">=</span><span class="p">{</span><span class="nx">receiver_name</span><span class="p">}</span>
+        <span class="na">onChange</span><span class="o">=</span><span class="p">{</span><span class="nx">setReceiverName</span><span class="p">}</span>
+      <span class="p">/&gt;</span>
+      <span class="p">...</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">EditReceiverView</span><span class="p">;</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="c1">// order-sheet/index.tsx
+</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">receiver_atom</span><span class="p">,</span> <span class="nx">getInitialValues</span> <span class="kr">as</span> <span class="nx">EditReceiverView_getInitialValues</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;common/EditReceiverView&#39;</span><span class="p">;</span>
+
+<span class="kr">const</span> <span class="nx">order_sheet_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">&lt;</span><span class="nt">OrderSheet</span><span class="p">&gt;({});</span>
+
+<span class="kd">function</span> <span class="nx">getInitialValues</span><span class="p">(</span>
+  <span class="nx">order_sheet</span>: <span class="kt">OrderSheet</span><span class="p">,</span>
+  <span class="nx">default_receiver</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">name</span>: <span class="kt">string</span><span class="p">;</span>
+    <span class="nx">mobile_tel</span>: <span class="kt">string</span><span class="p">;</span>
+    <span class="nx">postcode</span>: <span class="kt">string</span><span class="p">;</span>
+    <span class="nx">address1</span>: <span class="kt">string</span><span class="p">;</span>
+    <span class="nx">address2</span>: <span class="kt">string</span> <span class="o">|</span> <span class="kc">null</span><span class="p">;</span>
+  <span class="p">}</span> <span class="o">|</span> <span class="kc">null</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="p">[</span><span class="nx">Atom</span><span class="p">&lt;</span><span class="nt">unknown</span><span class="p">&gt;,</span> <span class="kt">unknown</span><span class="p">]</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span>
+    <span class="p">[</span><span class="nx">order_sheet_atom</span><span class="p">,</span> <span class="nx">order_sheet</span><span class="p">],</span>
+    <span class="p">...</span><span class="nx">EditReceiverView_getInitialValues</span><span class="p">(</span><span class="nx">default_receiver</span><span class="p">),</span>
+  <span class="p">];</span>
+<span class="p">}</span>
+
+<span class="kr">const</span> <span class="nx">purchaseAtom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="kr">async</span> <span class="p">(</span><span class="kr">get</span><span class="p">,</span> <span class="kr">set</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">order_sheet</span> <span class="o">=</span> <span class="kr">get</span><span class="p">(</span><span class="nx">order_sheet_atom</span><span class="p">);</span>
+  <span class="kr">const</span> <span class="nx">receiver</span> <span class="o">=</span> <span class="kr">get</span><span class="p">(</span><span class="nx">receiver_atom</span><span class="p">);</span>
+  <span class="p">...</span>
+<span class="p">});</span>
+
+<span class="kr">const</span> <span class="nx">OrderSheet</span>: <span class="kt">FC</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">purchase</span> <span class="o">=</span> <span class="nx">useUpdateAtom</span><span class="p">(</span><span class="nx">purchaseAtom</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+      <span class="p">...</span>
+      <span class="p">&lt;</span><span class="nt">EditReceiverView</span> <span class="p">/&gt;</span>
+      <span class="p">...</span>
+      <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="nx">purchase</span><span class="p">()}&gt;</span><span class="err">구매하기</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+      <span class="p">...</span>
+    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kr">const</span> <span class="nx">OrderSheetWithProvider</span>: <span class="kt">FC</span><span class="p">&lt;</span><span class="nt">Props</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">(</span>
+    <span class="p">&lt;</span><span class="nt">Provider</span>
+      <span class="na">initialValues</span><span class="o">=</span><span class="p">{</span><span class="nx">getInitialValues</span><span class="p">(</span>
+        <span class="nx">props</span><span class="p">.</span><span class="nx">order_sheet</span><span class="p">,</span>
+        <span class="nx">props</span><span class="p">.</span><span class="nx">default_receiver</span><span class="p">,</span>
+      <span class="p">)}</span>
+    <span class="p">&gt;</span>
+      <span class="p">&lt;</span><span class="nt">OrderSheet</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">Provider</span><span class="p">&gt;</span>
+  <span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">OrderSheetWithProvider</span><span class="p">;</span>
+</code></pre></div><h2 id="테스트">테스트</h2>
+<p>테스트는 중요하지만, 잘 하기는 쉽지 않습니다. 특히 수시로 변경되는 UI는 안정적이고 믿을 수 있는 테스트를 작성하기가 더 어렵습니다.
+하지만 상태를 뷰와 분리하면 그나마 테스트가 좀 쉬워집니다. Jotai로 만든 store는 뷰와 무관하기 때문에 테스트 작성이 비교적 용이합니다.</p>
+<p>다음과 같이 포인트 최대 적용이라는 액션을 만들었습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">atom</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;jotai&#39;</span><span class="p">;</span>
+
+<span class="c1">// 주문액
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">payment_amount_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">// 소유한 포인트 금액
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">available_point_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">// 최대 사용가능한 포인트 금액
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">maximum_usable_point_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">((</span><span class="kr">get</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">available_point</span> <span class="o">=</span> <span class="kr">get</span><span class="p">(</span><span class="nx">available_point_atom</span><span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">available_point</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="kr">const</span> <span class="nx">payment_amount</span> <span class="o">=</span> <span class="kr">get</span><span class="p">(</span><span class="nx">payment_amount_atom</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">available_point</span> <span class="o">&lt;=</span> <span class="nx">payment_amount</span> <span class="o">?</span> <span class="nx">available_point</span> : <span class="kt">payment_amount</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="c1">// 사용할 포인트 금액
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">point_to_use_atom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+<span class="c1">// 사용가능한 최대 포인트를 적용한다
+</span><span class="c1"></span><span class="kr">const</span> <span class="nx">applyAllPointAtom</span> <span class="o">=</span> <span class="nx">atom</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="p">(</span><span class="kr">get</span><span class="p">,</span> <span class="kr">set</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kr">set</span><span class="p">(</span><span class="nx">point_to_use_atom</span><span class="p">,</span> <span class="kr">get</span><span class="p">(</span><span class="nx">maximum_usable_point_atom</span><span class="p">));</span>
+<span class="p">});</span>
+
+<span class="c1">// Provider의 initialValues를 위한 도움 함수
+</span><span class="c1"></span><span class="kd">function</span> <span class="nx">getInitialValues</span><span class="p">(</span>
+  <span class="nx">payment_amount</span>: <span class="kt">number</span><span class="p">,</span>
+  <span class="nx">available_point</span>: <span class="kt">number</span><span class="p">,</span>
+<span class="p">)</span><span class="o">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="p">[</span><span class="nx">Atom</span><span class="p">&lt;</span><span class="nt">unknown</span><span class="p">&gt;,</span> <span class="kt">unknown</span><span class="p">]</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span>
+    <span class="p">[</span><span class="nx">payment_amount_atom</span><span class="p">,</span> <span class="nx">payment_amount</span><span class="p">],</span>
+    <span class="p">[</span><span class="nx">available_point_atom</span><span class="p">,</span> <span class="nx">available_point</span><span class="p">],</span>
+  <span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div><p>다음은 이 액션에 대한 테스트 코드입니다.(action 파일과 같은 디렉토리에 위치시켰습니다)
+현재 카카오스타일은 <a href="https://jestjs.io/">Jest</a> 프레임워크를 사용중이고(서버는 <a href="https://mochajs.org/">Mocha</a>를 사용하고 있습니다),
+<a href="https://testing-library.com/">Testing Library</a>의 도움을 받고 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">renderHook</span><span class="p">,</span> <span class="nx">act</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@testing-library/react-hooks&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">Provider</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;jotai&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">useAtomValue</span><span class="p">,</span> <span class="nx">useUpdateAtom</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;jotai/utils&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">getInitialValues</span><span class="p">,</span> <span class="nx">maximum_usable_point_atom</span><span class="p">,</span> <span class="nx">point_to_use_atom</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;../atoms&#39;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">applyAllPointAtom</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;./applyAllPoint&#39;</span><span class="p">;</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;applyAllPoint&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;포인트 사용액 기본값은 0이다&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="p">{</span> <span class="nx">result</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">renderHook</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+      <span class="nx">point_to_use</span>: <span class="kt">useAtomValue</span><span class="p">(</span><span class="nx">point_to_use_atom</span><span class="p">),</span>
+    <span class="p">}));</span>
+
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nx">point_to_use</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;사용 가능한 금액만큼 적용된다&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">initial_values</span> <span class="o">=</span> <span class="nx">getInitialValues</span><span class="p">(</span>
+      <span class="mi">92500</span><span class="p">,</span>
+      <span class="mi">10000</span><span class="p">,</span>
+    <span class="p">);</span>
+    <span class="kr">const</span> <span class="p">{</span> <span class="nx">result</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">renderHook</span><span class="p">(</span>
+      <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+        <span class="nx">point_to_use</span>: <span class="kt">useAtomValue</span><span class="p">(</span><span class="nx">point_to_use_atom</span><span class="p">),</span>
+        <span class="nx">maximum_usable_point</span>: <span class="kt">useAtomValue</span><span class="p">(</span><span class="nx">maximum_usable_point_atom</span><span class="p">),</span>
+        <span class="nx">applyAllPoint</span>: <span class="kt">useUpdateAtom</span><span class="p">(</span><span class="nx">applyAllPointAtom</span><span class="p">),</span>
+      <span class="p">}),</span>
+      <span class="p">{</span>
+        <span class="nx">wrapper</span><span class="o">:</span> <span class="p">({</span> <span class="nx">children</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">&lt;</span><span class="nt">Provider</span> <span class="na">initialValues</span><span class="o">=</span><span class="p">{</span><span class="nx">initial_values</span><span class="p">}&gt;{</span><span class="nx">children</span><span class="p">}&lt;/</span><span class="nt">Provider</span><span class="p">&gt;,</span>
+      <span class="p">},</span>
+    <span class="p">);</span>
+
+    <span class="nx">act</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">result</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nx">applyAllPoint</span><span class="p">();</span>
+    <span class="p">});</span>
+
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nx">maximum_usable_point</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nx">point_to_use</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;사용 가능한 금액이 주문 금액보다 많으면 주문 금액만큼 적용된다&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">initial_values</span> <span class="o">=</span> <span class="nx">getInitialValues</span><span class="p">(</span>
+      <span class="mi">92500</span><span class="p">,</span>
+      <span class="mi">200000</span><span class="p">,</span>
+    <span class="p">);</span>
+    <span class="kr">const</span> <span class="p">{</span> <span class="nx">result</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">renderHook</span><span class="p">(</span>
+      <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">({</span>
+        <span class="nx">point_to_use</span>: <span class="kt">useAtomValue</span><span class="p">(</span><span class="nx">point_to_use_atom</span><span class="p">),</span>
+        <span class="nx">maximum_usable_point</span>: <span class="kt">useAtomValue</span><span class="p">(</span><span class="nx">maximum_usable_point_atom</span><span class="p">),</span>
+        <span class="nx">applyAllPoint</span>: <span class="kt">useUpdateAtom</span><span class="p">(</span><span class="nx">applyAllPointAtom</span><span class="p">),</span>
+      <span class="p">}),</span>
+      <span class="p">{</span>
+        <span class="nx">wrapper</span><span class="o">:</span> <span class="p">({</span> <span class="nx">children</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">&lt;</span><span class="nt">Provider</span> <span class="na">initialValues</span><span class="o">=</span><span class="p">{</span><span class="nx">initial_values</span><span class="p">}&gt;{</span><span class="nx">children</span><span class="p">}&lt;/</span><span class="nt">Provider</span><span class="p">&gt;,</span>
+      <span class="p">},</span>
+    <span class="p">);</span>
+
+    <span class="nx">act</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="nx">result</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nx">applyAllPoint</span><span class="p">();</span>
+    <span class="p">});</span>
+
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nx">maximum_usable_point</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">92500</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nx">point_to_use</span><span class="p">).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">92500</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+      
+      <hr>
+      <div class='post-original'>
+        원본 링크 : <a href='http://sixmen.com/ko/tech/2022-01-13-2-jotai-recipe/' target='_blank'>http://sixmen.com/ko/tech/2022-01-13-2-jotai-recipe/</a>
+      </div>
+      
+    </div>
+
+    <div class='col-lg-3 sidemenu'>
+  <h4>Recent Posts</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2022-01-13-2-jotai-recipe/'>
+      <li class="sidemenu-recent-item">Jotai 레시피</li>
+    </a>
+    
+    <a href='/ko/2022-01-13-1-frontend-state-management/'>
+      <li class="sidemenu-recent-item">프론트엔드 상태 관리에 대한 여정</li>
+    </a>
+    
+    <a href='/ko/2021-12-16-1-server-driven-ui/'>
+      <li class="sidemenu-recent-item">Server Driven UI 설계를 통한 UI 유연화</li>
+    </a>
+    
+    <a href='/ko/2021-07-31-1-graphql-error-guide/'>
+      <li class="sidemenu-recent-item">GraphQL 에러 처리 규칙</li>
+    </a>
+    
+  </ul>
+  <hr>
+  <h4>Tags</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href="/ko/tags/amazon-sqs/">
+      <li class="sidemenu-recent-tags">amazon-sqs</li>
+    </a>
+    
+    <a href="/ko/tags/analytics/">
+      <li class="sidemenu-recent-tags">analytics</li>
+    </a>
+    
+    <a href="/ko/tags/android/">
+      <li class="sidemenu-recent-tags">android</li>
+    </a>
+    
+    <a href="/ko/tags/aws/">
+      <li class="sidemenu-recent-tags">aws</li>
+    </a>
+    
+    <a href="/ko/tags/aws-batch/">
+      <li class="sidemenu-recent-tags">aws-batch</li>
+    </a>
+    
+    <a href="/ko/tags/aws-lambda/">
+      <li class="sidemenu-recent-tags">aws-lambda</li>
+    </a>
+    
+    <a href="/ko/tags/botkit/">
+      <li class="sidemenu-recent-tags">botkit</li>
+    </a>
+    
+    <a href="/ko/tags/croquis/">
+      <li class="sidemenu-recent-tags">croquis</li>
+    </a>
+    
+    <a href="/ko/tags/css/">
+      <li class="sidemenu-recent-tags">css</li>
+    </a>
+    
+    <a href="/ko/tags/data/">
+      <li class="sidemenu-recent-tags">data</li>
+    </a>
+    
+    <a href="/ko/tags/event/">
+      <li class="sidemenu-recent-tags">event</li>
+    </a>
+    
+    <a href="/ko/tags/front-end/">
+      <li class="sidemenu-recent-tags">front-end</li>
+    </a>
+    
+    <a href="/ko/tags/frontend/">
+      <li class="sidemenu-recent-tags">frontend</li>
+    </a>
+    
+    <a href="/ko/tags/github/">
+      <li class="sidemenu-recent-tags">github</li>
+    </a>
+    
+    <a href="/ko/tags/graphql/">
+      <li class="sidemenu-recent-tags">graphql</li>
+    </a>
+    
+    <a href="/ko/tags/ios/">
+      <li class="sidemenu-recent-tags">ios</li>
+    </a>
+    
+    <a href="/ko/tags/jenkins/">
+      <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/jotai/">
+      <li class="sidemenu-recent-tags">jotai</li>
+    </a>
+    
+    <a href="/ko/tags/log/">
+      <li class="sidemenu-recent-tags">log</li>
+    </a>
+    
+    <a href="/ko/tags/microservice/">
+      <li class="sidemenu-recent-tags">microservice</li>
+    </a>
+    
+    <a href="/ko/tags/mithril/">
+      <li class="sidemenu-recent-tags">mithril</li>
+    </a>
+    
+    <a href="/ko/tags/nodejs/">
+      <li class="sidemenu-recent-tags">nodejs</li>
+    </a>
+    
+    <a href="/ko/tags/react/">
+      <li class="sidemenu-recent-tags">react</li>
+    </a>
+    
+    <a href="/ko/tags/rest-api/">
+      <li class="sidemenu-recent-tags">rest-api</li>
+    </a>
+    
+    <a href="/ko/tags/serverless-architecture/">
+      <li class="sidemenu-recent-tags">serverless-architecture</li>
+    </a>
+    
+    <a href="/ko/tags/slack/">
+      <li class="sidemenu-recent-tags">slack</li>
+    </a>
+    
+    <a href="/ko/tags/stack/">
+      <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/task-queue/">
+      <li class="sidemenu-recent-tags">task-queue</li>
+    </a>
+    
+    <a href="/ko/tags/thrift/">
+      <li class="sidemenu-recent-tags">thrift</li>
+    </a>
+    
+    <a href="/ko/tags/typescript/">
+      <li class="sidemenu-recent-tags">typescript</li>
+    </a>
+    
+    <a href="/ko/tags/ui/">
+      <li class="sidemenu-recent-tags">ui</li>
+    </a>
+    
+    <a href="/ko/tags/vertical-align/">
+      <li class="sidemenu-recent-tags">vertical-align</li>
+    </a>
+    
+    <a href="/ko/tags/webpack/">
+      <li class="sidemenu-recent-tags">webpack</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A1%9C%EA%B7%B8/">
+      <li class="sidemenu-recent-tags">로그</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/">
+      <li class="sidemenu-recent-tags">마이크로서비스</li>
+    </a>
+    
+    <a href="/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/">
+      <li class="sidemenu-recent-tags">튜토리얼</li>
+    </a>
+    
+  </ul>
+</div>
+
+    <div class='col-12'>
+      <hr>
+
+      <div class='float-left'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2022-01-13-1-frontend-state-management/' title='프론트엔드 상태 관리에 대한 여정'>&larr; 이전 글</a>
+        
+      </div>
+      <div class='float-right'>
+        
+        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
+        
+      </div>
+      <div class='clearfix'></div>
+      <hr>
+      <div class='text-center'>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "croquiscom-devblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='container'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2021 kakaostyle.com
+      <span class='float-right text-muted'>
+        powered by
+        <a href='https://gohugo.io/' target='_blank'>Hugo</a>
+        and
+        <a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-48716672-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+  integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+  integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
