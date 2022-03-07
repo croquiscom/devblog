@@ -112,93 +112,93 @@ config 모듈은 필요한 기능을 제공했지만, 오타 등의 이유로 �
 저희는 처음부터 설정 파일을 JSON이 아닌 JavaScript로 관리하고 있었습니다. 이를 그대로 TypeScript로 전환하면 그 자체가 타입 정의가 될 것 같았습니다.
 이렇게 만들어진 저희 설정 파일 형식은 다음과 같습니다.</p>
 <p>우선 설정의 기본 구조는 config/default.ts에 정의합니다. 이후 다른 코드에서는 이 파일의 내용을 기반으로 타입 검사가 이루어집니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">const</span> <span class="nx">Config</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">test_mode</span>: <span class="kt">false</span><span class="p">,</span>
-  <span class="nx">database</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">host</span><span class="o">:</span> <span class="s1">&#39;mydb.mydomain.com&#39;</span><span class="p">,</span>
-    <span class="nx">port</span>: <span class="kt">3306</span><span class="p">,</span>
-    <span class="nx">user</span><span class="o">:</span> <span class="s1">&#39;myuser&#39;</span><span class="p">,</span>
-    <span class="nx">password</span><span class="o">:</span> <span class="s1">&#39;mypassword&#39;</span><span class="p">,</span>
-  <span class="p">},</span>
-<span class="p">};</span>
-
-<span class="kr">export</span> <span class="k">default</span> <span class="nx">Config</span><span class="p">;</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">Config</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">test_mode</span>: <span class="kt">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">database</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">host</span><span class="o">:</span> <span class="s1">&#39;mydb.mydomain.com&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">port</span>: <span class="kt">3306</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">user</span><span class="o">:</span> <span class="s1">&#39;myuser&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">password</span><span class="o">:</span> <span class="s1">&#39;mypassword&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="nx">Config</span><span class="p">;</span></span></span></code></pre></div>
 <p>다른 환경에 대한 설정은 다른 부분에 대해서만 정의하면 됩니다. 다음은 테스트 환경을 위한 config/test.ts 파일입니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">const</span> <span class="nx">Config</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">test_mode</span>: <span class="kt">true</span><span class="p">,</span>
-  <span class="nx">database</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">host</span><span class="o">:</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
-    <span class="nx">port</span><span class="o">:</span> <span class="s1">&#39;5678&#39;</span><span class="p">,</span>
-  <span class="p">},</span>
-<span class="p">};</span>
-
-<span class="kr">export</span> <span class="k">default</span> <span class="nx">Config</span><span class="p">;</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">Config</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">test_mode</span>: <span class="kt">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">database</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">host</span><span class="o">:</span> <span class="s1">&#39;localhost&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">port</span><span class="o">:</span> <span class="s1">&#39;5678&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="nx">Config</span><span class="p">;</span></span></span></code></pre></div>
 <p>이제 이를 묶어서 다른 코드에 제공할 config/index.ts 파일을 정의합니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="nx">_</span> <span class="kr">from</span> <span class="s1">&#39;lodash&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">BaseConfig</span> <span class="kr">from</span> <span class="s1">&#39;./default&#39;</span><span class="p">;</span>
-
-<span class="kr">const</span> <span class="nx">Config</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">cloneDeep</span><span class="p">(</span><span class="nx">BaseConfig</span><span class="p">);</span>
-
-<span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">try</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="nx">EnvConfig</span> <span class="o">=</span> <span class="kr">require</span><span class="p">(</span><span class="sb">`./</span><span class="si">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span><span class="si">}</span><span class="sb">`</span><span class="p">).</span><span class="k">default</span><span class="p">;</span>
-    <span class="nx">_</span><span class="p">.</span><span class="nx">merge</span><span class="p">(</span><span class="nx">Config</span><span class="p">,</span> <span class="nx">EnvConfig</span><span class="p">);</span>
-  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Cannot find configs for env=</span><span class="si">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kr">export</span> <span class="p">{</span> <span class="nx">Config</span> <span class="p">};</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">_</span> <span class="kr">from</span> <span class="s1">&#39;lodash&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">BaseConfig</span> <span class="kr">from</span> <span class="s1">&#39;./default&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">Config</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">cloneDeep</span><span class="p">(</span><span class="nx">BaseConfig</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">try</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">EnvConfig</span> <span class="o">=</span> <span class="kr">require</span><span class="p">(</span><span class="sb">`./</span><span class="si">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span><span class="si">}</span><span class="sb">`</span><span class="p">).</span><span class="k">default</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">_</span><span class="p">.</span><span class="nx">merge</span><span class="p">(</span><span class="nx">Config</span><span class="p">,</span> <span class="nx">EnvConfig</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Cannot find configs for env=</span><span class="si">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="p">{</span> <span class="nx">Config</span> <span class="p">};</span></span></span></code></pre></div>
 <p>이 설정 파일은 다음과 같이 사용하면 됩니다. 이 코드는 NODE_ENV에 따라 다른 결과를 출력합니다. 물론 타입 검사도 완벽히 동작합니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="p">{</span> <span class="nx">Config</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;./config&#39;</span><span class="p">;</span>
-
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Config</span><span class="p">.</span><span class="nx">database</span><span class="p">);</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">Config</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;./config&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Config</span><span class="p">.</span><span class="nx">database</span><span class="p">);</span></span></span></code></pre></div>
 <p>다만 이대로는 부족한 점이 있습니다. test.ts 파일에서 오타(예 test_mode -&gt; testmode)나 타입 오류가 있어도 알려주지 않습니다.
 이는 다음 방법으로 해결할 수 있습니다. default.ts에 다음 내용을 추가합니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="c1">// from https://github.com/krzkaczor/ts-essentials
-</span><span class="c1"></span><span class="kr">type</span> <span class="nx">DeepPartial</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="p">[</span><span class="nx">P</span> <span class="k">in</span> <span class="k">keyof</span> <span class="nx">T</span><span class="p">]</span><span class="o">?:</span> <span class="nx">T</span><span class="p">[</span><span class="nx">P</span><span class="p">]</span> <span class="kr">extends</span> <span class="nb">Array</span><span class="p">&lt;</span><span class="nt">infer</span> <span class="na">U</span><span class="p">&gt;</span>
-  <span class="o">?</span> <span class="nb">Array</span><span class="p">&lt;</span><span class="nt">DeepPartial</span><span class="err">&lt;</span><span class="na">U</span><span class="p">&gt;</span><span class="o">&gt;</span>
-  <span class="c1">// tslint:disable-next-line:no-shadowed-variable
-</span><span class="c1"></span>  <span class="o">:</span> <span class="nx">T</span><span class="p">[</span><span class="nx">P</span><span class="p">]</span> <span class="kr">extends</span> <span class="nx">ReadonlyArray</span><span class="p">&lt;</span><span class="nt">infer</span> <span class="na">U</span><span class="p">&gt;</span>
-  <span class="o">?</span> <span class="nx">ReadonlyArray</span><span class="p">&lt;</span><span class="nt">DeepPartial</span><span class="err">&lt;</span><span class="na">U</span><span class="p">&gt;</span><span class="o">&gt;</span>
-  <span class="o">:</span> <span class="nx">DeepPartial</span><span class="p">&lt;</span><span class="nt">T</span><span class="err">[</span><span class="na">P</span><span class="err">]</span><span class="p">&gt;</span>
-<span class="p">};</span>
-
-<span class="kr">export</span> <span class="kr">type</span> <span class="nx">BaseConfigType</span> <span class="o">=</span> <span class="nx">DeepPartial</span><span class="p">&lt;</span><span class="nt">typeof</span> <span class="na">Config</span><span class="p">&gt;;</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="c1">// from https://github.com/krzkaczor/ts-essentials
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">type</span> <span class="nx">DeepPartial</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="p">[</span><span class="nx">P</span> <span class="k">in</span> <span class="k">keyof</span> <span class="nx">T</span><span class="p">]</span><span class="o">?:</span> <span class="nx">T</span><span class="p">[</span><span class="nx">P</span><span class="p">]</span> <span class="kr">extends</span> <span class="nb">Array</span><span class="p">&lt;</span><span class="nt">infer</span> <span class="na">U</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">?</span> <span class="nb">Array</span><span class="p">&lt;</span><span class="nt">DeepPartial</span><span class="err">&lt;</span><span class="na">U</span><span class="p">&gt;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// tslint:disable-next-line:no-shadowed-variable
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="o">:</span> <span class="nx">T</span><span class="p">[</span><span class="nx">P</span><span class="p">]</span> <span class="kr">extends</span> <span class="nx">ReadonlyArray</span><span class="p">&lt;</span><span class="nt">infer</span> <span class="na">U</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">?</span> <span class="nx">ReadonlyArray</span><span class="p">&lt;</span><span class="nt">DeepPartial</span><span class="err">&lt;</span><span class="na">U</span><span class="p">&gt;</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="o">:</span> <span class="nx">DeepPartial</span><span class="p">&lt;</span><span class="nt">T</span><span class="err">[</span><span class="na">P</span><span class="err">]</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">type</span> <span class="nx">BaseConfigType</span> <span class="o">=</span> <span class="nx">DeepPartial</span><span class="p">&lt;</span><span class="nt">typeof</span> <span class="na">Config</span><span class="p">&gt;;</span></span></span></code></pre></div>
 <p>이제 test.ts를 다음과 같이 수정합니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="p">{</span> <span class="nx">BaseConfigType</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;./default&#39;</span><span class="p">;</span>
-
-<span class="kr">const</span> <span class="nx">Config</span>: <span class="kt">BaseConfigType</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="p">...</span>
-<span class="p">};</span>
-
-<span class="kr">export</span> <span class="k">default</span> <span class="nx">Config</span><span class="p">;</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">BaseConfigType</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;./default&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">Config</span>: <span class="kt">BaseConfigType</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="p">...</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="nx">Config</span><span class="p">;</span></span></span></code></pre></div>
 <p>처음 정의 시 port의 타입이 달랐는데(string vs number) 이제는 다음과 같은 컴파일 오류가 발생합니다.</p>
-<pre tabindex="0"><code>config/test.ts(5,3): error TS2322: Type '{ host: string; port: string; }' is not assignable to type 'DeepPartial&lt;{ host: string; port: number; user: string; password: string; }&gt;'.
-  Types of property 'port' are incompatible.
-    Type 'string' is not assignable to type 'number | undefined'.
+<pre tabindex="0"><code>config/test.ts(5,3): error TS2322: Type &#39;{ host: string; port: string; }&#39; is not assignable to type &#39;DeepPartial&lt;{ host: string; port: number; user: string; password: string; }&gt;&#39;.
+  Types of property &#39;port&#39; are incompatible.
+    Type &#39;string&#39; is not assignable to type &#39;number | undefined&#39;.
 </code></pre><p>저희는 이런 식으로 설정을 정의해서 잘 사용하고 있습니다. 다만 아쉬운 점이 아예 없지는 않습니다.
 lodash의 merge를 사용하기 때문에 default 설정에서 정의한 값을 undefined로 덮어씌우지는 못합니다.
 또 default 설정의 타입이 기준이 되기 때문에 환경마다 설정의 형태가 매우 다르다면 default에서 타입을 명시적으로 써줘야 할 수도 있습니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="c1">// default
-</span><span class="c1"></span><span class="kr">import</span> <span class="nx">Redis</span> <span class="kr">from</span> <span class="s1">&#39;ioredis&#39;</span><span class="p">;</span>
-
-<span class="kr">const</span> <span class="nx">Config</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">database</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">password</span><span class="o">:</span> <span class="s1">&#39;mypassword&#39;</span> <span class="kr">as</span> <span class="kt">string</span> <span class="o">|</span> <span class="kc">null</span><span class="p">,</span>
-  <span class="p">},</span>
-  <span class="nx">cache</span><span class="o">:</span> <span class="p">{</span>
-    <span class="p">...</span>
-  <span class="p">}</span> <span class="kr">as</span> <span class="nx">Redis</span><span class="p">.</span><span class="nx">RedisOptions</span><span class="p">,</span>
-<span class="p">};</span>
-
-<span class="c1">// test
-</span><span class="c1"></span><span class="kr">const</span> <span class="nx">Config</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">database</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">password</span>: <span class="kt">null</span><span class="p">,</span>
-  <span class="p">},</span>
-<span class="p">};</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="c1">// default
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="nx">Redis</span> <span class="kr">from</span> <span class="s1">&#39;ioredis&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">Config</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">database</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">password</span><span class="o">:</span> <span class="s1">&#39;mypassword&#39;</span> <span class="kr">as</span> <span class="kt">string</span> <span class="o">|</span> <span class="kc">null</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">cache</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">...</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="kr">as</span> <span class="nx">Redis</span><span class="p">.</span><span class="nx">RedisOptions</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// test
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">Config</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">database</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">password</span>: <span class="kt">null</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></div>
 <p>제 생각에 JavaScript 생태계에서 TypeScript는 뺄 수 없는 부분이 된 것 같습니다.
 이 글이 TypeScript를 사용하시는 데 도움이 되었으면 합니다.</p>
       
@@ -213,6 +213,10 @@ lodash의 merge를 사용하기 때문에 default 설정에서 정의한 값을 
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2022-03-07-1-npm-private-repository/'>
+      <li class="sidemenu-recent-item">사내 npm 패키지 저장소를 구축하기 위해 겪었던 과정들</li>
+    </a>
+    
     <a href='/ko/2022-01-13-2-jotai-recipe/'>
       <li class="sidemenu-recent-item">Jotai 레시피</li>
     </a>
@@ -223,10 +227,6 @@ lodash의 merge를 사용하기 때문에 default 설정에서 정의한 값을 
     
     <a href='/ko/2021-12-16-1-server-driven-ui/'>
       <li class="sidemenu-recent-item">Server Driven UI 설계를 통한 UI 유연화</li>
-    </a>
-    
-    <a href='/ko/2021-07-31-1-graphql-error-guide/'>
-      <li class="sidemenu-recent-item">GraphQL 에러 처리 규칙</li>
     </a>
     
   </ul>
@@ -322,6 +322,10 @@ lodash의 merge를 사용하기 때문에 default 설정에서 정의한 값을 
       <li class="sidemenu-recent-tags">nodejs</li>
     </a>
     
+    <a href="/ko/tags/npm/">
+      <li class="sidemenu-recent-tags">npm</li>
+    </a>
+    
     <a href="/ko/tags/react/">
       <li class="sidemenu-recent-tags">react</li>
     </a>
@@ -399,7 +403,7 @@ lodash의 merge를 사용하기 때문에 default 설정에서 정의한 값을 
       <div class='text-center'>
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

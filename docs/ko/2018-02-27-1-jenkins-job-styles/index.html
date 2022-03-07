@@ -138,30 +138,30 @@
 <p>다음은 Blue Ocean에서 파이프라인을 정의하는 예입니다.</p>
 <p><img src="/img/content/2018-02-27-1/2018-02-27-1-03.png" alt="Blue Ocean에서 파이프라인 정의"></p>
 <p>UI에서 정의한 내용은 다음과 같이 Declarative 방식의 Jenkinsfile로 만들어집니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="n">pipeline</span> <span class="o">{</span>
-  <span class="n">agent</span> <span class="n">any</span>
-  <span class="n">stages</span> <span class="o">{</span>
-    <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
-      <span class="n">parallel</span> <span class="o">{</span>
-        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build 1&#39;</span><span class="o">)</span> <span class="o">{</span>
-          <span class="n">steps</span> <span class="o">{</span>
-            <span class="n">sh</span> <span class="s1">&#39;echo Build 1&#39;</span>
-          <span class="o">}</span>
-        <span class="o">}</span>
-        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build 2&#39;</span><span class="o">)</span> <span class="o">{</span>
-          <span class="n">steps</span> <span class="o">{</span>
-            <span class="n">sh</span> <span class="s1">&#39;echo Build 2&#39;</span>
-          <span class="o">}</span>
-        <span class="o">}</span>
-      <span class="o">}</span>
-    <span class="o">}</span>
-    <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy&#39;</span><span class="o">)</span> <span class="o">{</span>
-      <span class="n">steps</span> <span class="o">{</span>
-        <span class="n">sh</span> <span class="s1">&#39;echo Deploy&#39;</span>
-      <span class="o">}</span>
-    <span class="o">}</span>
-  <span class="o">}</span>
-<span class="o">}</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">  <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">parallel</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build 1&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">          <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sh</span> <span class="s1">&#39;echo Build 1&#39;</span>
+</span></span><span class="line"><span class="cl">          <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build 2&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">          <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sh</span> <span class="s1">&#39;echo Build 2&#39;</span>
+</span></span><span class="line"><span class="cl">          <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">      <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sh</span> <span class="s1">&#39;echo Deploy&#39;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">  <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div>
 <h1 id="결론">결론</h1>
 <p>젠킨스가 오래된 프로젝트이고 기존 방식을 버리지 못하는 상황에서 새로운 방식을 추가하다보니 혼란스러운 점이 있었습니다.</p>
 <p>새로운 프로젝트는 무조건 Jenkinsfile로 만들어서 소스에 추가한다고 생각하시는 것이 좋습니다.
@@ -181,6 +181,10 @@
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2022-03-07-1-npm-private-repository/'>
+      <li class="sidemenu-recent-item">사내 npm 패키지 저장소를 구축하기 위해 겪었던 과정들</li>
+    </a>
+    
     <a href='/ko/2022-01-13-2-jotai-recipe/'>
       <li class="sidemenu-recent-item">Jotai 레시피</li>
     </a>
@@ -191,10 +195,6 @@
     
     <a href='/ko/2021-12-16-1-server-driven-ui/'>
       <li class="sidemenu-recent-item">Server Driven UI 설계를 통한 UI 유연화</li>
-    </a>
-    
-    <a href='/ko/2021-07-31-1-graphql-error-guide/'>
-      <li class="sidemenu-recent-item">GraphQL 에러 처리 규칙</li>
     </a>
     
   </ul>
@@ -290,6 +290,10 @@
       <li class="sidemenu-recent-tags">nodejs</li>
     </a>
     
+    <a href="/ko/tags/npm/">
+      <li class="sidemenu-recent-tags">npm</li>
+    </a>
+    
     <a href="/ko/tags/react/">
       <li class="sidemenu-recent-tags">react</li>
     </a>
@@ -367,7 +371,7 @@
       <div class='text-center'>
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

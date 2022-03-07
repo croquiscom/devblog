@@ -199,29 +199,29 @@ CloudWatch를 설정할 때 Lambda Function이 필요하므로, 일단은 비워
 <p>그리고 SQS에서 메시지를 읽어들이는 코드를 작성해줍니다.
 <code>QueueUrl</code>은 이전에 생성한 SQS의 url을 넣어줍니다.
 AWS의 Console에서 확인할 수 있습니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">AWS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;aws-sdk&#34;</span><span class="p">);</span>
-<span class="kr">const</span> <span class="nx">sqs</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AWS</span><span class="p">.</span><span class="nx">SQS</span><span class="p">();</span>
-<span class="kr">const</span> <span class="nx">lambda</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AWS</span><span class="p">.</span><span class="nx">Lambda</span><span class="p">();</span>
-
-<span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">QueueUrl</span><span class="o">:</span> <span class="s1">&#39;https://sqs.ap-northeast-2.amazonaws.com/XXXXXX/MyFirstQueue&#39;</span><span class="p">,</span>
-    <span class="nx">MaxNumberOfMessages</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
-    <span class="nx">MessageAttributeNames</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;All&#39;</span><span class="p">]</span>
-  <span class="p">};</span>
-  <span class="nx">sqs</span><span class="p">.</span><span class="nx">receiveMessage</span><span class="p">(</span><span class="nx">params</span><span class="p">).</span><span class="nx">promise</span><span class="p">()</span>
-    <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Messages</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">Messages</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// Invoke Lambda here..
-</span><span class="c1"></span>      <span class="p">}</span>
-    <span class="p">})</span>
-    <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="nx">callback</span><span class="p">();</span>
-    <span class="p">})</span>
-    <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="nx">callback</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-    <span class="p">});</span>
-<span class="p">};</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">AWS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;aws-sdk&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">sqs</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AWS</span><span class="p">.</span><span class="nx">SQS</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">lambda</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AWS</span><span class="p">.</span><span class="nx">Lambda</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">params</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">QueueUrl</span><span class="o">:</span> <span class="s1">&#39;https://sqs.ap-northeast-2.amazonaws.com/XXXXXX/MyFirstQueue&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">MaxNumberOfMessages</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">MessageAttributeNames</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;All&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">sqs</span><span class="p">.</span><span class="nx">receiveMessage</span><span class="p">(</span><span class="nx">params</span><span class="p">).</span><span class="nx">promise</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Messages</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">Messages</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Invoke Lambda here..
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">callback</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">callback</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></div>
 <p>SQS의 <code>receiveMessage</code>는 큐에 포함된 메시지를 1~10개까지 반환합니다. 반환되는 메시지는 아래와 같은 내용을 포함합니다.</p>
 <ul>
 <li>Message body</li>
@@ -235,44 +235,44 @@ AWS의 Console에서 확인할 수 있습니다.</p>
 <p>위의 코드를 동작시키기 위해서는 Lambda function에 Permission을 추가해줘야 합니다.
 아래와 같은 Policy를 가지는 Role을 생성한 뒤, [Choose an existing role]을 선택하여 생성한 Role을 선택해 줍니다.
 아래 Role은 SQS에서 message를 전달받고 삭제할 수 있으며 Lambda를 실행시킬 수 있고, CloudWatch에 로그를 생성할 수 있습니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
-    <span class="nt">&#34;Version&#34;</span><span class="p">:</span> <span class="s2">&#34;2012-10-17&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;Statement&#34;</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="nt">&#34;Sid&#34;</span><span class="p">:</span> <span class="s2">&#34;Stmt1490663845000&#34;</span><span class="p">,</span>
-            <span class="nt">&#34;Effect&#34;</span><span class="p">:</span> <span class="s2">&#34;Allow&#34;</span><span class="p">,</span>
-            <span class="nt">&#34;Action&#34;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&#34;sqs:ReceiveMessage&#34;</span><span class="p">,</span>
-                <span class="s2">&#34;sqs:DeleteMessage&#34;</span>
-            <span class="p">],</span>
-            <span class="nt">&#34;Resource&#34;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&#34;*&#34;</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&#34;Sid&#34;</span><span class="p">:</span> <span class="s2">&#34;Stmt1490663945000&#34;</span><span class="p">,</span>
-            <span class="nt">&#34;Effect&#34;</span><span class="p">:</span> <span class="s2">&#34;Allow&#34;</span><span class="p">,</span>
-            <span class="nt">&#34;Action&#34;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&#34;lambda:InvokeFunction&#34;</span>
-            <span class="p">],</span>
-            <span class="nt">&#34;Resource&#34;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&#34;*&#34;</span>
-            <span class="p">]</span>
-        <span class="p">},</span>
-        <span class="p">{</span>
-            <span class="nt">&#34;Sid&#34;</span><span class="p">:</span> <span class="s2">&#34;Stmt1490663993000&#34;</span><span class="p">,</span>
-            <span class="nt">&#34;Effect&#34;</span><span class="p">:</span> <span class="s2">&#34;Allow&#34;</span><span class="p">,</span>
-            <span class="nt">&#34;Action&#34;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&#34;logs:CreateLogGroup&#34;</span><span class="p">,</span>
-                <span class="s2">&#34;logs:CreateLogStream&#34;</span><span class="p">,</span>
-                <span class="s2">&#34;logs:PutLogEvents&#34;</span>
-            <span class="p">],</span>
-            <span class="nt">&#34;Resource&#34;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="s2">&#34;arn:aws:logs:*:*:*&#34;</span>
-            <span class="p">]</span>
-        <span class="p">}</span>
-    <span class="p">]</span>
-<span class="p">}</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;Version&#34;</span><span class="p">:</span> <span class="s2">&#34;2012-10-17&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;Statement&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;Sid&#34;</span><span class="p">:</span> <span class="s2">&#34;Stmt1490663845000&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;Effect&#34;</span><span class="p">:</span> <span class="s2">&#34;Allow&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;Action&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;sqs:ReceiveMessage&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;sqs:DeleteMessage&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;Resource&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;*&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;Sid&#34;</span><span class="p">:</span> <span class="s2">&#34;Stmt1490663945000&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;Effect&#34;</span><span class="p">:</span> <span class="s2">&#34;Allow&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;Action&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;lambda:InvokeFunction&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;Resource&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;*&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;Sid&#34;</span><span class="p">:</span> <span class="s2">&#34;Stmt1490663993000&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;Effect&#34;</span><span class="p">:</span> <span class="s2">&#34;Allow&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;Action&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;logs:CreateLogGroup&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;logs:CreateLogStream&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;logs:PutLogEvents&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">],</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;Resource&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="s2">&#34;arn:aws:logs:*:*:*&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div>
 <p>이제 설정을 마치고, [Create Function]을 눌러 Lambda를 생성해 줍니다.
 그리고 [Test]버튼을 눌러 Lambda function을 테스트해봅니다.
 아래 화면과 같이 [Scheduled Event]를 선택한 후 [Save and test]로 테스트를 진행합니다.</p>
@@ -281,63 +281,63 @@ AWS의 Console에서 확인할 수 있습니다.</p>
 <p>이제 작업을 실행할 Worker function을 Consumer function과 동일한 설정으로 [TaskWorker]로 생성합니다.
 Worker function은 Consumer function이 읽어들인 메시지를 전달받아 처리하고, 처리가 완료되면 SQS로 부터 해당메시지를 삭제하는 역할을 합니다.
 코드는 아래와 같습니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">AWS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;aws-sdk&#34;</span><span class="p">);</span>
-<span class="kr">const</span> <span class="nx">sqs</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AWS</span><span class="p">.</span><span class="nx">SQS</span><span class="p">();</span>
-<span class="kr">const</span> <span class="nx">lambda</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AWS</span><span class="p">.</span><span class="nx">Lambda</span><span class="p">();</span>
-
-<span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">queueUrl</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">QueueUrl</span><span class="p">;</span>
-  <span class="kr">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">Message</span><span class="p">;</span>
-  <span class="kr">const</span> <span class="nx">params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">QueueUrl</span><span class="o">:</span> <span class="nx">queueUrl</span><span class="p">,</span>
-    <span class="nx">ReceiptHandle</span><span class="o">:</span> <span class="nx">message</span><span class="p">.</span><span class="nx">ReceiptHandle</span>
-  <span class="p">};</span>
-  <span class="nx">sqs</span><span class="p">.</span><span class="nx">deleteMessage</span><span class="p">(</span><span class="nx">params</span><span class="p">).</span><span class="nx">promise</span><span class="p">()</span>
-    <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="nx">callback</span><span class="p">();</span>
-    <span class="p">})</span>
-    <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="nx">callback</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-    <span class="p">});</span>
-<span class="p">};</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">AWS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;aws-sdk&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">sqs</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AWS</span><span class="p">.</span><span class="nx">SQS</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">lambda</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AWS</span><span class="p">.</span><span class="nx">Lambda</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">queueUrl</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">QueueUrl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">Message</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">params</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">QueueUrl</span><span class="o">:</span> <span class="nx">queueUrl</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">ReceiptHandle</span><span class="o">:</span> <span class="nx">message</span><span class="p">.</span><span class="nx">ReceiptHandle</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">sqs</span><span class="p">.</span><span class="nx">deleteMessage</span><span class="p">(</span><span class="nx">params</span><span class="p">).</span><span class="nx">promise</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">callback</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">callback</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></div>
 <p>Lambda function의 생성을 완료하면, Conusmer function에서 Worker function을 실행시키도록 코드를 수정합니다.
 아래 코드를 사용해서 전달받은 메시지를 Worker function으로 전달합니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">AWS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;aws-sdk&#34;</span><span class="p">);</span>
-<span class="kr">const</span> <span class="nx">sqs</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AWS</span><span class="p">.</span><span class="nx">SQS</span><span class="p">();</span>
-<span class="kr">const</span> <span class="nx">lambda</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AWS</span><span class="p">.</span><span class="nx">Lambda</span><span class="p">();</span>
-
-<span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">QueueUrl</span><span class="o">:</span> <span class="s1">&#39;https://sqs.ap-northeast-2.amazonaws.com/XXXXXX/MyFirstQueue&#39;</span><span class="p">,</span>
-    <span class="nx">MaxNumberOfMessages</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
-    <span class="nx">MessageAttributeNames</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;All&#39;</span><span class="p">]</span>
-  <span class="p">};</span>
-  <span class="nx">sqs</span><span class="p">.</span><span class="nx">receiveMessage</span><span class="p">(</span><span class="nx">params</span><span class="p">).</span><span class="nx">promise</span><span class="p">()</span>
-    <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Messages</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">Messages</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// Invoke Lambda here
-</span><span class="c1"></span>        <span class="kr">const</span> <span class="nx">jobs</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">Messages</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">message</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-          <span class="kr">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="nx">QueueUrl</span><span class="o">:</span> <span class="nx">params</span><span class="p">.</span><span class="nx">QueueUrl</span><span class="p">,</span>
-            <span class="nx">Message</span><span class="o">:</span> <span class="nx">message</span>
-          <span class="p">}</span>
-          <span class="kr">const</span> <span class="nx">lambdaInvokeParams</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="nx">FunctionName</span><span class="o">:</span> <span class="s1">&#39;TaskWorker&#39;</span><span class="p">,</span>
-            <span class="nx">InvocationType</span><span class="o">:</span> <span class="s1">&#39;Event&#39;</span><span class="p">,</span>
-            <span class="nx">Payload</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">payload</span><span class="p">)</span>
-          <span class="p">};</span>
-          <span class="k">return</span> <span class="nx">lambda</span><span class="p">.</span><span class="nx">invoke</span><span class="p">(</span><span class="nx">lambdaInvokeParams</span><span class="p">).</span><span class="nx">promise</span><span class="p">();</span>
-        <span class="p">});</span>
-        <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">jobs</span><span class="p">);</span>
-      <span class="p">}</span>
-    <span class="p">})</span>
-    <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="nx">callback</span><span class="p">();</span>
-    <span class="p">})</span>
-    <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
-      <span class="nx">callback</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-    <span class="p">});</span>
-<span class="p">};</span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">AWS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;aws-sdk&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">sqs</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AWS</span><span class="p">.</span><span class="nx">SQS</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">lambda</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AWS</span><span class="p">.</span><span class="nx">Lambda</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">exports</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">params</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">QueueUrl</span><span class="o">:</span> <span class="s1">&#39;https://sqs.ap-northeast-2.amazonaws.com/XXXXXX/MyFirstQueue&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">MaxNumberOfMessages</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">MessageAttributeNames</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;All&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">sqs</span><span class="p">.</span><span class="nx">receiveMessage</span><span class="p">(</span><span class="nx">params</span><span class="p">).</span><span class="nx">promise</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nx">then</span><span class="p">((</span><span class="nx">data</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">Messages</span> <span class="o">&amp;&amp;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">Messages</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Invoke Lambda here
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kr">const</span> <span class="nx">jobs</span> <span class="o">=</span> <span class="nx">data</span><span class="p">.</span><span class="nx">Messages</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">message</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="kr">const</span> <span class="nx">payload</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">QueueUrl</span><span class="o">:</span> <span class="nx">params</span><span class="p">.</span><span class="nx">QueueUrl</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">Message</span><span class="o">:</span> <span class="nx">message</span>
+</span></span><span class="line"><span class="cl">          <span class="p">}</span>
+</span></span><span class="line"><span class="cl">          <span class="kr">const</span> <span class="nx">lambdaInvokeParams</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">FunctionName</span><span class="o">:</span> <span class="s1">&#39;TaskWorker&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">InvocationType</span><span class="o">:</span> <span class="s1">&#39;Event&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">Payload</span><span class="o">:</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">payload</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">          <span class="p">};</span>
+</span></span><span class="line"><span class="cl">          <span class="k">return</span> <span class="nx">lambda</span><span class="p">.</span><span class="nx">invoke</span><span class="p">(</span><span class="nx">lambdaInvokeParams</span><span class="p">).</span><span class="nx">promise</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">});</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nb">Promise</span><span class="p">.</span><span class="nx">all</span><span class="p">(</span><span class="nx">jobs</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nx">then</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">callback</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">})</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="k">catch</span><span class="p">((</span><span class="nx">err</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">callback</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></div>
 <p>Lambda의 invoke함수에는 실행시킬 function의 이름 혹은 ARN과 InvocationType등을 전달합니다.
 InvocationType은 기본값인 &lsquo;RequestResponse&rsquo;, 비동기 실행을 위한 &lsquo;Event&rsquo;, test를 위한 &lsquo;DryRun&rsquo;값을 설정할 수 있습니다.
 또한 작업에 필요한 data를 Payload를 통해 전달할 수 있습니다.
@@ -362,6 +362,10 @@ AWS console의 CloudWatch항목에서 [Rules]을 선택하여, 새로운 Rule을
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2022-03-07-1-npm-private-repository/'>
+      <li class="sidemenu-recent-item">사내 npm 패키지 저장소를 구축하기 위해 겪었던 과정들</li>
+    </a>
+    
     <a href='/ko/2022-01-13-2-jotai-recipe/'>
       <li class="sidemenu-recent-item">Jotai 레시피</li>
     </a>
@@ -372,10 +376,6 @@ AWS console의 CloudWatch항목에서 [Rules]을 선택하여, 새로운 Rule을
     
     <a href='/ko/2021-12-16-1-server-driven-ui/'>
       <li class="sidemenu-recent-item">Server Driven UI 설계를 통한 UI 유연화</li>
-    </a>
-    
-    <a href='/ko/2021-07-31-1-graphql-error-guide/'>
-      <li class="sidemenu-recent-item">GraphQL 에러 처리 규칙</li>
     </a>
     
   </ul>
@@ -471,6 +471,10 @@ AWS console의 CloudWatch항목에서 [Rules]을 선택하여, 새로운 Rule을
       <li class="sidemenu-recent-tags">nodejs</li>
     </a>
     
+    <a href="/ko/tags/npm/">
+      <li class="sidemenu-recent-tags">npm</li>
+    </a>
+    
     <a href="/ko/tags/react/">
       <li class="sidemenu-recent-tags">react</li>
     </a>
@@ -548,7 +552,7 @@ AWS console의 CloudWatch항목에서 [Rules]을 선택하여, 새로운 Rule을
       <div class='text-center'>
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

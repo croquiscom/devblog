@@ -99,129 +99,129 @@
 <h2 id="라우트">라우트</h2>
 <p>Next.js 에서는 라우트를 pages 디렉토리에서 정하고 있습니다. 다만 카카오스타일에서는 pages를 프로젝트 루트에 두지 않고, src 밑에 모아두는 것을 선택했습니다. 비 Next.js 프로젝트에서도 마찬가지로 pages 밑에 두지만, 라우트 연결은 수동으로 해야 합니다.</p>
 <p>다음은 비 Next.js에서의 라우트 설정 예입니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">BrowserRouter</span> <span class="kr">as</span> <span class="nx">Router</span><span class="p">,</span> <span class="nx">Switch</span><span class="p">,</span> <span class="nx">Route</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;react-router-dom&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">HomePage</span> <span class="kr">from</span> <span class="s1">&#39;pages&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">LoginPage</span> <span class="kr">from</span> <span class="s1">&#39;pages/login&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">SignupPage</span> <span class="kr">from</span> <span class="s1">&#39;pages/signup&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">QnaQuestionMainPage</span> <span class="kr">from</span> <span class="s1">&#39;pages/qna/questions&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">QnaQuestionNewPage</span> <span class="kr">from</span> <span class="s1">&#39;pages/qna/questions/new&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">QnaQuestionDetailPage</span> <span class="kr">from</span> <span class="s1">&#39;pages/qna/questions/[question_id]&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">ChatRoomMainPage</span> <span class="kr">from</span> <span class="s1">&#39;pages/chat/rooms&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">ChatRoomDetailPage</span> <span class="kr">from</span> <span class="s1">&#39;pages/chat/rooms/[room_id]&#39;</span><span class="p">;</span>
-
-<span class="kd">function</span> <span class="nx">App() {</span>
-  <span class="k">return</span> <span class="p">(</span>
-    <span class="p">&lt;</span><span class="nt">Router</span><span class="p">&gt;</span>
-      <span class="p">&lt;</span><span class="nt">Switch</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">exact</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/&#39;</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">HomePage</span> <span class="p">/&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">exact</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/login&#39;</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">LoginPage</span> <span class="p">/&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">exact</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/signup&#39;</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">SignupPage</span> <span class="p">/&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">exact</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/qna/questions&#39;</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">QnaQuestionMainPage</span> <span class="p">/&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">exact</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/qna/questions/new&#39;</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">QnaQuestionNewPage</span> <span class="p">/&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/qna/questions/:question_id&#39;</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">QnaQuestionDetailPage</span> <span class="p">/&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">exact</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/chat/rooms&#39;</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">ChatRoomMainPage</span> <span class="p">/&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
-        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/chat/rooms/:room_id&#39;</span><span class="p">&gt;</span>
-          <span class="p">&lt;</span><span class="nt">ChatRoomDetailPage</span> <span class="p">/&gt;</span>
-        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
-      <span class="p">&lt;/</span><span class="nt">Switch</span><span class="p">&gt;</span>
-    <span class="p">&lt;/</span><span class="nt">Router</span><span class="p">&gt;</span>
-  <span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kr">export</span> <span class="k">default</span> <span class="nx">App</span><span class="p">;</span>
-</code></pre></div><p>Next.js에서는 같은 위치에 페이지 파일이 있으면 자동으로 라우트 설정이 됩니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">BrowserRouter</span> <span class="kr">as</span> <span class="nx">Router</span><span class="p">,</span> <span class="nx">Switch</span><span class="p">,</span> <span class="nx">Route</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;react-router-dom&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">HomePage</span> <span class="kr">from</span> <span class="s1">&#39;pages&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">LoginPage</span> <span class="kr">from</span> <span class="s1">&#39;pages/login&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">SignupPage</span> <span class="kr">from</span> <span class="s1">&#39;pages/signup&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">QnaQuestionMainPage</span> <span class="kr">from</span> <span class="s1">&#39;pages/qna/questions&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">QnaQuestionNewPage</span> <span class="kr">from</span> <span class="s1">&#39;pages/qna/questions/new&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">QnaQuestionDetailPage</span> <span class="kr">from</span> <span class="s1">&#39;pages/qna/questions/[question_id]&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">ChatRoomMainPage</span> <span class="kr">from</span> <span class="s1">&#39;pages/chat/rooms&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">ChatRoomDetailPage</span> <span class="kr">from</span> <span class="s1">&#39;pages/chat/rooms/[room_id]&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">App() {</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">Router</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">Switch</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">exact</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/&#39;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">          <span class="p">&lt;</span><span class="nt">HomePage</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">exact</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/login&#39;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">          <span class="p">&lt;</span><span class="nt">LoginPage</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">exact</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/signup&#39;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">          <span class="p">&lt;</span><span class="nt">SignupPage</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">exact</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/qna/questions&#39;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">          <span class="p">&lt;</span><span class="nt">QnaQuestionMainPage</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">exact</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/qna/questions/new&#39;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">          <span class="p">&lt;</span><span class="nt">QnaQuestionNewPage</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/qna/questions/:question_id&#39;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">          <span class="p">&lt;</span><span class="nt">QnaQuestionDetailPage</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">exact</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/chat/rooms&#39;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">          <span class="p">&lt;</span><span class="nt">ChatRoomMainPage</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">Route</span> <span class="na">path</span><span class="o">=</span><span class="s">&#39;/chat/rooms/:room_id&#39;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">          <span class="p">&lt;</span><span class="nt">ChatRoomDetailPage</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">Route</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;/</span><span class="nt">Switch</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">Router</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="nx">App</span><span class="p">;</span>
+</span></span></code></pre></div><p>Next.js에서는 같은 위치에 페이지 파일이 있으면 자동으로 라우트 설정이 됩니다.</p>
 <h2 id="페이지를-실제-구성하는-컴포넌트">페이지를 실제 구성하는 컴포넌트</h2>
 <p>간단한 뷰는 페이지 파일에 넣을 수 있겠지만 복잡한 경우 여러 컴포넌트로 나누어야 하는데 이를 pages 밑에 두면 Next.js 라우트로 인식되므로 별개의 위치에 둬야 합니다. 따라서 이를 components 디렉토리에 두기로 했습니다. 이때 RESTful한 주소를 갖도록 위치한 페이지와 달리 도메인별로 묶어서 구성합니다.</p>
 <p>QnaQuestionMainPage(<code>/pages/qna/questions/index.tsx</code>)에 대응하는 컴포넌트는 <code>/components/qna/question/main/index.tsx</code>에 위치하고, ChatRoomDetailPage(<code>/pages/chat/rooms/[room_id]/index.tsx</code>)에 대응하는 컴포넌트는 <code>/components/chat/room/detail/index.tsx</code>에 위치합니다. 컴포넌트 이름은 각각 QnaQuestionMain과 ChatRoomDetail입니다. 파일명을 컴포넌트 이름과 일치시킬지 여부를 내부에서 논의할 결과 진입점은 index.tsx로 통일하는 것으로 결정했습니다.</p>
 <p>예를 들어 QnaQuestionMainPage는 대략 다음과 같은 형태가 됩니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="p">{</span> <span class="nx">FC</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">QnaQuestionMain</span> <span class="kr">from</span> <span class="s1">&#39;components/qna/question/main&#39;</span><span class="p">;</span>
-
-<span class="kr">const</span> <span class="nx">QnaQuestionMainPage</span>: <span class="kt">FC</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">QnaQuestionMain</span> <span class="p">/&gt;;</span>
-<span class="p">};</span>
-
-<span class="kr">export</span> <span class="k">default</span> <span class="nx">QnaQuestionMainPage</span><span class="p">;</span>
-</code></pre></div><h2 id="데이터-가져오기">데이터 가져오기</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">FC</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">QnaQuestionMain</span> <span class="kr">from</span> <span class="s1">&#39;components/qna/question/main&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">QnaQuestionMainPage</span>: <span class="kt">FC</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">QnaQuestionMain</span> <span class="p">/&gt;;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="nx">QnaQuestionMainPage</span><span class="p">;</span>
+</span></span></code></pre></div><h2 id="데이터-가져오기">데이터 가져오기</h2>
 <p>Next.js 프로젝트와 비 Next.js 프로젝트는 데이터를 가져오는 시점이 다릅니다. Next.js는 클라이언트에 내보내기 전에 React와 무관하게 데이터를 가져오는데 반해, 비 Next.js 프로젝트는 클라이언트 로딩이 끝난 후 데이터를 가져와야 합니다. 어느 경우에든 비슷하게 구성하기 위해 데이터 가져오는 것을 fetchData라는 함수로 분리해 컴포넌트쪽에 둡니다. 각 컴포넌트는 상위 페이지로 부터 데이터를 props로 받아옵니다. 이렇게 구성하면 컴포넌트에 대한 스토리북 구성시 데이터를 다르게 부여하기 편하다라는 장점도 있습니다. 단점으로는 데이터가 고정이 아닌 경우(예를 들어 필터 설정, 정렬 옵션등에 의해 페이지 이동 없이 바뀌어야 하는 경우), 상위 페이지로 이를 전달하는 방법을 고민해 봐야 한다는 점이 있습니다.</p>
 <p>다음은 위 규칙에 따라 구성한 컴포넌트 내용입니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">interface</span> <span class="nx">Question</span> <span class="p">{</span>
-  <span class="nx">id</span>: <span class="kt">string</span><span class="p">;</span>
-  <span class="nx">title</span>: <span class="kt">string</span><span class="p">;</span>
-  <span class="nx">date</span>: <span class="kt">number</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="kr">export</span> <span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
-  <span class="nx">total_count</span>: <span class="kt">number</span><span class="p">;</span>
-  <span class="nx">question_list</span>: <span class="kt">Question</span><span class="p">[];</span>
-<span class="p">}</span>
-
-<span class="kr">const</span> <span class="nx">QnaQuestionMain</span>: <span class="kt">FC</span><span class="p">&lt;</span><span class="nt">Props</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="p">(</span>
-    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
-      <span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">question_list</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">question</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span>
-        <span class="p">&lt;</span><span class="nt">QuestionView</span> <span class="na">question</span><span class="o">=</span><span class="p">{</span><span class="nx">question</span><span class="p">}</span> <span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">question</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span> <span class="p">/&gt;</span>
-      <span class="p">))}</span>
-    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-  <span class="p">);</span>
-<span class="p">};</span>
-
-<span class="kr">export</span> <span class="k">default</span> <span class="nx">QnaQuestionMain</span><span class="p">;</span>
-
-<span class="kr">export</span> <span class="kr">async</span> <span class="kd">function</span> <span class="nx">fetchData</span><span class="p">(</span><span class="nx">context</span>: <span class="kt">GetServerSidePropsContext</span> <span class="o">|</span> <span class="kc">undefined</span><span class="p">)</span><span class="o">:</span> <span class="nx">Promise</span><span class="p">&lt;</span><span class="nt">Props</span><span class="p">&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetch</span><span class="p">(...);</span>
-  <span class="k">return</span> <span class="p">{</span>
-    <span class="nx">total_count</span>: <span class="kt">result.total_count</span><span class="p">,</span>
-    <span class="nx">question_list</span>: <span class="kt">result.question_list</span><span class="p">,</span>
-  <span class="p">};</span>
-<span class="p">}</span>
-</code></pre></div><p>Next.js 프로젝트에서는 getServerSideProps 메소드에서 fetchData를 호출합니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="kr">type</span> <span class="p">{</span> <span class="nx">GetServerSideProps</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;next&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">QnaQuestionMain</span><span class="p">,</span> <span class="p">{</span> <span class="nx">fetchData</span><span class="p">,</span> <span class="nx">Props</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;components/qna/question/main&#39;</span><span class="p">;</span>
-
-<span class="kr">export</span> <span class="kr">const</span> <span class="nx">getServerSideProps</span>: <span class="kt">GetServerSideProps</span><span class="p">&lt;</span><span class="nt">Props</span><span class="p">&gt;</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="p">{</span>
-    <span class="nx">props</span>: <span class="kt">await</span> <span class="nx">fetchData</span><span class="p">(</span><span class="nx">context</span><span class="p">),</span>
-  <span class="p">};</span>
-<span class="p">};</span>
-
-<span class="kr">const</span> <span class="nx">QnaQuestionMainPage</span>: <span class="kt">FC</span><span class="p">&lt;</span><span class="nt">Props</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">QnaQuestionMain</span> <span class="p">{</span><span class="na">...props</span><span class="p">}</span> <span class="p">/&gt;;</span>
-<span class="p">};</span>
-
-<span class="kr">export</span> <span class="k">default</span> <span class="nx">QnaQuestionMainPage</span><span class="p">;</span>
-</code></pre></div><p>반면 비 Next.js 프로젝트에서는 useEffect 안에서 호출합니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="kr">import</span> <span class="nx">QnaQuestionMain</span><span class="p">,</span> <span class="p">{</span> <span class="nx">fetchData</span><span class="p">,</span> <span class="nx">Props</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;components/qna/question/main&#39;</span><span class="p">;</span>
-
-<span class="kr">const</span> <span class="nx">QnaQuestionMainPage</span>: <span class="kt">FC</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="kr">const</span> <span class="p">[</span><span class="nx">props</span><span class="p">,</span> <span class="nx">setProps</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">&lt;</span><span class="nt">Props</span><span class="p">&gt;({</span> <span class="nx">total_count</span>: <span class="kt">0</span><span class="p">,</span> <span class="nx">question_list</span><span class="o">:</span> <span class="p">[]</span> <span class="p">});</span>
-
-  <span class="nx">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="nx">run</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="nx">setProps</span><span class="p">(</span><span class="k">await</span> <span class="nx">fetchData</span><span class="p">());</span>
-    <span class="p">};</span>
-    <span class="nx">run</span><span class="p">();</span>
-  <span class="p">},</span> <span class="p">[]);</span>
-
-  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">QnaQuestionMain</span> <span class="p">{</span><span class="na">...props</span><span class="p">}</span> <span class="p">/&gt;;</span>
-<span class="p">};</span>
-
-<span class="kr">export</span> <span class="k">default</span> <span class="nx">QnaQuestionMainPage</span><span class="p">;</span>
-</code></pre></div><h2 id="자잘한-규칙">자잘한 규칙</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">interface</span> <span class="nx">Question</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">id</span>: <span class="kt">string</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">title</span>: <span class="kt">string</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">date</span>: <span class="kt">number</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">interface</span> <span class="nx">Props</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">total_count</span>: <span class="kt">number</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">question_list</span>: <span class="kt">Question</span><span class="p">[];</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">QnaQuestionMain</span>: <span class="kt">FC</span><span class="p">&lt;</span><span class="nt">Props</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">{</span><span class="nx">props</span><span class="p">.</span><span class="nx">question_list</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">question</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">QuestionView</span> <span class="na">question</span><span class="o">=</span><span class="p">{</span><span class="nx">question</span><span class="p">}</span> <span class="na">key</span><span class="o">=</span><span class="p">{</span><span class="nx">question</span><span class="p">.</span><span class="nx">id</span><span class="p">}</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">))}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="nx">QnaQuestionMain</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">async</span> <span class="kd">function</span> <span class="nx">fetchData</span><span class="p">(</span><span class="nx">context</span>: <span class="kt">GetServerSidePropsContext</span> <span class="o">|</span> <span class="kc">undefined</span><span class="p">)</span><span class="o">:</span> <span class="nx">Promise</span><span class="p">&lt;</span><span class="nt">Props</span><span class="p">&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">fetch</span><span class="p">(...);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">total_count</span>: <span class="kt">result.total_count</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">question_list</span>: <span class="kt">result.question_list</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Next.js 프로젝트에서는 getServerSideProps 메소드에서 fetchData를 호출합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="kr">type</span> <span class="p">{</span> <span class="nx">GetServerSideProps</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;next&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">QnaQuestionMain</span><span class="p">,</span> <span class="p">{</span> <span class="nx">fetchData</span><span class="p">,</span> <span class="nx">Props</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;components/qna/question/main&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">getServerSideProps</span>: <span class="kt">GetServerSideProps</span><span class="p">&lt;</span><span class="nt">Props</span><span class="p">&gt;</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">props</span>: <span class="kt">await</span> <span class="nx">fetchData</span><span class="p">(</span><span class="nx">context</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">QnaQuestionMainPage</span>: <span class="kt">FC</span><span class="p">&lt;</span><span class="nt">Props</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">props</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">QnaQuestionMain</span> <span class="p">{</span><span class="na">...props</span><span class="p">}</span> <span class="p">/&gt;;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="nx">QnaQuestionMainPage</span><span class="p">;</span>
+</span></span></code></pre></div><p>반면 비 Next.js 프로젝트에서는 useEffect 안에서 호출합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">QnaQuestionMain</span><span class="p">,</span> <span class="p">{</span> <span class="nx">fetchData</span><span class="p">,</span> <span class="nx">Props</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;components/qna/question/main&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">QnaQuestionMainPage</span>: <span class="kt">FC</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="p">[</span><span class="nx">props</span><span class="p">,</span> <span class="nx">setProps</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">&lt;</span><span class="nt">Props</span><span class="p">&gt;({</span> <span class="nx">total_count</span>: <span class="kt">0</span><span class="p">,</span> <span class="nx">question_list</span><span class="o">:</span> <span class="p">[]</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">run</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">setProps</span><span class="p">(</span><span class="k">await</span> <span class="nx">fetchData</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">run</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span> <span class="p">[]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">&lt;</span><span class="nt">QnaQuestionMain</span> <span class="p">{</span><span class="na">...props</span><span class="p">}</span> <span class="p">/&gt;;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="nx">QnaQuestionMainPage</span><span class="p">;</span>
+</span></span></code></pre></div><h2 id="자잘한-규칙">자잘한 규칙</h2>
 <p>컴포넌트를 내보낼 때는 default export를 사용하고 있습니다. 이렇게 하면 내부적으로 컴포넌트 이름을 바꿔도 사용하는 쪽에 영향이 없다는 장점이 있습니다. (예를 들어 jotai를 적용하면서 Provider로 감쌀 필요가 있었습니다) 다만 정의하는 쪽과 사용하는 쪽의 이름을 다르게 줄 수 있어서 찾기 어려워지는 단점도 있습니다. (이는 컴포넌트 이름을 잘 부여하고 주의깊게 사용하면 되긴 합니다) 여기에 스토리북에서 컴포넌트 Props를 제대로 인식하지 못하는 작은 문제도 있습니다. (default export를 사용하고 파일 이름이 컴포넌트와 다른 index.tsx일 경우 발생)</p>
 <p>한 페이지 컴포넌트를 작게 쪼갠 경우 그 컴포넌트 사이에는 상대 경로로 참조하면 되지만, pages → components 처럼 멀리 떨어진 컴포넌트를 참조할 경우에는 절대 경로로 참조하는게 좋습니다. 이렇게 구성해야 파일을 <code>/pages/qna/questions/index.tsx</code> 에서 <code>/pages/questions/index.tsx</code>로 옮겨도 import 변경이 필요없습니다. 상대 경로로 참조 가능한 범위에 대해서는 사람마다 다르게 판단하기도 합니다.</p>
 <p>절대 경로로는 src 밑의 디렉토리들(예 components, pages, hooks)을 사용하고 있습니다. 저는 <code>@/components/qna/question/main</code> 형태를 제안했는데, <code>components/qna/question/main</code>를 쓰는 것으로 정해졌습니다.</p>
@@ -237,6 +237,10 @@
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2022-03-07-1-npm-private-repository/'>
+      <li class="sidemenu-recent-item">사내 npm 패키지 저장소를 구축하기 위해 겪었던 과정들</li>
+    </a>
+    
     <a href='/ko/2022-01-13-2-jotai-recipe/'>
       <li class="sidemenu-recent-item">Jotai 레시피</li>
     </a>
@@ -247,10 +251,6 @@
     
     <a href='/ko/2021-12-16-1-server-driven-ui/'>
       <li class="sidemenu-recent-item">Server Driven UI 설계를 통한 UI 유연화</li>
-    </a>
-    
-    <a href='/ko/2021-07-31-1-graphql-error-guide/'>
-      <li class="sidemenu-recent-item">GraphQL 에러 처리 규칙</li>
     </a>
     
   </ul>
@@ -346,6 +346,10 @@
       <li class="sidemenu-recent-tags">nodejs</li>
     </a>
     
+    <a href="/ko/tags/npm/">
+      <li class="sidemenu-recent-tags">npm</li>
+    </a>
+    
     <a href="/ko/tags/react/">
       <li class="sidemenu-recent-tags">react</li>
     </a>
@@ -423,7 +427,7 @@
       <div class='text-center'>
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

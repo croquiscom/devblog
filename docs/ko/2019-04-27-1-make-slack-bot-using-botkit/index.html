@@ -128,136 +128,136 @@ Botkit은 슬랙 앱을 만들어야 합니다.</p>
 <p>필요한 패키지는 <a href="https://www.npmjs.com/package/botkit">botkit</a>, <a href="https://www.npmjs.com/package/dotenv">dotenv</a> 뿐입니다.
 그리고 TypeScript로 만들기 위해 typescript와 ts-node를 추가합니다.</p>
 <p><strong><em>package.json</em></strong>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
-  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;bot&#34;</span><span class="p">,</span>
-  <span class="nt">&#34;scripts&#34;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&#34;start&#34;</span><span class="p">:</span> <span class="s2">&#34;ts-node app.ts&#34;</span>
-  <span class="p">},</span>
-  <span class="nt">&#34;dependencies&#34;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&#34;botkit&#34;</span><span class="p">:</span> <span class="s2">&#34;^0.7.4&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;dotenv&#34;</span><span class="p">:</span> <span class="s2">&#34;^7.0.0&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;ts-node&#34;</span><span class="p">:</span> <span class="s2">&#34;^8.0.3&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;typescript&#34;</span><span class="p">:</span> <span class="s2">&#34;^3.4.3&#34;</span>
-  <span class="p">},</span>
-  <span class="nt">&#34;devDependencies&#34;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&#34;@types/dotenv&#34;</span><span class="p">:</span> <span class="s2">&#34;^6.1.1&#34;</span>
-  <span class="p">}</span>
-<span class="p">}</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;bot&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;scripts&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;start&#34;</span><span class="p">:</span> <span class="s2">&#34;ts-node app.ts&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;dependencies&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;botkit&#34;</span><span class="p">:</span> <span class="s2">&#34;^0.7.4&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;dotenv&#34;</span><span class="p">:</span> <span class="s2">&#34;^7.0.0&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;ts-node&#34;</span><span class="p">:</span> <span class="s2">&#34;^8.0.3&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;typescript&#34;</span><span class="p">:</span> <span class="s2">&#34;^3.4.3&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;devDependencies&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;@types/dotenv&#34;</span><span class="p">:</span> <span class="s2">&#34;^6.1.1&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></p>
 <p>Access Token은 소스 관리가 되지 않는 .env 파일에 기록합니다.</p>
 <p><strong><em>.env</em></strong>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="nv">SLACK_BOT_TOKEN</span><span class="o">=</span>xoxb-276777......</code></pre></div></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">SLACK_BOT_TOKEN</span><span class="o">=</span>xoxb-276777......</span></span></code></pre></div></p>
 <p>TypeScript 컴파일 설정도 만들어줍니다.</p>
 <p><strong><em>tsconfig.json</em></strong>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
-  <span class="nt">&#34;compilerOptions&#34;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&#34;noImplicitAny&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nt">&#34;noImplicitThis&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nt">&#34;strictNullChecks&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nt">&#34;target&#34;</span><span class="p">:</span> <span class="s2">&#34;es2017&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;module&#34;</span><span class="p">:</span> <span class="s2">&#34;CommonJS&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;moduleResolution&#34;</span><span class="p">:</span> <span class="s2">&#34;node&#34;</span><span class="p">,</span>
-    <span class="nt">&#34;esModuleInterop&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nt">&#34;lib&#34;</span><span class="p">:</span> <span class="p">[</span>
-      <span class="s2">&#34;es2017&#34;</span><span class="p">,</span>
-      <span class="s2">&#34;dom&#34;</span><span class="p">,</span>
-      <span class="s2">&#34;esnext.asynciterable&#34;</span>
-    <span class="p">]</span>
-  <span class="p">}</span>
-<span class="p">}</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;compilerOptions&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;noImplicitAny&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;noImplicitThis&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;strictNullChecks&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;target&#34;</span><span class="p">:</span> <span class="s2">&#34;es2017&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;module&#34;</span><span class="p">:</span> <span class="s2">&#34;CommonJS&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;moduleResolution&#34;</span><span class="p">:</span> <span class="s2">&#34;node&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;esModuleInterop&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;lib&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;es2017&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;dom&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;esnext.asynciterable&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></p>
 <p>마지막으로 다음과 같이 봇 코드를 작성합니다.</p>
 <p><strong><em>app.ts</em></strong>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="nx">Botkit</span> <span class="kr">from</span> <span class="s1">&#39;botkit&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">dotenv</span> <span class="kr">from</span> <span class="s1">&#39;dotenv&#39;</span><span class="p">;</span>
-
-<span class="nx">dotenv</span><span class="p">.</span><span class="nx">config</span><span class="p">();</span>
-
-<span class="kr">const</span> <span class="nx">controller</span> <span class="o">=</span> <span class="nx">Botkit</span><span class="p">.</span><span class="nx">slackbot</span><span class="p">({</span>
-<span class="p">});</span>
-
-<span class="nx">controller</span><span class="p">.</span><span class="nx">startTicking</span><span class="p">();</span>
-
-<span class="kr">const</span> <span class="nx">bot</span> <span class="o">=</span> <span class="nx">controller</span><span class="p">.</span><span class="nx">spawn</span><span class="p">({</span> <span class="nx">token</span>: <span class="kt">process.env.SLACK_BOT_TOKEN</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span> <span class="p">});</span>
-
-<span class="nx">bot</span><span class="p">.</span><span class="nx">startRTM</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;구동에 실패했습니다.&#39;</span><span class="p">);</span>
-  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="nx">bot</span><span class="p">.</span><span class="nx">say</span><span class="p">({</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;봇이 배포되었습니다! 😄&#39;</span><span class="p">,</span> <span class="nx">channel</span><span class="o">:</span> <span class="s1">&#39;Cxxxxx&#39;</span> <span class="p">});</span>
-  <span class="p">}</span>
-<span class="p">});</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">Botkit</span> <span class="kr">from</span> <span class="s1">&#39;botkit&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">dotenv</span> <span class="kr">from</span> <span class="s1">&#39;dotenv&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">dotenv</span><span class="p">.</span><span class="nx">config</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">controller</span> <span class="o">=</span> <span class="nx">Botkit</span><span class="p">.</span><span class="nx">slackbot</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">controller</span><span class="p">.</span><span class="nx">startTicking</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">bot</span> <span class="o">=</span> <span class="nx">controller</span><span class="p">.</span><span class="nx">spawn</span><span class="p">({</span> <span class="nx">token</span>: <span class="kt">process.env.SLACK_BOT_TOKEN</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">bot</span><span class="p">.</span><span class="nx">startRTM</span><span class="p">((</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;구동에 실패했습니다.&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">bot</span><span class="p">.</span><span class="nx">say</span><span class="p">({</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;봇이 배포되었습니다! 😄&#39;</span><span class="p">,</span> <span class="nx">channel</span><span class="o">:</span> <span class="s1">&#39;Cxxxxx&#39;</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span></span></span></code></pre></div></p>
 <p><code>npm start</code>를 하면 봇이 구동되고 지정한 채널에 메시지가 표시됩니다.</p>
 <h1 id="봇-스킬-추가">봇 스킬 추가</h1>
 <p>봇 동작을 기술할 스크립트는 Botkit Starter Kit에 맞춰 스킬이라고 부르기로 했습니다.</p>
 <p>스킬 추가는 파일을 추가하기만 하면 되는 구조로 작성했습니다.</p>
 <p><strong><em>skill/index.ts</em></strong>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="kr">import</span> <span class="p">{</span> <span class="nx">SlackController</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;botkit&#39;</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">fs</span> <span class="kr">from</span> <span class="s1">&#39;fs&#39;</span><span class="p">;</span>
-
-<span class="kr">export</span> <span class="kr">const</span> <span class="nx">loadSkills</span> <span class="o">=</span> <span class="p">(</span><span class="nx">controller</span>: <span class="kt">SlackController</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">fs</span><span class="p">.</span><span class="nx">readdirSync</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">).</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">filename</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nx">filename</span> <span class="o">!==</span> <span class="s1">&#39;index.ts&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">filename</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;.disabled.&#39;</span><span class="p">))</span> <span class="p">{</span>
-      <span class="kr">require</span><span class="p">(</span><span class="s1">&#39;./&#39;</span> <span class="o">+</span> <span class="nx">filename</span><span class="p">).</span><span class="k">default</span><span class="p">(</span><span class="nx">controller</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">});</span>
-<span class="p">};</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">SlackController</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;botkit&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">fs</span> <span class="kr">from</span> <span class="s1">&#39;fs&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">loadSkills</span> <span class="o">=</span> <span class="p">(</span><span class="nx">controller</span>: <span class="kt">SlackController</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">fs</span><span class="p">.</span><span class="nx">readdirSync</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">).</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">filename</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">filename</span> <span class="o">!==</span> <span class="s1">&#39;index.ts&#39;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">filename</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="s1">&#39;.disabled.&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">require</span><span class="p">(</span><span class="s1">&#39;./&#39;</span> <span class="o">+</span> <span class="nx">filename</span><span class="p">).</span><span class="k">default</span><span class="p">(</span><span class="nx">controller</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></div></p>
 <p><strong><em>app.ts</em></strong>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="p">...</span>
-
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">loadSkills</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;./skill&#39;</span><span class="p">;</span>
-
-<span class="p">...</span>
-
-<span class="nx">loadSkills</span><span class="p">(</span><span class="nx">controller</span><span class="p">);</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">loadSkills</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;./skill&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">loadSkills</span><span class="p">(</span><span class="nx">controller</span><span class="p">);</span></span></span></code></pre></div></p>
 <p>다음은 Botkit Starter Kit for Slack Bots에서 가져온 스킬 샘플입니다.
 봇에게 color나 question이라는 단어를 포함해 1:1 메시지(direct_message)를 보내거나 언급하면 동작합니다.</p>
 <p><strong><em>skill/sample-conversation.ts</em></strong>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="c1">// copied from https://github.com/howdyai/botkit-starter-slack/blob/master/skills/sample_conversations.js
-</span><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">SlackController</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;botkit&#39;</span><span class="p">;</span>
-
-<span class="kr">export</span> <span class="k">default</span> <span class="p">(</span><span class="nx">controller</span>: <span class="kt">SlackController</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-  <span class="nx">controller</span><span class="p">.</span><span class="nx">hears</span><span class="p">([</span><span class="s1">&#39;color&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;direct_message&#39;</span><span class="p">,</span> <span class="s1">&#39;direct_mention&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">bot</span><span class="p">.</span><span class="nx">startConversation</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">convo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="nx">convo</span><span class="p">.</span><span class="nx">say</span><span class="p">(</span><span class="s1">&#39;This is an example of using convo.ask with a single callback.&#39;</span><span class="p">);</span>
-      <span class="nx">convo</span><span class="p">.</span><span class="nx">ask</span><span class="p">(</span><span class="s1">&#39;What is your favorite color?&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="nx">convo</span><span class="p">.</span><span class="nx">say</span><span class="p">(</span><span class="s1">&#39;Cool, I like &#39;</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span> <span class="o">+</span> <span class="s1">&#39; too!&#39;</span><span class="p">);</span>
-        <span class="nx">convo</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
-      <span class="p">});</span>
-    <span class="p">});</span>
-  <span class="p">});</span>
-
-  <span class="nx">controller</span><span class="p">.</span><span class="nx">hears</span><span class="p">([</span><span class="s1">&#39;question&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;direct_message&#39;</span><span class="p">,</span> <span class="s1">&#39;direct_mention&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">bot</span><span class="p">.</span><span class="nx">createConversation</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">convo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-      <span class="nx">convo</span><span class="p">.</span><span class="nx">addMessage</span><span class="p">({</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;How wonderful.&#39;</span> <span class="p">},</span> <span class="s1">&#39;yes_thread&#39;</span><span class="p">);</span>
-      <span class="nx">convo</span><span class="p">.</span><span class="nx">addMessage</span><span class="p">({</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;Cheese! It is not for everyone.&#39;</span><span class="p">,</span> <span class="nx">action</span><span class="o">:</span> <span class="s1">&#39;stop&#39;</span> <span class="p">},</span> <span class="s1">&#39;no_thread&#39;</span><span class="p">);</span>
-      <span class="nx">convo</span><span class="p">.</span><span class="nx">addMessage</span><span class="p">({</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;Sorry I did not understand. Say `yes` or `no`&#39;</span><span class="p">,</span> <span class="nx">action</span><span class="o">:</span> <span class="s1">&#39;default&#39;</span> <span class="p">},</span> <span class="s1">&#39;bad_response&#39;</span><span class="p">);</span>
-
-      <span class="nx">convo</span><span class="p">.</span><span class="nx">ask</span><span class="p">(</span><span class="s1">&#39;Do you like cheese?&#39;</span><span class="p">,</span> <span class="p">[{</span>
-        <span class="nx">pattern</span>: <span class="kt">bot.utterances.yes</span><span class="p">,</span>
-        <span class="nx">callback</span><span class="o">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-          <span class="nx">convo</span><span class="p">.</span><span class="nx">gotoThread</span><span class="p">(</span><span class="s1">&#39;yes_thread&#39;</span><span class="p">);</span>
-        <span class="p">},</span>
-      <span class="p">},</span> <span class="p">{</span>
-        <span class="nx">pattern</span>: <span class="kt">bot.utterances.no</span><span class="p">,</span>
-        <span class="nx">callback</span><span class="o">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-          <span class="nx">convo</span><span class="p">.</span><span class="nx">gotoThread</span><span class="p">(</span><span class="s1">&#39;no_thread&#39;</span><span class="p">);</span>
-        <span class="p">},</span>
-      <span class="p">},</span> <span class="p">{</span>
-        <span class="k">default</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-        <span class="nx">callback</span><span class="o">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-          <span class="nx">convo</span><span class="p">.</span><span class="nx">gotoThread</span><span class="p">(</span><span class="s1">&#39;bad_response&#39;</span><span class="p">);</span>
-        <span class="p">},</span>
-      <span class="p">}]);</span>
-
-      <span class="nx">convo</span><span class="p">.</span><span class="nx">activate</span><span class="p">();</span>
-
-      <span class="nx">convo</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">convo</span><span class="p">.</span><span class="nx">successful</span><span class="p">())</span> <span class="p">{</span>
-          <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="s1">&#39;Let us eat some!&#39;</span><span class="p">);</span>
-        <span class="p">}</span>
-      <span class="p">});</span>
-    <span class="p">});</span>
-  <span class="p">});</span>
-<span class="p">};</span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="c1">// copied from https://github.com/howdyai/botkit-starter-slack/blob/master/skills/sample_conversations.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">SlackController</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;botkit&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">(</span><span class="nx">controller</span>: <span class="kt">SlackController</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">controller</span><span class="p">.</span><span class="nx">hears</span><span class="p">([</span><span class="s1">&#39;color&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;direct_message&#39;</span><span class="p">,</span> <span class="s1">&#39;direct_mention&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">bot</span><span class="p">.</span><span class="nx">startConversation</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">convo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">convo</span><span class="p">.</span><span class="nx">say</span><span class="p">(</span><span class="s1">&#39;This is an example of using convo.ask with a single callback.&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">convo</span><span class="p">.</span><span class="nx">ask</span><span class="p">(</span><span class="s1">&#39;What is your favorite color?&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">convo</span><span class="p">.</span><span class="nx">say</span><span class="p">(</span><span class="s1">&#39;Cool, I like &#39;</span> <span class="o">+</span> <span class="nx">response</span><span class="p">.</span><span class="nx">text</span> <span class="o">+</span> <span class="s1">&#39; too!&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">convo</span><span class="p">.</span><span class="nx">next</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">      <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">controller</span><span class="p">.</span><span class="nx">hears</span><span class="p">([</span><span class="s1">&#39;question&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;direct_message&#39;</span><span class="p">,</span> <span class="s1">&#39;direct_mention&#39;</span><span class="p">],</span> <span class="p">(</span><span class="nx">bot</span><span class="p">,</span> <span class="nx">message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">bot</span><span class="p">.</span><span class="nx">createConversation</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">convo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">convo</span><span class="p">.</span><span class="nx">addMessage</span><span class="p">({</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;How wonderful.&#39;</span> <span class="p">},</span> <span class="s1">&#39;yes_thread&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">convo</span><span class="p">.</span><span class="nx">addMessage</span><span class="p">({</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;Cheese! It is not for everyone.&#39;</span><span class="p">,</span> <span class="nx">action</span><span class="o">:</span> <span class="s1">&#39;stop&#39;</span> <span class="p">},</span> <span class="s1">&#39;no_thread&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">convo</span><span class="p">.</span><span class="nx">addMessage</span><span class="p">({</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;Sorry I did not understand. Say `yes` or `no`&#39;</span><span class="p">,</span> <span class="nx">action</span><span class="o">:</span> <span class="s1">&#39;default&#39;</span> <span class="p">},</span> <span class="s1">&#39;bad_response&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="nx">convo</span><span class="p">.</span><span class="nx">ask</span><span class="p">(</span><span class="s1">&#39;Do you like cheese?&#39;</span><span class="p">,</span> <span class="p">[{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">pattern</span>: <span class="kt">bot.utterances.yes</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">callback</span><span class="o">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">convo</span><span class="p">.</span><span class="nx">gotoThread</span><span class="p">(</span><span class="s1">&#39;yes_thread&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">pattern</span>: <span class="kt">bot.utterances.no</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">callback</span><span class="o">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">convo</span><span class="p">.</span><span class="nx">gotoThread</span><span class="p">(</span><span class="s1">&#39;no_thread&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">default</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">callback</span><span class="o">:</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">convo</span><span class="p">.</span><span class="nx">gotoThread</span><span class="p">(</span><span class="s1">&#39;bad_response&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="nx">convo</span><span class="p">.</span><span class="nx">activate</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="nx">convo</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;end&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="p">(</span><span class="nx">convo</span><span class="p">.</span><span class="nx">successful</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="nx">bot</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="s1">&#39;Let us eat some!&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span></span></span></code></pre></div></p>
 <h1 id="마무리">마무리</h1>
 <p>원래 봇을 통해 의도했던 ChatOps는 아직 시작하지 못했지만, 회사 행정에 도움 되는 기능부터 하나씩 스킬을 늘려가고 있습니다.
 다음번에는 <a href="https://api.slack.com/messaging/interactivity">인터랙티브 메시지</a>를 만드는 방법을 소개하도록 하겠습니다.</p>
@@ -273,6 +273,10 @@ Botkit은 슬랙 앱을 만들어야 합니다.</p>
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2022-03-07-1-npm-private-repository/'>
+      <li class="sidemenu-recent-item">사내 npm 패키지 저장소를 구축하기 위해 겪었던 과정들</li>
+    </a>
+    
     <a href='/ko/2022-01-13-2-jotai-recipe/'>
       <li class="sidemenu-recent-item">Jotai 레시피</li>
     </a>
@@ -283,10 +287,6 @@ Botkit은 슬랙 앱을 만들어야 합니다.</p>
     
     <a href='/ko/2021-12-16-1-server-driven-ui/'>
       <li class="sidemenu-recent-item">Server Driven UI 설계를 통한 UI 유연화</li>
-    </a>
-    
-    <a href='/ko/2021-07-31-1-graphql-error-guide/'>
-      <li class="sidemenu-recent-item">GraphQL 에러 처리 규칙</li>
     </a>
     
   </ul>
@@ -382,6 +382,10 @@ Botkit은 슬랙 앱을 만들어야 합니다.</p>
       <li class="sidemenu-recent-tags">nodejs</li>
     </a>
     
+    <a href="/ko/tags/npm/">
+      <li class="sidemenu-recent-tags">npm</li>
+    </a>
+    
     <a href="/ko/tags/react/">
       <li class="sidemenu-recent-tags">react</li>
     </a>
@@ -459,7 +463,7 @@ Botkit은 슬랙 앱을 만들어야 합니다.</p>
       <div class='text-center'>
         <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     
