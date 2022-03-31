@@ -2,11 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://devblog.croquis.com/ko/tags/npm/</loc>
-    <lastmod>2022-03-07T00:00:00+00:00</lastmod>
+    <loc>https://devblog.croquis.com/ko/tags/aws/</loc>
+    <lastmod>2022-03-31T00:02:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devblog.croquis.com/ko/tags/kubernetes/</loc>
+    <lastmod>2022-03-31T00:02:00+00:00</lastmod>
   </url><url>
     <loc>https://devblog.croquis.com/ko/tags/</loc>
-    <lastmod>2022-03-07T00:00:00+00:00</lastmod>
+    <lastmod>2022-03-31T00:02:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -18,11 +21,14 @@
                 href="https://devblog.croquis.com/ko/tags/"
                 />
   </url><url>
-    <loc>https://devblog.croquis.com/ko/2022-03-07-1-npm-private-repository/</loc>
-    <lastmod>2022-03-07T00:00:00+00:00</lastmod>
+    <loc>https://devblog.croquis.com/ko/2022-03-31-3-build-eks-cluster-with-terraform/</loc>
+    <lastmod>2022-03-31T00:02:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devblog.croquis.com/ko/tags/tutorial/</loc>
+    <lastmod>2022-03-31T00:02:00+00:00</lastmod>
   </url><url>
     <loc>https://devblog.croquis.com/ko/</loc>
-    <lastmod>2022-03-07T00:00:00+00:00</lastmod>
+    <lastmod>2022-03-31T00:02:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -33,6 +39,18 @@
                 hreflang="ko"
                 href="https://devblog.croquis.com/ko/"
                 />
+  </url><url>
+    <loc>https://devblog.croquis.com/ko/2022-03-31-2-web-application-using-eks/</loc>
+    <lastmod>2022-03-31T00:01:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devblog.croquis.com/ko/2022-03-31-1-web-application-using-ecs/</loc>
+    <lastmod>2022-03-31T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devblog.croquis.com/ko/tags/npm/</loc>
+    <lastmod>2022-03-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devblog.croquis.com/ko/2022-03-07-1-npm-private-repository/</loc>
+    <lastmod>2022-03-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devblog.croquis.com/ko/tags/frontend/</loc>
     <lastmod>2022-01-13T00:00:00+00:00</lastmod>
@@ -78,9 +96,6 @@
   </url><url>
     <loc>https://devblog.croquis.com/ko/2020-02-15-1-configuration-in-typescript/</loc>
     <lastmod>2020-02-15T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://devblog.croquis.com/ko/tags/aws/</loc>
-    <lastmod>2020-02-11T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devblog.croquis.com/ko/tags/aws-batch/</loc>
     <lastmod>2020-02-11T00:00:00+00:00</lastmod>
