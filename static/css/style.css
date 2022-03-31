@@ -340,7 +340,12 @@ img {
 }
 
 blockquote {
-  margin-left: 30px;
-  margin-right: 30px;
+  padding-left: 16px;
+  padding-right: 16px;
   font-size: 90%;
+  border-left: 10px solid #27a9e3;
+}
+
+.chroma {
+  padding: 16px;
 }
