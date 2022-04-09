@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+  <meta charset='utf-8'>
+
+  <title>ESM 삽질기</title>
+  
+  <meta name='author' content='kakaostyle.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <meta property='og:title' content='ESM 삽질기' />
+  <meta property='og:type' content='article' />
+  <meta property='og:url' content='https://devblog.croquis.com/ko/2022-04-09-1-esm-problem/' />
+  
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link href='/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='/css/syntax.css?body=1' rel='stylesheet' type='text/css' media='all'>
+</head>
+
+<body>
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='float-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon' src='/img/github-icon.svg'>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>ESM 삽질기</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class='container'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='post-header'>
+        <div class='post-tags'>
+          
+
+<ul class='tag_box inline'>
+  <li><i class='fas fa-tags'></i></li>
+  
+  <li>
+    <a href='/ko/tags/node.js'>
+      Node.js
+      <span>1</span>
+    </a>
+  </li>
+  
+</ul>
+
+        </div>
+        <div class='float-right'>
+          
+          <div class='post-date'>
+            <i class='fas fa-calendar-alt'></i>
+            <span>09 April 2022</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-12 col-lg-9'>
+      <p>저희는 주기적으로 Node.js 모듈을 최신 버전으로 업데이트하고 있습니다.
+Node.js를 10년째 사용 중인데, CoffeeScript → TypeScript, 콜백 → Async.js → Promise(&amp; async, await) 전환 하면서 몇 번 혼란의 시기가 있었습니다.
+하지만 모듈 시스템은 쭉 이어져왔습니다.
+그런데 최근에 이 모듈 시스템에 큰 변화가 생겼고 기존 변화와 다르게 양립이 잘 안 되서 모듈 업데이트를 제대로 못 하고 있습니다.
+이 문제를 일으킨 ESM이 뭐고 어떤 작업이 필요한지 알아보려고 합니다. (개인적으로 만족하는 깔끔한 해결책이 나오지 못했습니다)</p>
+<h2 id="발생하는-문제">발생하는 문제</h2>
+<p><a href="https://www.npmjs.com/package/chalk">chalk</a> 란 모듈이 5.0으로 가면서 Pure ESM 모듈이 됐습니다. 이를 가져다 쓰면 다음과 같은 에러가 발생합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">chalk</span> <span class="kr">from</span> <span class="s1">&#39;chalk&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">chalk</span><span class="p">.</span><span class="nx">yellow</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">));</span>
+</span></span></code></pre></div><pre tabindex="0"><code>Error [ERR_REQUIRE_ESM]: require() of ES Module /a/node_modules/chalk/source/index.js from /a/a.ts not supported.
+Instead change the require of index.js in /a/a.ts to a dynamic import() which is available in all CommonJS modules.
+</code></pre><h2 id="esm이란-무엇인가">ESM이란 무엇인가?</h2>
+<p>초기 JavaScript는 모듈 시스템이 없었습니다.
+클라이언트쪽에서는 <a href="https://requirejs.org/">Require.js</a>란 것이 많이 쓰였습니다.
+한편 서버(Node.js)에서는 CommonJS가 적용되어 따로 발전을 했습니다.
+라이브러리가 클라이언트, 서버를 모두 지원하기 위한 <a href="https://stackoverflow.com/questions/16521471/relation-between-commonjs-amd-and-requirejs">패턴들이 개발</a>되어 적용됐던 기억이 나네요.
+그후 <a href="https://browserify.org/">Browserify</a>, <a href="https://webpack.js.org/">webpack</a> 같은 번들 시스템이 나오면서 CommonJS 쪽으로 통일되었습니다.</p>
+<p>대부분의 경우 잘 동작하지만 뭔가 문제가 있으시까 새로운 시스템이 나왔겠죠? 상세한 히스토리는 잘 모르지만 제가 아는 CommonJS의 가장 큰 문제는 런타임에 모듈을 읽는 다는 것입니다.
+다음 예를 보겠습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="c1">// a.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;a1&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./b&#39;</span><span class="p">).</span><span class="nx">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;a2&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">exports</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// b.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;b1&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./a&#39;</span><span class="p">).</span><span class="nx">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;b2&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">exports</span><span class="p">.</span><span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ node a.js 
+</span></span><span class="line"><span class="cl">a1
+</span></span><span class="line"><span class="cl">b1
+</span></span><span class="line"><span class="cl">undefined
+</span></span><span class="line"><span class="cl">b2
+</span></span><span class="line"><span class="cl"><span class="m">2</span>
+</span></span><span class="line"><span class="cl">a2
+</span></span></code></pre></div><p>위의 예에서 보다시피 require는 그 줄에 다다를 때 실행됩니다.
+순환 참조가 발생하는 경우(<code>require('./a')</code>) 모듈을 다시 읽지는 않습니다.
+이때문에 주의를 기울이지 않으면 위 예처럼 모듈이 내보낸 값이 얻어지지 않는 문제가 발생할 수 있습니다.</p>
+<p>TypeScript의 import문은 사실 require로 변환되는 코드이기 때문에 기존 컴파일 언어에 익숙하신 분이 보면 당황할만한 부분이 좀 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="c1">// a.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;a1&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">b</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;./b&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">b</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;a2&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// b.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;b1&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">a</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;./a&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">a</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;b2&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span></span></code></pre></div><pre tabindex="0"><code>$ ts-node a.ts 
+a1
+b1
+undefined
+b2
+2
+a2
+</code></pre><p>아마 이런 저런 이유 때문에 <a href="https://nodejs.org/api/esm.html">ESM</a>이란 것이 나왔으리라 생각합니다.
+(몇년전에 <code>.cjs</code>, <code>.mjs</code> 확장자 얘기가 나오는 글들 보면서 무슨 얘기가 진행되는 거야 라고 넘어간 기억이 있습니다.)</p>
+<p>async/await 문법이 나온 이후에 가장 아쉬운 점 중 하나가 최상위 단계에서 await가 불가능하다는 것입니다.</p>
+<pre tabindex="0"><code>$ cat a.js                                                                                                                                                                         1 ↵
+await Promise.resolve(1);
+$ node a.js 
+/a/a.js:1
+await Promise.resolve(1);
+^^^^^
+
+SyntaxError: await is only valid in async functions and the top level bodies of modules
+</code></pre><p>따라서 함수를 만들거나 <a href="https://developer.mozilla.org/ko/docs/Glossary/IIFE">IIFE</a>를 사용해야 했습니다.
+이것은 CommonJS의 한계로 인한 것이고 ESM에서는 가능해졌습니다.
+이런 이유도 있어서 CommonJS에서 ESM 모듈을 require 하는 것이 불가능합니다.
+반대로 ESM 모듈에서 CommonJS 모듈을 읽는 것은 가능하지만 신경써야 할 것들이 있습니다.</p>
+<p>이렇게 ESM이 만들어진 후에 Sindre Sorhus란 분이 <a href="https://blog.sindresorhus.com/get-ready-for-esm-aa53530b3f77">ESM 전환을 선언</a>했습니다.
+그리고 이 분이 만드는 많은 모듈들(예 <a href="https://www.npmjs.com/package/file-type">file-type</a>.
+<a href="https://www.npmjs.com/~sindresorhus">npm 개인 홈</a>에 들어가보면 1165개의 모듈에 관여하고 있다고 나오네요)이 <a href="https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c">Pure ESM</a> 모듈로 전환됐습니다.
+Pure ESM은 모듈이 CommonJS/ESM 양쪽을 지원하도록 구성할 수도 있지만, 굳이 ESM만 제공한다는 뜻입니다.</p>
+<p>문제는 CommonJS 프로젝트에서는 ESM 모듈을 불러오는 것이 불가능하다는 것에 있습니다.
+따라서 프로젝트가 ESM으로 전환해야지만 Pure ESM 모듈을 사용할 수 있습니다.</p>
+<h2 id="무엇이-문제인가">무엇이 문제인가?</h2>
+<h3 id="typescript에서-원인-찾기">TypeScript에서 원인 찾기</h3>
+<p>위 예제에서 다시 시작하겠습니다</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="nx">chalk</span> <span class="kr">from</span> <span class="s1">&#39;chalk&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">chalk</span><span class="p">.</span><span class="nx">yellow</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">));</span>
+</span></span></code></pre></div><p>ts-node로 실행해보면 다음과 같은 에러가 발생합니다.</p>
+<pre tabindex="0"><code>$ ts-node a.ts 
+Error [ERR_REQUIRE_ESM]: require() of ES Module /a/node_modules/chalk/source/index.js from /a/a.ts not supported.
+Instead change the require of index.js in /a/a.ts to a dynamic import() which is available in all CommonJS modules.
+</code></pre><p>컴파일된 JavaScript 결과물을 보면 원인을 알 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="s2">&#34;use strict&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">exports</span><span class="p">.</span><span class="nx">__esModule</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">chalk_1</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&#34;chalk&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">chalk_1</span><span class="p">[</span><span class="s2">&#34;default&#34;</span><span class="p">].</span><span class="nx">yellow</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">));</span>
+</span></span></code></pre></div><p>ESM 모듈은 require가 아니라 import를 해야 합니다.</p>
+<h3 id="javascript에서-문제-해결">JavaScript에서 문제 해결</h3>
+<p>TypeScript가 아니라 JavaScript로 import 구문을 사용해 작성해 봅니다. 이번에는 다른 에러가 납니다.</p>
+<pre tabindex="0"><code>$ cat a.js 
+import chalk from &#39;chalk&#39;;
+console.log(chalk.yellow(&#39;Hello&#39;));
+$ node a.js
+(node:72179) Warning: To load an ES module, set &#34;type&#34;: &#34;module&#34; in the package.json or use the .mjs extension.
+/a/a.js:1
+import chalk from &#39;chalk&#39;;
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+</code></pre><p>파일명을 <code>.mjs</code>로 바꾸면 잘 실행됩니다.</p>
+<pre tabindex="0"><code>$ node a.mjs 
+Hello
+</code></pre><p>파일명을 바꾸는 대신 전체 프로젝트를 ESM을 사용하는 것으로 선언할 수 있습니다. package.json에 <code>&quot;type&quot;: &quot;module&quot;</code>을 추가합니다.</p>
+<pre tabindex="0"><code>$ cat a.js 
+import chalk from &#39;chalk&#39;;
+console.log(chalk.yellow(&#39;Hello&#39;));
+$ cat package.json 
+{
+  &#34;type&#34;: &#34;module&#34;,
+  &#34;dependencies&#34;: {
+    &#34;chalk&#34;: &#34;^5.0.1&#34;
+  }
+}
+$ node a.js 
+Hello
+</code></pre><p>또는 TypeScript 실행시 보여준 에러 처럼 dynamic import를 사용할 수 있습니다.</p>
+<pre tabindex="0"><code>$ cat a.js 
+(async () =&gt; {
+  const chalk = await import(&#39;chalk&#39;);
+  console.log(chalk.default.yellow(&#39;Hello&#39;));
+})();
+$ node a.js 
+Hello
+</code></pre><p>정리하면 JavaScript에서 Pure ESM 모듈을 읽기 위해서는 다음 세가지 방법이 있습니다.</p>
+<ul>
+<li><code>.mjs</code> 확장자 사용</li>
+<li>전체 프로젝트를 ESM으로 전환</li>
+<li>dynamic import 사용</li>
+</ul>
+<h3 id="typescript로-되돌아-가서">TypeScript로 되돌아 가서</h3>
+<p><code>.mts</code> 란 확장자도 인식하고, tsc로 컴파일 해보면 <code>.mjs</code>로 나오긴 하지만 적절한 변환은 안 됩니다.</p>
+<p>dynamic import 구문을 사용해도 여전히 실행이 안 됩니다.
+컴파일된 결과물을 보면 여전히 require로 변환이 됩니다.
+이를 해결하려면 모듈시스템을 ES 것을 사용한다고 선언해야 합니다.
+tsconfig에서 <a href="https://www.typescriptlang.org/tsconfig#module">module 설정</a>을 적절히 해줘야 합니다.</p>
+<pre tabindex="0"><code>$ cat a.ts 
+(async () =&gt; {
+  const chalk = await import(&#39;chalk&#39;);
+  console.log(chalk.default.yellow(&#39;Hello&#39;));
+})();
+$ cat tsconfig.json 
+{
+  &#34;compilerOptions&#34;: {
+    &#34;target&#34;: &#34;es2017&#34;,
+    &#34;module&#34;: &#34;es2020&#34;,
+    &#34;moduleResolution&#34;: &#34;node&#34;
+  }
+}
+$ ts-node a.ts 
+Hello
+</code></pre><p>import를 require로 변환하지 않고 그대로 두는 건 module 설정이지만, Node.js에서 import 구문을 이해하는 것을 별개입니다.
+package.json에 <code>&quot;type&quot;: &quot;module&quot;</code> 도 추가하면 일반 import 구문도 동작합니다.
+ts-node로 실행시에는 <code>--esm</code> 옵션을 줘야 동작합니다.</p>
+<pre tabindex="0"><code>$ cat a.ts 
+import chalk from &#39;chalk&#39;;
+console.log(chalk.yellow(&#39;Hello&#39;));
+$ cat package.json 
+{
+  &#34;type&#34;: &#34;module&#34;,
+  &#34;dependencies&#34;: {...}
+}
+$ ts-node --esm a
+Hello
+$ tsc --module es2020 
+$ cat a.js
+import chalk from &#39;chalk&#39;;
+console.log(chalk.yellow(&#39;Hello&#39;));
+</code></pre><h2 id="실전-적용">실전 적용</h2>
+<p>이제 ESM의 동작 원리에 대해 약간 감이 옵니다. (저는 이 글을 쓰면서 정리하는데도 아직도 헷갈립니다) 이제 실전 적용을 해봅니다.</p>
+<p>JavaScript에서는 require와 dynamic import를 혼합해서 쓸 수 있습니다.
+다시 말해 ESM 전환(<code>&quot;type&quot;: &quot;module&quot;</code>)을 하지 않아도 ESM 모듈을 쓰는 것이 가능합니다.
+(static import가 안 되므로 코드를 다르게 작성하는 불편함은 있습니다.)</p>
+<p>하지만 TypeScript에서는 import를 require로 변환 또는 모드 import로 유지, 두 가지 선택지 밖에 없습니다.
+require로는 ESM 모듈을 쓸 수 없으므로 import 유지(<code>&quot;module&quot;: &quot;es2020&quot;</code>)를 해야 합니다.
+이 경우 Node.js에서 import 구문을 사용하므로 ESM 전환(<code>&quot;type&quot;: &quot;module&quot;</code>)도 해야 합니다.</p>
+<p>단순히 import 구문만 쓰면 되는게 아닙니다.
+<a href="https://nodejs.org/api/esm.html#mandatory-file-extensions">불러올 파일의 확장자를 모두 기술</a>해줘야 합니다.
+TypeScript 임에도 불구하고 <code>.js</code> 확장자를 써줘야 합니다.
+또 저는 디렉토리명으로 import 하는 것을 종종 사용하는데 모두 파일명으로 바꿔줘야 합니다.
+(<code>from './services' → from '.services/index.js'</code>) 이 과정을 도와주는 도구(<a href="https://www.npmjs.com/package/fix-esm-import-path">fix-esm-import-path</a>)도 있습니다.</p>
+<p>샘플로 만들어본 프로젝트에서는 이걸로 동작했습니다.
+하지만 실제 프로젝트로 가니 또 다른 이슈가 있었습니다.
+<code>__dirname</code> 을 쓸 수 없다고 해서 변환을 해야 했습니다.
+(예 <code>loadSchemaSync(join(__dirname, './index.graphql')</code>)</p>
+<p>이제 컴파일도 되고 구동해봅니다. 안 됩니다. ESM 모듈에서는 require 구문을 쓰는게 아예 안 됩니다.</p>
+<pre tabindex="0"><code>$ node a.js 
+file:///a/a.js:1
+const http = require(&#39;http&#39;);
+             ^
+
+ReferenceError: require is not defined in ES module scope, you can use import instead
+This file is being treated as an ES module because it has a &#39;.js&#39; file extension and &#39;/a/package.json&#39; contains &#34;type&#34;: &#34;module&#34;. To treat it as a CommonJS script, rename it to use the &#39;.cjs&#39; file extension.
+</code></pre><p>그런데 저희 주요 프로젝트 구조에는 TypeScript 내에서 require를 의존하는 곳이 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="c1">// tools/server.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">TZ</span> <span class="o">=</span> <span class="s1">&#39;Etc/UTC&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;ts-node/register/transpile-only&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;../app/server&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// config/index.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span> <span class="nx">loadConfig</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;(</span><span class="nx">dir</span><span class="o">:</span> <span class="nx">string</span><span class="p">,</span> <span class="nx">env</span><span class="o">?:</span> <span class="nx">string</span><span class="p">)</span><span class="o">:</span> <span class="nx">T</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">base</span> <span class="o">=</span> <span class="nx">cloneDeep</span><span class="p">(</span><span class="nx">require</span><span class="p">(</span><span class="sb">`</span><span class="si">${</span><span class="nx">dir</span><span class="si">}</span><span class="sb">/default`</span><span class="p">).</span><span class="k">default</span> <span class="nx">as</span> <span class="nx">T</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">...</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">base</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>다른 건 몰라도 config는 당장 고치기 어려워 보였습니다.
+또 즐겨쓰고 있는 <a href="https://github.com/croquiscom/rinore">REPL</a>도 제대로 동작을 안 하는 건 좀 심각했습니다.</p>
+<h2 id="그래서-해결책은">그래서 해결책은?</h2>
+<p>결국 이 이상 시간을 쏟기는 어려워서 어플리케이션을 ESM 모드로 전환하는 것은 포기했습니다.
+하지만 ESM 모듈은 여전히 필요했습니다.</p>
+<p>다행히 이번에 조사할 때는 저번에 찾지 못했던 <a href="https://github.com/TypeStrong/ts-node/discussions/1290">회피 방법</a>을 찾았습니다.
+TypeScript가 변환하지 않도록 import 문을 감추는 것입니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="k">new</span> <span class="nb">Function</span><span class="p">(</span><span class="s1">&#39;specifier&#39;</span><span class="p">,</span> <span class="s1">&#39;return import(specifier)&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><p><a href="https://stackoverflow.com/a/70546326/3239514">eval도 가능</a>하다는데 테스트해보진 않았습니다.</p>
+<p>다만 위 코드보다는 라이브러리를 활용하는 솔루션이 더 직관적인 것 같아서 이 방법을 사용했습니다.
+<a href="https://www.npmjs.com/package/tsimportlib">tsimportlib</a> 라이브러리를 사용하면 됩니다.</p>
+<p>아쉬운 대로 동작합니다만 나중에 프로젝트가 ESM으로 전환됐을 때 dynamic import를 static import로 바꿔줘야 할 것 같아 꼭 필요한 곳에만 쓰는 것으로 생각하고 있습니다.</p>
+<p>다행히 dynamic import는 서버에서만 필요했고, 프론트엔드 코드에서는 Next.js등이 잘 처리해주는지 static import로도 잘 동작했습니다.</p>
+<h2 id="마무리">마무리</h2>
+<p>개인적인 느낌으로 ESM은 Python2 → Python3를 전환시의 혼란을 보는 것 같습니다.
+저를 포함해 많은 사람들이 당황해하고 불만을 터트리네요</p>
+<p><img src="/img/content/2022-04-09-1/2022-04-09-1-01.png" alt="https://github.com/sindresorhus/meta/discussions/15#discussioncomment-2495719">
+<a href="https://github.com/sindresorhus/meta/discussions/15#discussioncomment-2495719">https://github.com/sindresorhus/meta/discussions/15#discussioncomment-2495719</a></p>
+<p>하지만 좋은 싫든 ESM으로의 전환은 시작된 것 같습니다.
+조금 더 생태계가 안정되면 다시 전환 시도를 해야 할 것 같습니다.</p>
+<h2 id="appendix">Appendix</h2>
+<ul>
+<li><a href="https://nodejs.org/api/esm.html">Modules: ECMAScript modules | Node.js Documentation</a></li>
+<li><a href="https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Modules">JavaScript modules - JavaScript | MDN</a></li>
+<li><a href="https://redfin.engineering/node-modules-at-war-why-commonjs-and-es-modules-cant-get-along-9617135eeca1">Node Modules at War: Why CommonJS and ES Modules Can’t Get Along</a> (<a href="https://roseline.oopy.io/dev/translation-why-cjs-and-esm-cannot-get-along">번역</a>, <a href="https://yceffort.kr/2020/08/commonjs-esmodules">요약</a>)</li>
+<li><a href="https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c">Pure ESM package</a></li>
+<li><a href="https://blog.sindresorhus.com/get-ready-for-esm-aa53530b3f77">Get Ready For ESM. JavaScript Modules will soon be a… | by Sindre Sorhus | 🦄 Sindre Sorhus’ blog</a></li>
+<li><a href="https://docs.joshuatz.com/cheatsheets/node-and-npm/node-esm/">ES Modules in NodeJS - Troubleshooting Resources</a></li>
+<li><a href="https://github.com/TypeStrong/ts-node/discussions/1290">Dynamic `import()` with `&ldquo;module&rdquo;: &ldquo;commonjs&rdquo;`</a></li>
+<li><a href="https://typestrong.org/ts-node/docs/imports/">CommonJS vs native ECMAScript modules | ts-node</a></li>
+<li><a href="https://www.npmjs.com/package/tsimportlib">tsimportlib</a></li>
+</ul>
+      
+      <hr>
+      <div class='post-original'>
+        원본 링크 : <a href='http://sixmen.com/ko/tech/2022-04-09-1-esm-problem/' target='_blank'>http://sixmen.com/ko/tech/2022-04-09-1-esm-problem/</a>
+      </div>
+      
+    </div>
+
+    <div class='col-lg-3 sidemenu'>
+  <h4>Recent Posts</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2022-04-09-1-esm-problem/'>
+      <li class="sidemenu-recent-item">ESM 삽질기</li>
+    </a>
+    
+    <a href='/ko/2022-03-31-3-build-eks-cluster-with-terraform/'>
+      <li class="sidemenu-recent-item">Terraform으로 EKS 구축하기</li>
+    </a>
+    
+    <a href='/ko/2022-03-31-2-web-application-using-eks/'>
+      <li class="sidemenu-recent-item">EKS를 사용해서 어플리케이션 서비스 하기</li>
+    </a>
+    
+    <a href='/ko/2022-03-31-1-web-application-using-ecs/'>
+      <li class="sidemenu-recent-item">ECS를 사용해서 어플리케이션 서비스 하기</li>
+    </a>
+    
+  </ul>
+  <hr>
+  <h4>Tags</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href="/ko/tags/amazon-sqs/">
+      <li class="sidemenu-recent-tags">amazon-sqs</li>
+    </a>
+    
+    <a href="/ko/tags/analytics/">
+      <li class="sidemenu-recent-tags">analytics</li>
+    </a>
+    
+    <a href="/ko/tags/android/">
+      <li class="sidemenu-recent-tags">android</li>
+    </a>
+    
+    <a href="/ko/tags/aws/">
+      <li class="sidemenu-recent-tags">aws</li>
+    </a>
+    
+    <a href="/ko/tags/aws-batch/">
+      <li class="sidemenu-recent-tags">aws-batch</li>
+    </a>
+    
+    <a href="/ko/tags/aws-lambda/">
+      <li class="sidemenu-recent-tags">aws-lambda</li>
+    </a>
+    
+    <a href="/ko/tags/botkit/">
+      <li class="sidemenu-recent-tags">botkit</li>
+    </a>
+    
+    <a href="/ko/tags/croquis/">
+      <li class="sidemenu-recent-tags">croquis</li>
+    </a>
+    
+    <a href="/ko/tags/css/">
+      <li class="sidemenu-recent-tags">css</li>
+    </a>
+    
+    <a href="/ko/tags/data/">
+      <li class="sidemenu-recent-tags">data</li>
+    </a>
+    
+    <a href="/ko/tags/event/">
+      <li class="sidemenu-recent-tags">event</li>
+    </a>
+    
+    <a href="/ko/tags/front-end/">
+      <li class="sidemenu-recent-tags">front-end</li>
+    </a>
+    
+    <a href="/ko/tags/frontend/">
+      <li class="sidemenu-recent-tags">frontend</li>
+    </a>
+    
+    <a href="/ko/tags/github/">
+      <li class="sidemenu-recent-tags">github</li>
+    </a>
+    
+    <a href="/ko/tags/graphql/">
+      <li class="sidemenu-recent-tags">graphql</li>
+    </a>
+    
+    <a href="/ko/tags/ios/">
+      <li class="sidemenu-recent-tags">ios</li>
+    </a>
+    
+    <a href="/ko/tags/jenkins/">
+      <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/jotai/">
+      <li class="sidemenu-recent-tags">jotai</li>
+    </a>
+    
+    <a href="/ko/tags/kubernetes/">
+      <li class="sidemenu-recent-tags">kubernetes</li>
+    </a>
+    
+    <a href="/ko/tags/log/">
+      <li class="sidemenu-recent-tags">log</li>
+    </a>
+    
+    <a href="/ko/tags/microservice/">
+      <li class="sidemenu-recent-tags">microservice</li>
+    </a>
+    
+    <a href="/ko/tags/mithril/">
+      <li class="sidemenu-recent-tags">mithril</li>
+    </a>
+    
+    <a href="/ko/tags/node.js/">
+      <li class="sidemenu-recent-tags">node.js</li>
+    </a>
+    
+    <a href="/ko/tags/nodejs/">
+      <li class="sidemenu-recent-tags">nodejs</li>
+    </a>
+    
+    <a href="/ko/tags/npm/">
+      <li class="sidemenu-recent-tags">npm</li>
+    </a>
+    
+    <a href="/ko/tags/react/">
+      <li class="sidemenu-recent-tags">react</li>
+    </a>
+    
+    <a href="/ko/tags/rest-api/">
+      <li class="sidemenu-recent-tags">rest-api</li>
+    </a>
+    
+    <a href="/ko/tags/serverless-architecture/">
+      <li class="sidemenu-recent-tags">serverless-architecture</li>
+    </a>
+    
+    <a href="/ko/tags/slack/">
+      <li class="sidemenu-recent-tags">slack</li>
+    </a>
+    
+    <a href="/ko/tags/stack/">
+      <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/task-queue/">
+      <li class="sidemenu-recent-tags">task-queue</li>
+    </a>
+    
+    <a href="/ko/tags/thrift/">
+      <li class="sidemenu-recent-tags">thrift</li>
+    </a>
+    
+    <a href="/ko/tags/tutorial/">
+      <li class="sidemenu-recent-tags">tutorial</li>
+    </a>
+    
+    <a href="/ko/tags/typescript/">
+      <li class="sidemenu-recent-tags">typescript</li>
+    </a>
+    
+    <a href="/ko/tags/ui/">
+      <li class="sidemenu-recent-tags">ui</li>
+    </a>
+    
+    <a href="/ko/tags/vertical-align/">
+      <li class="sidemenu-recent-tags">vertical-align</li>
+    </a>
+    
+    <a href="/ko/tags/webpack/">
+      <li class="sidemenu-recent-tags">webpack</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A1%9C%EA%B7%B8/">
+      <li class="sidemenu-recent-tags">로그</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/">
+      <li class="sidemenu-recent-tags">마이크로서비스</li>
+    </a>
+    
+    <a href="/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/">
+      <li class="sidemenu-recent-tags">튜토리얼</li>
+    </a>
+    
+  </ul>
+</div>
+
+    <div class='col-12'>
+      <hr>
+
+      <div class='float-left'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2022-03-31-3-build-eks-cluster-with-terraform/' title='Terraform으로 EKS 구축하기'>&larr; 이전 글</a>
+        
+      </div>
+      <div class='float-right'>
+        
+        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
+        
+      </div>
+      <div class='clearfix'></div>
+      <hr>
+      <div class='text-center'>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "croquiscom-devblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='container'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2021 kakaostyle.com
+      <span class='float-right text-muted'>
+        powered by
+        <a href='https://gohugo.io/' target='_blank'>Hugo</a>
+        and
+        <a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-48716672-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+  integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+  integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
