@@ -139,9 +139,16 @@ images: [/img/kakaostyle-logo.png]
 
 ## 데이터/ML
 
+* [Data lake](https://en.wikipedia.org/wiki/Data_lake)
+* [AWS Glue](https://aws.amazon.com/glue/)
+* [Amazon EMR](https://aws.amazon.com/ko/emr/)
+* [Data mart](https://en.wikipedia.org/wiki/Data_mart)
+* [Apache Airflow](https://airflow.apache.org/)
+* [Scala](https://www.scala-lang.org/)
+* [Gin Web Framework](https://github.com/gin-gonic/gin)
+* [MLOps](https://en.wikipedia.org/wiki/MLOps)
 * [Amazon Personalize](https://aws.amazon.com/ko/personalize/)
 * [Apache Spark](https://spark.apache.org/)
-* [Amazon EMR](https://aws.amazon.com/ko/emr/)
 * [Amazon QuickSight](https://aws.amazon.com/ko/quicksight/)
 * ~~[Apache Zeppelin](https://zeppelin.apache.org/)~~
 
