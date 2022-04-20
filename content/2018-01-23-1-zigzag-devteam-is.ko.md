@@ -3,7 +3,7 @@ title: 카카오스타일 개발팀은...
 tags: []
 date: 2018-01-23
 author: Sangmin Yoon
-images: [/img/content/2018-01-23-1/3.jpg]
+images: [/img/kakaostyle-logo.png]
 ---
 
 (2022년 4월 갱신)
