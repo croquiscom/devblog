@@ -2,6 +2,7 @@
 title: ESM 삽질기
 tags: ['Node.js']
 date: 2022-04-09T00:00:00
+author: Simon(윤상민)
 original: http://sixmen.com/ko/tech/2022-04-09-1-esm-problem/
 ---
 

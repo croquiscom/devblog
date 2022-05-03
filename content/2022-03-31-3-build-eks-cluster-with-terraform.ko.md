@@ -2,6 +2,7 @@
 title: Terraform으로 EKS 구축하기
 tags: ['AWS', 'Kubernetes', 'Tutorial']
 date: 2022-03-31T00:02:00
+author: Simon(윤상민)
 summary:
   이전 글에서는 ECS / EKS에서 서비스 하는 것에 대한 개념을 풀어 써봤습니다. 이번 글에서는 잘 만들어진 모듈을 이용해 빠르게 구성해보겠습니다.
 original: http://sixmen.com/ko/tech/2022-03-31-3-build-eks-cluster-with-terraform/

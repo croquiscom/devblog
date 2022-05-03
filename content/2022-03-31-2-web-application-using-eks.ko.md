@@ -2,6 +2,7 @@
 title: EKS를 사용해서 어플리케이션 서비스 하기
 tags: ['AWS', 'Kubernetes', 'Tutorial']
 date: 2022-03-31T00:01:00
+author: Simon(윤상민)
 summary:
   ECS 아티클에 이어 이번 글에서는 같은 서비스를 EKS로 구축해보도록 하겠습니다.
   간단하게 구축하는 것은 eksctl을 쓰면 되지만, 내부 이해를 위해 여기서는 기본부터 구현하도록 하겠습니다.

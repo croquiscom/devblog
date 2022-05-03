@@ -2,6 +2,7 @@
 title: ECS를 사용해서 어플리케이션 서비스 하기
 tags: ['AWS', 'Tutorial']
 date: 2022-03-31T00:00:00
+author: Simon(윤상민)
 original: http://sixmen.com/ko/tech/2022-03-31-1-web-application-using-ecs/
 ---
 
