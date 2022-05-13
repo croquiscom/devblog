@@ -2,43 +2,43 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>AWS on 카카오스타일 기술 블로그</title>
-    <link>https://devblog.croquis.com/ko/tags/aws/</link>
+    <link>https://devblog.kakaostyle.com/ko/tags/aws/</link>
     <description>Recent content in AWS on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 31 Mar 2022 00:02:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/aws/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 31 Mar 2022 00:02:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/aws/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Terraform으로 EKS 구축하기</title>
-      <link>https://devblog.croquis.com/ko/2022-03-31-3-build-eks-cluster-with-terraform/</link>
+      <link>https://devblog.kakaostyle.com/ko/2022-03-31-3-build-eks-cluster-with-terraform/</link>
       <pubDate>Thu, 31 Mar 2022 00:02:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2022-03-31-3-build-eks-cluster-with-terraform/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2022-03-31-3-build-eks-cluster-with-terraform/</guid>
       <description>이전 글에서는 ECS / EKS에서 서비스 하는 것에 대한 개념을 풀어 써봤습니다. 이번 글에서는 잘 만들어진 모듈을 이용해 빠르게 구성해보겠습니다.</description>
     </item>
     
     <item>
       <title>EKS를 사용해서 어플리케이션 서비스 하기</title>
-      <link>https://devblog.croquis.com/ko/2022-03-31-2-web-application-using-eks/</link>
+      <link>https://devblog.kakaostyle.com/ko/2022-03-31-2-web-application-using-eks/</link>
       <pubDate>Thu, 31 Mar 2022 00:01:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2022-03-31-2-web-application-using-eks/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2022-03-31-2-web-application-using-eks/</guid>
       <description>ECS 아티클에 이어 이번 글에서는 같은 서비스를 EKS로 구축해보도록 하겠습니다. 간단하게 구축하는 것은 eksctl을 쓰면 되지만, 내부 이해를 위해 여기서는 기본부터 구현하도록 하겠습니다.</description>
     </item>
     
     <item>
       <title>ECS를 사용해서 어플리케이션 서비스 하기</title>
-      <link>https://devblog.croquis.com/ko/2022-03-31-1-web-application-using-ecs/</link>
+      <link>https://devblog.kakaostyle.com/ko/2022-03-31-1-web-application-using-ecs/</link>
       <pubDate>Thu, 31 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2022-03-31-1-web-application-using-ecs/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2022-03-31-1-web-application-using-ecs/</guid>
       <description>&lt;p&gt;카카오스타일에서는 한동한 ECS를 사용해서 어플리케이션을 서비스했습니다. 현재는 EKS로 전환하고 있지만, ECS가 상대적으로 단순하기 때문에 서비스 구축 개념을 익히는데 좋은 것 같습니다. (간단한 서비스는 굳이 쿠버네티스를 쓸 필요가 없다고 생각합니다) 그런 의미에서 이번 글에서는 ECS를 이용해 단순한 서비스를 오픈하는 과정을 단계별로 설명해보려고 합니다.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>크로키의 스택 - AWS Batch</title>
-      <link>https://devblog.croquis.com/ko/2020-02-11-1-croquis-stack-aws-batch/</link>
+      <link>https://devblog.kakaostyle.com/ko/2020-02-11-1-croquis-stack-aws-batch/</link>
       <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2020-02-11-1-croquis-stack-aws-batch/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2020-02-11-1-croquis-stack-aws-batch/</guid>
       <description>&lt;p&gt;서비스를 운영하다 보면 주기적으로 실행이 필요한 작업이 생깁니다.
 이런 작업을 실행하는 방법은 여러 가지가 있을 수 있습니다.
 다음은 크로키에서 현재 선택해서 전환 중인 AWS Batch에 관해 설명합니다.&lt;/p&gt;</description>
@@ -46,10 +46,10 @@
     
     <item>
       <title>AWS Abuse Report</title>
-      <link>https://devblog.croquis.com/ko/2018-11-30-1-aws-abuse-report/</link>
+      <link>https://devblog.kakaostyle.com/ko/2018-11-30-1-aws-abuse-report/</link>
       <pubDate>Thu, 23 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2018-11-30-1-aws-abuse-report/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2018-11-30-1-aws-abuse-report/</guid>
       <description>&lt;p&gt;28일 오전, 한참 작업을 하다가 11시가 조금 넘은 시간에 문득 핸드폰을 들여다봤습니다.
 평상시 메일은 몰아서 처리하는 편인데(시급한 일이 메일로 오는 경우는 드물어서) 이날은 왠지 메일에 눈이 갔습니다.
 AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아니었고 Maintenance 알림 메일인가 하고 넘어가려는 순간
@@ -58,10 +58,10 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
     
     <item>
       <title>SQS, Lambda를 이용한 작업 대기열 만들기</title>
-      <link>https://devblog.croquis.com/ko/2017-05-13-1-aws-serverless-1/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-05-13-1-aws-serverless-1/</link>
       <pubDate>Sat, 13 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-05-13-1-aws-serverless-1/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-05-13-1-aws-serverless-1/</guid>
       <description>&lt;p&gt;최근 클라우드 컴퓨팅환경이 널리 사용되면서 서버 하드웨어 대한 유지보수 및 구성을 신경 쓰지 않고, 다양한 서비스들을 위한 서버를 개발할 수 있게 되었습니다. 하지만 이런 환경을 사용함에도 auto-scaling이나 서버 로그 수집, 서비스 배포 및 관리 등 소프트웨어 스택에 관한 부분은 신경 써줘야 합니다.&lt;/p&gt;
 &lt;p&gt;이러한 고민을 덜어주기 위해서 최근에는 serverless architecture라는 개념이 생기고 있습니다. serverless architecture에서는 소스코드와 몇 번의 클릭만으로 서비스를 위한 REST API를 만들 수 있고, 수많은 요청에 대한 확장성에 대해 고민을 할 필요가 없으며, 로그 및 다양한 모니터링 툴들을 추가적인 작업 없이 사용할 수 있습니다.&lt;/p&gt;
 &lt;p&gt;AWS에서도 serverless architecture를 위한 다양한 서비스를 제공하고 있습니다. 이번 글에서는 간단한 작업 대기열(task queue)을 만들어보며, serverless architecture 환경을 경험해보도록 하겠습니다.&lt;/p&gt;</description>

@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>UI on 카카오스타일 기술 블로그</title>
-    <link>https://devblog.croquis.com/ko/tags/ui/</link>
+    <link>https://devblog.kakaostyle.com/ko/tags/ui/</link>
     <description>Recent content in UI on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 16 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/ui/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 16 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/ui/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Server Driven UI 설계를 통한 UI 유연화</title>
-      <link>https://devblog.croquis.com/ko/2021-12-16-1-server-driven-ui/</link>
+      <link>https://devblog.kakaostyle.com/ko/2021-12-16-1-server-driven-ui/</link>
       <pubDate>Thu, 16 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2021-12-16-1-server-driven-ui/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2021-12-16-1-server-driven-ui/</guid>
       <description>&lt;p&gt;웹과 달리 네이티브 모바일 앱은 빌드, 배포 후에는 수정이 불가능합니다.
 만약 잘못된 위치에 버튼을 배치한 채로 스토어에 앱을 배포했다면,
 그리고 사용자가 잘못된 버전의 앱을 설치했다면 버튼의 위치를 수정할 방법이 없습니다.

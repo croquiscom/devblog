@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>REST API on 카카오스타일 기술 블로그</title>
-    <link>https://devblog.croquis.com/ko/tags/rest-api/</link>
+    <link>https://devblog.kakaostyle.com/ko/tags/rest-api/</link>
     <description>Recent content in REST API on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 30 May 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/rest-api/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 30 May 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/rest-api/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>크로키의 스택 - REST API</title>
-      <link>https://devblog.croquis.com/ko/2018-05-30-1-croquis-stack-rest-api/</link>
+      <link>https://devblog.kakaostyle.com/ko/2018-05-30-1-croquis-stack-rest-api/</link>
       <pubDate>Wed, 30 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2018-05-30-1-croquis-stack-rest-api/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2018-05-30-1-croquis-stack-rest-api/</guid>
       <description>&lt;p&gt;크로키가 클라이언트-서버 아키텍처를 가진 첫 번째 서비스 개발을 시작한 것은 2012년이었습니다.
 클라이언트에서 서버와 통신할 방법이 필요했는데 당시의 대세는 REST API였습니다.
 저도 거기에 공감했기 때문에 REST API를 만들어 클라이언트를 구현했습니다.

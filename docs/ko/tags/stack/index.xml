@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Stack on 카카오스타일 기술 블로그</title>
-    <link>https://devblog.croquis.com/ko/tags/stack/</link>
+    <link>https://devblog.kakaostyle.com/ko/tags/stack/</link>
     <description>Recent content in Stack on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 11 Feb 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/stack/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 11 Feb 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/stack/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>크로키의 스택 - AWS Batch</title>
-      <link>https://devblog.croquis.com/ko/2020-02-11-1-croquis-stack-aws-batch/</link>
+      <link>https://devblog.kakaostyle.com/ko/2020-02-11-1-croquis-stack-aws-batch/</link>
       <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2020-02-11-1-croquis-stack-aws-batch/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2020-02-11-1-croquis-stack-aws-batch/</guid>
       <description>&lt;p&gt;서비스를 운영하다 보면 주기적으로 실행이 필요한 작업이 생깁니다.
 이런 작업을 실행하는 방법은 여러 가지가 있을 수 있습니다.
 다음은 크로키에서 현재 선택해서 전환 중인 AWS Batch에 관해 설명합니다.&lt;/p&gt;</description>
@@ -19,20 +19,20 @@
     
     <item>
       <title>크로키의 스택 - GraphQL</title>
-      <link>https://devblog.croquis.com/ko/2019-05-22-1-croquis-stack-graphql/</link>
+      <link>https://devblog.kakaostyle.com/ko/2019-05-22-1-croquis-stack-graphql/</link>
       <pubDate>Wed, 22 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2019-05-22-1-croquis-stack-graphql/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2019-05-22-1-croquis-stack-graphql/</guid>
       <description>&lt;p&gt;현재 크로키는 API를 &lt;a href=&#34;https://graphql.org/&#34;&gt;GraphQL&lt;/a&gt;로 만들고 있습니다.
 아직 많은 부분에 대해서 연구 중이어서 현재 상황만 간단하게 정리해 보겠습니다.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>크로키의 스택 - Thrift</title>
-      <link>https://devblog.croquis.com/ko/2019-04-28-1-croquis-stack-thrift/</link>
+      <link>https://devblog.kakaostyle.com/ko/2019-04-28-1-croquis-stack-thrift/</link>
       <pubDate>Sun, 28 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2019-04-28-1-croquis-stack-thrift/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2019-04-28-1-croquis-stack-thrift/</guid>
       <description>&lt;p&gt;2016년 중반 마이크로서비스로의 전환을 결정했습니다.
 마이크로서비스는 이론상 다른 서비스에 영향을 주지 않고 내부 기술을 바꿀 수 있습니다.
 하지만 마이크로서비스 간의 통신 방법은 한번 결정하면 쉽게 바뀌기 어려울 것 같아서 가장 많이 고민했습니다.
@@ -42,10 +42,10 @@
     
     <item>
       <title>크로키의 스택 - REST API</title>
-      <link>https://devblog.croquis.com/ko/2018-05-30-1-croquis-stack-rest-api/</link>
+      <link>https://devblog.kakaostyle.com/ko/2018-05-30-1-croquis-stack-rest-api/</link>
       <pubDate>Wed, 30 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2018-05-30-1-croquis-stack-rest-api/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2018-05-30-1-croquis-stack-rest-api/</guid>
       <description>&lt;p&gt;크로키가 클라이언트-서버 아키텍처를 가진 첫 번째 서비스 개발을 시작한 것은 2012년이었습니다.
 클라이언트에서 서버와 통신할 방법이 필요했는데 당시의 대세는 REST API였습니다.
 저도 거기에 공감했기 때문에 REST API를 만들어 클라이언트를 구현했습니다.
@@ -54,10 +54,10 @@
     
     <item>
       <title>크로키의 스택 - 마이크로서비스</title>
-      <link>https://devblog.croquis.com/ko/2017-10-15-1-croquis-stack-microservice/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-10-15-1-croquis-stack-microservice/</link>
       <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-10-15-1-croquis-stack-microservice/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-10-15-1-croquis-stack-microservice/</guid>
       <description>&lt;p&gt;지그재그 서비스는 모놀리식 아키텍처(Monolithic Architecture)에서
 마이크로서비스 아키텍처(Microservice Architecture)로 전환중에 있습니다.
 이번 글에서는 그 과정을 설명하려고 합니다.&lt;/p&gt;</description>
@@ -65,10 +65,10 @@
     
     <item>
       <title>크로키의 스택 - Mithril</title>
-      <link>https://devblog.croquis.com/ko/2017-04-07-1-croquis-stack-mithril/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-04-07-1-croquis-stack-mithril/</link>
       <pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-04-07-1-croquis-stack-mithril/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-04-07-1-croquis-stack-mithril/</guid>
       <description>&lt;p&gt;이번 글에서는 크로키가 사용하는 스택 중
 클라이언트 JavaScript 프레임워크(client-side JavaScript framework)에 대해서
 소개해볼까 합니다.&lt;/p&gt;

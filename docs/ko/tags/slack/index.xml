@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Slack on 카카오스타일 기술 블로그</title>
-    <link>https://devblog.croquis.com/ko/tags/slack/</link>
+    <link>https://devblog.kakaostyle.com/ko/tags/slack/</link>
     <description>Recent content in Slack on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 27 Apr 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/slack/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 27 Apr 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/slack/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>BotKit을 이용한 슬랙 봇 만들기</title>
-      <link>https://devblog.croquis.com/ko/2019-04-27-1-make-slack-bot-using-botkit/</link>
+      <link>https://devblog.kakaostyle.com/ko/2019-04-27-1-make-slack-bot-using-botkit/</link>
       <pubDate>Sat, 27 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2019-04-27-1-make-slack-bot-using-botkit/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2019-04-27-1-make-slack-bot-using-botkit/</guid>
       <description>&lt;p&gt;크로키닷컴을 시작하고 비교적 초기부터 ChatOps를 해보고 싶었습니다.
 GitHub의 글을 보고 도입하고 싶다는 생각이 들었던 거로 기억합니다.
 당연하게 &lt;a href=&#34;https://hubot.github.com/&#34;&gt;Hubot&lt;/a&gt;을 이용해 채팅봇을 설정했습니다.&lt;/p&gt;
@@ -26,10 +26,10 @@ GitHub의 글을 보고 도입하고 싶다는 생각이 들었던 거로 기억
     
     <item>
       <title>GitHub 위키 이벤트를 슬랙으로 받기</title>
-      <link>https://devblog.croquis.com/ko/2017-01-06-1-github-wiki-to-slack/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-01-06-1-github-wiki-to-slack/</link>
       <pubDate>Fri, 06 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-01-06-1-github-wiki-to-slack/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-01-06-1-github-wiki-to-slack/</guid>
       <description>&lt;p&gt;현재 크로키닷컴은 프로젝트 관리를 GitHub로만 하고 있습니다.
 이슈도 GitHub 이슈로 관리하고, 문서도 GitHub 위키를 사용하고 있습니다.&lt;/p&gt;
 &lt;p&gt;GitHub는 슬랙과의 연동이 잘 되어 있어서 GitHub에서의 활동을

@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>GitHub on 카카오스타일 기술 블로그</title>
-    <link>https://devblog.croquis.com/ko/tags/github/</link>
+    <link>https://devblog.kakaostyle.com/ko/tags/github/</link>
     <description>Recent content in GitHub on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 06 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/github/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 06 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/github/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>GitHub Actions 활용하기</title>
-      <link>https://devblog.croquis.com/ko/2020-11-06-1-using-github-actions/</link>
+      <link>https://devblog.kakaostyle.com/ko/2020-11-06-1-using-github-actions/</link>
       <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2020-11-06-1-using-github-actions/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2020-11-06-1-using-github-actions/</guid>
       <description>&lt;p&gt;규모가 커지면 커질 수록 자동화된 워크플로우는 필수라고 생각합니다.
 하지만 부끄럽게도 크로키닷컴은 잘 구축된 편은 아닙니다.&lt;/p&gt;
 &lt;p&gt;유닛 테스트는 초기부터 있었지만 그걸 PR, 머지마다 자동으로 수행하지는 못했습니다.
@@ -30,10 +30,10 @@
     
     <item>
       <title>GitHub 위키 이벤트를 슬랙으로 받기</title>
-      <link>https://devblog.croquis.com/ko/2017-01-06-1-github-wiki-to-slack/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-01-06-1-github-wiki-to-slack/</link>
       <pubDate>Fri, 06 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-01-06-1-github-wiki-to-slack/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-01-06-1-github-wiki-to-slack/</guid>
       <description>&lt;p&gt;현재 크로키닷컴은 프로젝트 관리를 GitHub로만 하고 있습니다.
 이슈도 GitHub 이슈로 관리하고, 문서도 GitHub 위키를 사용하고 있습니다.&lt;/p&gt;
 &lt;p&gt;GitHub는 슬랙과의 연동이 잘 되어 있어서 GitHub에서의 활동을

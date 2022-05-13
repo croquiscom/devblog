@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Nodejs on 카카오스타일 기술 블로그</title>
-    <link>https://devblog.croquis.com/ko/tags/nodejs/</link>
+    <link>https://devblog.kakaostyle.com/ko/tags/nodejs/</link>
     <description>Recent content in Nodejs on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 10 Feb 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/nodejs/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 10 Feb 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/nodejs/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>크로키가 Node.js를 선택한 이유</title>
-      <link>https://devblog.croquis.com/ko/2017-02-10-1-why-croquis-selects-nodejs/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-02-10-1-why-croquis-selects-nodejs/</link>
       <pubDate>Fri, 10 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-02-10-1-why-croquis-selects-nodejs/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-02-10-1-why-croquis-selects-nodejs/</guid>
       <description>&lt;p&gt;현재 크로키에서는 서버용 웹 프레임워크로 &lt;a href=&#34;http://nodejs.org/&#34;&gt;Node.js&lt;/a&gt; 위에서
 &lt;a href=&#34;http://expressjs.com/&#34;&gt;Express&lt;/a&gt;를 사용하고 있습니다.&lt;/p&gt;
 &lt;p&gt;이번 글에서는 어떤 이유로 Node.js를 사용하게 되었는지 설명하려고 합니다.
@@ -20,10 +20,10 @@
     
     <item>
       <title>Node.js로 유닉스 파이프 처리하기</title>
-      <link>https://devblog.croquis.com/ko/2017-01-15-1-process-unix-pipe-with-nodejs/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-01-15-1-process-unix-pipe-with-nodejs/</link>
       <pubDate>Sun, 15 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-01-15-1-process-unix-pipe-with-nodejs/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-01-15-1-process-unix-pipe-with-nodejs/</guid>
       <description>&lt;p&gt;크로키에서는 로그를 JSON 문자열로 만들어 일자별(혹은 시간별)로 묶은 후
 gzip으로 압축해서 저장하고 있습니다.
 그런데 이미 만들어진 로그를 수정해야 하는 일이 생겼습니다.&lt;/p&gt;</description>

@@ -2,40 +2,40 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://devblog.croquis.com/en/categories/</loc>
+    <loc>https://devblog.kakaostyle.com/en/categories/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://devblog.croquis.com/ko/categories/"
+                href="https://devblog.kakaostyle.com/ko/categories/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://devblog.croquis.com/en/categories/"
+                href="https://devblog.kakaostyle.com/en/categories/"
                 />
   </url><url>
-    <loc>https://devblog.croquis.com/en/tags/</loc>
+    <loc>https://devblog.kakaostyle.com/en/tags/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://devblog.croquis.com/ko/tags/"
+                href="https://devblog.kakaostyle.com/ko/tags/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://devblog.croquis.com/en/tags/"
+                href="https://devblog.kakaostyle.com/en/tags/"
                 />
   </url><url>
-    <loc>https://devblog.croquis.com/en/</loc>
+    <loc>https://devblog.kakaostyle.com/en/</loc>
     <xhtml:link
                 rel="alternate"
                 hreflang="ko"
-                href="https://devblog.croquis.com/ko/"
+                href="https://devblog.kakaostyle.com/ko/"
                 />
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
-                href="https://devblog.croquis.com/en/"
+                href="https://devblog.kakaostyle.com/en/"
                 />
   </url>
 </urlset>

@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>카카오스타일 기술 블로그</title>
-    <link>https://devblog.croquis.com/ko/</link>
+    <link>https://devblog.kakaostyle.com/ko/</link>
     <description>Recent content on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 09 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 09 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ESM 삽질기</title>
-      <link>https://devblog.croquis.com/ko/2022-04-09-1-esm-problem/</link>
+      <link>https://devblog.kakaostyle.com/ko/2022-04-09-1-esm-problem/</link>
       <pubDate>Sat, 09 Apr 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2022-04-09-1-esm-problem/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2022-04-09-1-esm-problem/</guid>
       <description>&lt;p&gt;저희는 주기적으로 Node.js 모듈을 최신 버전으로 업데이트하고 있습니다.
 Node.js를 10년째 사용 중인데, CoffeeScript → TypeScript, 콜백 → Async.js → Promise(&amp;amp; async, await) 전환 하면서 몇 번 혼란의 시기가 있었습니다.
 하지만 모듈 시스템은 쭉 이어져왔습니다.
@@ -21,64 +21,64 @@ Node.js를 10년째 사용 중인데, CoffeeScript → TypeScript, 콜백 → As
     
     <item>
       <title>Terraform으로 EKS 구축하기</title>
-      <link>https://devblog.croquis.com/ko/2022-03-31-3-build-eks-cluster-with-terraform/</link>
+      <link>https://devblog.kakaostyle.com/ko/2022-03-31-3-build-eks-cluster-with-terraform/</link>
       <pubDate>Thu, 31 Mar 2022 00:02:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2022-03-31-3-build-eks-cluster-with-terraform/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2022-03-31-3-build-eks-cluster-with-terraform/</guid>
       <description>이전 글에서는 ECS / EKS에서 서비스 하는 것에 대한 개념을 풀어 써봤습니다. 이번 글에서는 잘 만들어진 모듈을 이용해 빠르게 구성해보겠습니다.</description>
     </item>
     
     <item>
       <title>EKS를 사용해서 어플리케이션 서비스 하기</title>
-      <link>https://devblog.croquis.com/ko/2022-03-31-2-web-application-using-eks/</link>
+      <link>https://devblog.kakaostyle.com/ko/2022-03-31-2-web-application-using-eks/</link>
       <pubDate>Thu, 31 Mar 2022 00:01:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2022-03-31-2-web-application-using-eks/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2022-03-31-2-web-application-using-eks/</guid>
       <description>ECS 아티클에 이어 이번 글에서는 같은 서비스를 EKS로 구축해보도록 하겠습니다. 간단하게 구축하는 것은 eksctl을 쓰면 되지만, 내부 이해를 위해 여기서는 기본부터 구현하도록 하겠습니다.</description>
     </item>
     
     <item>
       <title>ECS를 사용해서 어플리케이션 서비스 하기</title>
-      <link>https://devblog.croquis.com/ko/2022-03-31-1-web-application-using-ecs/</link>
+      <link>https://devblog.kakaostyle.com/ko/2022-03-31-1-web-application-using-ecs/</link>
       <pubDate>Thu, 31 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2022-03-31-1-web-application-using-ecs/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2022-03-31-1-web-application-using-ecs/</guid>
       <description>&lt;p&gt;카카오스타일에서는 한동한 ECS를 사용해서 어플리케이션을 서비스했습니다. 현재는 EKS로 전환하고 있지만, ECS가 상대적으로 단순하기 때문에 서비스 구축 개념을 익히는데 좋은 것 같습니다. (간단한 서비스는 굳이 쿠버네티스를 쓸 필요가 없다고 생각합니다) 그런 의미에서 이번 글에서는 ECS를 이용해 단순한 서비스를 오픈하는 과정을 단계별로 설명해보려고 합니다.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>사내 npm 패키지 저장소를 구축하기 위해 겪었던 과정들</title>
-      <link>https://devblog.croquis.com/ko/2022-03-07-1-npm-private-repository/</link>
+      <link>https://devblog.kakaostyle.com/ko/2022-03-07-1-npm-private-repository/</link>
       <pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2022-03-07-1-npm-private-repository/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2022-03-07-1-npm-private-repository/</guid>
       <description>회사나 팀에서 개발하다 보면 한 번쯤은 거의 필연적으로 내부에서 사용하기 위한 패키지 저장소에 대해 고민해보게 됩니다. 오늘은 그 고민을 통해 사내에서 사용할 수 있는 NPM 패키지 저장소를 구축하기 위해 겪었던 부분들에 대해 짧게나마 공유하려고 합니다.</description>
     </item>
     
     <item>
       <title>Jotai 레시피</title>
-      <link>https://devblog.croquis.com/ko/2022-01-13-2-jotai-recipe/</link>
+      <link>https://devblog.kakaostyle.com/ko/2022-01-13-2-jotai-recipe/</link>
       <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2022-01-13-2-jotai-recipe/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2022-01-13-2-jotai-recipe/</guid>
       <description>&lt;p&gt;이번 글에서는 카카오스타일에서 Jotai를 어떤 식으로 사용하고 있는지 여러가지 패턴에 대해 설명하려고 합니다.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>프론트엔드 상태 관리에 대한 여정</title>
-      <link>https://devblog.croquis.com/ko/2022-01-13-1-frontend-state-management/</link>
+      <link>https://devblog.kakaostyle.com/ko/2022-01-13-1-frontend-state-management/</link>
       <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2022-01-13-1-frontend-state-management/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2022-01-13-1-frontend-state-management/</guid>
       <description>&lt;p&gt;카카오스타일은 React에서 상태 관리를 위해 최근에 Jotai를 도입했습니다. Jotai에 대해 소개하기에 앞서 Jotai에 다다르기까지의 과정에 대해 설명해보려고 합니다.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>Server Driven UI 설계를 통한 UI 유연화</title>
-      <link>https://devblog.croquis.com/ko/2021-12-16-1-server-driven-ui/</link>
+      <link>https://devblog.kakaostyle.com/ko/2021-12-16-1-server-driven-ui/</link>
       <pubDate>Thu, 16 Dec 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2021-12-16-1-server-driven-ui/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2021-12-16-1-server-driven-ui/</guid>
       <description>&lt;p&gt;웹과 달리 네이티브 모바일 앱은 빌드, 배포 후에는 수정이 불가능합니다.
 만약 잘못된 위치에 버튼을 배치한 채로 스토어에 앱을 배포했다면,
 그리고 사용자가 잘못된 버전의 앱을 설치했다면 버튼의 위치를 수정할 방법이 없습니다.
@@ -98,29 +98,29 @@ Node.js를 10년째 사용 중인데, CoffeeScript → TypeScript, 콜백 → As
     
     <item>
       <title>GraphQL 에러 처리 규칙</title>
-      <link>https://devblog.croquis.com/ko/2021-07-31-1-graphql-error-guide/</link>
+      <link>https://devblog.kakaostyle.com/ko/2021-07-31-1-graphql-error-guide/</link>
       <pubDate>Sat, 31 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2021-07-31-1-graphql-error-guide/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2021-07-31-1-graphql-error-guide/</guid>
       <description>&lt;p&gt;Java로 코드를 작성해보신 분이라면 throws에 의해 컴파일 에러가 발생했을 때 뭔지는 잘 모르겠고 IDE가 제시한 대로 catch로 감싸고 넘어간 경험이 누구에게나 있을 것이라 생각합니다. 그만큼 예외 상황은 잘 이해하고 적절히 처리하기는 쉽지 않은 것 같습니다. 오늘은 카카오스타일이 사용하고 있는 GraphQL에서 에러를 어떻게 전달하고 처리하고 있는지 설명하려고 합니다.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>React 프로젝트 컴포넌트 구성</title>
-      <link>https://devblog.croquis.com/ko/2021-07-29-1-react-component-organization/</link>
+      <link>https://devblog.kakaostyle.com/ko/2021-07-29-1-react-component-organization/</link>
       <pubDate>Thu, 29 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2021-07-29-1-react-component-organization/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2021-07-29-1-react-component-organization/</guid>
       <description>&lt;p&gt;프로젝트가 시작된지 얼마 되지 않은 경우에 소스는 비교적 일관성을 가지고 있습니다. 하지만 시간이 지남에 따라 여러 사람이 참여하고, 비슷한 새로운 프로젝트가 만들어지면서 점점 일관성이 떨어지게 됩니다. (문서나 리뷰 과정이 있으면 비교적 낫지만, 완전히 방지하기는 어려운 것 같습니다) 또한 새로운 기술이 생기면서 (예를 들어 React Hook) 기존에 설정한 구조가 전혀 적합하지 않게 되는 경우가 생깁니다.&lt;/p&gt;
 &lt;p&gt;그런 의미에서 주기적으로 프로젝트 구성에 관한 가이드를 주기적으로 점검하고 갱신할 필요성이 있습니다. 이번 글에서는 2021년 7월 현재 React 프로젝트의 컴포넌트 구성에 대한 가이드를 설명하려고 합니다. (항상 예외 상황이 있기 마련이고, 이에 따른 변형을 허용하기에 가이드라는 용어를 쓰고 있습니다.)&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>카카오스타일 기술 블로그입니다</title>
-      <link>https://devblog.croquis.com/ko/2021-07-01-1-welcome-kakaostyle/</link>
+      <link>https://devblog.kakaostyle.com/ko/2021-07-01-1-welcome-kakaostyle/</link>
       <pubDate>Thu, 01 Jul 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2021-07-01-1-welcome-kakaostyle/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2021-07-01-1-welcome-kakaostyle/</guid>
       <description>&lt;p&gt;안녕하세요. 오랫만의 글인데 기술 글이 아니여서 죄송합니다.
 2021년 7월 1일부로 지그재그를 운영하는 크로키닷컴은 카카오스타일로 거듭나게 되었습니다.
 더 커진 규모에 걸맞게 더 양질의 기술 공유를 하도록 노력하겠습니다.
@@ -129,10 +129,10 @@ Node.js를 10년째 사용 중인데, CoffeeScript → TypeScript, 콜백 → As
     
     <item>
       <title>GitHub Actions 활용하기</title>
-      <link>https://devblog.croquis.com/ko/2020-11-06-1-using-github-actions/</link>
+      <link>https://devblog.kakaostyle.com/ko/2020-11-06-1-using-github-actions/</link>
       <pubDate>Fri, 06 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2020-11-06-1-using-github-actions/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2020-11-06-1-using-github-actions/</guid>
       <description>&lt;p&gt;규모가 커지면 커질 수록 자동화된 워크플로우는 필수라고 생각합니다.
 하지만 부끄럽게도 크로키닷컴은 잘 구축된 편은 아닙니다.&lt;/p&gt;
 &lt;p&gt;유닛 테스트는 초기부터 있었지만 그걸 PR, 머지마다 자동으로 수행하지는 못했습니다.
@@ -151,20 +151,20 @@ Node.js를 10년째 사용 중인데, CoffeeScript → TypeScript, 콜백 → As
     
     <item>
       <title>TypeScript에서의 환경 설정 관리</title>
-      <link>https://devblog.croquis.com/ko/2020-02-15-1-configuration-in-typescript/</link>
+      <link>https://devblog.kakaostyle.com/ko/2020-02-15-1-configuration-in-typescript/</link>
       <pubDate>Sat, 15 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2020-02-15-1-configuration-in-typescript/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2020-02-15-1-configuration-in-typescript/</guid>
       <description>&lt;p&gt;응용프로그램을 작성하다 보면 여러 가지 환경 설정(configuration)이 필요합니다.
 이번 글에서는 TypeScript에서 환경 설정을 관리하는 저희의 방법을 설명합니다.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>크로키의 스택 - AWS Batch</title>
-      <link>https://devblog.croquis.com/ko/2020-02-11-1-croquis-stack-aws-batch/</link>
+      <link>https://devblog.kakaostyle.com/ko/2020-02-11-1-croquis-stack-aws-batch/</link>
       <pubDate>Tue, 11 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2020-02-11-1-croquis-stack-aws-batch/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2020-02-11-1-croquis-stack-aws-batch/</guid>
       <description>&lt;p&gt;서비스를 운영하다 보면 주기적으로 실행이 필요한 작업이 생깁니다.
 이런 작업을 실행하는 방법은 여러 가지가 있을 수 있습니다.
 다음은 크로키에서 현재 선택해서 전환 중인 AWS Batch에 관해 설명합니다.&lt;/p&gt;</description>
@@ -172,38 +172,38 @@ Node.js를 10년째 사용 중인데, CoffeeScript → TypeScript, 콜백 → As
     
     <item>
       <title>Mobile Dev. in Croquis</title>
-      <link>https://devblog.croquis.com/ko/2019-09-19-2-mobile-dev-in-croquis/</link>
+      <link>https://devblog.kakaostyle.com/ko/2019-09-19-2-mobile-dev-in-croquis/</link>
       <pubDate>Thu, 19 Sep 2019 02:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2019-09-19-2-mobile-dev-in-croquis/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2019-09-19-2-mobile-dev-in-croquis/</guid>
       <description>&lt;p&gt;9월에 컨퍼런스에서 발표한 자료입니다.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>GraphQL in depth (serverside)</title>
-      <link>https://devblog.croquis.com/ko/2019-09-19-1-graphql-in-depth-serverside/</link>
+      <link>https://devblog.kakaostyle.com/ko/2019-09-19-1-graphql-in-depth-serverside/</link>
       <pubDate>Thu, 19 Sep 2019 01:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2019-09-19-1-graphql-in-depth-serverside/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2019-09-19-1-graphql-in-depth-serverside/</guid>
       <description>&lt;p&gt;7월에 크로키닷컴 팀원을 대상으로 발표한 자료입니다.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>크로키의 스택 - GraphQL</title>
-      <link>https://devblog.croquis.com/ko/2019-05-22-1-croquis-stack-graphql/</link>
+      <link>https://devblog.kakaostyle.com/ko/2019-05-22-1-croquis-stack-graphql/</link>
       <pubDate>Wed, 22 May 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2019-05-22-1-croquis-stack-graphql/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2019-05-22-1-croquis-stack-graphql/</guid>
       <description>&lt;p&gt;현재 크로키는 API를 &lt;a href=&#34;https://graphql.org/&#34;&gt;GraphQL&lt;/a&gt;로 만들고 있습니다.
 아직 많은 부분에 대해서 연구 중이어서 현재 상황만 간단하게 정리해 보겠습니다.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>(HTML/CSS) Vertical-Align(1) - Line Box</title>
-      <link>https://devblog.croquis.com/ko/2019-04-29-1-vertical-align-line-box/</link>
+      <link>https://devblog.kakaostyle.com/ko/2019-04-29-1-vertical-align-line-box/</link>
       <pubDate>Mon, 29 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2019-04-29-1-vertical-align-line-box/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2019-04-29-1-vertical-align-line-box/</guid>
       <description>&lt;p&gt;안녕하세요 지그재그에서 프론트엔드 개발을 하고 있는 태재영입니다.
 프론트엔드 개발자에게 중앙 정렬을 어떻게 하냐고 물어보면 inline 요소는 text-align 속성을 center로 지정하고, block 요소는 margin 속성을 auto로 지정한다고 대답할 겁니다.
 그런데 좌우가 아니라 위아래 수직 정렬을 어떻게 하겠냐고 물어보면 대답을 선뜻 못하거나 굉장히 다양한 답변들이 나옵니다.
@@ -212,10 +212,10 @@ Node.js를 10년째 사용 중인데, CoffeeScript → TypeScript, 콜백 → As
     
     <item>
       <title>크로키의 스택 - Thrift</title>
-      <link>https://devblog.croquis.com/ko/2019-04-28-1-croquis-stack-thrift/</link>
+      <link>https://devblog.kakaostyle.com/ko/2019-04-28-1-croquis-stack-thrift/</link>
       <pubDate>Sun, 28 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2019-04-28-1-croquis-stack-thrift/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2019-04-28-1-croquis-stack-thrift/</guid>
       <description>&lt;p&gt;2016년 중반 마이크로서비스로의 전환을 결정했습니다.
 마이크로서비스는 이론상 다른 서비스에 영향을 주지 않고 내부 기술을 바꿀 수 있습니다.
 하지만 마이크로서비스 간의 통신 방법은 한번 결정하면 쉽게 바뀌기 어려울 것 같아서 가장 많이 고민했습니다.
@@ -225,10 +225,10 @@ Node.js를 10년째 사용 중인데, CoffeeScript → TypeScript, 콜백 → As
     
     <item>
       <title>BotKit을 이용한 슬랙 봇 만들기</title>
-      <link>https://devblog.croquis.com/ko/2019-04-27-1-make-slack-bot-using-botkit/</link>
+      <link>https://devblog.kakaostyle.com/ko/2019-04-27-1-make-slack-bot-using-botkit/</link>
       <pubDate>Sat, 27 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2019-04-27-1-make-slack-bot-using-botkit/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2019-04-27-1-make-slack-bot-using-botkit/</guid>
       <description>&lt;p&gt;크로키닷컴을 시작하고 비교적 초기부터 ChatOps를 해보고 싶었습니다.
 GitHub의 글을 보고 도입하고 싶다는 생각이 들었던 거로 기억합니다.
 당연하게 &lt;a href=&#34;https://hubot.github.com/&#34;&gt;Hubot&lt;/a&gt;을 이용해 채팅봇을 설정했습니다.&lt;/p&gt;
@@ -243,10 +243,10 @@ GitHub의 글을 보고 도입하고 싶다는 생각이 들었던 거로 기억
     
     <item>
       <title>AWS Abuse Report</title>
-      <link>https://devblog.croquis.com/ko/2018-11-30-1-aws-abuse-report/</link>
+      <link>https://devblog.kakaostyle.com/ko/2018-11-30-1-aws-abuse-report/</link>
       <pubDate>Thu, 23 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2018-11-30-1-aws-abuse-report/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2018-11-30-1-aws-abuse-report/</guid>
       <description>&lt;p&gt;28일 오전, 한참 작업을 하다가 11시가 조금 넘은 시간에 문득 핸드폰을 들여다봤습니다.
 평상시 메일은 몰아서 처리하는 편인데(시급한 일이 메일로 오는 경우는 드물어서) 이날은 왠지 메일에 눈이 갔습니다.
 AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아니었고 Maintenance 알림 메일인가 하고 넘어가려는 순간
@@ -255,29 +255,29 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
     
     <item>
       <title>분석용 이벤트 로그 점검/정리하기 2</title>
-      <link>https://devblog.croquis.com/ko/2018-08-23-1-check-analytics-2/</link>
+      <link>https://devblog.kakaostyle.com/ko/2018-08-23-1-check-analytics-2/</link>
       <pubDate>Thu, 23 Aug 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2018-08-23-1-check-analytics-2/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2018-08-23-1-check-analytics-2/</guid>
       <description>&lt;p&gt;안녕하세요! 저는 개발팀의 오형준입니다. 앞선 글에서 데이터팀의 지형님께서 ‘분석용 이벤트 로그 점검/정리하기’라는 Task가 어떤 Task이며, 왜 중요한지에 대해 다루었다면, 이번 글에서는 이번 Task의 프로세스, 앱개발팀과 데이터팀 간의 협업 방식, 각 팀의 업무 방식 등에 대해 다루어 보려합니다!&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>분석용 이벤트 로그 점검/정리하기 1</title>
-      <link>https://devblog.croquis.com/ko/2018-07-10-1-check-analytics-1/</link>
+      <link>https://devblog.kakaostyle.com/ko/2018-07-10-1-check-analytics-1/</link>
       <pubDate>Tue, 10 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2018-07-10-1-check-analytics-1/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2018-07-10-1-check-analytics-1/</guid>
       <description>&lt;p&gt;지그재그는 누적 다운로드 수 1,100만, MAU 200만을 넘어가고 있는 여성 쇼핑몰 모음 앱 서비스입니다. 그렇기 때문에 매일같이 지그재그에 쌓여가는 이용자들의 데이터 로그들도 어마어마하죠.&lt;/p&gt;
 &lt;p&gt;이와 같은 로그들은 이용자들이 각자 자신에게 맞는 쇼핑몰/상품을 더 쉽게, 편하게 찾을 수 있도록 도와주는 개인화 알고리즘의 핵심 자원이면서, 이용자들이 앱의 각 기능들을 잘 활용하고 있는지 파악하기 위한 사용성 분석에도 필수적입니다. 또한 서비스 운영에 영향을 줄 수 있는 각종 이상 현상을 실시간으로 탐지하며 대응할 수 있게 도와주죠. 이를 위해 지그재그에서는 불필요한 로그/개인정보를 수집하지 않으면서도 앞선 목적에 부합하는 로그만 효율적으로 쌓아나가기 위해 노력하고 있습니다.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>크로키의 스택 - REST API</title>
-      <link>https://devblog.croquis.com/ko/2018-05-30-1-croquis-stack-rest-api/</link>
+      <link>https://devblog.kakaostyle.com/ko/2018-05-30-1-croquis-stack-rest-api/</link>
       <pubDate>Wed, 30 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2018-05-30-1-croquis-stack-rest-api/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2018-05-30-1-croquis-stack-rest-api/</guid>
       <description>&lt;p&gt;크로키가 클라이언트-서버 아키텍처를 가진 첫 번째 서비스 개발을 시작한 것은 2012년이었습니다.
 클라이언트에서 서버와 통신할 방법이 필요했는데 당시의 대세는 REST API였습니다.
 저도 거기에 공감했기 때문에 REST API를 만들어 클라이언트를 구현했습니다.
@@ -286,10 +286,10 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
     
     <item>
       <title>젠킨스 작업을 정의하는 방식들</title>
-      <link>https://devblog.croquis.com/ko/2018-02-27-1-jenkins-job-styles/</link>
+      <link>https://devblog.kakaostyle.com/ko/2018-02-27-1-jenkins-job-styles/</link>
       <pubDate>Tue, 27 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2018-02-27-1-jenkins-job-styles/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2018-02-27-1-jenkins-job-styles/</guid>
       <description>&lt;p&gt;오늘날의 소프트웨어 개발에 있어서 지속적 통합(continuous integration)은
 필수라고 할 수 있습니다.
 저도 당연히 동의하면서 오래전부터 도입하려고 했지만, 급한 일에 밀려 실제로 도입한 것은
@@ -302,10 +302,10 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
     
     <item>
       <title>카카오스타일 개발팀은...</title>
-      <link>https://devblog.croquis.com/ko/2018-01-23-1-zigzag-devteam-is/</link>
+      <link>https://devblog.kakaostyle.com/ko/2018-01-23-1-zigzag-devteam-is/</link>
       <pubDate>Tue, 23 Jan 2018 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2018-01-23-1-zigzag-devteam-is/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2018-01-23-1-zigzag-devteam-is/</guid>
       <description>&lt;p&gt;(2022년 4월 갱신)&lt;/p&gt;
 &lt;p&gt;카카오스타일에서는 최고의 개발팀을 만들기 위해 항상 노력하고 있습니다.
 이 글에서는 카카오스타일 개발팀의 문화와 관심사에 대해서 소개하고 있습니다.
@@ -320,10 +320,10 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
     
     <item>
       <title>크로키의 스택 - 마이크로서비스</title>
-      <link>https://devblog.croquis.com/ko/2017-10-15-1-croquis-stack-microservice/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-10-15-1-croquis-stack-microservice/</link>
       <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-10-15-1-croquis-stack-microservice/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-10-15-1-croquis-stack-microservice/</guid>
       <description>&lt;p&gt;지그재그 서비스는 모놀리식 아키텍처(Monolithic Architecture)에서
 마이크로서비스 아키텍처(Microservice Architecture)로 전환중에 있습니다.
 이번 글에서는 그 과정을 설명하려고 합니다.&lt;/p&gt;</description>
@@ -331,10 +331,10 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
     
     <item>
       <title>SQS, Lambda를 이용한 작업 대기열 만들기</title>
-      <link>https://devblog.croquis.com/ko/2017-05-13-1-aws-serverless-1/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-05-13-1-aws-serverless-1/</link>
       <pubDate>Sat, 13 May 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-05-13-1-aws-serverless-1/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-05-13-1-aws-serverless-1/</guid>
       <description>&lt;p&gt;최근 클라우드 컴퓨팅환경이 널리 사용되면서 서버 하드웨어 대한 유지보수 및 구성을 신경 쓰지 않고, 다양한 서비스들을 위한 서버를 개발할 수 있게 되었습니다. 하지만 이런 환경을 사용함에도 auto-scaling이나 서버 로그 수집, 서비스 배포 및 관리 등 소프트웨어 스택에 관한 부분은 신경 써줘야 합니다.&lt;/p&gt;
 &lt;p&gt;이러한 고민을 덜어주기 위해서 최근에는 serverless architecture라는 개념이 생기고 있습니다. serverless architecture에서는 소스코드와 몇 번의 클릭만으로 서비스를 위한 REST API를 만들 수 있고, 수많은 요청에 대한 확장성에 대해 고민을 할 필요가 없으며, 로그 및 다양한 모니터링 툴들을 추가적인 작업 없이 사용할 수 있습니다.&lt;/p&gt;
 &lt;p&gt;AWS에서도 serverless architecture를 위한 다양한 서비스를 제공하고 있습니다. 이번 글에서는 간단한 작업 대기열(task queue)을 만들어보며, serverless architecture 환경을 경험해보도록 하겠습니다.&lt;/p&gt;</description>
@@ -342,10 +342,10 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
     
     <item>
       <title>webpack, TypeScript, Mithril을 사용하는 프로젝트 생성 튜토리얼</title>
-      <link>https://devblog.croquis.com/ko/2017-04-11-1-webpack-setup-tutorial-with-typescript-and-mithril/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-04-11-1-webpack-setup-tutorial-with-typescript-and-mithril/</link>
       <pubDate>Tue, 11 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-04-11-1-webpack-setup-tutorial-with-typescript-and-mithril/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-04-11-1-webpack-setup-tutorial-with-typescript-and-mithril/</guid>
       <description>&lt;p&gt;클라이언트 JavaScript 개발 환경은 빠르게 변화하고 있습니다.
 다양한 관련 기술 중 빌드 툴 쪽에서 최근 가장 주목 받는 것은 &lt;a href=&#34;https://webpack.js.org/&#34;&gt;webpack&lt;/a&gt;이라고 할 수 있습니다.&lt;/p&gt;
 &lt;p&gt;webpack 전체는 굉장히 방대하기 때문에 한번에 이해하기가 쉽지 않습니다.
@@ -358,10 +358,10 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
     
     <item>
       <title>크로키의 스택 - Mithril</title>
-      <link>https://devblog.croquis.com/ko/2017-04-07-1-croquis-stack-mithril/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-04-07-1-croquis-stack-mithril/</link>
       <pubDate>Fri, 07 Apr 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-04-07-1-croquis-stack-mithril/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-04-07-1-croquis-stack-mithril/</guid>
       <description>&lt;p&gt;이번 글에서는 크로키가 사용하는 스택 중
 클라이언트 JavaScript 프레임워크(client-side JavaScript framework)에 대해서
 소개해볼까 합니다.&lt;/p&gt;
@@ -371,10 +371,10 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
     
     <item>
       <title>크로키가 Node.js를 선택한 이유</title>
-      <link>https://devblog.croquis.com/ko/2017-02-10-1-why-croquis-selects-nodejs/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-02-10-1-why-croquis-selects-nodejs/</link>
       <pubDate>Fri, 10 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-02-10-1-why-croquis-selects-nodejs/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-02-10-1-why-croquis-selects-nodejs/</guid>
       <description>&lt;p&gt;현재 크로키에서는 서버용 웹 프레임워크로 &lt;a href=&#34;http://nodejs.org/&#34;&gt;Node.js&lt;/a&gt; 위에서
 &lt;a href=&#34;http://expressjs.com/&#34;&gt;Express&lt;/a&gt;를 사용하고 있습니다.&lt;/p&gt;
 &lt;p&gt;이번 글에서는 어떤 이유로 Node.js를 사용하게 되었는지 설명하려고 합니다.
@@ -383,10 +383,10 @@ AWS에서 보낸 메일이 보였는데, 자주 오던 광고성 메일은 아�
     
     <item>
       <title>Node.js로 유닉스 파이프 처리하기</title>
-      <link>https://devblog.croquis.com/ko/2017-01-15-1-process-unix-pipe-with-nodejs/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-01-15-1-process-unix-pipe-with-nodejs/</link>
       <pubDate>Sun, 15 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-01-15-1-process-unix-pipe-with-nodejs/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-01-15-1-process-unix-pipe-with-nodejs/</guid>
       <description>&lt;p&gt;크로키에서는 로그를 JSON 문자열로 만들어 일자별(혹은 시간별)로 묶은 후
 gzip으로 압축해서 저장하고 있습니다.
 그런데 이미 만들어진 로그를 수정해야 하는 일이 생겼습니다.&lt;/p&gt;</description>
@@ -394,10 +394,10 @@ gzip으로 압축해서 저장하고 있습니다.
     
     <item>
       <title>GitHub 위키 이벤트를 슬랙으로 받기</title>
-      <link>https://devblog.croquis.com/ko/2017-01-06-1-github-wiki-to-slack/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-01-06-1-github-wiki-to-slack/</link>
       <pubDate>Fri, 06 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-01-06-1-github-wiki-to-slack/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-01-06-1-github-wiki-to-slack/</guid>
       <description>&lt;p&gt;현재 크로키닷컴은 프로젝트 관리를 GitHub로만 하고 있습니다.
 이슈도 GitHub 이슈로 관리하고, 문서도 GitHub 위키를 사용하고 있습니다.&lt;/p&gt;
 &lt;p&gt;GitHub는 슬랙과의 연동이 잘 되어 있어서 GitHub에서의 활동을
@@ -408,10 +408,10 @@ gzip으로 압축해서 저장하고 있습니다.
     
     <item>
       <title>iOS에서 년도를 구할 때 비정상적인 값이 나오는 문제</title>
-      <link>https://devblog.croquis.com/ko/2017-01-05-1-ios-calendar/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-01-05-1-ios-calendar/</link>
       <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-01-05-1-ios-calendar/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-01-05-1-ios-calendar/</guid>
       <description>&lt;p&gt;지그재그 앱을 사용하는 사용자를 분석할 때 사용하기 위해서
 최근 업데이트에 나이를 입력받는 화면이 추가되었습니다.&lt;/p&gt;
 &lt;p&gt;입력은 나이를 받지만 나이는 매년 달라지기 때문에 고정된 값인 태어난 년도로 변환하여 저장하고 있습니다.
@@ -420,10 +420,10 @@ gzip으로 압축해서 저장하고 있습니다.
     
     <item>
       <title>croquis.com 개발자 블로그를 시작합니다.</title>
-      <link>https://devblog.croquis.com/ko/2017-01-01-1-start-devblog/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-01-01-1-start-devblog/</link>
       <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-01-01-1-start-devblog/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-01-01-1-start-devblog/</guid>
       <description>&lt;p&gt;안녕하세요.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://zigzag.kr/&#34;&gt;지그재그&lt;/a&gt;라는 여성 쇼핑몰 서비스를
 운영하고 있는 croquis.com의 개발팀입니다.&lt;/p&gt;

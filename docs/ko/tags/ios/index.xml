@@ -2,25 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>iOS on 카카오스타일 기술 블로그</title>
-    <link>https://devblog.croquis.com/ko/tags/ios/</link>
+    <link>https://devblog.kakaostyle.com/ko/tags/ios/</link>
     <description>Recent content in iOS on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 19 Sep 2019 02:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/ios/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 19 Sep 2019 02:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/ios/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mobile Dev. in Croquis</title>
-      <link>https://devblog.croquis.com/ko/2019-09-19-2-mobile-dev-in-croquis/</link>
+      <link>https://devblog.kakaostyle.com/ko/2019-09-19-2-mobile-dev-in-croquis/</link>
       <pubDate>Thu, 19 Sep 2019 02:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2019-09-19-2-mobile-dev-in-croquis/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2019-09-19-2-mobile-dev-in-croquis/</guid>
       <description>&lt;p&gt;9월에 컨퍼런스에서 발표한 자료입니다.&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>iOS에서 년도를 구할 때 비정상적인 값이 나오는 문제</title>
-      <link>https://devblog.croquis.com/ko/2017-01-05-1-ios-calendar/</link>
+      <link>https://devblog.kakaostyle.com/ko/2017-01-05-1-ios-calendar/</link>
       <pubDate>Thu, 05 Jan 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2017-01-05-1-ios-calendar/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2017-01-05-1-ios-calendar/</guid>
       <description>&lt;p&gt;지그재그 앱을 사용하는 사용자를 분석할 때 사용하기 위해서
 최근 업데이트에 나이를 입력받는 화면이 추가되었습니다.&lt;/p&gt;
 &lt;p&gt;입력은 나이를 받지만 나이는 매년 달라지기 때문에 고정된 값인 태어난 년도로 변환하여 저장하고 있습니다.

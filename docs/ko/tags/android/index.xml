@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Android on 카카오스타일 기술 블로그</title>
-    <link>https://devblog.croquis.com/ko/tags/android/</link>
+    <link>https://devblog.kakaostyle.com/ko/tags/android/</link>
     <description>Recent content in Android on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 19 Sep 2019 02:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/android/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 19 Sep 2019 02:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/android/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mobile Dev. in Croquis</title>
-      <link>https://devblog.croquis.com/ko/2019-09-19-2-mobile-dev-in-croquis/</link>
+      <link>https://devblog.kakaostyle.com/ko/2019-09-19-2-mobile-dev-in-croquis/</link>
       <pubDate>Thu, 19 Sep 2019 02:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2019-09-19-2-mobile-dev-in-croquis/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2019-09-19-2-mobile-dev-in-croquis/</guid>
       <description>&lt;p&gt;9월에 컨퍼런스에서 발표한 자료입니다.&lt;/p&gt;</description>
     </item>
     

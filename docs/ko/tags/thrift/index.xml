@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Thrift on 카카오스타일 기술 블로그</title>
-    <link>https://devblog.croquis.com/ko/tags/thrift/</link>
+    <link>https://devblog.kakaostyle.com/ko/tags/thrift/</link>
     <description>Recent content in Thrift on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 28 Apr 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.croquis.com/ko/tags/thrift/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 28 Apr 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/thrift/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>크로키의 스택 - Thrift</title>
-      <link>https://devblog.croquis.com/ko/2019-04-28-1-croquis-stack-thrift/</link>
+      <link>https://devblog.kakaostyle.com/ko/2019-04-28-1-croquis-stack-thrift/</link>
       <pubDate>Sun, 28 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>https://devblog.croquis.com/ko/2019-04-28-1-croquis-stack-thrift/</guid>
+      <guid>https://devblog.kakaostyle.com/ko/2019-04-28-1-croquis-stack-thrift/</guid>
       <description>&lt;p&gt;2016년 중반 마이크로서비스로의 전환을 결정했습니다.
 마이크로서비스는 이론상 다른 서비스에 영향을 주지 않고 내부 기술을 바꿀 수 있습니다.
 하지만 마이크로서비스 간의 통신 방법은 한번 결정하면 쉽게 바뀌기 어려울 것 같아서 가장 많이 고민했습니다.
