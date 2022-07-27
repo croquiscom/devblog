@@ -81,19 +81,19 @@ Verdaccio의 경우 주변에서 많은 분이 들어보거나 사용해보신 �
 
 ### hosted npm 저장소 추가
 
-![Pasted image 20220301054619.png](/img/content/2022-03-07-1//Pasted_image_20220301054619.png)
+![Pasted image 20220301054619.png](/img/content/2022-03-07-1/Pasted_image_20220301054619.png)
 
 먼저 Repository -> Repositories에서 **Create repository**를 클릭해줍니다.
 
-![Pasted image 20220301054638.png](/img/content/2022-03-07-1//Pasted_image_20220301054638.png)
+![Pasted image 20220301054638.png](/img/content/2022-03-07-1/Pasted_image_20220301054638.png)
 
 그리고 Recipe 중에 **npm (hosted)** Recipe를 선택합니다.
 
-![Pasted image 20220301054647.png](/img/content/2022-03-07-1//Pasted_image_20220301054647.png)
+![Pasted image 20220301054647.png](/img/content/2022-03-07-1/Pasted_image_20220301054647.png)
 
 Name에 본인이 사용할 저장소 이름을 입력해주고 별다른 설정 없이 하단의 **Create repository**를 클릭해줍니다.
 
-![Pasted image 20220301054655.png](/img/content/2022-03-07-1//Pasted_image_20220301054655.png)
+![Pasted image 20220301054655.png](/img/content/2022-03-07-1/Pasted_image_20220301054655.png)
 
 생성 이후 리스트에서 본인이 만든 저장소를 클릭해서 들어간 뒤 화면과 같이 URL: 옆에 나와 있는 주소를 잘 메모해둡니다.
 
@@ -104,21 +104,21 @@ Name에 본인이 사용할 저장소 이름을 입력해주고 별다른 설정
 
 생성한 저장소에 사용자가 접근할 수 있도록 읽기 권한과 패키지 작업을 위한 쓰기 권한을 만들어 줍니다.
 
-![Pasted image 20220301054709.png](/img/content/2022-03-07-1//Pasted_image_20220301054709.png)
+![Pasted image 20220301054709.png](/img/content/2022-03-07-1/Pasted_image_20220301054709.png)
 
 Security -> Roles에서 Create role(Nexus role)을 클릭해줍니다.
 
-![Pasted image 20220307022217.png](/img/content/2022-03-07-1//Pasted_image_20220307022217.png)
+![Pasted image 20220307022217.png](/img/content/2022-03-07-1/Pasted_image_20220307022217.png)
 
 Privileges에서 npm을 검색하여 `nx-repository-view-npm-{생성한 저장소 이름}-browse` 및 `nx-repository-view-npm-{생성한 저장소 이름}-read`를 추가해줍니다.
 
-![Pasted image 20220307022250.png](/img/content/2022-03-07-1//Pasted_image_20220307022250.png)
+![Pasted image 20220307022250.png](/img/content/2022-03-07-1/Pasted_image_20220307022250.png)
 
 그리고 똑같은 방식으로 쓰기(add) 및 수정(edit) 권한을 추가해주고 Roles에 방금 만든 읽기 권한(npm-read)도 같이 Contained에 추가해줍니다.
 
 > delete도 함께 추가해줘도 되지만 보안상 이유로 패키지 작업자도 삭제는 별도의 요청을 통해 지울 수 있도록 추가하진 않았습니다.
 
-![Pasted image 20220301054744.png](/img/content/2022-03-07-1//Pasted_image_20220301054744.png)
+![Pasted image 20220301054744.png](/img/content/2022-03-07-1/Pasted_image_20220301054744.png)
 
 이제 추가해준 역할을 부여해줍니다.
 
@@ -151,25 +151,25 @@ $ Email: 본인의 이메일
 
 이제 npm publish(혹은 yarn publish)를 호출하면 배포가 잘..
 
-![Pasted image 20220301054855.png](/img/content/2022-03-07-1//Pasted_image_20220301054855.png)
+![Pasted image 20220301054855.png](/img/content/2022-03-07-1/Pasted_image_20220301054855.png)
 
 ..?
 
 분명 npm login도 했고... 권한도 제대로 부여한 것 같은데 배포가 되지 않았습니다... 😭
 
-![Pasted image 20220301055152.png](/img/content/2022-03-07-1//Pasted_image_20220301055152.png)
+![Pasted image 20220301055152.png](/img/content/2022-03-07-1/Pasted_image_20220301055152.png)
 
 한참을 찾던 끝에 [여기](https://productive.me/self-hosted-nexus-for-private-scoped-npm-packages/)에서 Realms 설정이 필요하다는 것을 알게 되었습니다.
 
-![Pasted image 20220301054907.png](/img/content/2022-03-07-1//Pasted_image_20220301054907.png)
+![Pasted image 20220301054907.png](/img/content/2022-03-07-1/Pasted_image_20220301054907.png)
 
 Security -> Realms에 들어가서 **npm Bearer Token Realm**을 Active로 옮겨준 뒤 Save를 누릅니다.
 
-![Pasted image 20220301063108.png](/img/content/2022-03-07-1//Pasted_image_20220301063108.png)
+![Pasted image 20220301063108.png](/img/content/2022-03-07-1/Pasted_image_20220301063108.png)
 
 이후 다시 배포를 진행하면 정상적으로 배포가 되는 것을 확인할 수 있습니다. 🎉
 
-![(Simon에게 받은 +1)](/img/content/2022-03-07-1//Pasted_image_20220301075935.png)
+![(Simon에게 받은 +1)](/img/content/2022-03-07-1/Pasted_image_20220301075935.png)
 
 (Simon에게 받은 +1)
 
@@ -188,7 +188,7 @@ $ echo -n 'user1:1234' | openssl base64
 dXNlcjE6MTIzNA==
 ```
 
-![Pasted image 20220301055219.png](/img/content/2022-03-07-1//Pasted_image_20220301055219.png)
+![Pasted image 20220301055219.png](/img/content/2022-03-07-1/Pasted_image_20220301055219.png)
 
 생성한 값을 Actions secrets에 추가해줍니다.
 
