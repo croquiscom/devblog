@@ -134,29 +134,29 @@
 <p>Sonatype Nexus가 이미 설치되어 있었기에, 이번 내용에서는 npm 저장소를 구축하는 방법에 대해서만 설명하도록 하겠습니다. <del>(나중에 기회가 된다면 설치 방법도&hellip;)</del></p>
 </blockquote>
 <h3 id="hosted-npm-저장소-추가">hosted npm 저장소 추가</h3>
-<p><img src="/img/content/2022-03-07-1//Pasted_image_20220301054619.png" alt="Pasted image 20220301054619.png"></p>
+<p><img src="/img/content/2022-03-07-1/Pasted_image_20220301054619.png" alt="Pasted image 20220301054619.png"></p>
 <p>먼저 Repository -&gt; Repositories에서 <strong>Create repository</strong>를 클릭해줍니다.</p>
-<p><img src="/img/content/2022-03-07-1//Pasted_image_20220301054638.png" alt="Pasted image 20220301054638.png"></p>
+<p><img src="/img/content/2022-03-07-1/Pasted_image_20220301054638.png" alt="Pasted image 20220301054638.png"></p>
 <p>그리고 Recipe 중에 <strong>npm (hosted)</strong> Recipe를 선택합니다.</p>
-<p><img src="/img/content/2022-03-07-1//Pasted_image_20220301054647.png" alt="Pasted image 20220301054647.png"></p>
+<p><img src="/img/content/2022-03-07-1/Pasted_image_20220301054647.png" alt="Pasted image 20220301054647.png"></p>
 <p>Name에 본인이 사용할 저장소 이름을 입력해주고 별다른 설정 없이 하단의 <strong>Create repository</strong>를 클릭해줍니다.</p>
-<p><img src="/img/content/2022-03-07-1//Pasted_image_20220301054655.png" alt="Pasted image 20220301054655.png"></p>
+<p><img src="/img/content/2022-03-07-1/Pasted_image_20220301054655.png" alt="Pasted image 20220301054655.png"></p>
 <p>생성 이후 리스트에서 본인이 만든 저장소를 클릭해서 들어간 뒤 화면과 같이 URL: 옆에 나와 있는 주소를 잘 메모해둡니다.</p>
 <blockquote>
 <p>이후에 아래에서 설명할 registry 설정에서 사용될 주소입니다.</p>
 </blockquote>
 <h3 id="roles-추가-및-권한-부여">Roles 추가 및 권한 부여</h3>
 <p>생성한 저장소에 사용자가 접근할 수 있도록 읽기 권한과 패키지 작업을 위한 쓰기 권한을 만들어 줍니다.</p>
-<p><img src="/img/content/2022-03-07-1//Pasted_image_20220301054709.png" alt="Pasted image 20220301054709.png"></p>
+<p><img src="/img/content/2022-03-07-1/Pasted_image_20220301054709.png" alt="Pasted image 20220301054709.png"></p>
 <p>Security -&gt; Roles에서 Create role(Nexus role)을 클릭해줍니다.</p>
-<p><img src="/img/content/2022-03-07-1//Pasted_image_20220307022217.png" alt="Pasted image 20220307022217.png"></p>
+<p><img src="/img/content/2022-03-07-1/Pasted_image_20220307022217.png" alt="Pasted image 20220307022217.png"></p>
 <p>Privileges에서 npm을 검색하여 <code>nx-repository-view-npm-{생성한 저장소 이름}-browse</code> 및 <code>nx-repository-view-npm-{생성한 저장소 이름}-read</code>를 추가해줍니다.</p>
-<p><img src="/img/content/2022-03-07-1//Pasted_image_20220307022250.png" alt="Pasted image 20220307022250.png"></p>
+<p><img src="/img/content/2022-03-07-1/Pasted_image_20220307022250.png" alt="Pasted image 20220307022250.png"></p>
 <p>그리고 똑같은 방식으로 쓰기(add) 및 수정(edit) 권한을 추가해주고 Roles에 방금 만든 읽기 권한(npm-read)도 같이 Contained에 추가해줍니다.</p>
 <blockquote>
 <p>delete도 함께 추가해줘도 되지만 보안상 이유로 패키지 작업자도 삭제는 별도의 요청을 통해 지울 수 있도록 추가하진 않았습니다.</p>
 </blockquote>
-<p><img src="/img/content/2022-03-07-1//Pasted_image_20220301054744.png" alt="Pasted image 20220301054744.png"></p>
+<p><img src="/img/content/2022-03-07-1/Pasted_image_20220301054744.png" alt="Pasted image 20220301054744.png"></p>
 <p>이제 추가해준 역할을 부여해줍니다.</p>
 <p>Security -&gt; Users에서 본인이 추가할 사용자에 들어가 Roles Granted에 추가해줍니다.</p>
 <h3 id="npm-registry-login">npm registry login</h3>
@@ -174,16 +174,16 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="로컬에서-패키지-배포">로컬에서 패키지 배포</h3>
 <p>이제 npm publish(혹은 yarn publish)를 호출하면 배포가 잘..</p>
-<p><img src="/img/content/2022-03-07-1//Pasted_image_20220301054855.png" alt="Pasted image 20220301054855.png"></p>
+<p><img src="/img/content/2022-03-07-1/Pasted_image_20220301054855.png" alt="Pasted image 20220301054855.png"></p>
 <p>..?</p>
 <p>분명 npm login도 했고&hellip; 권한도 제대로 부여한 것 같은데 배포가 되지 않았습니다&hellip; 😭</p>
-<p><img src="/img/content/2022-03-07-1//Pasted_image_20220301055152.png" alt="Pasted image 20220301055152.png"></p>
+<p><img src="/img/content/2022-03-07-1/Pasted_image_20220301055152.png" alt="Pasted image 20220301055152.png"></p>
 <p>한참을 찾던 끝에 <a href="https://productive.me/self-hosted-nexus-for-private-scoped-npm-packages/">여기</a>에서 Realms 설정이 필요하다는 것을 알게 되었습니다.</p>
-<p><img src="/img/content/2022-03-07-1//Pasted_image_20220301054907.png" alt="Pasted image 20220301054907.png"></p>
+<p><img src="/img/content/2022-03-07-1/Pasted_image_20220301054907.png" alt="Pasted image 20220301054907.png"></p>
 <p>Security -&gt; Realms에 들어가서 <strong>npm Bearer Token Realm</strong>을 Active로 옮겨준 뒤 Save를 누릅니다.</p>
-<p><img src="/img/content/2022-03-07-1//Pasted_image_20220301063108.png" alt="Pasted image 20220301063108.png"></p>
+<p><img src="/img/content/2022-03-07-1/Pasted_image_20220301063108.png" alt="Pasted image 20220301063108.png"></p>
 <p>이후 다시 배포를 진행하면 정상적으로 배포가 되는 것을 확인할 수 있습니다. 🎉</p>
-<p><img src="/img/content/2022-03-07-1//Pasted_image_20220301075935.png" alt="(Simon에게 받은 +1)"></p>
+<p><img src="/img/content/2022-03-07-1/Pasted_image_20220301075935.png" alt="(Simon에게 받은 +1)"></p>
 <p>(Simon에게 받은 +1)</p>
 <h3 id="github-actions에서-패키지-배포">GitHub Actions에서 패키지 배포</h3>
 <p>GitHub Actions를 통해 패키지 배포를 하기 위해서는 workflow에서 배포 전 패키지 저장소에 권한 인증을 해줘야 합니다.</p>
@@ -194,7 +194,7 @@
 </blockquote>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ <span class="nb">echo</span> -n <span class="s1">&#39;user1:1234&#39;</span> <span class="p">|</span> openssl base64
 </span></span><span class="line"><span class="cl"><span class="nv">dXNlcjE6MTIzNA</span><span class="o">==</span>
-</span></span></code></pre></div><p><img src="/img/content/2022-03-07-1//Pasted_image_20220301055219.png" alt="Pasted image 20220301055219.png"></p>
+</span></span></code></pre></div><p><img src="/img/content/2022-03-07-1/Pasted_image_20220301055219.png" alt="Pasted image 20220301055219.png"></p>
 <p>생성한 값을 Actions secrets에 추가해줍니다.</p>
 <p>이후 workflow yml 파일 중간에 .npmrc 파일을 생성하는 job을 추가해주면 정상적으로 배포가 됩니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl">- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Creating .npmrc</span><span class="w">
