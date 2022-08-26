@@ -174,3 +174,5 @@ export default QnaQuestionMainPage;
 한 페이지 컴포넌트를 작게 쪼갠 경우 그 컴포넌트 사이에는 상대 경로로 참조하면 되지만, pages → components 처럼 멀리 떨어진 컴포넌트를 참조할 경우에는 절대 경로로 참조하는게 좋습니다. 이렇게 구성해야 파일을 `/pages/qna/questions/index.tsx` 에서 `/pages/questions/index.tsx`로 옮겨도 import 변경이 필요없습니다. 상대 경로로 참조 가능한 범위에 대해서는 사람마다 다르게 판단하기도 합니다.
 
 절대 경로로는 src 밑의 디렉토리들(예 components, pages, hooks)을 사용하고 있습니다. 저는 `@/components/qna/question/main` 형태를 제안했는데, `components/qna/question/main`를 쓰는 것으로 정해졌습니다.
+
+> [추가] 새로운 논의를 통해 2022년 3월에 `@/` 를 사용하는 것으로 규칙이 바뀌었습니다.
