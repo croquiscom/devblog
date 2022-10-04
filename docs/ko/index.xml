@@ -5,7 +5,16 @@
     <link>https://devblog.kakaostyle.com/ko/</link>
     <description>Recent content on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 28 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 04 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GraphQL 이해하기: (1) 스키마 정의</title>
+      <link>https://devblog.kakaostyle.com/ko/2022-10-04-1-understanding-graphql-1-schema/</link>
+      <pubDate>Tue, 04 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/2022-10-04-1-understanding-graphql-1-schema/</guid>
+      <description>GraphQL은 query 방식만 정의한 단순한 스펙입니다. 하지만 개념이 간단하다고 그것을 동작하도록 구현하는 것까지 간단한 것은 아닙니다. GraphQL을 실제 제품에 적용하기까지는 많은 것들을 이해해야 합니다. 이에 대해 차례로 설명해보려고 합니다. 첫번째로 다뤄볼 내용은 스키마 정의입니다.</description>
+    </item>
+    
     <item>
       <title>잘못된 브랜치 배포를 방지하기</title>
       <link>https://devblog.kakaostyle.com/ko/2022-08-28-1-prevent-deploy-invalid-branch/</link>

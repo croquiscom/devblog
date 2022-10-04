@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+  <meta charset='utf-8'>
+
+  <title>GraphQL 이해하기: (1) 스키마 정의</title>
+  
+  <meta name='author' content='kakaostyle.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <meta property='og:title' content='GraphQL 이해하기: (1) 스키마 정의' />
+  <meta property='og:type' content='article' />
+  <meta property='og:url' content='https://devblog.kakaostyle.com/ko/2022-10-04-1-understanding-graphql-1-schema/' />
+  
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link href='/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='/css/syntax.css?body=1' rel='stylesheet' type='text/css' media='all'>
+</head>
+
+<body>
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='float-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon' src='/img/github-icon.svg'>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>GraphQL 이해하기: (1) 스키마 정의</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class='container'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='post-header'>
+        <div class='post-tags'>
+          
+
+<ul class='tag_box inline'>
+  <li><i class='fas fa-tags'></i></li>
+  
+  <li>
+    <a href='/ko/tags/graphql'>
+      GraphQL
+      <span>5</span>
+    </a>
+  </li>
+  
+</ul>
+
+        </div>
+        <div class='float-right'>
+          
+          <div class='post-author'>
+            <i class='fas fa-pencil-alt'></i>
+            <span>Simon(윤상민)</span>
+          </div>
+          
+          <div class='post-date'>
+            <i class='fas fa-calendar-alt'></i>
+            <span>04 October 2022</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-12 col-lg-9'>
+      <p><a href="https://graphql.org/">GraphQL</a>이란 것은 대부분 들어보셨을 것으로 생각합니다. 그리고 페이스북이 만들었다는 것 정도는 아실 것 같습니다. 근데 여기서 말하는 GraphQL이란 뭘까요?</p>
+<p>GraphQL 자체는 데이터 query를 어떻게 할지만 정해놓았습니다.</p>
+<p>즉</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nc">User</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">id</span><span class="p">:</span><span class="w"> </span><span class="nc">ID</span><span class="p">!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">name</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nc">Query</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">user</span><span class="p">(</span><span class="py">id</span><span class="p">:</span><span class="w"> </span><span class="nc">ID</span><span class="p">!):</span><span class="w"> </span><span class="nc">User</span><span class="p">!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>와 같이 정의된 스키마에</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="kd">query</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nc">user</span><span class="p">(</span><span class="py">id</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;10&#34;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nc">id</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="py">name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>와 같이 질의하면</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="s">&#34;data&#34;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="s">&#34;user&#34;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="s">&#34;id&#34;</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;10&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="s">&#34;name&#34;</span><span class="p">:</span><span class="w"> </span><span class="s">&#34;Simon&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>라는 결과만 내놓으면 됩니다.</p>
+<p>하지만 개념이 간단하다고 그것을 동작하도록 구현하는 것까지 간단한 것은 아닙니다. GraphQL을 실제 제품에 적용하기까지는 많은 것들을 이해해야 합니다. 이에 대해 차례로 설명해보려고 합니다. 첫번째로 다뤄볼 내용은 스키마 정의입니다.</p>
+<blockquote>
+<p>언어나 구현체 별로 세부 내용이 다를 수도 있습니다. 따라서 앞으로 설명할 내용은 주로 참조 구현인 <a href="https://github.com/graphql/graphql-js">GraphQL.js</a>에 대한 내용이 됩니다. 여기에 더해서 대중적으로 많이 쓰이는 Java 계열의 라이브러리(<a href="https://www.graphql-java.com/">graphql-java</a>, <a href="https://netflix.github.io/dgs/">DGS Framework</a>등)를 일부 포함합니다. 다른 언어에서 사용하는 다른 라이브러리는 다른 생김새를 가지고 있을 수 있겠지만, 개념이 크게 다르지 않을 것으로 생각합니다.</p>
+</blockquote>
+<h2 id="날raw-객체를-사용해서-정의하기">날(raw) 객체를 사용해서 정의하기</h2>
+<p>GraphQL 스키마는 GraphQLSchema 클래스의 인스턴스입니다. 이런 클래스들을 이용해 직접 정의할 수 있습니다. <a href="https://github.com/graphql/graphql-js#using-graphqljs">GraphQL.js의 코드</a>를 가져와 보겠습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">GraphQLObjectType</span><span class="p">,</span> <span class="nx">GraphQLSchema</span><span class="p">,</span> <span class="nx">GraphQLString</span><span class="p">,</span> <span class="nx">printSchema</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;graphql&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">schema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">GraphQLSchema</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">query</span>: <span class="kt">new</span> <span class="nx">GraphQLObjectType</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;RootQueryType&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fields</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">hello</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">type</span><span class="o">:</span> <span class="nx">GraphQLString</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}),</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">printSchema</span><span class="p">(</span><span class="nx">schema</span><span class="p">));</span>
+</span></span></code></pre></div><p>위 코드를 실행하면 다음과 같은 스키마가 만들어지는 것을 볼 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="kd">schema</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="kd">query</span><span class="p">:</span><span class="w"> </span><span class="nc">RootQueryType</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nc">type</span><span class="w"> </span><span class="py">RootQueryType</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">hello</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>RootQueryType를 Query로 바꾸면 좀 더 익숙한 스키마가 만들어집니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nc">Query</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">hello</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>커스텀 타입도 추가할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">GraphQLList</span><span class="p">,</span> <span class="nx">GraphQLNonNull</span><span class="p">,</span> <span class="nx">GraphQLObjectType</span><span class="p">,</span> <span class="nx">GraphQLSchema</span><span class="p">,</span> <span class="nx">GraphQLString</span><span class="p">,</span> <span class="nx">printSchema</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;graphql&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">User</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">GraphQLObjectType</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;User&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">fields</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">name</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">type</span><span class="o">:</span> <span class="k">new</span> <span class="nx">GraphQLNonNull</span><span class="p">(</span><span class="nx">GraphQLString</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">schema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">GraphQLSchema</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">query</span>: <span class="kt">new</span> <span class="nx">GraphQLObjectType</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Query&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fields</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">users</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kr">type</span><span class="o">:</span> <span class="k">new</span> <span class="nx">GraphQLNonNull</span><span class="p">(</span><span class="k">new</span> <span class="nx">GraphQLList</span><span class="p">(</span><span class="k">new</span> <span class="nx">GraphQLNonNull</span><span class="p">(</span><span class="nx">User</span><span class="p">))),</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}),</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">printSchema</span><span class="p">(</span><span class="nx">schema</span><span class="p">));</span>
+</span></span></code></pre></div><p>위 코드는 다음과 같은 스키마를 정의한 것입니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nc">Query</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">users</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nc">User</span><span class="p">!]!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nc">User</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">name</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>JVM 계열에서 기반이 되는 <a href="https://www.graphql-java.com/">graphql-java</a>는 이 형태의 스키마 생성을 지원합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">val</span> <span class="py">userType</span> <span class="p">=</span> <span class="n">GraphQLObjectType</span><span class="p">.</span><span class="n">newObject</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;User&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="k">field</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GraphQLFieldDefinition</span><span class="p">.</span><span class="n">newFieldDefinition</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="n">type</span><span class="p">(</span><span class="n">GraphQLNonNull</span><span class="p">(</span><span class="n">GraphQLString</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">build</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">schema</span> <span class="p">=</span> <span class="n">GraphQLSchema</span><span class="p">.</span><span class="n">newSchema</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">query</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GraphQLObjectType</span><span class="p">.</span><span class="n">newObject</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;Query&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="k">field</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="n">GraphQLFieldDefinition</span><span class="p">.</span><span class="n">newFieldDefinition</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;users&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">.</span><span class="n">type</span><span class="p">(</span><span class="n">GraphQLNonNull</span><span class="p">(</span><span class="n">GraphQLList</span><span class="p">(</span><span class="n">GraphQLNonNull</span><span class="p">(</span><span class="n">userType</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">).</span><span class="n">build</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">println</span><span class="p">(</span><span class="n">SchemaPrinter</span><span class="p">().</span><span class="n">print</span><span class="p">(</span><span class="n">schema</span><span class="p">))</span>
+</span></span></code></pre></div><p>이 방식은 간단한 스키마를 정의하는데도 많은 노력이 들고 틀릴 가능성도 높습니다. (다만 리졸버를 정의시 같이 포함할 수 있다는 장점은 있습니다.) 그래서 GraphQL 도입 초기에 예제만 보고 무조건 이렇게 해야 하는 것으로 알고 있을 때 잠깐만 사용했고, 현재는 이렇게 정의하지 않습니다. 다만 내부에서는 이 형태이기 때문에 이해하고 있으면 GraphQL 실행 최적화를 할 때 도움이 됩니다.</p>
+<h2 id="스키마-정의-문자열에서-스키마-생성하기">스키마 정의 문자열에서 스키마 생성하기</h2>
+<p>날 객체를 쓰는 것보다 좀 더 나은 방법은 스키마 정의 문자열에서 스키마를 생성하는 것입니다. buildSchema 함수를 사용하면 됩니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">buildSchema</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;graphql&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">schema</span> <span class="o">=</span> <span class="nx">buildSchema</span><span class="p">(</span><span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">type User {
+</span></span></span><span class="line"><span class="cl"><span class="sb">  name: String!
+</span></span></span><span class="line"><span class="cl"><span class="sb">}
+</span></span></span><span class="line"><span class="cl"><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">type Query {
+</span></span></span><span class="line"><span class="cl"><span class="sb">  users: [User!]!
+</span></span></span><span class="line"><span class="cl"><span class="sb">}
+</span></span></span><span class="line"><span class="cl"><span class="sb">`</span><span class="p">);</span>
+</span></span></code></pre></div><p>이 방식은 스키마 우선(schema-first) 접근으로 불립니다. graphql-java도 이 방식을 지원하고, DGS도 이 방식을 사용합니다. 이렇게 생성한 스키마에 리졸버는 따로 붙여줘야 합니다.</p>
+<p>다른 방식으로 <a href="https://github.com/apollographql/graphql-tag">graphql-tag</a> 모듈의 gql 태그를 쓰는 방법이 있습니다. 다만 이 태그는 parse 함수를 써서 GraphQLSchema 객체가 아닌 DocumentNode 객체를 만들어 내기 때문에, <a href="https://www.graphql-tools.com/docs/generate-schema">makeExecutableSchema</a>를 사용해 스키마 객체로 변환할 필요가 있습니다. 이 방식은 IDE에서 문법 강조가 되는 장점이 있었지만, 최근에는 gql 태그가 아니더라도 문법 강조가 되는 것으로 알고 있습니다. 그리고 저희는 현재 GraphQL 질의를 <code>.graphql</code> 파일로 만들어 문법 강조를 받고 있기 때문에 이 방식은 사용하지 않습니다. (오래전에 시도해서 아직 일부 코드에 흔적이 남아있습니다.)</p>
+<h2 id="코드에서-스키마-생성하기">코드에서 스키마 생성하기</h2>
+<p>또 다른 방법으로는 코드에서 스키마를 유도해 내는 것입니다. 이 방법은 기본 라이브러리에서 지원하지 않고 <a href="https://typegraphql.com/">TypeGraphQL</a>이라는 다른 라이브러리를 사용합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="s1">&#39;reflect-metadata&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">buildSchemaSync</span><span class="p">,</span> <span class="nx">ObjectType</span><span class="p">,</span> <span class="nx">Field</span><span class="p">,</span> <span class="nx">Resolver</span><span class="p">,</span> <span class="nx">Query</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;type-graphql&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">@ObjectType</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">@Field</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nb">String</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">name</span>: <span class="kt">string</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">@Resolver</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">UserResolver</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">@Query</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">User</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">users</span><span class="p">()</span><span class="o">:</span> <span class="nx">User</span><span class="p">[]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[];</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">schema</span> <span class="o">=</span> <span class="nx">buildSchemaSync</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">resolvers</span><span class="o">:</span> <span class="p">[</span><span class="nx">UserResolver</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p>이 방식은 코드 우선(code-first) 접근으로 불립니다. <a href="https://opensource.expediagroup.com/graphql-kotlin/docs/">GraphQL Kotlin</a>도 이 방식을 사용합니다.</p>
+<p>리졸버 구현시 결국 코드로 된 모델(클래스)이 필요한데, 이 모델을 스키마 정의에 바로 사용할 수 있다는 장점이 있습니다. 그리고 같은 모델을 데이터베이스 테이블 정의에도 사용할 수 있다는 것(<a href="https://typeorm.io/">TypeORM</a>이나 <a href="https://croquiscom.github.io/cormo/">CORMO</a>를 사용해서)이 좋아보여서 한때 전체에 적용했었습니다.</p>
+<p>하지만 막상 시간이 지나니 거슬리는 점들이 꽤 나왔습니다.</p>
+<ul>
+<li>GraphQL 모델(타입)과 데이터베이스 테이블이 미묘하게 달라서 한 클래스로 양쪽을 모두 지원하는게 어색한 경우가 많았습니다.</li>
+<li>타 서비스에서 GraphQL API를 이용할 때, 서비스가 제공하는 GraphQL API(스키마)를 한눈에 보고 싶을 때가 있는데 코드와 스키마가 섞여서 전체를 한눈에 보기 어렵습니다.</li>
+<li>원하는 스키마를 정의하기 위해 TypeGraphQL의 방식을 따로 배워야 합니다. 예를 들어 TypeScript 타입은 <code>User[]</code>로 쓰는데 타입 정의는 <code>[User]</code>로 해야 합니다. <code>[User]</code>, <code>[User!]</code>, <code>[User]!</code>, <code>[User!]!</code> 구분은 <code>nullable</code> 옵션으로 하는데 직관성이 아무래도 떨어진다고 보입니다.</li>
+<li>TypeGraphQL로 안 되는 부분이 있었습니다. 당시에 enum의 주석을 추가하는게 불가능했고, 현재는 가능해졌지만 TypeScript의 한계로 자연스럽지 않습니다. (decorator를 사용하지 못하고, <code>registerEnumType</code>의 옵션으로 기술해야 합니다.)</li>
+</ul>
+<p>그래서 현재는 스키마 우선 접근을 사용하는 것으로 바뀌었습니다. 스키마 타입과 코드 클래스를 각기 정의해야 하는 단점도 <a href="https://www.graphql-code-generator.com/">GraphQL Code Generator</a> 같은 코드 생성기를 사용하면 어느 정도 해소가 됩니다.</p>
+
+      
+      <hr>
+      <div class='post-original'>
+        원본 링크 : <a href='https://sixmen.com/ko/tech/2022-10-04-1-understanding-graphql-1-schema/' target='_blank'>https://sixmen.com/ko/tech/2022-10-04-1-understanding-graphql-1-schema/</a>
+      </div>
+      
+    </div>
+
+    <div class='col-lg-3 sidemenu'>
+  <h4>Recent Posts</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2022-10-04-1-understanding-graphql-1-schema/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (1) 스키마 정의</li>
+    </a>
+    
+    <a href='/ko/2022-08-28-1-prevent-deploy-invalid-branch/'>
+      <li class="sidemenu-recent-item">잘못된 브랜치 배포를 방지하기</li>
+    </a>
+    
+    <a href='/ko/2022-04-09-1-esm-problem/'>
+      <li class="sidemenu-recent-item">ESM 삽질기</li>
+    </a>
+    
+    <a href='/ko/2022-03-31-3-build-eks-cluster-with-terraform/'>
+      <li class="sidemenu-recent-item">Terraform으로 EKS 구축하기</li>
+    </a>
+    
+  </ul>
+  <hr>
+  <h4>Tags</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href="/ko/tags/amazon-sqs/">
+      <li class="sidemenu-recent-tags">amazon-sqs</li>
+    </a>
+    
+    <a href="/ko/tags/analytics/">
+      <li class="sidemenu-recent-tags">analytics</li>
+    </a>
+    
+    <a href="/ko/tags/android/">
+      <li class="sidemenu-recent-tags">android</li>
+    </a>
+    
+    <a href="/ko/tags/aws/">
+      <li class="sidemenu-recent-tags">aws</li>
+    </a>
+    
+    <a href="/ko/tags/aws-batch/">
+      <li class="sidemenu-recent-tags">aws-batch</li>
+    </a>
+    
+    <a href="/ko/tags/aws-lambda/">
+      <li class="sidemenu-recent-tags">aws-lambda</li>
+    </a>
+    
+    <a href="/ko/tags/botkit/">
+      <li class="sidemenu-recent-tags">botkit</li>
+    </a>
+    
+    <a href="/ko/tags/croquis/">
+      <li class="sidemenu-recent-tags">croquis</li>
+    </a>
+    
+    <a href="/ko/tags/css/">
+      <li class="sidemenu-recent-tags">css</li>
+    </a>
+    
+    <a href="/ko/tags/data/">
+      <li class="sidemenu-recent-tags">data</li>
+    </a>
+    
+    <a href="/ko/tags/event/">
+      <li class="sidemenu-recent-tags">event</li>
+    </a>
+    
+    <a href="/ko/tags/front-end/">
+      <li class="sidemenu-recent-tags">front-end</li>
+    </a>
+    
+    <a href="/ko/tags/frontend/">
+      <li class="sidemenu-recent-tags">frontend</li>
+    </a>
+    
+    <a href="/ko/tags/git/">
+      <li class="sidemenu-recent-tags">git</li>
+    </a>
+    
+    <a href="/ko/tags/github/">
+      <li class="sidemenu-recent-tags">github</li>
+    </a>
+    
+    <a href="/ko/tags/graphql/">
+      <li class="sidemenu-recent-tags">graphql</li>
+    </a>
+    
+    <a href="/ko/tags/ios/">
+      <li class="sidemenu-recent-tags">ios</li>
+    </a>
+    
+    <a href="/ko/tags/jenkins/">
+      <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/jotai/">
+      <li class="sidemenu-recent-tags">jotai</li>
+    </a>
+    
+    <a href="/ko/tags/kubernetes/">
+      <li class="sidemenu-recent-tags">kubernetes</li>
+    </a>
+    
+    <a href="/ko/tags/log/">
+      <li class="sidemenu-recent-tags">log</li>
+    </a>
+    
+    <a href="/ko/tags/microservice/">
+      <li class="sidemenu-recent-tags">microservice</li>
+    </a>
+    
+    <a href="/ko/tags/mithril/">
+      <li class="sidemenu-recent-tags">mithril</li>
+    </a>
+    
+    <a href="/ko/tags/node.js/">
+      <li class="sidemenu-recent-tags">node.js</li>
+    </a>
+    
+    <a href="/ko/tags/nodejs/">
+      <li class="sidemenu-recent-tags">nodejs</li>
+    </a>
+    
+    <a href="/ko/tags/npm/">
+      <li class="sidemenu-recent-tags">npm</li>
+    </a>
+    
+    <a href="/ko/tags/react/">
+      <li class="sidemenu-recent-tags">react</li>
+    </a>
+    
+    <a href="/ko/tags/rest-api/">
+      <li class="sidemenu-recent-tags">rest-api</li>
+    </a>
+    
+    <a href="/ko/tags/serverless-architecture/">
+      <li class="sidemenu-recent-tags">serverless-architecture</li>
+    </a>
+    
+    <a href="/ko/tags/slack/">
+      <li class="sidemenu-recent-tags">slack</li>
+    </a>
+    
+    <a href="/ko/tags/stack/">
+      <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/task-queue/">
+      <li class="sidemenu-recent-tags">task-queue</li>
+    </a>
+    
+    <a href="/ko/tags/thrift/">
+      <li class="sidemenu-recent-tags">thrift</li>
+    </a>
+    
+    <a href="/ko/tags/tutorial/">
+      <li class="sidemenu-recent-tags">tutorial</li>
+    </a>
+    
+    <a href="/ko/tags/typescript/">
+      <li class="sidemenu-recent-tags">typescript</li>
+    </a>
+    
+    <a href="/ko/tags/ui/">
+      <li class="sidemenu-recent-tags">ui</li>
+    </a>
+    
+    <a href="/ko/tags/vertical-align/">
+      <li class="sidemenu-recent-tags">vertical-align</li>
+    </a>
+    
+    <a href="/ko/tags/webpack/">
+      <li class="sidemenu-recent-tags">webpack</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A1%9C%EA%B7%B8/">
+      <li class="sidemenu-recent-tags">로그</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/">
+      <li class="sidemenu-recent-tags">마이크로서비스</li>
+    </a>
+    
+    <a href="/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/">
+      <li class="sidemenu-recent-tags">튜토리얼</li>
+    </a>
+    
+  </ul>
+</div>
+
+    <div class='col-12'>
+      <hr>
+
+      <div class='float-left'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2022-08-28-1-prevent-deploy-invalid-branch/' title='잘못된 브랜치 배포를 방지하기'>&larr; 이전 글</a>
+        
+      </div>
+      <div class='float-right'>
+        
+        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
+        
+      </div>
+      <div class='clearfix'></div>
+      <hr>
+      <div class='text-center'>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "croquiscom-devblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='container'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2021 kakaostyle.com
+      <span class='float-right text-muted'>
+        powered by
+        <a href='https://gohugo.io/' target='_blank'>Hugo</a>
+        and
+        <a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-48716672-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+  integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+  integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
