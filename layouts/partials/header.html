@@ -17,6 +17,8 @@
   {{ range first 6 . }}
   <meta property='og:image' content='{{ . | absURL }}' />
   {{ end }}
+  {{ else }}
+  <meta property='og:image' content='{{ "/img/og-image.png" | absURL }}' />  
   {{ end }}
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
