@@ -6,11 +6,12 @@
 
   <title>{{ .Title }}</title>
   {{ if .Description }}
-  <meta name='description' content='{{ .Description }}'>{{ end }}
+  <meta name='description' content='{{ if .Description }}{{ .Description }}{{ else }}{{ .Summary }}{{ end }}'>{{ end }}
   <meta name='author' content='kakaostyle.com'>
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
   <meta property='og:title' content='{{ .Title }}' />
+  <meta property='og:description' content='{{ if .Description }}{{ .Description }}{{ else }}{{ .Summary }}{{ end }}' />
   <meta property='og:type' content='{{ if .IsPage }}article{{ else }}website{{ end }}' />
   <meta property='og:url' content='{{ .Permalink }}' />
   {{ with .Params.images }}
