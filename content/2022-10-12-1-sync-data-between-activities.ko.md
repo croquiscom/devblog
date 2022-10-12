@@ -48,12 +48,12 @@ const bc = new BroadcastChannel('test_app');
 ```tsx
 // onmessage 방식
 bc.onmessage = function(event) {
-	console.log(event);
+  console.log(event);
 };
 
 // addEventListener 방식
 bc.addEventListener('message', function(event) {
-	console.log(event);
+  console.log(event);
 });
 ```
 
@@ -102,7 +102,7 @@ const bc = new BroadcastChannel('test_app');
 
 // 옵션 - 로컬스토리지 방식만 사용할 경우
 const bc = new BroadcastChannel('test_app', {
-	type: 'localstorage', // 사용 방식 지정: 'native', 'idb', 'localstorage'
+  type: 'localstorage', // 사용 방식 지정: 'native', 'idb', 'localstorage'
 });
 ```
 
@@ -113,12 +113,12 @@ const bc = new BroadcastChannel('test_app', {
 ```jsx
 // onmessage 방식
 bc.onmessage = function(message) {
-	console.log(message); // "Hello! I'm here!"
+  console.log(message); // "Hello! I'm here!"
 };
 
 // addEventListener 방식
 bc.addEventListener('message', function(message) {
-	console.log(message); // "Hello! I'm here!"
+  console.log(message); // "Hello! I'm here!"
 });
 ```
 
@@ -241,8 +241,8 @@ import { useBroadcastChannel } from './hooks';
 
 const App = () => {
   const [count, setCount] = useState<number>(0);
-	const { postMessage } = useBroadcastChannel<number>('test-app', (message) => {
-		// 메시지를 전달받으면 setCount 함수 호출
+  const { postMessage } = useBroadcastChannel<number>('test-app', (message) => {
+    // 메시지를 전달받으면 setCount 함수 호출
     setCount(message);
   });
 

@@ -127,12 +127,12 @@
 <p>메시지 수신은 <code>onmessage</code>를 활용하거나 <code>addEventListener</code>를 추가하여 수신할 수 있습니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="c1">// onmessage 방식
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">bc</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">};</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// addEventListener 방식
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">bc</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">});</span>
 </span></span></code></pre></div><h3 id="메시지-전달">메시지 전달</h3>
 <p>그러고 나서 <code>postMessage</code> 메서드를 통해 메시지를 보내면 아래와 같이 결과를 얻을 수 있습니다.</p>
@@ -160,18 +160,18 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// 옵션 - 로컬스토리지 방식만 사용할 경우
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">bc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BroadcastChannel</span><span class="p">(</span><span class="s1">&#39;test_app&#39;</span><span class="p">,</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;localstorage&#39;</span><span class="p">,</span> <span class="c1">// 사용 방식 지정: &#39;native&#39;, &#39;idb&#39;, &#39;localstorage&#39;
+</span></span><span class="line"><span class="cl">  <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;localstorage&#39;</span><span class="p">,</span> <span class="c1">// 사용 방식 지정: &#39;native&#39;, &#39;idb&#39;, &#39;localstorage&#39;
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">});</span>
 </span></span></code></pre></div><h3 id="메시지-수신-1">메시지 수신</h3>
 <p>기존 네이티브 Web API와 다르게 파라미터가 <code>event</code>가 아닌 <code>message</code>입니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="c1">// onmessage 방식
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">bc</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span> <span class="c1">// &#34;Hello! I&#39;m here!&#34;
+</span></span><span class="line"><span class="cl">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span> <span class="c1">// &#34;Hello! I&#39;m here!&#34;
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// addEventListener 방식
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">bc</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span> <span class="c1">// &#34;Hello! I&#39;m here!&#34;
+</span></span><span class="line"><span class="cl">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span> <span class="c1">// &#34;Hello! I&#39;m here!&#34;
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">});</span>
 </span></span></code></pre></div><h3 id="메시지-전달-및-채널-닫기">메시지 전달 및 채널 닫기</h3>
 <p>메시지 전달 부분과 채널을 닫는 부분은 기존과 동일합니다.</p>
@@ -269,8 +269,8 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">App</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">&lt;</span><span class="nt">number</span><span class="p">&gt;(</span><span class="mi">0</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="kr">const</span> <span class="p">{</span> <span class="nx">postMessage</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">useBroadcastChannel</span><span class="p">&lt;</span><span class="nt">number</span><span class="p">&gt;(</span><span class="s1">&#39;test-app&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">// 메시지를 전달받으면 setCount 함수 호출
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="p">{</span> <span class="nx">postMessage</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">useBroadcastChannel</span><span class="p">&lt;</span><span class="nt">number</span><span class="p">&gt;(</span><span class="s1">&#39;test-app&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 메시지를 전달받으면 setCount 함수 호출
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">setCount</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="p">});</span>
 </span></span><span class="line"><span class="cl">
