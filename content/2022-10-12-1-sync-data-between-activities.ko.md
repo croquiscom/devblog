@@ -241,8 +241,8 @@ import { useBroadcastChannel } from './hooks';
 
 const App = () => {
   const [count, setCount] = useState<number>(0);
-	const { postMessage } = useBroadcastChannel<number>('test-app', (message) => {
-		// 메시지를 전달받으면 setCount 함수 호출
+  const { postMessage } = useBroadcastChannel<number>('test-app', (message) => {
+    // 메시지를 전달받으면 setCount 함수 호출
     setCount(message);
   });
 
