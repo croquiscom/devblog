@@ -5,7 +5,25 @@
     <link>https://devblog.kakaostyle.com/ko/tags/</link>
     <description>Recent content in Tags on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 04 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Frontend</title>
+      <link>https://devblog.kakaostyle.com/ko/tags/frontend/</link>
+      <pubDate>Wed, 12 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/tags/frontend/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>React</title>
+      <link>https://devblog.kakaostyle.com/ko/tags/react/</link>
+      <pubDate>Wed, 12 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/tags/react/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>GraphQL</title>
       <link>https://devblog.kakaostyle.com/ko/tags/graphql/</link>
@@ -70,15 +88,6 @@
     </item>
     
     <item>
-      <title>Frontend</title>
-      <link>https://devblog.kakaostyle.com/ko/tags/frontend/</link>
-      <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://devblog.kakaostyle.com/ko/tags/frontend/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Jotai</title>
       <link>https://devblog.kakaostyle.com/ko/tags/jotai/</link>
       <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
@@ -93,15 +102,6 @@
       <pubDate>Thu, 16 Dec 2021 00:00:00 +0000</pubDate>
       
       <guid>https://devblog.kakaostyle.com/ko/tags/ui/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>React</title>
-      <link>https://devblog.kakaostyle.com/ko/tags/react/</link>
-      <pubDate>Thu, 29 Jul 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://devblog.kakaostyle.com/ko/tags/react/</guid>
       <description></description>
     </item>
     

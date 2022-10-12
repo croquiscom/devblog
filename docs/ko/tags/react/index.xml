@@ -5,7 +5,16 @@
     <link>https://devblog.kakaostyle.com/ko/tags/react/</link>
     <description>Recent content in React on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 29 Jul 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/react/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/react/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>웹뷰 액티비티간 데이터 동기화하기</title>
+      <link>https://devblog.kakaostyle.com/ko/2022-10-12-1-sync-data-between-activities/</link>
+      <pubDate>Wed, 12 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/2022-10-12-1-sync-data-between-activities/</guid>
+      <description>지그재그 에픽 서비스는 여러 웹뷰를 사용하도록 구성되어 있습니다. 한 화면에서 변동된 데이터를 다른 화면에 반영해야 하는 기술 이슈가 발생했는데 이를 해결한 방법에 대해 설명합니다.</description>
+    </item>
+    
     <item>
       <title>React 프로젝트 컴포넌트 구성</title>
       <link>https://devblog.kakaostyle.com/ko/2021-07-29-1-react-component-organization/</link>

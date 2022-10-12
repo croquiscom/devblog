@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+  <meta charset='utf-8'>
+
+  <title>웹뷰 액티비티간 데이터 동기화하기</title>
+  
+  <meta name='author' content='kakaostyle.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <meta property='og:title' content='웹뷰 액티비티간 데이터 동기화하기' />
+  <meta property='og:description' content='지그재그 에픽 서비스는 여러 웹뷰를 사용하도록 구성되어 있습니다. 한 화면에서 변동된 데이터를 다른 화면에 반영해야 하는 기술 이슈가 발생했는데 이를 해결한 방법에 대해 설명합니다.' />
+  <meta property='og:type' content='article' />
+  <meta property='og:url' content='https://devblog.kakaostyle.com/ko/2022-10-12-1-sync-data-between-activities/' />
+  
+  
+  <meta property='og:image' content='https://devblog.kakaostyle.com/img/content/2022-10-12-1/problem.png' />
+  
+  
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link href='/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='/css/syntax.css?body=1' rel='stylesheet' type='text/css' media='all'>
+</head>
+
+<body>
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='float-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon' src='/img/github-icon.svg'>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>웹뷰 액티비티간 데이터 동기화하기</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class='container'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='post-header'>
+        <div class='post-tags'>
+          
+
+<ul class='tag_box inline'>
+  <li><i class='fas fa-tags'></i></li>
+  
+  <li>
+    <a href='/ko/tags/react'>
+      React
+      <span>2</span>
+    </a>
+  </li>
+  
+  <li>
+    <a href='/ko/tags/frontend'>
+      Frontend
+      <span>3</span>
+    </a>
+  </li>
+  
+</ul>
+
+        </div>
+        <div class='float-right'>
+          
+          <div class='post-author'>
+            <i class='fas fa-pencil-alt'></i>
+            <span>Jason(황주성)</span>
+          </div>
+          
+          <div class='post-date'>
+            <i class='fas fa-calendar-alt'></i>
+            <span>12 October 2022</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-12 col-lg-9'>
+      <p>안녕하세요! 👋
+카카오스타일 프론트엔드 챕터 소속 Jason(제이슨/황주성)입니다.</p>
+<p>여러분은 혹시 서비스를 개발하면서 브라우저의 윈도우, 탭 혹은 웹뷰 액티비티 간 데이터를 동기화 해줘야 했던 경험이 있으신가요?</p>
+<p>페이스북이나 인스타그램과 같이 사용자가 상세 페이지에서 게시물 좋아요를 누른 뒤에 타임라인 화면으로 돌아왔을 때 해당 변경 내용이 반영된 경우를 예를 들 수 있을 것 같습니다.</p>
+<p>작년 초 오픈한 지그재그 에픽 서비스에서도 이와 비슷한 기능이 들어갔는데요, 앱 내 서비스를 제공하면서 가능한 네이티브 앱을 사용하는 듯한 경험을 주기 위해 페이지 이동 시 앱 인터페이스를 통해 새로운 웹뷰 액티비티와 함께 페이지를 보여주는 방식을 적용하게 되었습니다.</p>
+<p><img src="/img/content/2022-10-12-1/epick.png" alt="epick.png"></p>
+<p>그러다 보니 메인 화면에서 게시물을 클릭하여 새로운 액티비티를 연 뒤에 좋아요를 클릭하고 액티비티를 닫게 됐을 때 이전에 있던 메인 화면에서도 해당 좋아요 상태가 반영되어야 했고 이러한 부분에서 액티비티 간 데이터 동기화가 필요하게 되었습니다.</p>
+<p><img src="/img/content/2022-10-12-1/problem.png" alt="problem.png"></p>
+<p>여러 방법을 시도하다 최종적으로 저는 이 문제를 Broadcast Channel이라는 Web API를 접한 뒤 pubkey/broadcast-channel 라이브러리를 활용하여 해결하게 되었고, 오늘은 이 부분에 대해 간략하게 여러분들께 공유 드리려고 합니다.</p>
+<h2 id="broadcast-channel-api">Broadcast Channel API</h2>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API">Broadcast Channel API</a>란 동일한 출처에서 서로 다른 브라우징 컨텍스트(탭, 윈도우, iframe 등)들이 채널을 개설하거나 참여하여 해당 채널에서 메시지를 전송하거나 받는 등 양방향 통신을 가능하게 해줍니다.</p>
+<p><img src="/img/content/2022-10-12-1/broadcast_channel.png" alt="Broadcast Channel.png"></p>
+<blockquote>
+<p>참조: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API">https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API</a></p>
+</blockquote>
+<p>공식 문서의 예시도 나와 있듯 사용법이 정말 간단한데요.</p>
+<p>먼저 새로운 BroadcastChannel 인터페이스를 생성해주면서 임의의 채널 이름을 인자로 넣어주게 되면 내부에서 해당 채널을 생성하거나 이미 열려있는 경우 해당 채널에 참여하게 됩니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">bc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BroadcastChannel</span><span class="p">(</span><span class="s1">&#39;test_app&#39;</span><span class="p">);</span>
+</span></span></code></pre></div><h3 id="메시지-수신">메시지 수신</h3>
+<p>메시지 수신은 <code>onmessage</code>를 활용하거나 <code>addEventListener</code>를 추가하여 수신할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="c1">// onmessage 방식
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">bc</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// addEventListener 방식
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">bc</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">event</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><h3 id="메시지-전달">메시지 전달</h3>
+<p>그러고 나서 <code>postMessage</code> 메서드를 통해 메시지를 보내면 아래와 같이 결과를 얻을 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="nx">bc</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s2">&#34;Hello! I&#39;m here!&#34;</span><span class="p">);</span>
+</span></span></code></pre></div><p><img src="/img/content/2022-10-12-1/code1.png" alt="code1.png"></p>
+<blockquote>
+<p>서로 다른 윈도우에서 왼쪽은 메시지를 수신. 오른쪽은 메시지를 전달.</p>
+</blockquote>
+<h3 id="채널-닫기">채널 닫기</h3>
+<p><code>close</code> 메서드를 호출해서 채널을 닫게 되면 이후 <code>postMessage</code>를 통해 메시지를 전달해도 수신하지 않게 됩니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="nx">bc</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+</span></span></code></pre></div><p><img src="/img/content/2022-10-12-1/code2.png" alt="code2.png"></p>
+<h2 id="pubkeybroadcast-channel-라이브러리">pubkey/broadcast-channel 라이브러리</h2>
+<p>네이티브 Web API의 경우 <a href="https://caniuse.com/broadcastchannel">지원 브라우저 스펙</a>이 제한적이다 보니 네이티브 방식과 함께 추가로 환경에 따라 별도 localStorage, IndexedDB 등 다양한 메소드로 제공해주는 <a href="https://github.com/pubkey/broadcast-channel">pubkey/broadcast-channel</a> 라이브러리를 사용하게 되었습니다.</p>
+<p>먼저 패키지를 설치해줍니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># npm</span>
+</span></span><span class="line"><span class="cl">npm install broadcast-channel
+</span></span><span class="line"><span class="cl"><span class="c1"># yarn</span>
+</span></span><span class="line"><span class="cl">yarn add broadcast-channel
+</span></span></code></pre></div><p>채널 생성은 기존 네이티브 Web API랑 비슷하며 필요할 경우 따로 옵션을 설정할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">BroadcastChannel</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">&#39;broadcast-channel&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 기본 사용법
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">bc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BroadcastChannel</span><span class="p">(</span><span class="s1">&#39;test_app&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 옵션 - 로컬스토리지 방식만 사용할 경우
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">const</span> <span class="nx">bc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BroadcastChannel</span><span class="p">(</span><span class="s1">&#39;test_app&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;localstorage&#39;</span><span class="p">,</span> <span class="c1">// 사용 방식 지정: &#39;native&#39;, &#39;idb&#39;, &#39;localstorage&#39;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">});</span>
+</span></span></code></pre></div><h3 id="메시지-수신-1">메시지 수신</h3>
+<p>기존 네이티브 Web API와 다르게 파라미터가 <code>event</code>가 아닌 <code>message</code>입니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="c1">// onmessage 방식
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">bc</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span> <span class="c1">// &#34;Hello! I&#39;m here!&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// addEventListener 방식
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">bc</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span> <span class="c1">// &#34;Hello! I&#39;m here!&#34;
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">});</span>
+</span></span></code></pre></div><h3 id="메시지-전달-및-채널-닫기">메시지 전달 및 채널 닫기</h3>
+<p>메시지 전달 부분과 채널을 닫는 부분은 기존과 동일합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="c1">// 메시지 전달
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">bc</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s2">&#34;Hello! I&#39;m here!&#34;</span><span class="p">);</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="c1">// 채널 닫기
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">bc</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+</span></span></code></pre></div><h2 id="리액트에서-함께-사용해보기">리액트에서 함께 사용해보기</h2>
+<p>이제 간단한 리액트 Counter 앱에 broadcast-channel 라이브러리를 도입하여 탭 간 데이터 동기화하는 것을 만들어 보겠습니다.</p>
+<p><img src="/img/content/2022-10-12-1/sample.png" alt="sample.png"></p>
+<h3 id="기본-counter-코드">기본 Counter 코드</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="c1">// src/App.tsx
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">useState</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">App</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">&lt;</span><span class="nt">number</span><span class="p">&gt;(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">handleClick</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">setCount</span><span class="p">((</span><span class="nx">prev</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">next</span> <span class="o">=</span> <span class="nx">prev</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Counter</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span><span class="nx">Current</span> <span class="nx">count</span><span class="o">:</span> <span class="p">{</span><span class="nx">count</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">          <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">handleClick</span><span class="p">}&gt;</span><span class="nx">Count</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="nx">App</span><span class="p">;</span>
+</span></span></code></pre></div><h3 id="usebroadcastchannel-react-hooks">useBroadcastChannel React Hooks</h3>
+<p>리액트에서 사용하기 편하게 broadcast-channel 라이브러리를 훅으로 만들어줍니다.
+파라미터로는 <strong>채널 이름</strong>, <strong>메시지 핸들러</strong>, <strong>라이브러리 옵션</strong>을 받도록 구현해주었습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="c1">// src/hooks.ts
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">useRef</span><span class="p">,</span> <span class="nx">useEffect</span><span class="p">,</span> <span class="nx">useCallback</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">BroadcastChannel</span><span class="p">,</span> <span class="nx">BroadcastChannelOptions</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;broadcast-channel&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">interface</span> <span class="nx">UseBroadcastChannelOptions</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">extends</span> <span class="nx">Omit</span><span class="p">&lt;</span><span class="nt">BroadcastChannelOptions</span><span class="err">,</span> <span class="err">&#39;</span><span class="na">node</span><span class="err">&#39;</span><span class="p">&gt;</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">useBroadcastChannel</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;(</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">channelName</span>: <span class="kt">string</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">onMessage</span><span class="o">:</span> <span class="p">(</span><span class="nx">message</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">options?</span>: <span class="kt">UseBroadcastChannelOptions</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">broadcastChannelRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">&lt;</span><span class="nt">BroadcastChannel</span><span class="err">&lt;</span><span class="na">T</span><span class="p">&gt;</span> <span class="o">|</span> <span class="kc">null</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">onMessageRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="o">&lt;</span><span class="p">((</span><span class="nx">message</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">)</span> <span class="o">|</span> <span class="kc">null</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">handlePostMessage</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">((</span><span class="nx">message</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="nx">broadcastChannelRef</span><span class="p">.</span><span class="nx">current</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">broadcastChannelRef</span><span class="p">.</span><span class="nx">current</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span> <span class="p">[]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">onMessageRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="nx">onMessage</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span> <span class="p">[</span><span class="nx">onMessage</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nx">useEffect</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">let</span> <span class="nx">mounted</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">channel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BroadcastChannel</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;(</span><span class="nx">channelName</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kr">const</span> <span class="nx">handleMessage</span> <span class="o">=</span> <span class="p">(</span><span class="nx">message</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">mounted</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">onMessageRef</span><span class="p">.</span><span class="nx">current</span><span class="o">?</span><span class="p">.(</span><span class="nx">message</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">channel</span><span class="p">.</span><span class="nx">onmessage</span> <span class="o">=</span> <span class="nx">handleMessage</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">broadcastChannelRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="nx">channel</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">mounted</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">broadcastChannelRef</span><span class="p">.</span><span class="nx">current</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">channel</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span> <span class="p">[</span><span class="nx">channelName</span><span class="p">,</span> <span class="nx">options</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">{</span> <span class="nx">postMessage</span>: <span class="kt">handlePostMessage</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="counter-app에-usebroadcastchannel-도입">Counter App에 useBroadcastChannel 도입</h3>
+<p>마지막으로 만들었던 훅을 리액트 앱에 추가하고 <code>onMessage</code> 부분과 <code>postMessage</code> 부분을 도입해 줍니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="c1">// src/App.tsx
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kr">import</span> <span class="p">{</span> <span class="nx">useState</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">useBroadcastChannel</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;./hooks&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">App</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="p">[</span><span class="nx">count</span><span class="p">,</span> <span class="nx">setCount</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useState</span><span class="p">&lt;</span><span class="nt">number</span><span class="p">&gt;(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="kr">const</span> <span class="p">{</span> <span class="nx">postMessage</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">useBroadcastChannel</span><span class="p">&lt;</span><span class="nt">number</span><span class="p">&gt;(</span><span class="s1">&#39;test-app&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// 메시지를 전달받으면 setCount 함수 호출
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">setCount</span><span class="p">(</span><span class="nx">message</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">handleClick</span> <span class="o">=</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">setCount</span><span class="p">((</span><span class="nx">prev</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">next</span> <span class="o">=</span> <span class="nx">prev</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// 다른 윈도우나 탭에 알려주기 위해 postMessage 메서드 호출
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nx">postMessage</span><span class="p">(</span><span class="nx">next</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span><span class="nx">Counter</span><span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span><span class="nx">Current</span> <span class="nx">count</span><span class="o">:</span> <span class="p">{</span><span class="nx">count</span><span class="p">}&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">          <span class="p">&lt;</span><span class="nt">button</span> <span class="na">onClick</span><span class="o">=</span><span class="p">{</span><span class="nx">handleClick</span><span class="p">}&gt;</span><span class="nx">Count</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="nx">App</span><span class="p">;</span>
+</span></span></code></pre></div><p><img src="/img/content/2022-10-12-1/sample_result.gif" alt="sample_result.gif"></p>
+<h2 id="마치며">마치며</h2>
+<p>만약 <a href="https://tanstack.com/query/v4">TanStack Query</a>(React Query)를 사용해 데이터를 관리하고 있다면 직접 데이터를 주고 받는 대신 실험 버전 플러그인인 <a href="https://tanstack.com/query/v4/docs/plugins/broadcastQueryClient">broadcastQueryClient</a>를 활용해 데이터를 동기화 할 수도 있습니다. 클라이언트 웹뷰간 데이터를 동기화 하는 대신 웹뷰 전환이 일어날 때(visibilitychange 이벤트) 서버에서 새로 데이터를 받아올 수도 있습니다. 이와 같이 문제를 해결하는 방법은 여러가지가 있으니 상황에 맞게 도입해보면 좋을 것 같습니다.</p>
+<p>추가로 위에 만들었던 리액트 훅을 <a href="https://github.com/use-broadcast-channel/use-broadcast-channel">모듈</a>로 만들어 공개했습니다.
+이슈 및 PR은 언제나 환영입니다. :) (<del>Star도 주시면 좋습니다</del>)</p>
+<p>마지막으로 지그재그 에픽 서비스 및 지그재그 앱 내 웹뷰 페이지를 함께 개발해보고 싶으시면 언제든 편하게 <a href="https://career.kakaostyle.com/o/31890">링크</a>를 통해 지원해주세요!</p>
+<p>감사합니다.</p>
+
+      
+    </div>
+
+    <div class='col-lg-3 sidemenu'>
+  <h4>Recent Posts</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2022-10-12-1-sync-data-between-activities/'>
+      <li class="sidemenu-recent-item">웹뷰 액티비티간 데이터 동기화하기</li>
+    </a>
+    
+    <a href='/ko/2022-10-04-1-understanding-graphql-1-schema/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (1) 스키마 정의</li>
+    </a>
+    
+    <a href='/ko/2022-08-28-1-prevent-deploy-invalid-branch/'>
+      <li class="sidemenu-recent-item">잘못된 브랜치 배포를 방지하기</li>
+    </a>
+    
+    <a href='/ko/2022-04-09-1-esm-problem/'>
+      <li class="sidemenu-recent-item">ESM 삽질기</li>
+    </a>
+    
+  </ul>
+  <hr>
+  <h4>Tags</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href="/ko/tags/amazon-sqs/">
+      <li class="sidemenu-recent-tags">amazon-sqs</li>
+    </a>
+    
+    <a href="/ko/tags/analytics/">
+      <li class="sidemenu-recent-tags">analytics</li>
+    </a>
+    
+    <a href="/ko/tags/android/">
+      <li class="sidemenu-recent-tags">android</li>
+    </a>
+    
+    <a href="/ko/tags/aws/">
+      <li class="sidemenu-recent-tags">aws</li>
+    </a>
+    
+    <a href="/ko/tags/aws-batch/">
+      <li class="sidemenu-recent-tags">aws-batch</li>
+    </a>
+    
+    <a href="/ko/tags/aws-lambda/">
+      <li class="sidemenu-recent-tags">aws-lambda</li>
+    </a>
+    
+    <a href="/ko/tags/botkit/">
+      <li class="sidemenu-recent-tags">botkit</li>
+    </a>
+    
+    <a href="/ko/tags/croquis/">
+      <li class="sidemenu-recent-tags">croquis</li>
+    </a>
+    
+    <a href="/ko/tags/css/">
+      <li class="sidemenu-recent-tags">css</li>
+    </a>
+    
+    <a href="/ko/tags/data/">
+      <li class="sidemenu-recent-tags">data</li>
+    </a>
+    
+    <a href="/ko/tags/event/">
+      <li class="sidemenu-recent-tags">event</li>
+    </a>
+    
+    <a href="/ko/tags/front-end/">
+      <li class="sidemenu-recent-tags">front-end</li>
+    </a>
+    
+    <a href="/ko/tags/frontend/">
+      <li class="sidemenu-recent-tags">frontend</li>
+    </a>
+    
+    <a href="/ko/tags/git/">
+      <li class="sidemenu-recent-tags">git</li>
+    </a>
+    
+    <a href="/ko/tags/github/">
+      <li class="sidemenu-recent-tags">github</li>
+    </a>
+    
+    <a href="/ko/tags/graphql/">
+      <li class="sidemenu-recent-tags">graphql</li>
+    </a>
+    
+    <a href="/ko/tags/ios/">
+      <li class="sidemenu-recent-tags">ios</li>
+    </a>
+    
+    <a href="/ko/tags/jenkins/">
+      <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/jotai/">
+      <li class="sidemenu-recent-tags">jotai</li>
+    </a>
+    
+    <a href="/ko/tags/kubernetes/">
+      <li class="sidemenu-recent-tags">kubernetes</li>
+    </a>
+    
+    <a href="/ko/tags/log/">
+      <li class="sidemenu-recent-tags">log</li>
+    </a>
+    
+    <a href="/ko/tags/microservice/">
+      <li class="sidemenu-recent-tags">microservice</li>
+    </a>
+    
+    <a href="/ko/tags/mithril/">
+      <li class="sidemenu-recent-tags">mithril</li>
+    </a>
+    
+    <a href="/ko/tags/node.js/">
+      <li class="sidemenu-recent-tags">node.js</li>
+    </a>
+    
+    <a href="/ko/tags/nodejs/">
+      <li class="sidemenu-recent-tags">nodejs</li>
+    </a>
+    
+    <a href="/ko/tags/npm/">
+      <li class="sidemenu-recent-tags">npm</li>
+    </a>
+    
+    <a href="/ko/tags/react/">
+      <li class="sidemenu-recent-tags">react</li>
+    </a>
+    
+    <a href="/ko/tags/rest-api/">
+      <li class="sidemenu-recent-tags">rest-api</li>
+    </a>
+    
+    <a href="/ko/tags/serverless-architecture/">
+      <li class="sidemenu-recent-tags">serverless-architecture</li>
+    </a>
+    
+    <a href="/ko/tags/slack/">
+      <li class="sidemenu-recent-tags">slack</li>
+    </a>
+    
+    <a href="/ko/tags/stack/">
+      <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/task-queue/">
+      <li class="sidemenu-recent-tags">task-queue</li>
+    </a>
+    
+    <a href="/ko/tags/thrift/">
+      <li class="sidemenu-recent-tags">thrift</li>
+    </a>
+    
+    <a href="/ko/tags/tutorial/">
+      <li class="sidemenu-recent-tags">tutorial</li>
+    </a>
+    
+    <a href="/ko/tags/typescript/">
+      <li class="sidemenu-recent-tags">typescript</li>
+    </a>
+    
+    <a href="/ko/tags/ui/">
+      <li class="sidemenu-recent-tags">ui</li>
+    </a>
+    
+    <a href="/ko/tags/vertical-align/">
+      <li class="sidemenu-recent-tags">vertical-align</li>
+    </a>
+    
+    <a href="/ko/tags/webpack/">
+      <li class="sidemenu-recent-tags">webpack</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A1%9C%EA%B7%B8/">
+      <li class="sidemenu-recent-tags">로그</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/">
+      <li class="sidemenu-recent-tags">마이크로서비스</li>
+    </a>
+    
+    <a href="/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/">
+      <li class="sidemenu-recent-tags">튜토리얼</li>
+    </a>
+    
+  </ul>
+</div>
+
+    <div class='col-12'>
+      <hr>
+
+      <div class='float-left'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2022-10-04-1-understanding-graphql-1-schema/' title='GraphQL 이해하기: (1) 스키마 정의'>&larr; 이전 글</a>
+        
+      </div>
+      <div class='float-right'>
+        
+        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
+        
+      </div>
+      <div class='clearfix'></div>
+      <hr>
+      <div class='text-center'>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "croquiscom-devblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='container'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2021 kakaostyle.com
+      <span class='float-right text-muted'>
+        powered by
+        <a href='https://gohugo.io/' target='_blank'>Hugo</a>
+        and
+        <a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-48716672-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+  integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+  integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
