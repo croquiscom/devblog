@@ -236,16 +236,16 @@ spec:
         image: nginx
         imagePullPolicy: IfNotPresent
       nodeSelector:
-        **nodeType: network-node**
+        nodeType: network-node
       tolerations:
       - effect: NoSchedule
         key: node-role.kubernetes.io/master
       - key: CriticalAddonsOnly
         operator: Exists
-      **- effect: "NoSchedule"
+      - effect: "NoSchedule"
         key: "networkNode"
         operator: "Equal"
-        value: "true"**
+        value: "true"
 ```
 
 이제 Pod 를 기동하면 빠르게 원하는 **Provisioner** 가 추가한 Node 에 할당되는 것을 확인할 수 있습니다! 제가 애용하는 [k9s](https://k9scli.io/) 도구를 통해 살펴보겠습니다.

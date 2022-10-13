@@ -349,3 +349,11 @@ blockquote {
 .chroma {
   padding: 16px;
 }
+
+h2 {
+  margin-top: 2rem;
+}
+
+h3 {
+  margin-top: 1rem;
+}
