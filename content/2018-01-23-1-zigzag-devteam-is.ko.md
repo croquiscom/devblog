@@ -14,7 +14,7 @@ images: [/img/kakaostyle-logo.png]
 
 이 글을 읽고 카카오스타일의 개발팀에 관심이 생기신 분은 언제든지 메일([job@kakaostyle.com](mailto:job@kakaostyle.com))로 연락주세요.
 이력서를 보내주셔도 좋고, 깃허브 주소를 보내주셔도 좋습니다.
-카카오스타일에서 현재 진행 중인 채용 공고는 [여기](https://kakaostyle.recruiter.co.kr/app/jobnotice/list)서 보실 수 있습니다.
+카카오스타일에서 현재 진행 중인 채용 공고는 [여기](https://kakaostyle.career.greetinghr.com/)서 보실 수 있습니다.
 
 그 외 문의사항이나 가볍게 나누고 싶은 이야기가 있다면 [카카오스타일 채용 페이스북 페이지](https://www.facebook.com/kakaostylecareer)를,
 카카오스타일의 일하는 문화가 궁금하시다면 [카카오스타일 브런치](https://brunch.co.kr/@zigzag)를 활용해주세요! 
