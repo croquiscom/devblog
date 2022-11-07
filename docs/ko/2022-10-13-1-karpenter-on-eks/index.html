@@ -10,7 +10,7 @@
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
   <meta property='og:title' content='EKS클러스터 Karpenter 적용기' />
-  <meta property='og:description' content='안녕하세요! 카카오스타일 SRE팀 네사입니다. 오늘은 카카오스타일 SRE팀에서 올해 EKS 클러스터 이전을 하며 새롭게 도입 했던 AWS Karpenter 에 대해 공유를 해보려 합니다' />
+  <meta property='og:description' content='안녕하세요! 카카오스타일 SRE팀 네사입니다. 오늘은 카카오스타일 SRE팀에서 올해 EKS 클러스터 이전을 하며 새롭게 도입 했던 AWS Karpenter 에 대해 공유를 해보려 합니다.' />
   <meta property='og:type' content='article' />
   <meta property='og:url' content='https://devblog.kakaostyle.com/ko/2022-10-13-1-karpenter-on-eks/' />
   
@@ -317,13 +317,16 @@ INFO    controller.provisioning    Launching node with 1 pods requesting {&#34;c
 <p>마지막으로, <strong>Karpenter</strong> 는 비교적 신규 서비스인만큼 초기 버전에서는 잘 동작하지 않는 기능이 많습니다. 예를 들어, 카카오스타일에서는 Node 에 특정 Pod 를 격리하기 위해 <code>podAffinity</code> 와 <code>podAntiAffinity</code> 를 지정하려고 했는데, 의도한 대로 동작하지 않아 헤매다가 <code>v0.9.0</code>에서 새롭게 추가된 기능인 것을 확인하고 버전을 업데이트 했던 경험이 있습니다. 따라서 <strong>Karpenter</strong> 를 사용할 땐 가능한 최신 버전을 사용하는 것을 추천합니다.</p>
 <h2 id="끝으로">끝으로,</h2>
 <p>얼마 전 AWS에서 Enterprise Support 고객들을 상대로 진행했던 HighLander 행사에서 다들 아직 <strong>Karpenter</strong> 에 대한 신뢰가 부족하다는 인상을 받았는데요, 도입을 고민하시는 분들께 이 글이 도움이 되었으면 합니다. 감사합니다!</p>
-
       
     </div>
 
     <div class='col-lg-3 sidemenu'>
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2022-11-07-1-understanding-graphql-2-execution/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (2) 실행 및 전송</li>
+    </a>
     
     <a href='/ko/2022-10-13-1-karpenter-on-eks/'>
       <li class="sidemenu-recent-item">EKS클러스터 Karpenter 적용기</li>
@@ -335,10 +338,6 @@ INFO    controller.provisioning    Launching node with 1 pods requesting {&#34;c
     
     <a href='/ko/2022-10-04-1-understanding-graphql-1-schema/'>
       <li class="sidemenu-recent-item">GraphQL 이해하기: (1) 스키마 정의</li>
-    </a>
-    
-    <a href='/ko/2022-08-28-1-prevent-deploy-invalid-branch/'>
-      <li class="sidemenu-recent-item">잘못된 브랜치 배포를 방지하기</li>
     </a>
     
   </ul>
@@ -523,7 +522,7 @@ INFO    controller.provisioning    Launching node with 1 pods requesting {&#34;c
       </div>
       <div class='float-right'>
         
-        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
+        <a class='btn btn-outline-primary' href='/ko/2022-11-07-1-understanding-graphql-2-execution/' title='GraphQL 이해하기: (2) 실행 및 전송'>다음 글 &rarr;</a>
         
       </div>
       <div class='clearfix'></div>

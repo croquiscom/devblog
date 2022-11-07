@@ -2,17 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://devblog.kakaostyle.com/ko/tags/aws/</loc>
-    <lastmod>2022-10-13T00:00:00+00:00</lastmod>
+    <loc>https://devblog.kakaostyle.com/ko/tags/graphql/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://devblog.kakaostyle.com/ko/2022-10-13-1-karpenter-on-eks/</loc>
-    <lastmod>2022-10-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://devblog.kakaostyle.com/ko/tags/kubernetes/</loc>
-    <lastmod>2022-10-13T00:00:00+00:00</lastmod>
+    <loc>https://devblog.kakaostyle.com/ko/2022-11-07-1-understanding-graphql-2-execution/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devblog.kakaostyle.com/ko/tags/</loc>
-    <lastmod>2022-10-13T00:00:00+00:00</lastmod>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -25,7 +22,7 @@
                 />
   </url><url>
     <loc>https://devblog.kakaostyle.com/ko/</loc>
-    <lastmod>2022-10-13T00:00:00+00:00</lastmod>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -37,6 +34,15 @@
                 href="https://devblog.kakaostyle.com/ko/"
                 />
   </url><url>
+    <loc>https://devblog.kakaostyle.com/ko/tags/aws/</loc>
+    <lastmod>2022-10-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devblog.kakaostyle.com/ko/2022-10-13-1-karpenter-on-eks/</loc>
+    <lastmod>2022-10-13T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devblog.kakaostyle.com/ko/tags/kubernetes/</loc>
+    <lastmod>2022-10-13T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://devblog.kakaostyle.com/ko/tags/frontend/</loc>
     <lastmod>2022-10-12T00:00:00+00:00</lastmod>
   </url><url>
@@ -45,9 +51,6 @@
   </url><url>
     <loc>https://devblog.kakaostyle.com/ko/2022-10-12-1-sync-data-between-activities/</loc>
     <lastmod>2022-10-12T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://devblog.kakaostyle.com/ko/tags/graphql/</loc>
-    <lastmod>2022-10-04T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devblog.kakaostyle.com/ko/2022-10-04-1-understanding-graphql-1-schema/</loc>
     <lastmod>2022-10-04T00:00:00+00:00</lastmod>

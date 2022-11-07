@@ -12,7 +12,7 @@
       <pubDate>Thu, 13 Oct 2022 00:00:00 +0000</pubDate>
       
       <guid>https://devblog.kakaostyle.com/ko/2022-10-13-1-karpenter-on-eks/</guid>
-      <description>안녕하세요! 카카오스타일 SRE팀 네사입니다. 오늘은 카카오스타일 SRE팀에서 올해 EKS 클러스터 이전을 하며 새롭게 도입 했던 AWS Karpenter 에 대해 공유를 해보려 합니다</description>
+      <description>&lt;p&gt;안녕하세요! 카카오스타일 SRE팀 네사입니다. 오늘은 카카오스타일 SRE팀에서 올해 EKS 클러스터 이전을 하며 새롭게 도입 했던 &lt;strong&gt;AWS Karpenter&lt;/strong&gt; 에 대해 공유를 해보려 합니다.&lt;/p&gt;</description>
     </item>
     
     <item>

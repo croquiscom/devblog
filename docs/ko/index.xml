@@ -5,14 +5,23 @@
     <link>https://devblog.kakaostyle.com/ko/</link>
     <description>Recent content on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 13 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GraphQL 이해하기: (2) 실행 및 전송</title>
+      <link>https://devblog.kakaostyle.com/ko/2022-11-07-1-understanding-graphql-2-execution/</link>
+      <pubDate>Mon, 07 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/2022-11-07-1-understanding-graphql-2-execution/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://devblog.kakaostyle.com/ko/2022-10-04-1-understanding-graphql-1-schema/&#34;&gt;이전 글&lt;/a&gt;에서 GraphQL 스키마를 정의했습니다. 이제 이 스키마에 질의를 하고 그 결과를 받을 수 있습니다.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>EKS클러스터 Karpenter 적용기</title>
       <link>https://devblog.kakaostyle.com/ko/2022-10-13-1-karpenter-on-eks/</link>
       <pubDate>Thu, 13 Oct 2022 00:00:00 +0000</pubDate>
       
       <guid>https://devblog.kakaostyle.com/ko/2022-10-13-1-karpenter-on-eks/</guid>
-      <description>안녕하세요! 카카오스타일 SRE팀 네사입니다. 오늘은 카카오스타일 SRE팀에서 올해 EKS 클러스터 이전을 하며 새롭게 도입 했던 AWS Karpenter 에 대해 공유를 해보려 합니다</description>
+      <description>&lt;p&gt;안녕하세요! 카카오스타일 SRE팀 네사입니다. 오늘은 카카오스타일 SRE팀에서 올해 EKS 클러스터 이전을 하며 새롭게 도입 했던 &lt;strong&gt;AWS Karpenter&lt;/strong&gt; 에 대해 공유를 해보려 합니다.&lt;/p&gt;</description>
     </item>
     
     <item>
