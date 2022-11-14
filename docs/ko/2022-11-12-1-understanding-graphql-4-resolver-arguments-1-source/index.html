@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+  <meta charset='utf-8'>
+
+  <title>GraphQL 이해하기: (4) 리졸버 인자 - 1. source</title>
+  
+  <meta name='author' content='kakaostyle.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <meta property='og:title' content='GraphQL 이해하기: (4) 리졸버 인자 - 1. source' />
+  <meta property='og:description' content='GraphQL.js의 리졸버는 네개의 인자를 가지고 있습니다. 그 중 첫번째 인자는 source 입니다.' />
+  <meta property='og:type' content='article' />
+  <meta property='og:url' content='https://devblog.kakaostyle.com/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/' />
+  
+  <meta property='og:image' content='https://devblog.kakaostyle.com/img/og-image.png' />  
+  
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link href='/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='/css/syntax.css?body=1' rel='stylesheet' type='text/css' media='all'>
+</head>
+
+<body>
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='float-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon' src='/img/github-icon.svg'>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>GraphQL 이해하기: (4) 리졸버 인자 - 1. source</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class='container'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='post-header'>
+        <div class='post-tags'>
+          
+
+<ul class='tag_box inline'>
+  <li><i class='fas fa-tags'></i></li>
+  
+  <li>
+    <a href='/ko/tags/graphql'>
+      GraphQL
+      <span>8</span>
+    </a>
+  </li>
+  
+</ul>
+
+        </div>
+        <div class='float-right'>
+          
+          <div class='post-author'>
+            <i class='fas fa-pencil-alt'></i>
+            <span>Simon(윤상민)</span>
+          </div>
+          
+          <div class='post-date'>
+            <i class='fas fa-calendar-alt'></i>
+            <span>12 November 2022</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-12 col-lg-9'>
+      <p>GraphQL.js의 리졸버는 네개의 인자를 가지고 있습니다. 그 중 첫번째 인자는 source 입니다.</p>
+<blockquote>
+<p>GraphQL Java에서는 DataFetchingEnvironment.getSource로 얻을 수 있습니다.</p>
+</blockquote>
+<p>앞서 설명했듯이 리졸버는 상위 필드에서 하위 필드 순서로 호출됩니다. source는 상위 필드에서 반환한 값이 들어갑니다. 상위 필드가 없는 Query 필드에는 execute(graphql) 메소드의 rootValue 값이 들어옵니다. 다만 실전에서 rootValue를 사용해 본 적은 없습니다.</p>
+<p>굉장히 단순한 동작이지만 상위 필드에서 반환한 값이 <strong>그대로</strong> 들어온 다는 점을 이해해두면 좋습니다. 카카오스타일에서는 이 특성을 활용한 리졸버가 있습니다.</p>
+<p>앞선 예제를 다시 보겠습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">type_defs</span> <span class="o">=</span> <span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">type User {
+</span></span></span><span class="line"><span class="cl"><span class="sb">  id: ID!
+</span></span></span><span class="line"><span class="cl"><span class="sb">  name: String!
+</span></span></span><span class="line"><span class="cl"><span class="sb">  mobile_tel: String!
+</span></span></span><span class="line"><span class="cl"><span class="sb">}
+</span></span></span><span class="line"><span class="cl"><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">type Post {
+</span></span></span><span class="line"><span class="cl"><span class="sb">  id: ID!
+</span></span></span><span class="line"><span class="cl"><span class="sb">  title: String!
+</span></span></span><span class="line"><span class="cl"><span class="sb">  author_id: ID!
+</span></span></span><span class="line"><span class="cl"><span class="sb">  author: User!
+</span></span></span><span class="line"><span class="cl"><span class="sb">}
+</span></span></span><span class="line"><span class="cl"><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">type Query {
+</span></span></span><span class="line"><span class="cl"><span class="sb">  getPosts: [Post!]!
+</span></span></span><span class="line"><span class="cl"><span class="sb">  getUser(id: ID!): User!
+</span></span></span><span class="line"><span class="cl"><span class="sb">}`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">posts</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Post 1&#39;</span><span class="p">,</span> <span class="nx">author_id</span><span class="o">:</span> <span class="s1">&#39;51&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Post 2&#39;</span><span class="p">,</span> <span class="nx">author_id</span><span class="o">:</span> <span class="s1">&#39;52&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Post 3&#39;</span><span class="p">,</span> <span class="nx">author_id</span><span class="o">:</span> <span class="s1">&#39;51&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">resolvers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Query</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">getPosts</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">posts</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Post</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">author</span><span class="o">:</span> <span class="p">(</span><span class="nx">source</span>: <span class="kt">any</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">authors</span><span class="p">[</span><span class="nx">source</span><span class="p">.</span><span class="nx">author_id</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>GraphQL의 Post 타입과 구현 부분의 Post 인터페이스는 명백하게 같지 않습니다. 하지만 문제 없이 동작하죠. 이 차이를 명확히 보기 위해 Post 클래스를 정의하는 것으로 바꿔보겠습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">Post</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">constructor</span><span class="p">(</span><span class="kr">public</span> <span class="nx">id</span>: <span class="kt">string</span><span class="p">,</span> <span class="kr">public</span> <span class="nx">title</span>: <span class="kt">string</span><span class="p">,</span> <span class="kr">public</span> <span class="nx">author_id</span>: <span class="kt">string</span><span class="p">)</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">posts</span>: <span class="kt">Post</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span><span class="k">new</span> <span class="nx">Post</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;Post 1&#39;</span><span class="p">,</span> <span class="s1">&#39;51&#39;</span><span class="p">),</span> <span class="k">new</span> <span class="nx">Post</span><span class="p">(</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;Post 2&#39;</span><span class="p">,</span> <span class="s1">&#39;52&#39;</span><span class="p">),</span> <span class="k">new</span> <span class="nx">Post</span><span class="p">(</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;Post 3&#39;</span><span class="p">,</span> <span class="s1">&#39;51&#39;</span><span class="p">)];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">resolvers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Query</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">getPosts</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">posts</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Post</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">author</span><span class="o">:</span> <span class="p">(</span><span class="nx">source</span>: <span class="kt">Post</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">authors</span><span class="p">[</span><span class="nx">source</span><span class="p">.</span><span class="nx">author_id</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>이렇게 하면 GraphQL의 Post 타입과 다르다는 점이 명확히 눈에 들어옵니다.</p>
+<p>타입스크립트에서는 필드만 동일하면 해당 클래스와 같은 타입으로 인지합니다. 둘을 섞어서 정의해보면 어떻게 될까요?</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">posts</span>: <span class="kt">Post</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="k">new</span> <span class="nx">Post</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;Post 1&#39;</span><span class="p">,</span> <span class="s1">&#39;51&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Post 2&#39;</span><span class="p">,</span> <span class="nx">author_id</span><span class="o">:</span> <span class="s1">&#39;52&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Post 3&#39;</span><span class="p">,</span> <span class="nx">author_id</span><span class="o">:</span> <span class="s1">&#39;51&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">resolvers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Post</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">author</span><span class="o">:</span> <span class="p">(</span><span class="nx">source</span>: <span class="kt">Post</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">source</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="nx">source</span> <span class="k">instanceof</span> <span class="nx">Post</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">authors</span><span class="p">[</span><span class="nx">source</span><span class="p">.</span><span class="nx">author_id</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>결과는</p>
+<pre tabindex="0"><code>1 true
+2 false
+3 false
+</code></pre><p>이 됩니다. 극단적으로는 다음과 같은 것도 가능합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">resolvers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Query</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">getPosts</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">posts</span><span class="p">.</span><span class="nx">map</span><span class="p">((</span><span class="nx">post</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span> <span class="nx">_id</span>: <span class="kt">post.id</span> <span class="p">})),</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Post</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">id</span><span class="o">:</span> <span class="p">(</span><span class="nx">source</span><span class="o">:</span> <span class="p">{</span> <span class="nx">_id</span>: <span class="kt">string</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">source</span><span class="p">.</span><span class="nx">_id</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">title</span><span class="o">:</span> <span class="p">(</span><span class="nx">source</span><span class="o">:</span> <span class="p">{</span> <span class="nx">_id</span>: <span class="kt">string</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">posts</span><span class="p">.</span><span class="nx">find</span><span class="p">((</span><span class="nx">post</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">post</span><span class="p">.</span><span class="nx">id</span> <span class="o">===</span> <span class="nx">source</span><span class="p">.</span><span class="nx">_id</span><span class="p">)</span><span class="o">!</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">author</span><span class="o">:</span> <span class="p">(</span><span class="nx">source</span><span class="o">:</span> <span class="p">{</span> <span class="nx">_id</span>: <span class="kt">string</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">authors</span><span class="p">[</span><span class="nx">posts</span><span class="p">.</span><span class="nx">find</span><span class="p">((</span><span class="nx">post</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">post</span><span class="p">.</span><span class="nx">id</span> <span class="o">===</span> <span class="nx">source</span><span class="p">.</span><span class="nx">_id</span><span class="p">)</span><span class="o">!</span><span class="p">.</span><span class="nx">author_id</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>위에서 알 수 있듯이 상위 필드가 반환하는 값이 GraphQL 타입과 무관해도 아무 문제없습니다.</p>
+<p>GraphQL Java에서도 동작은 같습니다. (DGS 예이지만, DGS가 GraphQL Java 위에서 동작하므로 차이가 없습니다.)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">data</span> <span class="k">class</span> <span class="nc">Id</span><span class="p">(</span><span class="k">val</span> <span class="py">_id</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">data</span> <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="k">val</span> <span class="py">id</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="k">val</span> <span class="py">name</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="k">val</span> <span class="py">mobile</span><span class="n">_tel</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">users</span> <span class="p">=</span> <span class="n">mapOf</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;51&#34;</span> <span class="n">to</span> <span class="n">User</span><span class="p">(</span><span class="s2">&#34;51&#34;</span><span class="p">,</span> <span class="s2">&#34;John&#34;</span><span class="p">,</span> <span class="s2">&#34;01012345678&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;52&#34;</span> <span class="n">to</span> <span class="n">User</span><span class="p">(</span><span class="s2">&#34;52&#34;</span><span class="p">,</span> <span class="s2">&#34;Alex&#34;</span><span class="p">,</span> <span class="s2">&#34;01087654321&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@DgsComponent</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">PostDataFetcher</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">data</span> <span class="k">class</span> <span class="nc">Post</span><span class="p">(</span><span class="k">val</span> <span class="py">id</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="k">val</span> <span class="py">title</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="k">val</span> <span class="py">author</span><span class="n">_id</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="k">val</span> <span class="py">posts</span> <span class="p">=</span> <span class="n">listOf</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Post</span><span class="p">(</span><span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;Post 1&#34;</span><span class="p">,</span> <span class="s2">&#34;51&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Post</span><span class="p">(</span><span class="s2">&#34;2&#34;</span><span class="p">,</span> <span class="s2">&#34;Post 2&#34;</span><span class="p">,</span> <span class="s2">&#34;52&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Post</span><span class="p">(</span><span class="s2">&#34;3&#34;</span><span class="p">,</span> <span class="s2">&#34;Post 3&#34;</span><span class="p">,</span> <span class="s2">&#34;51&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@DgsQuery</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">getPosts</span><span class="p">()</span> <span class="p">=</span> <span class="n">posts</span><span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">Id</span><span class="p">(</span><span class="k">it</span><span class="p">.</span><span class="n">id</span><span class="p">)</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@DgsData</span><span class="p">(</span><span class="n">parentType</span> <span class="p">=</span> <span class="s2">&#34;Post&#34;</span><span class="p">,</span> <span class="k">field</span> <span class="p">=</span> <span class="s2">&#34;id&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">id</span><span class="p">(</span><span class="n">dfe</span><span class="p">:</span> <span class="n">DgsDataFetchingEnvironment</span><span class="p">)</span> <span class="p">=</span> <span class="n">dfe</span><span class="p">.</span><span class="n">getSource</span><span class="p">&lt;</span><span class="n">Id</span><span class="p">&gt;().</span><span class="n">_id</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@DgsData</span><span class="p">(</span><span class="n">parentType</span> <span class="p">=</span> <span class="s2">&#34;Post&#34;</span><span class="p">,</span> <span class="k">field</span> <span class="p">=</span> <span class="s2">&#34;title&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">title</span><span class="p">(</span><span class="n">dfe</span><span class="p">:</span> <span class="n">DgsDataFetchingEnvironment</span><span class="p">)</span> <span class="p">=</span> <span class="n">posts</span><span class="p">.</span><span class="n">find</span> <span class="p">{</span> <span class="k">it</span><span class="p">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">dfe</span><span class="p">.</span><span class="n">getSource</span><span class="p">&lt;</span><span class="n">Id</span><span class="p">&gt;().</span><span class="n">_id</span> <span class="p">}</span><span class="o">!!</span><span class="p">.</span><span class="n">title</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@DgsData</span><span class="p">(</span><span class="n">parentType</span> <span class="p">=</span> <span class="s2">&#34;Post&#34;</span><span class="p">,</span> <span class="k">field</span> <span class="p">=</span> <span class="s2">&#34;author&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">author</span><span class="p">(</span><span class="n">dfe</span><span class="p">:</span> <span class="n">DgsDataFetchingEnvironment</span><span class="p">)</span> <span class="p">=</span> <span class="n">users</span><span class="p">[</span><span class="n">posts</span><span class="p">.</span><span class="n">find</span> <span class="p">{</span> <span class="k">it</span><span class="p">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">dfe</span><span class="p">.</span><span class="n">getSource</span><span class="p">&lt;</span><span class="n">Id</span><span class="p">&gt;().</span><span class="n">_id</span> <span class="p">}</span><span class="o">!!</span><span class="p">.</span><span class="n">author_id</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>잘 활용하면 좋지만 코드를 새로 접한 사람에게 혼란을 줄 수도 있습니다. 또 위 특성 때문에 타입 언어와 안 어울리는 부분이 있습니다. 저희의 경우 TypeScript 프로젝트에 <a href="https://www.the-guild.dev/graphql/codegen">GraphQL Code Generator</a>를 사용해 리졸버 타입을 지정해주고 있는데, getPosts 리졸버가 반환하는 값에 non-null인 author 필드 값이 없다고 타입 에러가 나기 때문에 어쩔 수 없이 any를 써주고 있습니다.</p>
+      
+      <hr>
+      <div class='post-original'>
+        원본 링크 : <a href='https://sixmen.com/ko/tech/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/' target='_blank'>https://sixmen.com/ko/tech/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/</a>
+      </div>
+      
+    </div>
+
+    <div class='col-lg-3 sidemenu'>
+  <h4>Recent Posts</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 1. source</li>
+    </a>
+    
+    <a href='/ko/2022-11-09-1-understanding-graphql-3-understanding-resolver/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (3) 리졸버의 이해</li>
+    </a>
+    
+    <a href='/ko/2022-11-07-1-understanding-graphql-2-execution/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (2) 실행 및 전송</li>
+    </a>
+    
+    <a href='/ko/2022-10-13-1-karpenter-on-eks/'>
+      <li class="sidemenu-recent-item">EKS클러스터 Karpenter 적용기</li>
+    </a>
+    
+  </ul>
+  <hr>
+  <h4>Tags</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href="/ko/tags/amazon-sqs/">
+      <li class="sidemenu-recent-tags">amazon-sqs</li>
+    </a>
+    
+    <a href="/ko/tags/analytics/">
+      <li class="sidemenu-recent-tags">analytics</li>
+    </a>
+    
+    <a href="/ko/tags/android/">
+      <li class="sidemenu-recent-tags">android</li>
+    </a>
+    
+    <a href="/ko/tags/aws/">
+      <li class="sidemenu-recent-tags">aws</li>
+    </a>
+    
+    <a href="/ko/tags/aws-batch/">
+      <li class="sidemenu-recent-tags">aws-batch</li>
+    </a>
+    
+    <a href="/ko/tags/aws-lambda/">
+      <li class="sidemenu-recent-tags">aws-lambda</li>
+    </a>
+    
+    <a href="/ko/tags/botkit/">
+      <li class="sidemenu-recent-tags">botkit</li>
+    </a>
+    
+    <a href="/ko/tags/croquis/">
+      <li class="sidemenu-recent-tags">croquis</li>
+    </a>
+    
+    <a href="/ko/tags/css/">
+      <li class="sidemenu-recent-tags">css</li>
+    </a>
+    
+    <a href="/ko/tags/data/">
+      <li class="sidemenu-recent-tags">data</li>
+    </a>
+    
+    <a href="/ko/tags/event/">
+      <li class="sidemenu-recent-tags">event</li>
+    </a>
+    
+    <a href="/ko/tags/front-end/">
+      <li class="sidemenu-recent-tags">front-end</li>
+    </a>
+    
+    <a href="/ko/tags/frontend/">
+      <li class="sidemenu-recent-tags">frontend</li>
+    </a>
+    
+    <a href="/ko/tags/git/">
+      <li class="sidemenu-recent-tags">git</li>
+    </a>
+    
+    <a href="/ko/tags/github/">
+      <li class="sidemenu-recent-tags">github</li>
+    </a>
+    
+    <a href="/ko/tags/graphql/">
+      <li class="sidemenu-recent-tags">graphql</li>
+    </a>
+    
+    <a href="/ko/tags/ios/">
+      <li class="sidemenu-recent-tags">ios</li>
+    </a>
+    
+    <a href="/ko/tags/jenkins/">
+      <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/jotai/">
+      <li class="sidemenu-recent-tags">jotai</li>
+    </a>
+    
+    <a href="/ko/tags/kubernetes/">
+      <li class="sidemenu-recent-tags">kubernetes</li>
+    </a>
+    
+    <a href="/ko/tags/log/">
+      <li class="sidemenu-recent-tags">log</li>
+    </a>
+    
+    <a href="/ko/tags/microservice/">
+      <li class="sidemenu-recent-tags">microservice</li>
+    </a>
+    
+    <a href="/ko/tags/mithril/">
+      <li class="sidemenu-recent-tags">mithril</li>
+    </a>
+    
+    <a href="/ko/tags/node.js/">
+      <li class="sidemenu-recent-tags">node.js</li>
+    </a>
+    
+    <a href="/ko/tags/nodejs/">
+      <li class="sidemenu-recent-tags">nodejs</li>
+    </a>
+    
+    <a href="/ko/tags/npm/">
+      <li class="sidemenu-recent-tags">npm</li>
+    </a>
+    
+    <a href="/ko/tags/react/">
+      <li class="sidemenu-recent-tags">react</li>
+    </a>
+    
+    <a href="/ko/tags/rest-api/">
+      <li class="sidemenu-recent-tags">rest-api</li>
+    </a>
+    
+    <a href="/ko/tags/serverless-architecture/">
+      <li class="sidemenu-recent-tags">serverless-architecture</li>
+    </a>
+    
+    <a href="/ko/tags/slack/">
+      <li class="sidemenu-recent-tags">slack</li>
+    </a>
+    
+    <a href="/ko/tags/stack/">
+      <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/task-queue/">
+      <li class="sidemenu-recent-tags">task-queue</li>
+    </a>
+    
+    <a href="/ko/tags/thrift/">
+      <li class="sidemenu-recent-tags">thrift</li>
+    </a>
+    
+    <a href="/ko/tags/tutorial/">
+      <li class="sidemenu-recent-tags">tutorial</li>
+    </a>
+    
+    <a href="/ko/tags/typescript/">
+      <li class="sidemenu-recent-tags">typescript</li>
+    </a>
+    
+    <a href="/ko/tags/ui/">
+      <li class="sidemenu-recent-tags">ui</li>
+    </a>
+    
+    <a href="/ko/tags/vertical-align/">
+      <li class="sidemenu-recent-tags">vertical-align</li>
+    </a>
+    
+    <a href="/ko/tags/webpack/">
+      <li class="sidemenu-recent-tags">webpack</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A1%9C%EA%B7%B8/">
+      <li class="sidemenu-recent-tags">로그</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/">
+      <li class="sidemenu-recent-tags">마이크로서비스</li>
+    </a>
+    
+    <a href="/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/">
+      <li class="sidemenu-recent-tags">튜토리얼</li>
+    </a>
+    
+  </ul>
+</div>
+
+    <div class='col-12'>
+      <hr>
+
+      <div class='float-left'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2022-11-09-1-understanding-graphql-3-understanding-resolver/' title='GraphQL 이해하기: (3) 리졸버의 이해'>&larr; 이전 글</a>
+        
+      </div>
+      <div class='float-right'>
+        
+        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
+        
+      </div>
+      <div class='clearfix'></div>
+      <hr>
+      <div class='text-center'>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "croquiscom-devblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='container'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2021 kakaostyle.com
+      <span class='float-right text-muted'>
+        powered by
+        <a href='https://gohugo.io/' target='_blank'>Hugo</a>
+        and
+        <a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-48716672-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+  integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+  integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

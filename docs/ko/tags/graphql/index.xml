@@ -5,7 +5,16 @@
     <link>https://devblog.kakaostyle.com/ko/tags/graphql/</link>
     <description>Recent content in GraphQL on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 09 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/graphql/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 12 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/graphql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GraphQL 이해하기: (4) 리졸버 인자 - 1. source</title>
+      <link>https://devblog.kakaostyle.com/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/</link>
+      <pubDate>Sat, 12 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/</guid>
+      <description>&lt;p&gt;GraphQL.js의 리졸버는 네개의 인자를 가지고 있습니다. 그 중 첫번째 인자는 source 입니다.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>GraphQL 이해하기: (3) 리졸버의 이해</title>
       <link>https://devblog.kakaostyle.com/ko/2022-11-09-1-understanding-graphql-3-understanding-resolver/</link>

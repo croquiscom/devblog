@@ -3,13 +3,13 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://devblog.kakaostyle.com/ko/tags/graphql/</loc>
-    <lastmod>2022-11-09T00:00:00+00:00</lastmod>
+    <lastmod>2022-11-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://devblog.kakaostyle.com/ko/2022-11-09-1-understanding-graphql-3-understanding-resolver/</loc>
-    <lastmod>2022-11-09T00:00:00+00:00</lastmod>
+    <loc>https://devblog.kakaostyle.com/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/</loc>
+    <lastmod>2022-11-12T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devblog.kakaostyle.com/ko/tags/</loc>
-    <lastmod>2022-11-09T00:00:00+00:00</lastmod>
+    <lastmod>2022-11-12T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -22,7 +22,7 @@
                 />
   </url><url>
     <loc>https://devblog.kakaostyle.com/ko/</loc>
-    <lastmod>2022-11-09T00:00:00+00:00</lastmod>
+    <lastmod>2022-11-12T00:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -33,6 +33,9 @@
                 hreflang="ko"
                 href="https://devblog.kakaostyle.com/ko/"
                 />
+  </url><url>
+    <loc>https://devblog.kakaostyle.com/ko/2022-11-09-1-understanding-graphql-3-understanding-resolver/</loc>
+    <lastmod>2022-11-09T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devblog.kakaostyle.com/ko/2022-11-07-1-understanding-graphql-2-execution/</loc>
     <lastmod>2022-11-07T00:00:00+00:00</lastmod>
