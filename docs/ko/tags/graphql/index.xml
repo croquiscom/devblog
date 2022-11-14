@@ -5,7 +5,34 @@
     <link>https://devblog.kakaostyle.com/ko/tags/graphql/</link>
     <description>Recent content in GraphQL on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sat, 12 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/graphql/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 15 Nov 2022 03:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/graphql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GraphQL 이해하기: (4) 리졸버 인자 - 4. info</title>
+      <link>https://devblog.kakaostyle.com/ko/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/</link>
+      <pubDate>Tue, 15 Nov 2022 03:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/</guid>
+      <description>&lt;p&gt;GraphQL.js 리졸버의 마지막 인자는 info입니다. info는 현재 처리 중인 질의에 대한 정보가 들어가 있습니다. 보통은 리졸버 구현에 info가 필요하지 않지만 최적화나 복잡한 연결을 위해서는 info의 내용이 필요합니다.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>GraphQL 이해하기: (4) 리졸버 인자 - 3. context</title>
+      <link>https://devblog.kakaostyle.com/ko/2022-11-15-2-understanding-graphql-4-resolver-arguments-3-context/</link>
+      <pubDate>Tue, 15 Nov 2022 02:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/2022-11-15-2-understanding-graphql-4-resolver-arguments-3-context/</guid>
+      <description>&lt;p&gt;GraphQL.js 리졸버의 세번째 인자는 context입니다. 이 인자는 온전히 사용자가 설정하는 것으로 매 요청마다 새로 생성되며 같은 요청을 처리하는 리졸버가 상태를 공유하기 위해 사용합니다.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>GraphQL 이해하기: (4) 리졸버 인자 - 2. args</title>
+      <link>https://devblog.kakaostyle.com/ko/2022-11-15-1-understanding-graphql-4-resolver-arguments-2-args/</link>
+      <pubDate>Tue, 15 Nov 2022 01:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/2022-11-15-1-understanding-graphql-4-resolver-arguments-2-args/</guid>
+      <description>&lt;p&gt;GraphQL.js 리졸버의 두번째 인자는 args입니다. 해당 필드에 인자가 주어지면 그 값이 들어옵니다.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>GraphQL 이해하기: (4) 리졸버 인자 - 1. source</title>
       <link>https://devblog.kakaostyle.com/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/</link>

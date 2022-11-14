@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+  <meta charset='utf-8'>
+
+  <title>GraphQL 이해하기: (4) 리졸버 인자 - 4. info</title>
+  
+  <meta name='author' content='kakaostyle.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <meta property='og:title' content='GraphQL 이해하기: (4) 리졸버 인자 - 4. info' />
+  <meta property='og:description' content='GraphQL.js 리졸버의 마지막 인자는 info입니다. info는 현재 처리 중인 질의에 대한 정보가 들어가 있습니다. 보통은 리졸버 구현에 info가 필요하지 않지만 최적화나 복잡한 연결을 위해서는 info의 내용이 필요합니다.' />
+  <meta property='og:type' content='article' />
+  <meta property='og:url' content='https://devblog.kakaostyle.com/ko/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/' />
+  
+  <meta property='og:image' content='https://devblog.kakaostyle.com/img/og-image.png' />  
+  
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link href='/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='/css/syntax.css?body=1' rel='stylesheet' type='text/css' media='all'>
+</head>
+
+<body>
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='float-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon' src='/img/github-icon.svg'>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>GraphQL 이해하기: (4) 리졸버 인자 - 4. info</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class='container'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='post-header'>
+        <div class='post-tags'>
+          
+
+<ul class='tag_box inline'>
+  <li><i class='fas fa-tags'></i></li>
+  
+  <li>
+    <a href='/ko/tags/graphql'>
+      GraphQL
+      <span>11</span>
+    </a>
+  </li>
+  
+</ul>
+
+        </div>
+        <div class='float-right'>
+          
+          <div class='post-author'>
+            <i class='fas fa-pencil-alt'></i>
+            <span>Simon(윤상민)</span>
+          </div>
+          
+          <div class='post-date'>
+            <i class='fas fa-calendar-alt'></i>
+            <span>15 November 2022</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-12 col-lg-9'>
+      <p>GraphQL.js 리졸버의 마지막 인자는 info입니다. info는 현재 처리 중인 질의에 대한 정보가 들어가 있습니다. 보통은 리졸버 구현에 info가 필요하지 않지만 최적화나 복잡한 연결을 위해서는 info의 내용이 필요합니다.</p>
+<h2 id="variablevalues">variableValues</h2>
+<p>variableValues 속성에는 실행시 준 변수 값이 들어있습니다. 그런데 변수를 사용한 경우에만 값이 있기 때문에 생각보다 쓸 만한 곳은 없습니다. 아래 예에서 query도 필드의 인자이지만 variableValues에는 포함되지 않습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">makeExecutableSchema</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@graphql-tools/schema&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">graphql</span><span class="p">,</span> <span class="nx">GraphQLResolveInfo</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;graphql&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">type_defs</span> <span class="o">=</span> <span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">type User {
+</span></span></span><span class="line"><span class="cl"><span class="sb">  id: ID!
+</span></span></span><span class="line"><span class="cl"><span class="sb">  name: String!
+</span></span></span><span class="line"><span class="cl"><span class="sb">}
+</span></span></span><span class="line"><span class="cl"><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">type Query {
+</span></span></span><span class="line"><span class="cl"><span class="sb">  users(query: String, length: Int): [User!]!
+</span></span></span><span class="line"><span class="cl"><span class="sb">}`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">users</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Francisco&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Alexander&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">resolvers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Query</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">users</span><span class="o">:</span> <span class="p">(</span><span class="nx">_source</span>: <span class="kt">unknown</span><span class="p">,</span> <span class="nx">_args</span>: <span class="kt">unknown</span><span class="p">,</span> <span class="nx">_context</span>: <span class="kt">any</span><span class="p">,</span> <span class="nx">info</span>: <span class="kt">GraphQLResolveInfo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">variableValues</span><span class="p">);</span> <span class="c1">// { length: 5 }
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">return</span> <span class="nx">users</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">User</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">name</span><span class="o">:</span> <span class="p">(</span><span class="nx">source</span>: <span class="kt">any</span><span class="p">,</span> <span class="nx">_args</span>: <span class="kt">unknown</span><span class="p">,</span> <span class="nx">_context</span>: <span class="kt">any</span><span class="p">,</span> <span class="nx">info</span>: <span class="kt">GraphQLResolveInfo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">variableValues</span><span class="p">);</span> <span class="c1">// { length: 5 }
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">return</span> <span class="nx">source</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">schema</span> <span class="o">=</span> <span class="nx">makeExecutableSchema</span><span class="p">({</span> <span class="nx">typeDefs</span>: <span class="kt">type_defs</span><span class="p">,</span> <span class="nx">resolvers</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="kr">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">await</span> <span class="nx">graphql</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">schema</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">source</span><span class="o">:</span> <span class="sb">`query($length: Int) { users(query: &#34;H&#34;, length: $length) { id name } }`</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">variableValues</span><span class="o">:</span> <span class="p">{</span> <span class="nx">length</span>: <span class="kt">5</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">})();</span>
+</span></span></code></pre></div><p>GraphQL Java에서는 DataFetchingEnvironment.getVariables()로 얻을 수 있습니다.</p>
+<h2 id="path-fieldname-parenttype-returntype">path, fieldName, parentType, returnType</h2>
+<p>path을 통해 현재 리졸버가 어떤 경로에 의해 실행됐는지 알 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">makeExecutableSchema</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@graphql-tools/schema&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">graphql</span><span class="p">,</span> <span class="nx">GraphQLResolveInfo</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;graphql&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">type_defs</span> <span class="o">=</span> <span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">type Name {
+</span></span></span><span class="line"><span class="cl"><span class="sb">  first: String!
+</span></span></span><span class="line"><span class="cl"><span class="sb">  last: String!
+</span></span></span><span class="line"><span class="cl"><span class="sb">}
+</span></span></span><span class="line"><span class="cl"><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">type User {
+</span></span></span><span class="line"><span class="cl"><span class="sb">  id: ID!
+</span></span></span><span class="line"><span class="cl"><span class="sb">  name: Name!
+</span></span></span><span class="line"><span class="cl"><span class="sb">}
+</span></span></span><span class="line"><span class="cl"><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">type Query {
+</span></span></span><span class="line"><span class="cl"><span class="sb">  users: [User!]!
+</span></span></span><span class="line"><span class="cl"><span class="sb">}`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">users</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="p">{</span> <span class="nx">first</span><span class="o">:</span> <span class="s1">&#39;John&#39;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s1">&#39;Doe&#39;</span> <span class="p">}</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="p">{</span> <span class="nx">first</span><span class="o">:</span> <span class="s1">&#39;Michael&#39;</span><span class="p">,</span> <span class="nx">last</span><span class="o">:</span> <span class="s1">&#39;Frank&#39;</span> <span class="p">}</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">resolvers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Query</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">users</span><span class="o">:</span> <span class="p">(</span><span class="nx">_source</span>: <span class="kt">unknown</span><span class="p">,</span> <span class="nx">_args</span>: <span class="kt">unknown</span><span class="p">,</span> <span class="nx">_context</span>: <span class="kt">any</span><span class="p">,</span> <span class="nx">info</span>: <span class="kt">GraphQLResolveInfo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">path</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">users</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">User</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">name</span><span class="o">:</span> <span class="p">(</span><span class="nx">source</span>: <span class="kt">any</span><span class="p">,</span> <span class="nx">_args</span>: <span class="kt">unknown</span><span class="p">,</span> <span class="nx">_context</span>: <span class="kt">any</span><span class="p">,</span> <span class="nx">info</span>: <span class="kt">GraphQLResolveInfo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">path</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">source</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Name</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">first</span><span class="o">:</span> <span class="p">(</span><span class="nx">source</span>: <span class="kt">any</span><span class="p">,</span> <span class="nx">_args</span>: <span class="kt">unknown</span><span class="p">,</span> <span class="nx">_context</span>: <span class="kt">any</span><span class="p">,</span> <span class="nx">info</span>: <span class="kt">GraphQLResolveInfo</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">info</span><span class="p">.</span><span class="nx">path</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">source</span><span class="p">.</span><span class="nx">first</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">schema</span> <span class="o">=</span> <span class="nx">makeExecutableSchema</span><span class="p">({</span> <span class="nx">typeDefs</span>: <span class="kt">type_defs</span><span class="p">,</span> <span class="nx">resolvers</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="kr">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">await</span> <span class="nx">graphql</span><span class="p">({</span> <span class="nx">schema</span><span class="p">,</span> <span class="nx">source</span><span class="o">:</span> <span class="sb">`query { users { id name { first last } } }`</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">})();</span>
+</span></span></code></pre></div><p>다음과 같은 구조의 데이터입니다. users는 배열이기 때문에 중간에 ‘0’이 키로 존재합니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span> <span class="nt">&#34;key&#34;</span><span class="p">:</span> <span class="s2">&#34;users&#34;</span><span class="p">,</span> <span class="nt">&#34;typename&#34;</span><span class="p">:</span> <span class="s2">&#34;Query&#34;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;prev&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;prev&#34;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&#34;key&#34;</span><span class="p">:</span> <span class="s2">&#34;users&#34;</span><span class="p">,</span> <span class="nt">&#34;typename&#34;</span><span class="p">:</span> <span class="s2">&#34;Query&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;key&#34;</span><span class="p">:</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;key&#34;</span><span class="p">:</span> <span class="s2">&#34;name&#34;</span><span class="p">,</span> <span class="nt">&#34;typename&#34;</span><span class="p">:</span> <span class="s2">&#34;User&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;prev&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;prev&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;prev&#34;</span><span class="p">:</span> <span class="p">{</span> <span class="nt">&#34;key&#34;</span><span class="p">:</span> <span class="s2">&#34;users&#34;</span><span class="p">,</span> <span class="nt">&#34;typename&#34;</span><span class="p">:</span> <span class="s2">&#34;Query&#34;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;key&#34;</span><span class="p">:</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;key&#34;</span><span class="p">:</span> <span class="s2">&#34;name&#34;</span><span class="p">,</span> <span class="nt">&#34;typename&#34;</span><span class="p">:</span> <span class="s2">&#34;User&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&#34;key&#34;</span><span class="p">:</span> <span class="s2">&#34;first&#34;</span><span class="p">,</span> <span class="nt">&#34;typename&#34;</span><span class="p">:</span> <span class="s2">&#34;Name&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>fieldName, parentType, returnType에는 다음 스키마에 해당하는 타입이 들어가 있습니다.</p>
+<pre tabindex="0"><code>users, Query, [User!]!
+name, User, Name!
+first, Name, String!
+</code></pre><p>GraphQL Java에서는 DataFetchingEnvironment의 <code>getExecutionStepInfo().getPath()</code>, <code>getField().getName()</code>, <code>getParentType()</code>, <code>getExecutionStepInfo().getType()</code>으로 얻을 수 있습니다.</p>
+<h2 id="fieldnodes">fieldNodes</h2>
+<p>fieldNodes에는 현재 실행중인 리졸버가 반환해야 하는 필드 정보가 들어가 있습니다. (GraphQL Java에는 getField()로 얻을 수 있습니다.) 쿼리 최적화등에 사용할 수 있어서 가장 많이 쓰는 속성입니다.</p>
+<p>위 예에서 각 리졸버에 각각 <code>users { id name { first last } }</code>, <code>name { first last }</code>, <code>first</code>라는 값이 들어온다고 보면 됩니다. GraphQL.js의 내부 구조체를 그대로 주기 때문에 직접 쓰기에는 어렵습니다. 그래서 카카오스타일에서는 <a href="https://github.com/croquiscom/crary-node/tree/master/packages/graphql">@croquiscom/crary-graphql</a>이라는 자체 라이브러리를 만들어 사용하고 있습니다.</p>
+<h3 id="getfieldlist">getFieldList</h3>
+<p><code>getFieldList(info)</code>를 실행하면 현 리졸버가 반환해야 할 필드 목록을 반환합니다. 위 예에서는 <code>[ 'id', 'name.first', 'name.last' ]</code>, <code>[ 'first', 'last' ]</code>, <code>[]</code>가 실행 결과가 됩니다. 이를 활용해 클라이언트가 요청한 필드만 처리하는 최적화를 할 수 있습니다.</p>
+<p>중첩된 필드는 <code>.</code> 으로 묶여 1차원 배열로 반환하는데, 카카오스타일에서 쓰는 ORM인 <a href="https://croquiscom.github.io/cormo/">CORMO</a>에서 객체 컬럼이 있을 때 사용하는 select 구문의 인자로 그대로 쓸 수 있는 형태를 가지고 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">Name</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">@cormo</span><span class="p">.</span><span class="nx">Column</span><span class="p">({</span> <span class="kr">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="nx">required</span>: <span class="kt">true</span> <span class="p">})</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">public</span> <span class="nx">first</span>: <span class="kt">string</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kd">@cormo</span><span class="p">.</span><span class="nx">Column</span><span class="p">({</span> <span class="kr">type</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span> <span class="nx">required</span>: <span class="kt">true</span> <span class="p">})</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">public</span> <span class="nx">last</span>: <span class="kt">string</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">@cormo</span><span class="p">.</span><span class="nx">Model</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">User</span> <span class="kr">extends</span> <span class="nx">cormo</span><span class="p">.</span><span class="nx">BaseModel</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">id</span>: <span class="kt">number</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kd">@cormo</span><span class="p">.</span><span class="nx">ObjectColumn</span><span class="p">(</span><span class="nx">Name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">public</span> <span class="nx">name</span>: <span class="kt">Name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">records</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">User</span><span class="p">.</span><span class="nx">where</span><span class="p">().</span><span class="nx">select</span><span class="p">(</span><span class="nx">getFieldList</span><span class="p">(</span><span class="nx">info</span><span class="p">));</span>
+</span></span></code></pre></div><p><code>{ users { id name { first } } }</code>와 같이 일부 필드만 요청한 경우 위 코드는 <code>SELECT id, name_first FROM users</code>와 같이 요청한 컬럼만 DB에서 가져오는 최적화된 쿼리로 변환됩니다.</p>
+<h3 id="getfieldlist1st">getFieldList1st</h3>
+<p>getFieldList1st는 getFieldList와 유사하지만 첫번째 깊이의 필드만 반환합니다. 즉 위 예에서는 <code>[ 'id', 'name' ]</code>, <code>[ 'first', 'last' ]</code>, <code>[]</code> 를 반환합니다.</p>
+<p>args 아티클에 있는 total_count, item_list 예에서 <code>getFieldList1st(info).includes('item_list')</code> 조건문을 써서 item_list를 요청한 경우에만 DB에서 목록을 가져오는 최적화를 할 수 있습니다.</p>
+<h3 id="addargumenttoinfo-addfieldtoinfo-removeargumentfrominfo-removefieldfrominfo">addArgumentToInfo, addFieldToInfo, removeArgumentFromInfo, removeFieldFromInfo</h3>
+<p>카카오스타일에서는 API gateway를 두고 있고, 거기서 GraphQL을 각 마이크로서비스로 분배합니다. 이 때 클라이언트 요청을 일부 변형한 후에 마이크로서비스로 전달할 필요가 있어서 만든 유틸리티입니다. info에 필드를 추가/삭제하거나 인자를 변형할 수 있습니다.</p>
+<p>마이크로서비스에서 계정 정보를 반환하는 Query.user(id: ID!) API를 제공한다고 가정해 봅시다. 하지만 API gateway에서는 이 API를 그대로 쓰는게 아니라 현재 로그인한 사용자의 정보를 반환하는 Query.user 형태로 클라이언트에 노출하고 있습니다. 로그인한 사용자 정보는 API gateway가 알고 있고, 마이크로서비스 API 호출시 이를 인자에 추가해줘야 합니다. 이 로직을 다음과 같이 구현하고 있습니다. (hookResolver는 기존 리졸버의 동작 앞뒤에 다른 동작을 추가할 수 있는 유틸리티입니다.)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="nx">hookResolver</span><span class="p">(</span><span class="nx">schema</span><span class="p">.</span><span class="nx">getQueryType</span><span class="p">()</span><span class="o">!</span><span class="p">.</span><span class="nx">getFields</span><span class="p">().</span><span class="nx">user</span><span class="p">,</span> <span class="kr">async</span> <span class="p">(</span><span class="nx">source</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">info</span><span class="p">,</span> <span class="nx">resolve</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">user_id</span>: <span class="kt">string</span> <span class="o">|</span> <span class="kc">undefined</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">session</span><span class="p">.</span><span class="nx">login_user_id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">user_id</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">info</span> <span class="o">=</span> <span class="nx">addArgumentToInfo</span><span class="p">(</span><span class="nx">info</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="nx">user_id</span><span class="p">,</span> <span class="k">new</span> <span class="nx">GraphQLNonNull</span><span class="p">(</span><span class="nx">GraphQLID</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 또는 info = info.addArgument(&#39;id&#39;, user_id, new GraphQLNonNull(GraphQLID));
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>  <span class="k">return</span> <span class="k">await</span> <span class="nx">resolve</span><span class="p">(</span><span class="nx">source</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">context</span><span class="p">,</span> <span class="nx">info</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div>
+      
+      <hr>
+      <div class='post-original'>
+        원본 링크 : <a href='https://sixmen.com/ko/tech/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/' target='_blank'>https://sixmen.com/ko/tech/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/</a>
+      </div>
+      
+    </div>
+
+    <div class='col-lg-3 sidemenu'>
+  <h4>Recent Posts</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 4. info</li>
+    </a>
+    
+    <a href='/ko/2022-11-15-2-understanding-graphql-4-resolver-arguments-3-context/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 3. context</li>
+    </a>
+    
+    <a href='/ko/2022-11-15-1-understanding-graphql-4-resolver-arguments-2-args/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 2. args</li>
+    </a>
+    
+    <a href='/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 1. source</li>
+    </a>
+    
+  </ul>
+  <hr>
+  <h4>Tags</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href="/ko/tags/amazon-sqs/">
+      <li class="sidemenu-recent-tags">amazon-sqs</li>
+    </a>
+    
+    <a href="/ko/tags/analytics/">
+      <li class="sidemenu-recent-tags">analytics</li>
+    </a>
+    
+    <a href="/ko/tags/android/">
+      <li class="sidemenu-recent-tags">android</li>
+    </a>
+    
+    <a href="/ko/tags/aws/">
+      <li class="sidemenu-recent-tags">aws</li>
+    </a>
+    
+    <a href="/ko/tags/aws-batch/">
+      <li class="sidemenu-recent-tags">aws-batch</li>
+    </a>
+    
+    <a href="/ko/tags/aws-lambda/">
+      <li class="sidemenu-recent-tags">aws-lambda</li>
+    </a>
+    
+    <a href="/ko/tags/botkit/">
+      <li class="sidemenu-recent-tags">botkit</li>
+    </a>
+    
+    <a href="/ko/tags/croquis/">
+      <li class="sidemenu-recent-tags">croquis</li>
+    </a>
+    
+    <a href="/ko/tags/css/">
+      <li class="sidemenu-recent-tags">css</li>
+    </a>
+    
+    <a href="/ko/tags/data/">
+      <li class="sidemenu-recent-tags">data</li>
+    </a>
+    
+    <a href="/ko/tags/event/">
+      <li class="sidemenu-recent-tags">event</li>
+    </a>
+    
+    <a href="/ko/tags/front-end/">
+      <li class="sidemenu-recent-tags">front-end</li>
+    </a>
+    
+    <a href="/ko/tags/frontend/">
+      <li class="sidemenu-recent-tags">frontend</li>
+    </a>
+    
+    <a href="/ko/tags/git/">
+      <li class="sidemenu-recent-tags">git</li>
+    </a>
+    
+    <a href="/ko/tags/github/">
+      <li class="sidemenu-recent-tags">github</li>
+    </a>
+    
+    <a href="/ko/tags/graphql/">
+      <li class="sidemenu-recent-tags">graphql</li>
+    </a>
+    
+    <a href="/ko/tags/ios/">
+      <li class="sidemenu-recent-tags">ios</li>
+    </a>
+    
+    <a href="/ko/tags/jenkins/">
+      <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/jotai/">
+      <li class="sidemenu-recent-tags">jotai</li>
+    </a>
+    
+    <a href="/ko/tags/kubernetes/">
+      <li class="sidemenu-recent-tags">kubernetes</li>
+    </a>
+    
+    <a href="/ko/tags/log/">
+      <li class="sidemenu-recent-tags">log</li>
+    </a>
+    
+    <a href="/ko/tags/microservice/">
+      <li class="sidemenu-recent-tags">microservice</li>
+    </a>
+    
+    <a href="/ko/tags/mithril/">
+      <li class="sidemenu-recent-tags">mithril</li>
+    </a>
+    
+    <a href="/ko/tags/node.js/">
+      <li class="sidemenu-recent-tags">node.js</li>
+    </a>
+    
+    <a href="/ko/tags/nodejs/">
+      <li class="sidemenu-recent-tags">nodejs</li>
+    </a>
+    
+    <a href="/ko/tags/npm/">
+      <li class="sidemenu-recent-tags">npm</li>
+    </a>
+    
+    <a href="/ko/tags/react/">
+      <li class="sidemenu-recent-tags">react</li>
+    </a>
+    
+    <a href="/ko/tags/rest-api/">
+      <li class="sidemenu-recent-tags">rest-api</li>
+    </a>
+    
+    <a href="/ko/tags/serverless-architecture/">
+      <li class="sidemenu-recent-tags">serverless-architecture</li>
+    </a>
+    
+    <a href="/ko/tags/slack/">
+      <li class="sidemenu-recent-tags">slack</li>
+    </a>
+    
+    <a href="/ko/tags/stack/">
+      <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/task-queue/">
+      <li class="sidemenu-recent-tags">task-queue</li>
+    </a>
+    
+    <a href="/ko/tags/thrift/">
+      <li class="sidemenu-recent-tags">thrift</li>
+    </a>
+    
+    <a href="/ko/tags/tutorial/">
+      <li class="sidemenu-recent-tags">tutorial</li>
+    </a>
+    
+    <a href="/ko/tags/typescript/">
+      <li class="sidemenu-recent-tags">typescript</li>
+    </a>
+    
+    <a href="/ko/tags/ui/">
+      <li class="sidemenu-recent-tags">ui</li>
+    </a>
+    
+    <a href="/ko/tags/vertical-align/">
+      <li class="sidemenu-recent-tags">vertical-align</li>
+    </a>
+    
+    <a href="/ko/tags/webpack/">
+      <li class="sidemenu-recent-tags">webpack</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A1%9C%EA%B7%B8/">
+      <li class="sidemenu-recent-tags">로그</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/">
+      <li class="sidemenu-recent-tags">마이크로서비스</li>
+    </a>
+    
+    <a href="/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/">
+      <li class="sidemenu-recent-tags">튜토리얼</li>
+    </a>
+    
+  </ul>
+</div>
+
+    <div class='col-12'>
+      <hr>
+
+      <div class='float-left'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2022-11-15-2-understanding-graphql-4-resolver-arguments-3-context/' title='GraphQL 이해하기: (4) 리졸버 인자 - 3. context'>&larr; 이전 글</a>
+        
+      </div>
+      <div class='float-right'>
+        
+        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
+        
+      </div>
+      <div class='clearfix'></div>
+      <hr>
+      <div class='text-center'>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "croquiscom-devblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='container'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2021 kakaostyle.com
+      <span class='float-right text-muted'>
+        powered by
+        <a href='https://gohugo.io/' target='_blank'>Hugo</a>
+        and
+        <a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-48716672-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+  integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+  integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

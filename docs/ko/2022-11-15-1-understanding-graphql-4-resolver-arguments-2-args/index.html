@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+  <meta charset='utf-8'>
+
+  <title>GraphQL 이해하기: (4) 리졸버 인자 - 2. args</title>
+  
+  <meta name='author' content='kakaostyle.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <meta property='og:title' content='GraphQL 이해하기: (4) 리졸버 인자 - 2. args' />
+  <meta property='og:description' content='GraphQL.js 리졸버의 두번째 인자는 args입니다. 해당 필드에 인자가 주어지면 그 값이 들어옵니다.' />
+  <meta property='og:type' content='article' />
+  <meta property='og:url' content='https://devblog.kakaostyle.com/ko/2022-11-15-1-understanding-graphql-4-resolver-arguments-2-args/' />
+  
+  <meta property='og:image' content='https://devblog.kakaostyle.com/img/og-image.png' />  
+  
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link href='/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='/css/syntax.css?body=1' rel='stylesheet' type='text/css' media='all'>
+</head>
+
+<body>
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='float-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon' src='/img/github-icon.svg'>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>GraphQL 이해하기: (4) 리졸버 인자 - 2. args</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class='container'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='post-header'>
+        <div class='post-tags'>
+          
+
+<ul class='tag_box inline'>
+  <li><i class='fas fa-tags'></i></li>
+  
+  <li>
+    <a href='/ko/tags/graphql'>
+      GraphQL
+      <span>11</span>
+    </a>
+  </li>
+  
+</ul>
+
+        </div>
+        <div class='float-right'>
+          
+          <div class='post-author'>
+            <i class='fas fa-pencil-alt'></i>
+            <span>Simon(윤상민)</span>
+          </div>
+          
+          <div class='post-date'>
+            <i class='fas fa-calendar-alt'></i>
+            <span>15 November 2022</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-12 col-lg-9'>
+      <p>GraphQL.js 리졸버의 두번째 인자는 args입니다. 해당 필드에 인자가 주어지면 그 값이 들어옵니다.</p>
+<blockquote>
+<p>GraphQL Java에서는 DataFetchingEnvironment.getArguments 로 얻을 수 있습니다.</p>
+</blockquote>
+<h2 id="인자-처리하기">인자 처리하기</h2>
+<p>프로그래밍에서 함수 호출에 인자가 있는 것은 당연하기 때문에 어렵지 않은 개념일 겁니다. 다만 GraphQL에서 간과하기 쉬운 특성으로 객체 속성에도 인자를 줄 수 있다는 점이 있습니다. 이를 활용해 데이터를 서버에서 적절히 가공해 클라이언트에 주도록 할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">makeExecutableSchema</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;@graphql-tools/schema&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">graphql</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;graphql&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">type_defs</span> <span class="o">=</span> <span class="sb">`
+</span></span></span><span class="line"><span class="cl"><span class="sb">type User {
+</span></span></span><span class="line"><span class="cl"><span class="sb">  id: ID!
+</span></span></span><span class="line"><span class="cl"><span class="sb">  name(length: Int): String!
+</span></span></span><span class="line"><span class="cl"><span class="sb">}
+</span></span></span><span class="line"><span class="cl"><span class="sb">
+</span></span></span><span class="line"><span class="cl"><span class="sb">type Query {
+</span></span></span><span class="line"><span class="cl"><span class="sb">  users(query: String, length: Int): [User!]!
+</span></span></span><span class="line"><span class="cl"><span class="sb">}`</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">interface</span> <span class="nx">User</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">id</span>: <span class="kt">string</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">name</span>: <span class="kt">string</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">users</span>: <span class="kt">User</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Francisco&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Alexander&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Picasso&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Charles&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Frederick&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">{</span> <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;Nicholas&#39;</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">];</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">resolvers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Query</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">users</span><span class="o">:</span> <span class="p">(</span><span class="nx">_source</span>: <span class="kt">unknown</span><span class="p">,</span> <span class="nx">args</span><span class="o">:</span> <span class="p">{</span> <span class="nx">query?</span>: <span class="kt">string</span><span class="p">;</span> <span class="nx">length?</span>: <span class="kt">number</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`users args: </span><span class="si">${</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">filtered</span> <span class="o">=</span> <span class="nx">args</span><span class="p">.</span><span class="nx">query</span> <span class="o">?</span> <span class="nx">users</span><span class="p">.</span><span class="nx">filter</span><span class="p">((</span><span class="nx">user</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">user</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">includes</span><span class="p">(</span><span class="nx">args</span><span class="p">.</span><span class="nx">query</span><span class="o">!</span><span class="p">))</span> <span class="o">:</span> <span class="nx">users</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">args</span><span class="p">.</span><span class="nx">length</span> <span class="o">?</span> <span class="nx">filtered</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">args</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">:</span> <span class="nx">filtered</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">User</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">name</span><span class="o">:</span> <span class="p">(</span><span class="nx">source</span>: <span class="kt">User</span><span class="p">,</span> <span class="nx">args</span><span class="o">:</span> <span class="p">{</span> <span class="nx">length?</span>: <span class="kt">number</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`name args: </span><span class="si">${</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="nx">args</span><span class="p">.</span><span class="nx">length</span> <span class="o">?</span> <span class="nx">source</span><span class="p">.</span><span class="nx">name</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nx">args</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="o">:</span> <span class="nx">source</span><span class="p">.</span><span class="nx">name</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">schema</span> <span class="o">=</span> <span class="nx">makeExecutableSchema</span><span class="p">({</span> <span class="nx">typeDefs</span>: <span class="kt">type_defs</span><span class="p">,</span> <span class="nx">resolvers</span> <span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">(</span><span class="kr">async</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">result</span> <span class="o">=</span> <span class="k">await</span> <span class="nx">graphql</span><span class="p">({</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">schema</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">source</span><span class="o">:</span> <span class="sb">`query {
+</span></span></span><span class="line"><span class="cl"><span class="sb">  a: users(query: &#34;o&#34;, length: 2) { id name }
+</span></span></span><span class="line"><span class="cl"><span class="sb">  b: users(length: 2) { id name(length: 3) }
+</span></span></span><span class="line"><span class="cl"><span class="sb">  c: users(query: &#34;o&#34;, length: null) { id name(length: null) }
+</span></span></span><span class="line"><span class="cl"><span class="sb">}`</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">2</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="p">})();</span>
+</span></span></code></pre></div><p>실행 결과는 너무 당연해서 별다른 설명이 필요없습니다.</p>
+<pre tabindex="0"><code>users args: {&#34;query&#34;:&#34;o&#34;,&#34;length&#34;:2}
+name args: {}
+name args: {}
+users args: {&#34;length&#34;:2}
+name args: {&#34;length&#34;:3}
+name args: {&#34;length&#34;:3}
+users args: {&#34;query&#34;:&#34;o&#34;,&#34;length&#34;:null}
+name args: {&#34;length&#34;:null}
+name args: {&#34;length&#34;:null}
+name args: {&#34;length&#34;:null}
+{
+  &#34;data&#34;: {
+    &#34;a&#34;: [
+      { &#34;id&#34;: &#34;1&#34;, &#34;name&#34;: &#34;Francisco&#34; },
+      { &#34;id&#34;: &#34;3&#34;, &#34;name&#34;: &#34;Picasso&#34; }
+    ],
+    &#34;b&#34;: [
+      { &#34;id&#34;: &#34;1&#34;, &#34;name&#34;: &#34;Fra&#34; },
+      { &#34;id&#34;: &#34;2&#34;, &#34;name&#34;: &#34;Ale&#34; }
+    ],
+    &#34;c&#34;: [
+      { &#34;id&#34;: &#34;1&#34;, &#34;name&#34;: &#34;Francisco&#34; },
+      { &#34;id&#34;: &#34;3&#34;, &#34;name&#34;: &#34;Picasso&#34; },
+      { &#34;id&#34;: &#34;6&#34;, &#34;name&#34;: &#34;Nicholas&#34; }
+    ]
+  }
+}
+</code></pre><p>하나 주목할 점은 nullable 인자에 null을 준 것과 아예 누락한게 다르다는 점입니다. JavaScript에서 null과 undefined는 모든 사람들에게 혼란을 주는 괴이한 스펙이지만, 가끔은 유용/필요할 때가 있습니다. 다만 GraphQL API는 모든 언어를 생각해야 하기 때문에 null과 누락이 다르다는 특성을 실제 활용한 적은 없습니다.</p>
+<p>다음은 DGS Framework로 구현한 예입니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">data</span> <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="k">val</span> <span class="py">id</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="k">val</span> <span class="py">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">users</span> <span class="p">=</span> <span class="n">listOf</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">User</span><span class="p">(</span><span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;Francisco&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">User</span><span class="p">(</span><span class="s2">&#34;2&#34;</span><span class="p">,</span> <span class="s2">&#34;Alexander&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">User</span><span class="p">(</span><span class="s2">&#34;3&#34;</span><span class="p">,</span> <span class="s2">&#34;Picasso&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">User</span><span class="p">(</span><span class="s2">&#34;4&#34;</span><span class="p">,</span> <span class="s2">&#34;Charles&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">User</span><span class="p">(</span><span class="s2">&#34;5&#34;</span><span class="p">,</span> <span class="s2">&#34;Frederick&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">User</span><span class="p">(</span><span class="s2">&#34;6&#34;</span><span class="p">,</span> <span class="s2">&#34;Nicholas&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@DgsComponent</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">UserDataFetcher</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@DgsQuery</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">users</span><span class="p">(</span><span class="n">dfe</span><span class="p">:</span> <span class="n">DgsDataFetchingEnvironment</span><span class="p">):</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">val</span> <span class="py">query</span> <span class="p">=</span> <span class="n">dfe</span><span class="p">.</span><span class="n">getArgument</span><span class="p">&lt;</span><span class="n">String</span><span class="p">?&gt;(</span><span class="s2">&#34;query&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">val</span> <span class="py">length</span> <span class="p">=</span> <span class="n">dfe</span><span class="p">.</span><span class="n">getArgument</span><span class="p">&lt;</span><span class="n">Int</span><span class="p">?&gt;(</span><span class="s2">&#34;length&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">println</span><span class="p">(</span><span class="s2">&#34;users </span><span class="si">${dfe.arguments}</span><span class="s2"> / </span><span class="si">$query</span><span class="s2"> / </span><span class="si">$length</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">val</span> <span class="py">filtered</span> <span class="p">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">query</span> <span class="o">!=</span> <span class="k">null</span><span class="p">)</span> <span class="n">users</span><span class="p">.</span><span class="n">filter</span> <span class="p">{</span> <span class="k">it</span><span class="p">.</span><span class="n">name</span><span class="p">.</span><span class="n">contains</span><span class="p">(</span><span class="n">query</span><span class="p">)</span> <span class="p">}</span> <span class="k">else</span> <span class="n">users</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="k">if</span> <span class="p">(</span><span class="n">length</span> <span class="o">!=</span> <span class="k">null</span><span class="p">)</span> <span class="n">filtered</span><span class="p">.</span><span class="n">subList</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span> <span class="k">else</span> <span class="n">filtered</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@DgsData</span><span class="p">(</span><span class="n">parentType</span> <span class="p">=</span> <span class="s2">&#34;User&#34;</span><span class="p">,</span> <span class="k">field</span> <span class="p">=</span> <span class="s2">&#34;name&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">name</span><span class="p">(</span><span class="n">dfe</span><span class="p">:</span> <span class="n">DgsDataFetchingEnvironment</span><span class="p">):</span> <span class="n">String</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">val</span> <span class="py">length</span> <span class="p">=</span> <span class="n">dfe</span><span class="p">.</span><span class="n">getArgument</span><span class="p">&lt;</span><span class="n">Int</span><span class="p">?&gt;(</span><span class="s2">&#34;length&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">println</span><span class="p">(</span><span class="s2">&#34;name </span><span class="si">${dfe.arguments}</span><span class="s2"> / </span><span class="si">$length</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">val</span> <span class="py">name</span> <span class="p">=</span> <span class="n">dfe</span><span class="p">.</span><span class="n">getSource</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;().</span><span class="n">name</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="k">if</span> <span class="p">(</span><span class="n">length</span> <span class="o">!=</span> <span class="k">null</span><span class="p">)</span> <span class="n">name</span><span class="p">.</span><span class="n">substring</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span> <span class="k">else</span> <span class="n">name</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>질의 결과는 당연히 동일하고, arguments를 한번 살펴보면 null이 들어온 경우와 값이 주어지지 않은 경우가 구분되는 것을 확인할 수 있습니다.</p>
+<pre tabindex="0"><code>users {query=o, length=2} / o / 2
+name {} / null
+name {} / null
+users {length=2} / null / 2
+name {length=3} / 3
+name {length=3} / 3
+users {query=o, length=null} / o / null
+name {length=null} / null
+name {length=null} / null
+name {length=null} / null
+</code></pre><h2 id="상위-필드의-인자-사용">상위 필드의 인자 사용</h2>
+<p>User 타입의 필드 리졸버를 구현이 필요하다고 생각해봅시다. 그런데 이 User 객체가 getPosts → Post → author를 거쳐 온 것인지, getUser에서 온 것인지 구분할 수가 없습니다. 따라서 리졸버는 가급적 어떤 경로에서 온 것인지 몰라도 동작하도록 구현하는 것이 바람직합니다. 그런데 상위 필드의 인자를 사용한다? 얼핏 봐도 하면 안 되는 일 같지만 아쉽게도 이게 필요한 경우가 있습니다.</p>
+<p>서버에서 리소스 목록을 반환하는 API는 기본이라고 볼 수 있죠. 그리고 이 목록이 방대하기 때문에 페이지네이션으로 가져오는 경우도 흔합니다. 페이지네이션을 보여주려면 요청한 목록 외에 전체 리소스 개수도 필요합니다. 물론 GraphQL을 사용하면 목록과 개수를 한번에 요청하는 것이 가능합니다. 흔한 요구사항인 만큼 페이스북이 처음 GraphQL을 내놓을때 <a href="https://relay.dev/graphql/connections.htm">Connections</a> 라는 스펙을 <a href="https://relay.dev/">Relay</a>와 함께 제시했습니다.</p>
+<p>이 스펙으로 포스트 목록을 요청하면 다음과 같은 형태가 됩니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="kd">query</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nc">getPosts</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="py">totalCount</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="py">pageInfo</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="py">hasNextPage</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="py">edges</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="py">cursor</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="py">node</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="py">id</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="py">title</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="py">author</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="py">name</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>개인적으로 이 스펙은 복잡해서 이해하기 어렵다고 느껴졌기 때문에 카카오스타일에서는 Connection, Edge, Node 대신 단순한 List, Item 개념을 사용해서 목록을 구현하고 있습니다. cursor를 위로 빼서 Edge 필요성을 없애고, hasNextPage를 <code>next_cursor != null</code> 로 대체했다고 보시면 됩니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nc">PostList</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">total_count</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">item_list</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="nc">Post</span><span class="p">!]!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">next_cursor</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">type</span><span class="w"> </span><span class="nc">Query</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">getPosts</span><span class="p">:</span><span class="w"> </span><span class="nc">PostList</span><span class="p">!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>항상 글 전체 목록만 가져올리는 없겠죠? 원하는 글 목록에 대한 조건을 추가해봅시다. 페이지네이션은 전통적인 방식인 OFFSET &amp; LIMIT으로 구현하기로 했습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nc">Query</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">getPosts</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="py">author_id</span><span class="p">:</span><span class="w"> </span><span class="nc">ID</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="py">date_created_gte</span><span class="p">:</span><span class="w"> </span><span class="nc">Float</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="py">date_created_lt</span><span class="p">:</span><span class="w"> </span><span class="nc">Float</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="py">title_contains</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="py">limit</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">		</span><span class="py">skip</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="p">):</span><span class="w"> </span><span class="nc">PostList</span><span class="p">!</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>total_count, item_list를 구현할 때 위 인자를 모두 알아야 합니다. (total_count 구현시에는 limit, skip이 필요하지 않습니다) 하지만 이 리졸버에서 getPosts의 인자를 얻을 방법이 없습니다. 그렇다고 total_count, item_list에 인자를 중복 기술하는 것은 좋아보이지 않습니다.</p>
+<p>이전 source 설명 아티클에서 말씀드린 테크닉을 사용하면 상위 인자를 얻을 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">resolvers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Query</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">getPosts</span><span class="o">:</span> <span class="p">(</span><span class="nx">_source</span>: <span class="kt">unknown</span><span class="p">,</span> <span class="nx">args</span>: <span class="kt">GetPostsArgs</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">({</span> <span class="nx">__args</span>: <span class="kt">args</span> <span class="p">}),</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">PostList</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">total_count</span><span class="o">:</span> <span class="p">({</span> <span class="nx">__args</span>: <span class="kt">args</span> <span class="p">}</span><span class="o">:</span> <span class="p">{</span> <span class="nx">__args</span>: <span class="kt">GetPostsArgs</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// get total count with arguments
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">item_list</span><span class="o">:</span> <span class="p">({</span> <span class="nx">__args</span>: <span class="kt">args</span> <span class="p">}</span><span class="o">:</span> <span class="p">{</span> <span class="nx">__args</span>: <span class="kt">GetPostsArgs</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="c1">// get item list with arguments
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>원 리졸버의 args와 헷갈리기 때문에 익숙해지려면 시간이 걸리지만 동작은 합니다. 이 테크닉을 사용하지 않으려면 getPosts에서 total_count, item_list를 모두 구해 반환하면 됩니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">resolvers</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">Query</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">getPosts</span><span class="o">:</span> <span class="p">(</span><span class="nx">_source</span>: <span class="kt">unknown</span><span class="p">,</span> <span class="nx">args</span>: <span class="kt">GetPostsArgs</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="kr">const</span> <span class="nx">total_count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// get total count with arguments
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="kr">const</span> <span class="nx">item_list</span> <span class="o">=</span> <span class="p">[];</span> <span class="c1">// get item list with arguments
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="k">return</span> <span class="p">{</span> <span class="nx">total_count</span><span class="p">,</span> <span class="nx">item_list</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>이 경우 내가 total_count, item_list 중 하나만 요청한 경우에도 나머지를 계산해야 하는 비효율이 발생합니다. (다음에 설명할 info를 사용해 최적화할 수는 있습니다) 어느 쪽이든 그렇게 깔끔하지는 않습니다만, 개인적으로는 주로 전자의 패턴을 많이 사용하고 있습니다. (후자로 한 경우도 있습니다.) 상위 인자를 접근하는 것은 일반적으로 좋지 않은 패턴이므로 위와 같이 실질적으로 하나의 쌍으로 간주되는 경우만 사용하시는 것이 좋습니다.</p>
+<p>GraphQL Java도 똑같이 구현할 수 있지만, 상위 필드가 반환해주는 값을 별도로 전달 받을 수 있는 localContext 라는 개념이 있어 이를 활용할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">PostDataFetcher</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">data</span> <span class="k">class</span> <span class="nc">Post</span><span class="p">(</span><span class="k">val</span> <span class="py">id</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="k">val</span> <span class="py">title</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="k">val</span> <span class="py">author</span><span class="n">_id</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">data</span> <span class="k">class</span> <span class="nc">PostList</span><span class="p">(</span><span class="k">val</span> <span class="py">total</span><span class="n">_count</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="k">val</span> <span class="py">item</span><span class="n">_list</span><span class="p">:</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Post</span><span class="p">&gt;)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@DgsQuery</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">getPosts</span><span class="p">(</span><span class="n">dfe</span><span class="p">:</span> <span class="n">DgsDataFetchingEnvironment</span><span class="p">):</span> <span class="n">DataFetcherResult</span><span class="p">&lt;</span><span class="n">PostList</span><span class="p">&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">println</span><span class="p">(</span><span class="s2">&#34;getPosts </span><span class="si">${dfe.arguments}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">DataFetcherResult</span><span class="p">.</span><span class="n">newResult</span><span class="p">&lt;</span><span class="n">PostList</span><span class="p">&gt;()</span>
+</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="k">data</span><span class="p">(</span><span class="n">PostList</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">emptyList</span><span class="p">()))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="n">localContext</span><span class="p">(</span><span class="n">dfe</span><span class="p">.</span><span class="n">arguments</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="n">build</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@DgsData</span><span class="p">(</span><span class="n">parentType</span> <span class="p">=</span> <span class="s2">&#34;PostList&#34;</span><span class="p">,</span> <span class="k">field</span> <span class="p">=</span> <span class="s2">&#34;total_count&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">totalCount</span><span class="p">(</span><span class="n">dfe</span><span class="p">:</span> <span class="n">DgsDataFetchingEnvironment</span><span class="p">):</span> <span class="n">Int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">println</span><span class="p">(</span><span class="s2">&#34;totalCount </span><span class="si">${dfe.getLocalContext&lt;Map&lt;String, Object&gt;&gt;()}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="m">10</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nd">@DgsData</span><span class="p">(</span><span class="n">parentType</span> <span class="p">=</span> <span class="s2">&#34;PostList&#34;</span><span class="p">,</span> <span class="k">field</span> <span class="p">=</span> <span class="s2">&#34;item_list&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">itemList</span><span class="p">(</span><span class="n">dfe</span><span class="p">:</span> <span class="n">DgsDataFetchingEnvironment</span><span class="p">):</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Post</span><span class="p">&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">println</span><span class="p">(</span><span class="s2">&#34;itemList </span><span class="si">${dfe.getLocalContext&lt;Map&lt;String, Object&gt;&gt;()}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">listOf</span><span class="p">(</span><span class="n">Post</span><span class="p">(</span><span class="s2">&#34;1&#34;</span><span class="p">,</span> <span class="s2">&#34;Post 1&#34;</span><span class="p">,</span> <span class="s2">&#34;51&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+      
+      <hr>
+      <div class='post-original'>
+        원본 링크 : <a href='https://sixmen.com/ko/tech/2022-11-15-1-understanding-graphql-4-resolver-arguments-2-args/' target='_blank'>https://sixmen.com/ko/tech/2022-11-15-1-understanding-graphql-4-resolver-arguments-2-args/</a>
+      </div>
+      
+    </div>
+
+    <div class='col-lg-3 sidemenu'>
+  <h4>Recent Posts</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 4. info</li>
+    </a>
+    
+    <a href='/ko/2022-11-15-2-understanding-graphql-4-resolver-arguments-3-context/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 3. context</li>
+    </a>
+    
+    <a href='/ko/2022-11-15-1-understanding-graphql-4-resolver-arguments-2-args/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 2. args</li>
+    </a>
+    
+    <a href='/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 1. source</li>
+    </a>
+    
+  </ul>
+  <hr>
+  <h4>Tags</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href="/ko/tags/amazon-sqs/">
+      <li class="sidemenu-recent-tags">amazon-sqs</li>
+    </a>
+    
+    <a href="/ko/tags/analytics/">
+      <li class="sidemenu-recent-tags">analytics</li>
+    </a>
+    
+    <a href="/ko/tags/android/">
+      <li class="sidemenu-recent-tags">android</li>
+    </a>
+    
+    <a href="/ko/tags/aws/">
+      <li class="sidemenu-recent-tags">aws</li>
+    </a>
+    
+    <a href="/ko/tags/aws-batch/">
+      <li class="sidemenu-recent-tags">aws-batch</li>
+    </a>
+    
+    <a href="/ko/tags/aws-lambda/">
+      <li class="sidemenu-recent-tags">aws-lambda</li>
+    </a>
+    
+    <a href="/ko/tags/botkit/">
+      <li class="sidemenu-recent-tags">botkit</li>
+    </a>
+    
+    <a href="/ko/tags/croquis/">
+      <li class="sidemenu-recent-tags">croquis</li>
+    </a>
+    
+    <a href="/ko/tags/css/">
+      <li class="sidemenu-recent-tags">css</li>
+    </a>
+    
+    <a href="/ko/tags/data/">
+      <li class="sidemenu-recent-tags">data</li>
+    </a>
+    
+    <a href="/ko/tags/event/">
+      <li class="sidemenu-recent-tags">event</li>
+    </a>
+    
+    <a href="/ko/tags/front-end/">
+      <li class="sidemenu-recent-tags">front-end</li>
+    </a>
+    
+    <a href="/ko/tags/frontend/">
+      <li class="sidemenu-recent-tags">frontend</li>
+    </a>
+    
+    <a href="/ko/tags/git/">
+      <li class="sidemenu-recent-tags">git</li>
+    </a>
+    
+    <a href="/ko/tags/github/">
+      <li class="sidemenu-recent-tags">github</li>
+    </a>
+    
+    <a href="/ko/tags/graphql/">
+      <li class="sidemenu-recent-tags">graphql</li>
+    </a>
+    
+    <a href="/ko/tags/ios/">
+      <li class="sidemenu-recent-tags">ios</li>
+    </a>
+    
+    <a href="/ko/tags/jenkins/">
+      <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/jotai/">
+      <li class="sidemenu-recent-tags">jotai</li>
+    </a>
+    
+    <a href="/ko/tags/kubernetes/">
+      <li class="sidemenu-recent-tags">kubernetes</li>
+    </a>
+    
+    <a href="/ko/tags/log/">
+      <li class="sidemenu-recent-tags">log</li>
+    </a>
+    
+    <a href="/ko/tags/microservice/">
+      <li class="sidemenu-recent-tags">microservice</li>
+    </a>
+    
+    <a href="/ko/tags/mithril/">
+      <li class="sidemenu-recent-tags">mithril</li>
+    </a>
+    
+    <a href="/ko/tags/node.js/">
+      <li class="sidemenu-recent-tags">node.js</li>
+    </a>
+    
+    <a href="/ko/tags/nodejs/">
+      <li class="sidemenu-recent-tags">nodejs</li>
+    </a>
+    
+    <a href="/ko/tags/npm/">
+      <li class="sidemenu-recent-tags">npm</li>
+    </a>
+    
+    <a href="/ko/tags/react/">
+      <li class="sidemenu-recent-tags">react</li>
+    </a>
+    
+    <a href="/ko/tags/rest-api/">
+      <li class="sidemenu-recent-tags">rest-api</li>
+    </a>
+    
+    <a href="/ko/tags/serverless-architecture/">
+      <li class="sidemenu-recent-tags">serverless-architecture</li>
+    </a>
+    
+    <a href="/ko/tags/slack/">
+      <li class="sidemenu-recent-tags">slack</li>
+    </a>
+    
+    <a href="/ko/tags/stack/">
+      <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/task-queue/">
+      <li class="sidemenu-recent-tags">task-queue</li>
+    </a>
+    
+    <a href="/ko/tags/thrift/">
+      <li class="sidemenu-recent-tags">thrift</li>
+    </a>
+    
+    <a href="/ko/tags/tutorial/">
+      <li class="sidemenu-recent-tags">tutorial</li>
+    </a>
+    
+    <a href="/ko/tags/typescript/">
+      <li class="sidemenu-recent-tags">typescript</li>
+    </a>
+    
+    <a href="/ko/tags/ui/">
+      <li class="sidemenu-recent-tags">ui</li>
+    </a>
+    
+    <a href="/ko/tags/vertical-align/">
+      <li class="sidemenu-recent-tags">vertical-align</li>
+    </a>
+    
+    <a href="/ko/tags/webpack/">
+      <li class="sidemenu-recent-tags">webpack</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A1%9C%EA%B7%B8/">
+      <li class="sidemenu-recent-tags">로그</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/">
+      <li class="sidemenu-recent-tags">마이크로서비스</li>
+    </a>
+    
+    <a href="/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/">
+      <li class="sidemenu-recent-tags">튜토리얼</li>
+    </a>
+    
+  </ul>
+</div>
+
+    <div class='col-12'>
+      <hr>
+
+      <div class='float-left'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/' title='GraphQL 이해하기: (4) 리졸버 인자 - 1. source'>&larr; 이전 글</a>
+        
+      </div>
+      <div class='float-right'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2022-11-15-2-understanding-graphql-4-resolver-arguments-3-context/' title='GraphQL 이해하기: (4) 리졸버 인자 - 3. context'>다음 글 &rarr;</a>
+        
+      </div>
+      <div class='clearfix'></div>
+      <hr>
+      <div class='text-center'>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "croquiscom-devblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='container'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2021 kakaostyle.com
+      <span class='float-right text-muted'>
+        powered by
+        <a href='https://gohugo.io/' target='_blank'>Hugo</a>
+        and
+        <a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-48716672-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+  integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+  integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

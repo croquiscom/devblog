@@ -74,6 +74,83 @@
       <div>
         <div class='posts-head'>
           <span class='posts-title'>
+            <a href='/ko/2021-07-01-1-welcome-kakaostyle/'>카카오스타일 기술 블로그입니다</a>
+          </span>
+          <div class='posts-info text-right'>
+            <span class='posts-date'>01 Jul 2021 | </span>
+            
+            <span class='posts-author'>by Sangmin Yoon</span>
+            
+          </div>
+        </div>
+        <div class='card-body'>
+          <a href='/ko/2021-07-01-1-welcome-kakaostyle/' class='posts-content'>
+            <p>안녕하세요. 오랫만의 글인데 기술 글이 아니여서 죄송합니다.
+2021년 7월 1일부로 지그재그를 운영하는 크로키닷컴은 카카오스타일로 거듭나게 되었습니다.
+더 커진 규모에 걸맞게 더 양질의 기술 공유를 하도록 노력하겠습니다.
+많은 기대부탁드립니다.</p>
+            <div class='posts-readmore'>&hellip; read more </div>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <div class='posts-head'>
+          <span class='posts-title'>
+            <a href='/ko/2020-11-06-1-using-github-actions/'>GitHub Actions 활용하기</a>
+          </span>
+          <div class='posts-info text-right'>
+            <span class='posts-date'>06 Nov 2020 | </span>
+            
+            <span class='posts-author'>by Sangmin Yoon</span>
+            
+          </div>
+        </div>
+        <div class='card-body'>
+          <a href='/ko/2020-11-06-1-using-github-actions/' class='posts-content'>
+            <p>규모가 커지면 커질 수록 자동화된 워크플로우는 필수라고 생각합니다.
+하지만 부끄럽게도 크로키닷컴은 잘 구축된 편은 아닙니다.</p>
+<p>유닛 테스트는 초기부터 있었지만 그걸 PR, 머지마다 자동으로 수행하지는 못했습니다.
+그러다가 2017년 중반 겨우 Jenkins를 세팅해서 자동 테스트만은 수행했습니다. 하지만 그게 워크플로우와 잘 어우러지지 못했습니다.
+2019년에는 CodeBuild로 전환을 했고 비로서 PR 생성시 자동 테스트를 수행해 실패하면 머지를 할 수 없도록 구성이 됐습니다.</p>
+<p>그럭저럭 아쉬운 대로 쓰고는 있었지만 매 테스트마다 수십분씩 걸리고 수정도 어려웠습니다.
+가장 대중적으로 널리 쓰이는 Jenkins, 저희가 만든 OSS에 연결해 둔 <a href="https://travis-ci.com/">Travis CI</a>, <a href="https://circleci.com/">CircleCI</a>등을
+계속 두드려봤지만 썩 마음에 드는게 없었습니다.</p>
+<p>가장 방해가 되던건 저희가 마이크로서비스 아키텍처로 서비스들이 잘게 쪼개져 있는데, 저장소는 단일 저장소(monorepo)라는 점이였습니다.
+그러나 사람이 늘면서 도저히 단일 저장소로는 감당이 안 되어 저장소를 분리하기 시작했고, 분리된 저장소에서
+새로운 자동화 시스템을 고민하는데 그 때 눈에 띈 것이 <a href="https://github.com/features/actions">GitHub Actions</a>였습니다.
+작성이 쉬우면서도 확장성이 좋아서 그 뒤로 여러가지 워크플로우에 GitHub Actions를 사용하고 있습니다.</p>
+<p>이번 글에서는 현재 저희 팀이 세팅한 GitHub Actions의 workflow 파일을 공유하려고 합니다.
+이 내용이 독자분들에게 도움이 됐으면 합니다.</p>
+            <div class='posts-readmore'>&hellip; read more </div>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <div class='posts-head'>
+          <span class='posts-title'>
+            <a href='/ko/2020-02-15-1-configuration-in-typescript/'>TypeScript에서의 환경 설정 관리</a>
+          </span>
+          <div class='posts-info text-right'>
+            <span class='posts-date'>15 Feb 2020 | </span>
+            
+            <span class='posts-author'>by Sangmin Yoon</span>
+            
+          </div>
+        </div>
+        <div class='card-body'>
+          <a href='/ko/2020-02-15-1-configuration-in-typescript/' class='posts-content'>
+            <p>응용프로그램을 작성하다 보면 여러 가지 환경 설정(configuration)이 필요합니다.
+이번 글에서는 TypeScript에서 환경 설정을 관리하는 저희의 방법을 설명합니다.</p>
+            <div class='posts-readmore'>&hellip; read more </div>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <div class='posts-head'>
+          <span class='posts-title'>
             <a href='/ko/2020-02-11-1-croquis-stack-aws-batch/'>크로키의 스택 - AWS Batch</a>
           </span>
           <div class='posts-info text-right'>
@@ -113,90 +190,26 @@
         </div>
       </div>
       
-      <div>
-        <div class='posts-head'>
-          <span class='posts-title'>
-            <a href='/ko/2019-09-19-1-graphql-in-depth-serverside/'>GraphQL in depth (serverside)</a>
-          </span>
-          <div class='posts-info text-right'>
-            <span class='posts-date'>19 Sep 2019 | </span>
-            
-            <span class='posts-author'>by Sangmin Yoon</span>
-            
-          </div>
-        </div>
-        <div class='card-body'>
-          <a href='/ko/2019-09-19-1-graphql-in-depth-serverside/' class='posts-content'>
-            <p>7월에 크로키닷컴 팀원을 대상으로 발표한 자료입니다.</p>
-            <div class='posts-readmore'>&hellip; read more </div>
-          </a>
-        </div>
-      </div>
-      
-      <div>
-        <div class='posts-head'>
-          <span class='posts-title'>
-            <a href='/ko/2019-05-22-1-croquis-stack-graphql/'>크로키의 스택 - GraphQL</a>
-          </span>
-          <div class='posts-info text-right'>
-            <span class='posts-date'>22 May 2019 | </span>
-            
-            <span class='posts-author'>by Sangmin Yoon</span>
-            
-          </div>
-        </div>
-        <div class='card-body'>
-          <a href='/ko/2019-05-22-1-croquis-stack-graphql/' class='posts-content'>
-            <p>현재 크로키는 API를 <a href="https://graphql.org/">GraphQL</a>로 만들고 있습니다.
-아직 많은 부분에 대해서 연구 중이어서 현재 상황만 간단하게 정리해 보겠습니다.</p>
-            <div class='posts-readmore'>&hellip; read more </div>
-          </a>
-        </div>
-      </div>
-      
-      <div>
-        <div class='posts-head'>
-          <span class='posts-title'>
-            <a href='/ko/2019-04-29-1-vertical-align-line-box/'>(HTML/CSS) Vertical-Align(1) - Line Box</a>
-          </span>
-          <div class='posts-info text-right'>
-            <span class='posts-date'>29 Apr 2019 | </span>
-            
-            <span class='posts-author'>by Jaeyoung Tae</span>
-            
-          </div>
-        </div>
-        <div class='card-body'>
-          <a href='/ko/2019-04-29-1-vertical-align-line-box/' class='posts-content'>
-            <p>안녕하세요 지그재그에서 프론트엔드 개발을 하고 있는 태재영입니다.
-프론트엔드 개발자에게 중앙 정렬을 어떻게 하냐고 물어보면 inline 요소는 text-align 속성을 center로 지정하고, block 요소는 margin 속성을 auto로 지정한다고 대답할 겁니다.
-그런데 좌우가 아니라 위아래 수직 정렬을 어떻게 하겠냐고 물어보면 대답을 선뜻 못하거나 굉장히 다양한 답변들이 나옵니다.
-그 여러 방법들 중에 개발자들이 사용하면서도 &ldquo;왜 되는거지?&ldquo;라고 의구심을 많이 품게 되는 vertical-align에 대해서 자세히 써보려고 합니다.</p>
-            <div class='posts-readmore'>&hellip; read more </div>
-          </a>
-        </div>
-      </div>
-      
     </div>
 
     <div class='col-lg-3 sidemenu'>
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 4. info</li>
+    </a>
+    
+    <a href='/ko/2022-11-15-2-understanding-graphql-4-resolver-arguments-3-context/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 3. context</li>
+    </a>
+    
+    <a href='/ko/2022-11-15-1-understanding-graphql-4-resolver-arguments-2-args/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 2. args</li>
+    </a>
+    
     <a href='/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/'>
       <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 1. source</li>
-    </a>
-    
-    <a href='/ko/2022-11-09-1-understanding-graphql-3-understanding-resolver/'>
-      <li class="sidemenu-recent-item">GraphQL 이해하기: (3) 리졸버의 이해</li>
-    </a>
-    
-    <a href='/ko/2022-11-07-1-understanding-graphql-2-execution/'>
-      <li class="sidemenu-recent-item">GraphQL 이해하기: (2) 실행 및 전송</li>
-    </a>
-    
-    <a href='/ko/2022-10-13-1-karpenter-on-eks/'>
-      <li class="sidemenu-recent-item">EKS클러스터 Karpenter 적용기</li>
     </a>
     
   </ul>

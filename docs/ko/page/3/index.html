@@ -74,6 +74,70 @@
       <div>
         <div class='posts-head'>
           <span class='posts-title'>
+            <a href='/ko/2022-04-09-1-esm-problem/'>ESM 삽질기</a>
+          </span>
+          <div class='posts-info text-right'>
+            <span class='posts-date'>09 Apr 2022 | </span>
+            
+            <span class='posts-author'>by Simon(윤상민)</span>
+            
+          </div>
+        </div>
+        <div class='card-body'>
+          <a href='/ko/2022-04-09-1-esm-problem/' class='posts-content'>
+            <p>저희는 주기적으로 Node.js 모듈을 최신 버전으로 업데이트하고 있습니다.
+Node.js를 10년째 사용 중인데, CoffeeScript → TypeScript, 콜백 → Async.js → Promise(&amp; async, await) 전환 하면서 몇 번 혼란의 시기가 있었습니다.
+하지만 모듈 시스템은 쭉 이어져왔습니다.
+그런데 최근에 이 모듈 시스템에 큰 변화가 생겼고 기존 변화와 다르게 양립이 잘 안 되서 모듈 업데이트를 제대로 못 하고 있습니다.
+이 문제를 일으킨 ESM이 뭐고 어떤 작업이 필요한지 알아보려고 합니다. (개인적으로 만족하는 깔끔한 해결책이 나오지 못했습니다)</p>
+            <div class='posts-readmore'>&hellip; read more </div>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <div class='posts-head'>
+          <span class='posts-title'>
+            <a href='/ko/2022-03-31-3-build-eks-cluster-with-terraform/'>Terraform으로 EKS 구축하기</a>
+          </span>
+          <div class='posts-info text-right'>
+            <span class='posts-date'>31 Mar 2022 | </span>
+            
+            <span class='posts-author'>by Simon(윤상민)</span>
+            
+          </div>
+        </div>
+        <div class='card-body'>
+          <a href='/ko/2022-03-31-3-build-eks-cluster-with-terraform/' class='posts-content'>
+            이전 글에서는 ECS / EKS에서 서비스 하는 것에 대한 개념을 풀어 써봤습니다. 이번 글에서는 잘 만들어진 모듈을 이용해 빠르게 구성해보겠습니다.
+            <div class='posts-readmore'>&hellip; read more </div>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <div class='posts-head'>
+          <span class='posts-title'>
+            <a href='/ko/2022-03-31-2-web-application-using-eks/'>EKS를 사용해서 어플리케이션 서비스 하기</a>
+          </span>
+          <div class='posts-info text-right'>
+            <span class='posts-date'>31 Mar 2022 | </span>
+            
+            <span class='posts-author'>by Simon(윤상민)</span>
+            
+          </div>
+        </div>
+        <div class='card-body'>
+          <a href='/ko/2022-03-31-2-web-application-using-eks/' class='posts-content'>
+            ECS 아티클에 이어 이번 글에서는 같은 서비스를 EKS로 구축해보도록 하겠습니다. 간단하게 구축하는 것은 eksctl을 쓰면 되지만, 내부 이해를 위해 여기서는 기본부터 구현하도록 하겠습니다.
+            <div class='posts-readmore'>&hellip; read more </div>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <div class='posts-head'>
+          <span class='posts-title'>
             <a href='/ko/2022-03-31-1-web-application-using-ecs/'>ECS를 사용해서 어플리케이션 서비스 하기</a>
           </span>
           <div class='posts-info text-right'>
@@ -111,100 +175,26 @@
         </div>
       </div>
       
-      <div>
-        <div class='posts-head'>
-          <span class='posts-title'>
-            <a href='/ko/2022-01-13-2-jotai-recipe/'>Jotai 레시피</a>
-          </span>
-          <div class='posts-info text-right'>
-            <span class='posts-date'>13 Jan 2022 | </span>
-            
-            <span class='posts-author'>by Simon(윤상민)</span>
-            
-          </div>
-        </div>
-        <div class='card-body'>
-          <a href='/ko/2022-01-13-2-jotai-recipe/' class='posts-content'>
-            <p>이번 글에서는 카카오스타일에서 Jotai를 어떤 식으로 사용하고 있는지 여러가지 패턴에 대해 설명하려고 합니다.</p>
-            <div class='posts-readmore'>&hellip; read more </div>
-          </a>
-        </div>
-      </div>
-      
-      <div>
-        <div class='posts-head'>
-          <span class='posts-title'>
-            <a href='/ko/2022-01-13-1-frontend-state-management/'>프론트엔드 상태 관리에 대한 여정</a>
-          </span>
-          <div class='posts-info text-right'>
-            <span class='posts-date'>13 Jan 2022 | </span>
-            
-            <span class='posts-author'>by Simon(윤상민)</span>
-            
-          </div>
-        </div>
-        <div class='card-body'>
-          <a href='/ko/2022-01-13-1-frontend-state-management/' class='posts-content'>
-            <p>카카오스타일은 React에서 상태 관리를 위해 최근에 Jotai를 도입했습니다. Jotai에 대해 소개하기에 앞서 Jotai에 다다르기까지의 과정에 대해 설명해보려고 합니다.</p>
-            <div class='posts-readmore'>&hellip; read more </div>
-          </a>
-        </div>
-      </div>
-      
-      <div>
-        <div class='posts-head'>
-          <span class='posts-title'>
-            <a href='/ko/2021-12-16-1-server-driven-ui/'>Server Driven UI 설계를 통한 UI 유연화</a>
-          </span>
-          <div class='posts-info text-right'>
-            <span class='posts-date'>16 Dec 2021 | </span>
-            
-            <span class='posts-author'>by simon.z(박성범)</span>
-            
-          </div>
-        </div>
-        <div class='card-body'>
-          <a href='/ko/2021-12-16-1-server-driven-ui/' class='posts-content'>
-            <p>웹과 달리 네이티브 모바일 앱은 빌드, 배포 후에는 수정이 불가능합니다.
-만약 잘못된 위치에 버튼을 배치한 채로 스토어에 앱을 배포했다면,
-그리고 사용자가 잘못된 버전의 앱을 설치했다면 버튼의 위치를 수정할 방법이 없습니다.
-유일한 방법은 사용자가 스스로 스토어에 들어가 수정된 버전의 앱으로 업데이트하는 것 뿐입니다.</p>
-<p>배포 후 수정이 불가능하다는 특성이 부딪히는 또 다른 상황은 A/B 테스트입니다.
-소프트웨어를 사용하는 동안 일어나는 사용자의 행동과 경험은 화면 구성이나 문구에 따라 크게 달라지기 때문에 최적의 화면을 디자인하는 것이 중요합니다.
-그런데 사용자의 행동과 경험을 예측하는 것은 너무 어려운 일이기 때문에 현실의 사용자들에게 다양한 유형의 UI를 제공하고,
-어떤 UI가 적합한지 실측할 필요가 있습니다.
-실제로 카카오스타일을 비롯한 많은 소프트웨어 기업들이 사용자를 A, B 그룹으로 나누고 (더 많은 그룹으로 나눌 수도 있습니다)
-각 그룹에게 서로 다른 UI를 제공해 가장 적합한 UI를 선정하는 A/B 테스트를 진행하고 있습니다.</p>
-<p>유연한 UI를 제공하려면 UI가 클라이언트의 빌드와 배포로부터 자유로워야 합니다.
-이러한 목표를 이루기 위해 웹뷰와 같이 네이티브 환경을 벗어난 다양한 방법을 선택할 수도 있겠지만,
-현실에서는 다양한 이유로 웹뷰를 사용할 수 없는 상황이 있습니다.
-이 글에서는 간단한 예시를 통해 Server Driven UI의 개념에 대해 설명하고,
-네이티브 모바일 앱의 UI를 유연하게 다루기 위해 카카오스타일의 지그재그UX그룹이 Server Driven UI 설계를 어떻게 사용하고 있는지 소개하고자 합니다.</p>
-            <div class='posts-readmore'>&hellip; read more </div>
-          </a>
-        </div>
-      </div>
-      
     </div>
 
     <div class='col-lg-3 sidemenu'>
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 4. info</li>
+    </a>
+    
+    <a href='/ko/2022-11-15-2-understanding-graphql-4-resolver-arguments-3-context/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 3. context</li>
+    </a>
+    
+    <a href='/ko/2022-11-15-1-understanding-graphql-4-resolver-arguments-2-args/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 2. args</li>
+    </a>
+    
     <a href='/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/'>
       <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 1. source</li>
-    </a>
-    
-    <a href='/ko/2022-11-09-1-understanding-graphql-3-understanding-resolver/'>
-      <li class="sidemenu-recent-item">GraphQL 이해하기: (3) 리졸버의 이해</li>
-    </a>
-    
-    <a href='/ko/2022-11-07-1-understanding-graphql-2-execution/'>
-      <li class="sidemenu-recent-item">GraphQL 이해하기: (2) 실행 및 전송</li>
-    </a>
-    
-    <a href='/ko/2022-10-13-1-karpenter-on-eks/'>
-      <li class="sidemenu-recent-item">EKS클러스터 Karpenter 적용기</li>
     </a>
     
   </ul>
