@@ -337,24 +337,24 @@
 </span></span></span><span class="line"><span class="cl"><span class="s">  getUser(id: ID!): User!
 </span></span></span><span class="line"><span class="cl"><span class="s">}&#34;&#34;&#34;</span><span class="p">.</span><span class="n">trimIndent</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">queryBuilderFunction</span> <span class="p">=</span> <span class="p">{</span> <span class="n">builder</span><span class="p">:</span> <span class="n">TypeRuntimeWiring</span><span class="p">.</span><span class="n">Builder</span> <span class="o">-&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">queryBuilderFunction</span> <span class="p">=</span> <span class="p">{</span> <span class="n">builder</span><span class="p">:</span> <span class="nc">TypeRuntimeWiring</span><span class="p">.</span><span class="n">Builder</span> <span class="o">-&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">builder</span><span class="p">.</span><span class="n">dataFetcher</span><span class="p">(</span><span class="s2">&#34;getPosts&#34;</span><span class="p">,</span> <span class="n">StaticDataFetcher</span><span class="p">(</span><span class="n">posts</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">        <span class="p">.</span><span class="n">dataFetcher</span><span class="p">(</span><span class="s2">&#34;getUser&#34;</span><span class="p">)</span> <span class="p">{</span> <span class="n">env</span> <span class="o">-&gt;</span> <span class="n">users</span><span class="p">[</span><span class="n">env</span><span class="p">.</span><span class="n">getArgument</span><span class="p">(</span><span class="s2">&#34;id&#34;</span><span class="p">)]</span> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">var</span> <span class="py">postBuilderFunction</span> <span class="p">=</span> <span class="p">{</span> <span class="n">builder</span><span class="p">:</span> <span class="n">TypeRuntimeWiring</span><span class="p">.</span><span class="n">Builder</span> <span class="o">-&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">var</span> <span class="py">postBuilderFunction</span> <span class="p">=</span> <span class="p">{</span> <span class="n">builder</span><span class="p">:</span> <span class="nc">TypeRuntimeWiring</span><span class="p">.</span><span class="n">Builder</span> <span class="o">-&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">builder</span><span class="p">.</span><span class="n">dataFetcher</span><span class="p">(</span><span class="s2">&#34;author&#34;</span><span class="p">)</span> <span class="p">{</span> <span class="n">env</span> <span class="o">-&gt;</span> <span class="n">users</span><span class="p">[</span><span class="n">env</span><span class="p">.</span><span class="n">getSource</span><span class="p">&lt;</span><span class="n">Post</span><span class="p">&gt;().</span><span class="n">author_id</span><span class="p">]</span> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">var</span> <span class="py">userBuilderFunction</span> <span class="p">=</span> <span class="p">{</span> <span class="n">builder</span><span class="p">:</span> <span class="n">TypeRuntimeWiring</span><span class="p">.</span><span class="n">Builder</span> <span class="o">-&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">var</span> <span class="py">userBuilderFunction</span> <span class="p">=</span> <span class="p">{</span> <span class="n">builder</span><span class="p">:</span> <span class="nc">TypeRuntimeWiring</span><span class="p">.</span><span class="n">Builder</span> <span class="o">-&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">builder</span><span class="p">.</span><span class="n">dataFetcher</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">)</span> <span class="p">{</span> <span class="n">env</span> <span class="o">-&gt;</span> <span class="n">env</span><span class="p">.</span><span class="n">getSource</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;().</span><span class="n">name</span><span class="p">.</span><span class="n">lowercase</span><span class="p">()</span> <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">runtimeWiring</span> <span class="p">=</span> <span class="n">RuntimeWiring</span><span class="p">.</span><span class="n">newRuntimeWiring</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">runtimeWiring</span> <span class="p">=</span> <span class="nc">RuntimeWiring</span><span class="p">.</span><span class="n">newRuntimeWiring</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">type</span><span class="p">(</span><span class="s2">&#34;Query&#34;</span><span class="p">,</span> <span class="n">queryBuilderFunction</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">type</span><span class="p">(</span><span class="s2">&#34;Post&#34;</span><span class="p">,</span> <span class="n">postBuilderFunction</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">type</span><span class="p">(</span><span class="s2">&#34;User&#34;</span><span class="p">,</span> <span class="n">userBuilderFunction</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">build</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">schema</span> <span class="p">=</span> <span class="n">SchemaGenerator</span><span class="p">().</span><span class="n">makeExecutableSchema</span><span class="p">(</span><span class="n">typeRegistry</span><span class="p">,</span> <span class="n">runtimeWiring</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">graphql</span> <span class="p">=</span> <span class="n">GraphQL</span><span class="p">.</span><span class="n">newGraphQL</span><span class="p">(</span><span class="n">schema</span><span class="p">).</span><span class="n">build</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">graphql</span> <span class="p">=</span> <span class="nc">GraphQL</span><span class="p">.</span><span class="n">newGraphQL</span><span class="p">(</span><span class="n">schema</span><span class="p">).</span><span class="n">build</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">query</span> <span class="p">=</span> <span class="s">&#34;&#34;&#34;query { getPosts { id title author { id name } } getUser(id: &#34;51&#34;) { id name mobile_tel } }&#34;&#34;&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="n">println</span><span class="p">(</span><span class="n">graphql</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">).</span><span class="n">toString</span><span class="p">())</span>
 </span></span></code></pre></div><p>실행 결과입니다.</p>
@@ -407,7 +407,7 @@
 </span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">getUser</span><span class="p">(</span><span class="nd">@InputArgument</span> <span class="n">id</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">=</span> <span class="n">users</span><span class="p">[</span><span class="n">id</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nd">@DgsData</span><span class="p">(</span><span class="n">parentType</span> <span class="p">=</span> <span class="s2">&#34;Post&#34;</span><span class="p">,</span> <span class="k">field</span> <span class="p">=</span> <span class="s2">&#34;author&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">author</span><span class="p">(</span><span class="n">dfe</span><span class="p">:</span> <span class="n">DgsDataFetchingEnvironment</span><span class="p">)</span> <span class="p">=</span> <span class="n">users</span><span class="p">[</span><span class="n">dfe</span><span class="p">.</span><span class="n">getSource</span><span class="p">&lt;</span><span class="n">PostDataFetcher</span><span class="p">.</span><span class="n">Post</span><span class="p">&gt;().</span><span class="n">author_id</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">author</span><span class="p">(</span><span class="n">dfe</span><span class="p">:</span> <span class="n">DgsDataFetchingEnvironment</span><span class="p">)</span> <span class="p">=</span> <span class="n">users</span><span class="p">[</span><span class="n">dfe</span><span class="p">.</span><span class="n">getSource</span><span class="p">&lt;</span><span class="nc">PostDataFetcher</span><span class="p">.</span><span class="n">Post</span><span class="p">&gt;().</span><span class="n">author_id</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="nd">@DgsData</span><span class="p">(</span><span class="n">parentType</span> <span class="p">=</span> <span class="s2">&#34;User&#34;</span><span class="p">,</span> <span class="k">field</span> <span class="p">=</span> <span class="s2">&#34;name&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="k">fun</span> <span class="nf">name</span><span class="p">(</span><span class="n">dfe</span><span class="p">:</span> <span class="n">DgsDataFetchingEnvironment</span><span class="p">)</span> <span class="p">=</span> <span class="n">dfe</span><span class="p">.</span><span class="n">getSource</span><span class="p">&lt;</span><span class="n">User</span><span class="p">&gt;().</span><span class="n">name</span><span class="p">.</span><span class="n">lowercase</span><span class="p">()</span>
@@ -425,6 +425,10 @@
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2023-07-17-1-msk-mock-in-storybook/'>
+      <li class="sidemenu-recent-item">Storybook의 MSW mock 구조 개선</li>
+    </a>
+    
     <a href='/ko/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/'>
       <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 4. info</li>
     </a>
@@ -435,10 +439,6 @@
     
     <a href='/ko/2022-11-15-1-understanding-graphql-4-resolver-arguments-2-args/'>
       <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 2. args</li>
-    </a>
-    
-    <a href='/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/'>
-      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 1. source</li>
     </a>
     
   </ul>
@@ -568,6 +568,10 @@
     
     <a href="/ko/tags/stack/">
       <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/storybook/">
+      <li class="sidemenu-recent-tags">storybook</li>
     </a>
     
     <a href="/ko/tags/task-queue/">

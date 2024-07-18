@@ -141,8 +141,8 @@
 <p>GraphQL 클래스의 execute 메소드를 써서 질의를 할 수 있습니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">data</span> <span class="k">class</span> <span class="nc">User</span><span class="p">(</span><span class="k">val</span> <span class="py">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">userType</span> <span class="p">=</span> <span class="n">GraphQLObjectType</span><span class="p">.</span><span class="n">newObject</span><span class="p">().</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;User&#34;</span><span class="p">).</span><span class="k">field</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">GraphQLFieldDefinition</span><span class="p">.</span><span class="n">newFieldDefinition</span><span class="p">().</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">).</span><span class="n">type</span><span class="p">(</span><span class="n">GraphQLNonNull</span><span class="p">(</span><span class="n">GraphQLString</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">userType</span> <span class="p">=</span> <span class="nc">GraphQLObjectType</span><span class="p">.</span><span class="n">newObject</span><span class="p">().</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;User&#34;</span><span class="p">).</span><span class="k">field</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nc">GraphQLFieldDefinition</span><span class="p">.</span><span class="n">newFieldDefinition</span><span class="p">().</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">).</span><span class="n">type</span><span class="p">(</span><span class="n">GraphQLNonNull</span><span class="p">(</span><span class="n">GraphQLString</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl"><span class="p">).</span><span class="n">build</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">usersFetcher</span> <span class="p">=</span> <span class="n">DataFetcher</span> <span class="p">{</span>
@@ -150,17 +150,17 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">codeRegistry</span> <span class="p">=</span>
-</span></span><span class="line"><span class="cl">    <span class="n">GraphQLCodeRegistry</span><span class="p">.</span><span class="n">newCodeRegistry</span><span class="p">().</span><span class="n">dataFetcher</span><span class="p">(</span><span class="n">FieldCoordinates</span><span class="p">.</span><span class="n">coordinates</span><span class="p">(</span><span class="s2">&#34;Query&#34;</span><span class="p">,</span> <span class="s2">&#34;users&#34;</span><span class="p">),</span> <span class="n">usersFetcher</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nc">GraphQLCodeRegistry</span><span class="p">.</span><span class="n">newCodeRegistry</span><span class="p">().</span><span class="n">dataFetcher</span><span class="p">(</span><span class="nc">FieldCoordinates</span><span class="p">.</span><span class="n">coordinates</span><span class="p">(</span><span class="s2">&#34;Query&#34;</span><span class="p">,</span> <span class="s2">&#34;users&#34;</span><span class="p">),</span> <span class="n">usersFetcher</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="p">.</span><span class="n">build</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">schema</span> <span class="p">=</span> <span class="n">GraphQLSchema</span><span class="p">.</span><span class="n">newSchema</span><span class="p">().</span><span class="n">query</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">GraphQLObjectType</span><span class="p">.</span><span class="n">newObject</span><span class="p">().</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;Query&#34;</span><span class="p">).</span><span class="k">field</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">        <span class="n">GraphQLFieldDefinition</span><span class="p">.</span><span class="n">newFieldDefinition</span><span class="p">().</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;users&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">schema</span> <span class="p">=</span> <span class="nc">GraphQLSchema</span><span class="p">.</span><span class="n">newSchema</span><span class="p">().</span><span class="n">query</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nc">GraphQLObjectType</span><span class="p">.</span><span class="n">newObject</span><span class="p">().</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;Query&#34;</span><span class="p">).</span><span class="k">field</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nc">GraphQLFieldDefinition</span><span class="p">.</span><span class="n">newFieldDefinition</span><span class="p">().</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;users&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="n">type</span><span class="p">(</span><span class="n">GraphQLNonNull</span><span class="p">(</span><span class="n">GraphQLList</span><span class="p">(</span><span class="n">GraphQLNonNull</span><span class="p">(</span><span class="n">userType</span><span class="p">))))</span>
 </span></span><span class="line"><span class="cl">    <span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">).</span><span class="n">codeRegistry</span><span class="p">(</span><span class="n">codeRegistry</span><span class="p">).</span><span class="n">build</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">graphql</span> <span class="p">=</span> <span class="n">GraphQL</span><span class="p">.</span><span class="n">newGraphQL</span><span class="p">(</span><span class="n">schema</span><span class="p">).</span><span class="n">build</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">graphql</span> <span class="p">=</span> <span class="nc">GraphQL</span><span class="p">.</span><span class="n">newGraphQL</span><span class="p">(</span><span class="n">schema</span><span class="p">).</span><span class="n">build</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="n">println</span><span class="p">(</span><span class="n">graphql</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&#34;query { users { name } }&#34;</span><span class="p">).</span><span class="n">toString</span><span class="p">())</span>
 </span></span></code></pre></div><p>다음은 그 결과입니다</p>
 <pre tabindex="0"><code>ExecutionResultImpl{errors=[], data={users=[{name=Johnny}]}, dataPresent=true, extensions=null}
@@ -228,6 +228,10 @@
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2023-07-17-1-msk-mock-in-storybook/'>
+      <li class="sidemenu-recent-item">Storybook의 MSW mock 구조 개선</li>
+    </a>
+    
     <a href='/ko/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/'>
       <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 4. info</li>
     </a>
@@ -238,10 +242,6 @@
     
     <a href='/ko/2022-11-15-1-understanding-graphql-4-resolver-arguments-2-args/'>
       <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 2. args</li>
-    </a>
-    
-    <a href='/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/'>
-      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 1. source</li>
     </a>
     
   </ul>
@@ -371,6 +371,10 @@
     
     <a href="/ko/tags/stack/">
       <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/storybook/">
+      <li class="sidemenu-recent-tags">storybook</li>
     </a>
     
     <a href="/ko/tags/task-queue/">

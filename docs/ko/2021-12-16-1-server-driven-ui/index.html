@@ -232,8 +232,8 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">screen</span><span class="p">(</span><span class="n">screenType</span><span class="p">:</span> <span class="n">ScreenType</span><span class="p">):</span> <span class="n">Screen</span> <span class="p">=</span>
 </span></span><span class="line"><span class="cl">  <span class="n">Screen</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">    <span class="k">when</span> <span class="p">(</span><span class="n">screenType</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="n">ScreenType</span><span class="p">.</span><span class="n">HOME</span> <span class="p">=&gt;</span> <span class="n">getHomeComponents</span><span class="p">(),</span>
-</span></span><span class="line"><span class="cl">      <span class="n">ScreenType</span><span class="p">.</span><span class="n">SIGN_IN</span> <span class="p">=&gt;</span> <span class="n">getSignInComponents</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">      <span class="nc">ScreenType</span><span class="p">.</span><span class="n">HOME</span> <span class="p">=&gt;</span> <span class="n">getHomeComponents</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">      <span class="nc">ScreenType</span><span class="p">.</span><span class="n">SIGN_IN</span> <span class="p">=&gt;</span> <span class="n">getSignInComponents</span><span class="p">(),</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="p">)</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">getHomeComponents</span><span class="p">():</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Component</span><span class="p">&gt;</span> <span class="p">=</span>
@@ -363,18 +363,18 @@ UI를 구성하기 위한 클라이언트 작업도 필요했습니다.
 </span></span><span class="line"><span class="cl"><span class="k">enum</span> <span class="k">class</span> <span class="nc">Screen</span><span class="p">(</span><span class="k">val</span> <span class="py">componentMethods</span><span class="p">:</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">ComponentMethod</span><span class="p">&gt;)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="n">HOME</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">    <span class="n">listOf</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="n">Component</span><span class="p">.</span><span class="n">BANNER_GROUP</span><span class="p">,</span> <span class="n">Method</span><span class="p">.</span><span class="n">HOME</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="n">Component</span><span class="p">.</span><span class="n">BANNER</span><span class="p">,</span> <span class="n">Method</span><span class="p">.</span><span class="n">HOME</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="n">Component</span><span class="p">.</span><span class="n">TEXT_TITLE</span><span class="p">,</span> <span class="n">Method</span><span class="p">.</span><span class="n">HOME</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="n">Component</span><span class="p">.</span><span class="n">GOODS_GROUP</span><span class="p">,</span> <span class="n">Method</span><span class="p">.</span><span class="n">HOME</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="n">Component</span><span class="p">.</span><span class="n">GOODS_CARD_LIST</span><span class="p">,</span> <span class="n">Method</span><span class="p">.</span><span class="n">HOME</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="nc">Component</span><span class="p">.</span><span class="n">BANNER_GROUP</span><span class="p">,</span> <span class="nc">Method</span><span class="p">.</span><span class="n">HOME</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="nc">Component</span><span class="p">.</span><span class="n">BANNER</span><span class="p">,</span> <span class="nc">Method</span><span class="p">.</span><span class="n">HOME</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="nc">Component</span><span class="p">.</span><span class="n">TEXT_TITLE</span><span class="p">,</span> <span class="nc">Method</span><span class="p">.</span><span class="n">HOME</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="nc">Component</span><span class="p">.</span><span class="n">GOODS_GROUP</span><span class="p">,</span> <span class="nc">Method</span><span class="p">.</span><span class="n">HOME</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="nc">Component</span><span class="p">.</span><span class="n">GOODS_CARD_LIST</span><span class="p">,</span> <span class="nc">Method</span><span class="p">.</span><span class="n">HOME</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">    <span class="p">),</span>
 </span></span><span class="line"><span class="cl"> <span class="p">),</span>
 </span></span><span class="line"><span class="cl">  <span class="n">BEST</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">    <span class="n">listOf</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="n">Component</span><span class="p">.</span><span class="n">CATEGORY</span><span class="p">,</span> <span class="n">Method</span><span class="p">.</span><span class="n">GENERAL</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="n">Component</span><span class="p">.</span><span class="n">SORTING</span><span class="p">,</span> <span class="n">Method</span><span class="p">.</span><span class="n">GENERAL</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="n">Component</span><span class="p">.</span><span class="n">GOODS_CARD_LIST</span><span class="p">,</span> <span class="n">Method</span><span class="p">.</span><span class="n">BEST</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="nc">Component</span><span class="p">.</span><span class="n">CATEGORY</span><span class="p">,</span> <span class="nc">Method</span><span class="p">.</span><span class="n">GENERAL</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="nc">Component</span><span class="p">.</span><span class="n">SORTING</span><span class="p">,</span> <span class="nc">Method</span><span class="p">.</span><span class="n">GENERAL</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">      <span class="n">ComponentMethod</span><span class="p">(</span><span class="nc">Component</span><span class="p">.</span><span class="n">GOODS_CARD_LIST</span><span class="p">,</span> <span class="nc">Method</span><span class="p">.</span><span class="n">BEST</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">),</span>
 </span></span><span class="line"><span class="cl">  <span class="p">),</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
@@ -390,7 +390,7 @@ UI를 구성하기 위한 클라이언트 작업도 필요했습니다.
 </span></span></code></pre></div><p>어떤 클래스가 <code>ComponentGeneratable</code> 인터페이스를 구현한다면, 해당 클래스는 컴포넌트를 생성할 수 있는 구현체라는 의미가 됩니다.
 따라서 홈 화면에 보여줄 상품 카드 목록은 <code>HomeGoodsCardListGenerator</code> 구현체를 통해, 베스트 화면에 보여줄 상품 카드 목록은 <code>BestGoodsCardListGenerator</code> 구현체를 통해 제공할 수 있습니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">HomeGoodsCardListGenerator</span> <span class="p">:</span> <span class="n">ComponentGeneratable</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">override</span> <span class="n">componentMethod</span> <span class="p">=</span> <span class="n">ComponentMethod</span><span class="p">.</span><span class="n">HOME</span>
+</span></span><span class="line"><span class="cl">  <span class="k">override</span> <span class="n">componentMethod</span> <span class="p">=</span> <span class="nc">ComponentMethod</span><span class="p">.</span><span class="n">HOME</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="k">override</span> <span class="n">generate</span><span class="p">():</span> <span class="n">GoodsCardList</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">val</span> <span class="py">goodsList</span><span class="p">:</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Goods</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">getGoodsList</span><span class="p">().</span><span class="n">shuffled</span><span class="p">()</span>
@@ -398,7 +398,7 @@ UI를 구성하기 위한 클라이언트 작업도 필요했습니다.
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">BestGoodsCardListGenerator</span> <span class="p">:</span> <span class="n">ComponentGeneratable</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">override</span> <span class="n">componentMethod</span> <span class="p">=</span> <span class="n">ComponentMethod</span><span class="p">.</span><span class="n">BEST</span>
+</span></span><span class="line"><span class="cl">  <span class="k">override</span> <span class="n">componentMethod</span> <span class="p">=</span> <span class="nc">ComponentMethod</span><span class="p">.</span><span class="n">BEST</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="k">override</span> <span class="n">generate</span><span class="p">():</span> <span class="n">GoodsCardList</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="k">val</span> <span class="py">goodsList</span><span class="p">:</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Goods</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">getGoodsList</span><span class="p">().</span><span class="n">sortedByDescending</span> <span class="p">{</span> <span class="k">it</span><span class="p">.</span><span class="n">score</span> <span class="p">}</span>
@@ -409,8 +409,8 @@ UI를 구성하기 위한 클라이언트 작업도 필요했습니다.
 하나로 통합해 <code>getComponents</code> 함수로 만들 수 있습니다. <code>screenType</code> 인자에 따라 설계도를 참조해 해당 화면에 제공할 컴포넌트를 반환하면 됩니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">getComponents</span><span class="p">(</span><span class="n">screenType</span><span class="p">:</span> <span class="n">ScreenType</span><span class="p">):</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Component</span><span class="p">&gt;</span> <span class="p">=</span>
 </span></span><span class="line"><span class="cl">  <span class="k">when</span> <span class="p">(</span><span class="n">screenType</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ScreenType</span><span class="p">.</span><span class="n">HOME</span> <span class="o">-&gt;</span> <span class="n">Screen</span><span class="p">.</span><span class="n">HOME</span><span class="p">.</span><span class="n">componentMethods</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ScreenType</span><span class="p">.</span><span class="n">BEST</span> <span class="o">-&gt;</span> <span class="n">Screen</span><span class="p">.</span><span class="n">BEST</span><span class="p">.</span><span class="n">componentMethods</span>
+</span></span><span class="line"><span class="cl">    <span class="nc">ScreenType</span><span class="p">.</span><span class="n">HOME</span> <span class="o">-&gt;</span> <span class="nc">Screen</span><span class="p">.</span><span class="nc">HOME</span><span class="p">.</span><span class="n">componentMethods</span>
+</span></span><span class="line"><span class="cl">    <span class="nc">ScreenType</span><span class="p">.</span><span class="n">BEST</span> <span class="o">-&gt;</span> <span class="nc">Screen</span><span class="p">.</span><span class="nc">BEST</span><span class="p">.</span><span class="n">componentMethods</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}.</span><span class="n">map</span> <span class="p">{</span> <span class="n">componentMethod</span> <span class="o">-&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="n">componentMaker</span><span class="p">.</span><span class="n">make</span><span class="p">(</span><span class="n">componentMethod</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
@@ -454,6 +454,10 @@ UI를 구성하기 위한 클라이언트 작업도 필요했습니다.
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2023-07-17-1-msk-mock-in-storybook/'>
+      <li class="sidemenu-recent-item">Storybook의 MSW mock 구조 개선</li>
+    </a>
+    
     <a href='/ko/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/'>
       <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 4. info</li>
     </a>
@@ -464,10 +468,6 @@ UI를 구성하기 위한 클라이언트 작업도 필요했습니다.
     
     <a href='/ko/2022-11-15-1-understanding-graphql-4-resolver-arguments-2-args/'>
       <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 2. args</li>
-    </a>
-    
-    <a href='/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/'>
-      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 1. source</li>
     </a>
     
   </ul>
@@ -597,6 +597,10 @@ UI를 구성하기 위한 클라이언트 작업도 필요했습니다.
     
     <a href="/ko/tags/stack/">
       <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/storybook/">
+      <li class="sidemenu-recent-tags">storybook</li>
     </a>
     
     <a href="/ko/tags/task-queue/">

@@ -189,21 +189,21 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">name</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">!</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><p>JVM 계열에서 기반이 되는 <a href="https://www.graphql-java.com/">graphql-java</a>는 이 형태의 스키마 생성을 지원합니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">val</span> <span class="py">userType</span> <span class="p">=</span> <span class="n">GraphQLObjectType</span><span class="p">.</span><span class="n">newObject</span><span class="p">()</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">val</span> <span class="py">userType</span> <span class="p">=</span> <span class="nc">GraphQLObjectType</span><span class="p">.</span><span class="n">newObject</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;User&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="k">field</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">        <span class="n">GraphQLFieldDefinition</span><span class="p">.</span><span class="n">newFieldDefinition</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="nc">GraphQLFieldDefinition</span><span class="p">.</span><span class="n">newFieldDefinition</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;name&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="n">type</span><span class="p">(</span><span class="n">GraphQLNonNull</span><span class="p">(</span><span class="n">GraphQLString</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">    <span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">build</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">schema</span> <span class="p">=</span> <span class="n">GraphQLSchema</span><span class="p">.</span><span class="n">newSchema</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">schema</span> <span class="p">=</span> <span class="nc">GraphQLSchema</span><span class="p">.</span><span class="n">newSchema</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="n">query</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">        <span class="n">GraphQLObjectType</span><span class="p">.</span><span class="n">newObject</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">        <span class="nc">GraphQLObjectType</span><span class="p">.</span><span class="n">newObject</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;Query&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">            <span class="p">.</span><span class="k">field</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">                <span class="n">GraphQLFieldDefinition</span><span class="p">.</span><span class="n">newFieldDefinition</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">                <span class="nc">GraphQLFieldDefinition</span><span class="p">.</span><span class="n">newFieldDefinition</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">                    <span class="p">.</span><span class="n">name</span><span class="p">(</span><span class="s2">&#34;users&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">                    <span class="p">.</span><span class="n">type</span><span class="p">(</span><span class="n">GraphQLNonNull</span><span class="p">(</span><span class="n">GraphQLList</span><span class="p">(</span><span class="n">GraphQLNonNull</span><span class="p">(</span><span class="n">userType</span><span class="p">))))</span>
 </span></span><span class="line"><span class="cl">            <span class="p">)</span>
@@ -271,6 +271,10 @@
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
     
+    <a href='/ko/2023-07-17-1-msk-mock-in-storybook/'>
+      <li class="sidemenu-recent-item">Storybook의 MSW mock 구조 개선</li>
+    </a>
+    
     <a href='/ko/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/'>
       <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 4. info</li>
     </a>
@@ -281,10 +285,6 @@
     
     <a href='/ko/2022-11-15-1-understanding-graphql-4-resolver-arguments-2-args/'>
       <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 2. args</li>
-    </a>
-    
-    <a href='/ko/2022-11-12-1-understanding-graphql-4-resolver-arguments-1-source/'>
-      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 1. source</li>
     </a>
     
   </ul>
@@ -414,6 +414,10 @@
     
     <a href="/ko/tags/stack/">
       <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/storybook/">
+      <li class="sidemenu-recent-tags">storybook</li>
     </a>
     
     <a href="/ko/tags/task-queue/">
