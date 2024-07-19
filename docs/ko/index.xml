@@ -5,7 +5,16 @@
     <link>https://devblog.kakaostyle.com/ko/</link>
     <description>Recent content on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 17 Jul 2023 01:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 04 Aug 2023 01:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>프론트엔드 테스트 자동화 전략 - 1. 테스트 자동화란?</title>
+      <link>https://devblog.kakaostyle.com/ko/2023-08-04-1-frontend-testing-1-what-is-it/</link>
+      <pubDate>Fri, 04 Aug 2023 01:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/2023-08-04-1-frontend-testing-1-what-is-it/</guid>
+      <description>&lt;p&gt;프론트엔드는 입력/출력이 명확하지 않기 때문에 테스트를 작성하면서 고민해봐야 할 내용이 많습니다. 프론트엔드 관점에 맞춰 테스트 자동화, 테스트의 정의와 방향성에 대해서 다뤄봤습니다.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Storybook의 MSW mock 구조 개선</title>
       <link>https://devblog.kakaostyle.com/ko/2023-07-17-1-msk-mock-in-storybook/</link>

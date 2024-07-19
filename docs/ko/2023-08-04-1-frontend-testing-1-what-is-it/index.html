@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+  <meta charset='utf-8'>
+
+  <title>프론트엔드 테스트 자동화 전략 - 1. 테스트 자동화란?</title>
+  
+  <meta name='author' content='kakaostyle.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <meta property='og:title' content='프론트엔드 테스트 자동화 전략 - 1. 테스트 자동화란?' />
+  <meta property='og:description' content='프론트엔드는 입력/출력이 명확하지 않기 때문에 테스트를 작성하면서 고민해봐야 할 내용이 많습니다. 프론트엔드 관점에 맞춰 테스트 자동화, 테스트의 정의와 방향성에 대해서 다뤄봤습니다.' />
+  <meta property='og:type' content='article' />
+  <meta property='og:url' content='https://devblog.kakaostyle.com/ko/2023-08-04-1-frontend-testing-1-what-is-it/' />
+  
+  <meta property='og:image' content='https://devblog.kakaostyle.com/img/og-image.png' />  
+  
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link href='/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='/css/syntax.css?body=1' rel='stylesheet' type='text/css' media='all'>
+</head>
+
+<body>
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='float-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon' src='/img/github-icon.svg'>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>프론트엔드 테스트 자동화 전략 - 1. 테스트 자동화란?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class='container'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='post-header'>
+        <div class='post-tags'>
+          
+
+<ul class='tag_box inline'>
+  <li><i class='fas fa-tags'></i></li>
+  
+  <li>
+    <a href='/ko/tags/frontend'>
+      Frontend
+      <span>4</span>
+    </a>
+  </li>
+  
+  <li>
+    <a href='/ko/tags/testing'>
+      Testing
+      <span>1</span>
+    </a>
+  </li>
+  
+</ul>
+
+        </div>
+        <div class='float-right'>
+          
+          <div class='post-author'>
+            <i class='fas fa-pencil-alt'></i>
+            <span>Martin(유덕남)</span>
+          </div>
+          
+          <div class='post-date'>
+            <i class='fas fa-calendar-alt'></i>
+            <span>04 August 2023</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-12 col-lg-9'>
+      <p>프론트엔드는 입력/출력이 명확하지 않기 때문에 테스트를 작성하면서 고민해봐야 할 내용이 많습니다. 프론트엔드 관점에 맞춰 테스트 자동화, 테스트의 정의와 방향성에 대해서 다뤄봤습니다.</p>
+<h2 id="들어가며">들어가며</h2>
+<p>프로젝트가 커질수록 서로 영향을 주는 구성요소들이 증가합니다. 이로 인해 하나의 요소를 수정하면, 전혀 관련이 없는 다른 요소에 영향을 주어 오류가 발생할 수 있습니다. 프로젝트를 배포하기 전에 이런 문제를 확인하고 해결하려면 테스트가 필요합니다. 하지만 회귀 (regression) 테스트는 프로젝트가 커질 수록 시간이 많이 소요되기 때문에 잘 수행되지 않는 경향이 있습니다.</p>
+<p>이는 결국 기술 부채의 누적으로 이어지게 됩니다. 기술 개선을 위해서는 기능 단위의 개발이 아닌, 프로젝트 전반적인 수정이 필요한데, 전체 테스트를 수행할 시간이 부족해지기 때문에 기술 개선에 대해 두려움을 느끼기 쉽습니다.</p>
+<p>이런 상황에서는 테스트 자동화를 고민해볼 수 있습니다. 테스트를 자동으로 진행해서, 바뀐 내용이 정상적으로 동작한다는 신뢰를 줄 수 있으면, 기술 개선 또한 두려움 없이 진행할 수 있습니다. 물론, 기술적인 측면 외에도, 매번 기능을 꼼꼼하게 테스트할 수 있기 때문에, 버그로 인한 장애를 막을 수 있습니다.</p>
+<p>그럼에도 불구하고, 프론트엔드에서 테스트 자동화를 진행하는 사례는 많지 않입니다. 백엔드 분야에서는 테스트 자동화에 대한 정보도 많고, 실제 사례도 굉장히 많은 편이지만, 프론트엔드에서는 거의 찾아보기가 어렵습니다. 테스트 프레임워크의 사용 방법에 대한 글은 많지만, 어떤 것을 어떻게 테스트해야 하는지, 즉 테스트 전략에 대해 다루는 글은 거의 찾아보지 못했습니다.</p>
+<p>하지만, 단순히 테스트를 많이 작성한다고 제품의 품질이 좋아지는 것은 아닙니다. <strong>테스트도 우리가 관리해야 하는 코드</strong>이며, 테스트를 작성하고 관리하는데 드는 비용도 결코 무시할 수 없습니다. 따라서 테스트 전략을 세우고, 효율적으로 테스트를 작성하는 것은 매우 중요합니다.</p>
+<p>만약 테스트를 효율적으로 작성하지 않는다면, 테스트의 효용성을 느끼지 못하고 테스트 코드가 버려지거나, 더 이상 작성하지 않게 되는 경우가 쉽게 발생하게 됩니다.</p>
+<p>관련된 자료가 많지 않은 상황에서 테스트에 대한 방향성을 설정할 수 있도록, 프론트엔드에서 테스트를 하는 방법에 대해서 글을 풀어나가보려고 합니다.</p>
+<h2 id="테스트-자동화란">테스트 자동화란?</h2>
+<p>프론트엔드 개발을 하다 보면, <code>.test.ts</code> 와 같이 테스트 코드가 작성된 모습을 간혹 볼 수 있습니다. 직접 테스트를 작성하지 않는다고 해도, create-react-app과 같은 도구들이 자동으로 테스트를 작성해주기도 합니다.</p>
+<p>이런 파일을 열어보면, 아래와 같은 내용이 들어 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="c1">// add.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// add.test.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">it</span><span class="p">(</span><span class="s1">&#39;1 더하기 1은 2이다&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">expect</span><span class="p">(</span><span class="nx">add</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">});</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p>이런 식으로, 프로그램이 의도한 대로 동작하는지 검사하는 것을 테스트라고 합니다. 다시 말해서, 프로그램의 입력을 정해진 대로 넣고, 출력이 정상적인지 확인하는 과정입니다.</p>
+<p>직접 프로그램을 실행해서 원하는 데이터를 넣어보는 방법으로 사람이 직접 테스트할 수도 있고, 위처럼 테스트 코드를 작성할 수도 있습니다. 이렇게 테스트 코드를 통한 방법을 <strong>테스트 자동화</strong>라고 합니다.</p>
+<p>위처럼 간단한 프로그램에 대해서는 테스트 코드를 작성하는 것은 매우 쉽습니다. 프로그램이 기대하는 입력을 넣고, 출력을 확인해 보면 됩니다. 테스트에서 신경써야 하는 내용도 거의 없기 때문에 개발 속도도 빠르고, 테스트를 돌리는 속도도 빠릅니다. 이렇게, 적은 양의 코드를 격리시켜 놓고 진행하는 테스트를 <strong>유닛 테스트</strong>라고 합니다.</p>
+<p>하지만, 프로그램이 자체적으로 상태를 가지게 되고, 구성요소가 많아질수록 테스트의 작성이 어려워집니다. 테스트에 필요한 모든 구성요소를 불러와서, 이런 구성요소의 동작 또한 신경쓰면서 테스트해야 합니다. 하나의 구성요소가 아닌, 여러 구성요소들을 묶어서 진행하는 테스트를 <strong>통합 테스트</strong>라고 합니다.</p>
+<p>유닛, 통합 테스트는 어느정도 격리된 환경에서 진행하게 되므로, 제품이 실제로 동작하는지 테스트하는 것은 아닙니다. 고객이 실제로 제품을 사용할 수 있는지 확인하기 위해서, 실제 환경에서 진행하는 테스트를 <strong>E2E (End-to-End) 테스트</strong>라고 합니다.</p>
+<p>여기까지는 테스트에 대해 관심있게 보셨으면 한 번쯤 들어보셨을만한 내용입니다. 하지만, 이런 내용들을 실제로 프론트엔드에 적용하려고 하면 여러가지 의문점이 생깁니다.</p>
+<h2 id="프론트엔드-테스트의-어려움">프론트엔드 테스트의 어려움</h2>
+<p>테스트 코드를 작성할 때에는 제품 요구사항을 중점으로 생각하게 됩니다. 예를 들어 “포인트로 상품을 주문했을 때, 포인트가 차감되고 주문이 결제완료로 변경된다” 와 같은 시나리오를 상상하며 테스트를 작성해볼 수 있습니다.</p>
+<p>하지만, 프론트엔드에는 실제로 DB를 수정하는 로직이 존재하지 않습니다. “상품을 주문하는 것”에 프론트엔드가 필요하지만, 상품을 주문하고 나서 DB가 바뀌는 것은 프론트엔드의 영역이 아닙니다!</p>
+<p>게다가, 백엔드에서는 외부에 노출되는 API를 직접 선언하면서 개발하게 되지만, 프론트엔드는 유저가 보는 화면을 만드는 작업이기 때문에, 어떤 것을 테스트해야 하는지가 모호할 수 있습니다.</p>
+<p>과거에는 테스트에 대한 방향성이 명확하지 않아서, 컴포넌트가 반환하는 HTML이나 내부 상태의 변화를 비교하는 등의 방법으로 테스트를 진행하고는 했습니다. 하지만, 이런 방법은 비효율적이고 자주 깨지는 테스트가 되기 쉽습니다.</p>
+<h2 id="위양성과-위음성">위양성과 위음성</h2>
+<p>테스트를 작성하면서 가장 주의깊게 고민해야 하는 부분은 위양성과 위음성입니다.</p>
+<p>코로나와 같은 질병을 검사하는 검사 키트를 만들어본다고 가정해봅시다. 코로나에 걸리지 않았는데도 코로나에 걸렸다고 진단하는 것을 위양성, 코로나에 걸렸지만 정상이라고 진단하는 것을 위음성이라고 합니다.</p>
+<p>만약 위양성이 많아지게 된다면, 실제로 문제가 없음에도 불구하고 격리나 치료를 진행해야 하는 등 불필요한 비용이 소모되게 됩니다.</p>
+<p>반대로, 위음성이 많아지게 된다면, 코로나에 걸렸지만 격리를 하지 않게 되어 추가 감염을 초래하게 됩니다.</p>
+<p>비슷하게, 소프트웨어를 테스트할 때에도 위양성과 위음성이라는 개념이 존재합니다. 우리가 어떤 것을 테스트하느냐에 따라서, 실제로 문제가 없는데도 에러를 반환하게 될 수도 있고, 문제가 있어도 정상이라고 판단하게 될 수 있습니다.</p>
+<p>테스트가 시도때도 없이 에러를 반환한다면, 처음에는 고치려는 시도를 하더라도 점점 피로가 생기면서 <strong>테스트가 방치되고, 무시되는 현상</strong>이 일어납니다. 이렇게 되면 테스트 자동화는 의미를 잃어버립니다.</p>
+<p>반면에 버그가 있는데도 테스트가 정상이라고 판단한다면, 애초부터 버그를 잡을 수 없기 때문에 테스트의 의미가 없습니다. 오류가 있었는데도 테스트를 믿고 정상이라고 배포를 하게 되고, 서비스 장애가 생기게 됩니다.</p>
+<p>앙쪽 모두 테스트의 의미를 잃어버리기 때문에, 위양성과 위음성이 발생하지 않도록 하는 것은 매우 중요합니다. 하지만, 이를 완벽히 방지하면서 테스트를 설계하는 것은 어렵고, 시행착오를 거쳐 경험이 쌓여야 합니다.</p>
+<p>결국, 테스트를 의미있게 작성하기 위해서는 <strong>고객에게 제공하는 가치</strong>를 생각해보아야 합니다. 다시 말해서, 이 프로그램이 어떤 문제를 해결해주는지를 생각하고, 프로그램이 잃어버리면 안되는 것들만 테스트해야 합니다.</p>
+<h2 id="테스트-시나리오">테스트 시나리오</h2>
+<p>이런 관점에서 생각해보면, 프로그램이 외부 세계와 상호작용하는 규정을 검증하는 것이 테스트라고 볼 수 있습니다. 컴포넌트의 DOM 위치가 중요한 것이 아니라, 사용자가 행동했을 때 원하는 동작이 수행되는지, 또 사용자가 볼 수 있도록 노출되는지가 더 중요합니다.</p>
+<p><img src="/img/content/2023-08-04-1.png" alt="컴포넌트는 외부의 여러가지 요소들과 상호작용합니다. 주로 사용자, 백엔드, 외부 props들이 있습니다."></p>
+<p>즉, 다시 말해서, 프로그램의 <strong>행동 규정</strong>을 만드는 것이 첫번째입니다. 어떻게 행동 규정을 생각해볼 수 있을까요?</p>
+<p>백엔드의 동작은 프론트엔드에서 신경써야 하는 부분이 아닙니다. 하지만 백엔드와 유저를 중개해주는 역할을 수행하는 것은 굉장히 중요합니다.</p>
+<p>일반적으로 테스트 케이스를 작성한다고 하면, “포인트로 상품을 주문했을 때, 포인트가 차감되고 주문이 결제완료로 변경된다”와 같이, 서비스 전체가 어떻게 동작하는지를 생각하게 됩니다. 하지만, 위에서도 설명했다시피 이런 로직은 프론트엔드에는 포함되어 있지 않습니다.</p>
+<p><strong>유저</strong>와 <strong>백엔드</strong>를 외부 구성요소라고 생각한다면 아래와 같이 생각해볼 요소를 나눌 수 있습니다.</p>
+<ul>
+<li>백엔드에서 값을 가져오면 사용자에게 어떻게 노출되는지</li>
+<li>사용자가 버튼을 누르면 어떻게 바뀌어서 보여지는지</li>
+<li>사용자가 버튼을 누르면 백엔드에 어떻게 호출되는지</li>
+</ul>
+<p>이런 관점에서 생각해보면, 아래와 같이 테스트 케이스를 나눠서 생각할 수 있습니다.</p>
+<ul>
+<li>주문서를 열면, 상품 목록과 잔여 포인트가 노출된다.</li>
+<li>사용자가 포인트 “전액사용” 버튼을 누르면, 결제 금액이 0원으로 바뀐다.</li>
+<li>결제 금액이 0원인 상태에서 “결제하기” 버튼을 누르면, PG사 호출 없이 주문 완료 API를 호출한다.</li>
+</ul>
+<p>즉, 백엔드의 동작에는 신경쓰지 않고, 프론트엔드 자체적으로 할 수 있는 일들을 기준으로 테스트를 작성하게 됩니다.</p>
+<p>비슷한 원리로, 우리가 제어할 수 없는 <strong>외부 요소</strong>의 동작이라면 모두 테스트해볼 수 있습니다.</p>
+<p>공통 컴포넌트를 만든다고 할 때에도, props에 대한 규칙이 생기게 되면 이를 바꾸기는 쉽지 않습니다. 이 컴포넌트를 쓰는 다른 코드들은 props에 따른 동작에 의존하게 되기 때문에, 동작이 바뀌면 오류가 발생하기 때문입니다. 즉, props와의 상호작용에 대해서 암시적인 행동 규정이 생긴 것이고, 이를 분석해보면서 props에 따라서 어떻게 동작하는지 확인하는 테스트를 작성할 수 있습니다. 즉, props를 외부 요소라고 생각해볼 수 있는 것입니다.</p>
+<p>이렇게 생각해보면 대부분의 테스트가 “유닛 테스트”가 아니라 “통합 테스트”가 됩니다. 대부분의 코드들이 서버나 유저와 상호작용하면서 동작하고, 프론트엔드는 본질적으로 여러 구성요소를 중개해주는 역할이기 때문입니다.</p>
+<h2 id="유닛-테스트와-통합-테스트">유닛 테스트와 통합 테스트</h2>
+<p>일반적으로 유닛 테스트는 복잡하고 중요한 로직을 격리해놓고 작성하게 됩니다.</p>
+<p>“상품의 목록을 받아서, 결제해야 할 금액을 계산하는 로직” 등과 같이, 복잡하고 중요하다면 별도의 함수나 클래스로 분리해서 테스트하게 됩니다. 외부에 영향받지 않고 단독적으로 복잡한 로직을 검증할 수 있기 때문에 테스트하기에도, 버그를 줄이는 측면에서도 좋습니다.</p>
+<p>하지만, 프론트엔드에서는 이런 요소들보다는, 여러 외부 요소를 중개해주는 요소들이 대다수입니다. 대부분의 단독 로직은 복잡하지 않지만, 외부 요소들을 중개하면서 복잡도가 발생합니다. 이런 것들을 유닛 테스트로 작성하기는 어렵습니다.</p>
+<p>이 관점에서, 코드의 복잡성과 의존성을 토대로 유닛 테스트의 효용성을 생각해볼 수 있습니다. 아래는 <a href="https://blog.stevensanderson.com/2009/11/04/selective-unit-testing-costs-and-benefits/">Selective Unit Testing – Costs and Benefits</a>라는 글에서 발췌해온 내용입니다:</p>
+<ul>
+<li>복잡하고 독립적인 코드: 비즈니스 로직이나, 데이터를 정제하는 용도의 코드입니다. 이런 코드는 테스트하기도 쉽고, 중요성도 높기 때문에 유닛 테스트를 작성할 것이 권장됩니다.</li>
+<li>간단하고 외부 요소가 많은 코드: 여러 로직들을 모아서 상호작용하도록 하는 코드입니다. 이런 코드는 통합 테스트를 통해서 동작을 검증할 수 있습니다.
+<ul>
+<li>원 글에서는 통합 테스트를 다루지 않기 때문에 테스트하지 않을 것을 권장하고 있습니다. 프론트엔드의 복잡도는 여러 구성요소를 묶으면서 발생하기 때문에, 통합 테스트로 검증이 필요하다고 생각합니다.</li>
+</ul>
+</li>
+<li>간단하고 독립적인 코드: 1 + 1 = 2와 같이 당연한 (trivial) 로직들입니다. 이런 코드는 테스트를 작성하기도 쉽긴 하지만, 효용성도 없어서 딱히 다룰 필요가 없습니다.</li>
+<li>복잡하고 외부 요소가 많은 코드: 이런 코드는 테스트를 작성하기도 어렵지만, 테스트의 중요성도 높기 때문에, “복잡한 로직”과, “상호작용 코드” 둘로 나누는 방법으로 리팩토링할 수 있습니다.</li>
+</ul>
+<p>프론트엔드에서는 복잡하고 독립적인 코드를 찾아보기 어렵지만, 외부 요소와 상호작용하는 부분이 많기 때문에 통합 테스트 위주로 고민해볼 수 있습니다.</p>
+<h2 id="테스트의-효용성">테스트의 효용성</h2>
+<p>테스트 자동화는 여러 장점을 가지고 있지만, 코드를 바꿔도 정상적으로 동작할 수 있는 것을 확인하고, 이를 통해 리팩토링이나 기술 부채 해소에 자신감을 가질 수 있는 것이 제일 큰 장점이라고 생각합니다.</p>
+<p>하지만 위양성으로 인해서 리팩토링을 수행했더니 테스트가 깨지기도 합니다. 기능적으로는 아무런 문제가 없음에도 불구하고, 내부 구현체가 바뀌어서 오류가 발생하는 것입니다. 이로 인해서 리팩토링할 때 큰 이득을 보지 못하는 경우도 많습니다.</p>
+<p>이런 문제를 해소하려면, 위에서 언급했듯 외부 요소의 동작을 통해서 테스트하는 것이 중요합니다. 내부적으로 useState의 상태가 어떻게 바뀌는지, 컴포넌트가 어떻게 리렌더되는지의 여부는 중요하지 않습니다. 대신, 유저가 행동을 수행했을 때, 유저가 그 값을 볼 수 있는지, 서버에 제대로 데이터가 전달되는지에 대한 여부가 더 중요합니다.</p>
+<p>옛날에 쓰이던 <a href="https://enzymejs.github.io/enzyme/">enzyme</a> 등의 테스팅 라이브러리는 React의 내부적인 상태를 기반으로 테스트했기 때문에 위양성이 발생하기가 쉬웠습니다. 비교적 최근에 나온 <a href="https://testing-library.com/docs/react-testing-library/intro/">react-testing-library</a>는 유저가 볼 수 있는 것과, 행동할 수 있는 것을 기반으로 테스트하는 것을 권장하고 있습니다. (<a href="https://soojae.tistory.com/84">https://soojae.tistory.com/84</a>)</p>
+<p>또한, 테스트 작성에 대한 “가성비”도 생각해보아야 합니다. 일회성으로 작성되고 빠르게 사라질 기능이라면 테스트 코드를 작성할 이유가 없습니다. 비슷하게, 자주 쓰이지 않는 기능들에 대한 테스트 우선순위도 매우 낮을 것입니다. 결국 테스트 작성은 코드에 대한 신뢰를 얻기 위함이기 때문에, 개발하는 코드가 중요하지 않거나 오래 쓰이지 않는다면 큰 의미가 없게 됩니다.</p>
+<p>하지만 테스트를 이제 막 도입하는 과정이기 때문에 이런 고민을 하게 되긴 하지만, 테스트 작성이 정착되고 난다면 (즉, 테스트의 필요성에 대해서 모두가 공감할 수 있고, 생산성 저하가 없다면) TDD와 같은 접근도 고민해볼 수 있을 것입니다.</p>
+<h2 id="통합-테스트-작성하기">통합 테스트 작성하기</h2>
+<p>통합 테스트를 작성하는 것은 유닛 테스트를 작성하는 것보다 훨씬 어렵습니다. 외부 세계를 시뮬레이션해야하고, 필요한 요소들을 전부 테스트 환경 내부에 가져올 수 있어야 하기 때문입니다.</p>
+<p>우리가 제어할 수 없는 외부 요소를 mock을 통해서 가짜 데이터를 내보내도록 하고, 이런 mock이 얼마나 호출되었는지 테스트하는 방법으로 외부 세계와의 상호작용을 확인해볼 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="c1">// saveExcel.test.js
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">it</span><span class="p">(</span><span class="s1">&#39;saveExcel은 파일을 저장한다&#39;</span><span class="p">,</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">writeFileFn</span> <span class="o">=</span> <span class="nx">jest</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nx">spyOn</span><span class="p">(</span><span class="nx">fs</span><span class="p">,</span> <span class="s1">&#39;writeFile&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">.</span><span class="nx">mockImplementation</span><span class="p">(()</span> <span class="p">=&gt;</span> <span class="p">{});</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">saveExcel</span><span class="p">([</span> <span class="p">...</span> <span class="p">]);</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">expect</span><span class="p">(</span><span class="nx">writeFileFn</span><span class="p">).</span><span class="nx">toHaveBeenCalled</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span></code></pre></div><p>위의 경우에는, saveExcel이 <code>fs.writeFile</code> 을 호출한다는 점을 확인하고, 이를 가짜 함수 (mock)으로 덮어 씌우는 방법으로 테스트를 진행했습니다. saveExcel을 호출한 뒤에는, <code>writeFile</code> 의 호출 여부를 확인합니다.</p>
+<p>통합 테스트를 위해서는 외부 요소들을 모두 mock을 통해서 구성할 수 있어야 합니다. 프론트엔드의 경우에는 백엔드, 사용자, 바깥 Context 등 많은 요소들에 대한 고려가 필요합니다.</p>
+<p>다행스럽게도 대부분의 프론트엔드 프로젝트에서는 스토리북을 활용하고 있습니다. 스토리북에서는 테스트에 필요한 모든 구성요소를 mock으로 만들어야 제대로 동작하기 때문에, 이런 작업들을 스토리북에서 모두 이미 진행했다고 볼 수 있습니다.</p>
+<h2 id="스토리북에-대해서">스토리북에 대해서</h2>
+<p><a href="https://storybook.js.org/">스토리북</a>은, 컴포넌트를 격리시켜 놓고, 각 컴포넌트의 props와 주변 환경을 자유롭게 변경해보면서 상호작용해볼 수 있는 유틸리티입니다.</p>
+<p>개발 과정에 테스트 환경으로 사용해볼 수 있을뿐만 아니라, 기획자나 디자이너 등 여러 팀원들과 소통하는 데에도 유용한 문서로써 기능합니다.</p>
+<p>스토리북을 작업하면서 이미 컴포넌트를 격리해두었기 때문에, 이 환경을 그대로 활용하는 방법으로 테스트를 작성할 수도 있습니다. 즉, 통합 테스트를 작성할 때 가장 큰 어려움인 mock에 대해서 이미 고민을 해결해두었고, 테스트만 작성하면 되는 상황입니다.</p>
+<p>스토리북에서는 <a href="https://storybook.js.org/docs/writing-tests/interaction-testing">Interaction Testing</a>이라는 이름으로 사용자의 행동을 모방하는 형태의 테스트 프레임워크를 이미 제공하고 있습니다. 이를 사용함으로써 바로 테스트를 작성해볼 수 있습니다.</p>
+<p>Interaction Testing에서는 react-testing-library와 jest를 기반으로 테스트 코드를 작성해볼 수 있습니다. 아래는 테스트 케이스의 예시입니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">const</span> <span class="nx">CreateAccepted</span> <span class="o">=</span> <span class="nx">Template</span><span class="p">.</span><span class="nx">bind</span><span class="p">({});</span>
+</span></span><span class="line"><span class="cl"><span class="nx">CreateAccepted</span><span class="p">.</span><span class="nx">storyName</span> <span class="o">=</span> <span class="s1">&#39;인증키를 생성할 수 있고, 이미 동의했다면 약관 동의 화면이 스킵된다&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">CreateAccepted</span><span class="p">.</span><span class="nx">play</span> <span class="o">=</span> <span class="kr">async</span> <span class="p">({</span> <span class="nx">canvasElement</span> <span class="p">})</span> <span class="p">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nx">within</span><span class="p">(</span><span class="nx">canvasElement</span><span class="p">.</span><span class="nx">parentElement</span><span class="o">!</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">localStorage</span><span class="p">.</span><span class="nx">setItem</span><span class="p">(</span><span class="nx">CHECK_TERMS_AGREEMENT</span><span class="p">,</span> <span class="s1">&#39;true&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="kr">await</span> <span class="nx">userEvent</span><span class="p">.</span><span class="nx">click</span><span class="p">(</span><span class="kr">await</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">findByText</span><span class="p">(</span><span class="sr">/인증키 발급/</span><span class="p">,</span> <span class="p">{</span> <span class="nx">selector</span><span class="o">:</span> <span class="s1">&#39;button&#39;</span> <span class="p">}));</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">await</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">findByText</span><span class="p">(</span><span class="s1">&#39;인증키 발급 완료&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>테스트에 대한 구체적인 예시와, 테스트 환경을 구성하는 방법/자동화에 대해서는 다음 글에서 다뤄보도록 하겠습니다.</p>
+<h2 id="마치며">마치며</h2>
+<p>이렇게 해서 테스트에 대한 정의와 전략에 대해서 어느정도 다뤄봤습니다. 특히 프론트엔드 관점에서 테스트를 어떻게 접근해야 하는지에 대한 자료가 많지 않았기 때문에, 정리가 필요하다고 생각했습니다. 이 글이 테스트의 방향성에 대해서 도움이 되었다면 좋겠습니다.</p>
+<p>프론트엔드쪽 자료가 많지는 않지만, 백엔드 관점에서 쓰인 책들도 크게 도움이 됩니다. 프론트엔드에서는 대부분이 “통합 테스트”가 어울린다는 관점에서 생각해보며 읽으면 도움이 되는 내용이 많을 것입니다.</p>
+<p>다음은 이 글을 쓰면서 큰 도움이 된 글 / 책입니다. 더 궁금하시면 읽어보셔도 좋을 것 같습니다.</p>
+<ul>
+<li><a href="https://kentcdodds.com/blog/write-tests">https://kentcdodds.com/blog/write-tests</a></li>
+<li><a href="https://kentcdodds.com/blog/testing-implementation-details">https://kentcdodds.com/blog/testing-implementation-details</a></li>
+<li><a href="https://yeoulcoding.me/244">https://yeoulcoding.me/244</a></li>
+<li>Unit Testing Principles, Practices, and Patterns: Effective testing styles, patterns, and reliable automation for unit testing, mocking, and integration testing with examples in C# (Vladimir Khorikov) (<a href="https://www.aladin.co.kr/shop/wproduct.aspx?ItemId=280870631">국내 번역</a>)</li>
+</ul>
+<p>다음 글에서는 구체적으로 테스트를 작성하는 방법과, 테스트 환경에 대해서 다뤄볼 예정입니다. 감사합니다.</p>
+      
+    </div>
+
+    <div class='col-lg-3 sidemenu'>
+  <h4>Recent Posts</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2023-08-04-1-frontend-testing-1-what-is-it/'>
+      <li class="sidemenu-recent-item">프론트엔드 테스트 자동화 전략 - 1. 테스트 자동화란?</li>
+    </a>
+    
+    <a href='/ko/2023-07-17-1-msk-mock-in-storybook/'>
+      <li class="sidemenu-recent-item">Storybook의 MSW mock 구조 개선</li>
+    </a>
+    
+    <a href='/ko/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 4. info</li>
+    </a>
+    
+    <a href='/ko/2022-11-15-2-understanding-graphql-4-resolver-arguments-3-context/'>
+      <li class="sidemenu-recent-item">GraphQL 이해하기: (4) 리졸버 인자 - 3. context</li>
+    </a>
+    
+  </ul>
+  <hr>
+  <h4>Tags</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href="/ko/tags/amazon-sqs/">
+      <li class="sidemenu-recent-tags">amazon-sqs</li>
+    </a>
+    
+    <a href="/ko/tags/analytics/">
+      <li class="sidemenu-recent-tags">analytics</li>
+    </a>
+    
+    <a href="/ko/tags/android/">
+      <li class="sidemenu-recent-tags">android</li>
+    </a>
+    
+    <a href="/ko/tags/aws/">
+      <li class="sidemenu-recent-tags">aws</li>
+    </a>
+    
+    <a href="/ko/tags/aws-batch/">
+      <li class="sidemenu-recent-tags">aws-batch</li>
+    </a>
+    
+    <a href="/ko/tags/aws-lambda/">
+      <li class="sidemenu-recent-tags">aws-lambda</li>
+    </a>
+    
+    <a href="/ko/tags/botkit/">
+      <li class="sidemenu-recent-tags">botkit</li>
+    </a>
+    
+    <a href="/ko/tags/croquis/">
+      <li class="sidemenu-recent-tags">croquis</li>
+    </a>
+    
+    <a href="/ko/tags/css/">
+      <li class="sidemenu-recent-tags">css</li>
+    </a>
+    
+    <a href="/ko/tags/data/">
+      <li class="sidemenu-recent-tags">data</li>
+    </a>
+    
+    <a href="/ko/tags/event/">
+      <li class="sidemenu-recent-tags">event</li>
+    </a>
+    
+    <a href="/ko/tags/front-end/">
+      <li class="sidemenu-recent-tags">front-end</li>
+    </a>
+    
+    <a href="/ko/tags/frontend/">
+      <li class="sidemenu-recent-tags">frontend</li>
+    </a>
+    
+    <a href="/ko/tags/git/">
+      <li class="sidemenu-recent-tags">git</li>
+    </a>
+    
+    <a href="/ko/tags/github/">
+      <li class="sidemenu-recent-tags">github</li>
+    </a>
+    
+    <a href="/ko/tags/graphql/">
+      <li class="sidemenu-recent-tags">graphql</li>
+    </a>
+    
+    <a href="/ko/tags/ios/">
+      <li class="sidemenu-recent-tags">ios</li>
+    </a>
+    
+    <a href="/ko/tags/jenkins/">
+      <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/jotai/">
+      <li class="sidemenu-recent-tags">jotai</li>
+    </a>
+    
+    <a href="/ko/tags/kubernetes/">
+      <li class="sidemenu-recent-tags">kubernetes</li>
+    </a>
+    
+    <a href="/ko/tags/log/">
+      <li class="sidemenu-recent-tags">log</li>
+    </a>
+    
+    <a href="/ko/tags/microservice/">
+      <li class="sidemenu-recent-tags">microservice</li>
+    </a>
+    
+    <a href="/ko/tags/mithril/">
+      <li class="sidemenu-recent-tags">mithril</li>
+    </a>
+    
+    <a href="/ko/tags/node.js/">
+      <li class="sidemenu-recent-tags">node.js</li>
+    </a>
+    
+    <a href="/ko/tags/nodejs/">
+      <li class="sidemenu-recent-tags">nodejs</li>
+    </a>
+    
+    <a href="/ko/tags/npm/">
+      <li class="sidemenu-recent-tags">npm</li>
+    </a>
+    
+    <a href="/ko/tags/react/">
+      <li class="sidemenu-recent-tags">react</li>
+    </a>
+    
+    <a href="/ko/tags/rest-api/">
+      <li class="sidemenu-recent-tags">rest-api</li>
+    </a>
+    
+    <a href="/ko/tags/serverless-architecture/">
+      <li class="sidemenu-recent-tags">serverless-architecture</li>
+    </a>
+    
+    <a href="/ko/tags/slack/">
+      <li class="sidemenu-recent-tags">slack</li>
+    </a>
+    
+    <a href="/ko/tags/stack/">
+      <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/storybook/">
+      <li class="sidemenu-recent-tags">storybook</li>
+    </a>
+    
+    <a href="/ko/tags/task-queue/">
+      <li class="sidemenu-recent-tags">task-queue</li>
+    </a>
+    
+    <a href="/ko/tags/testing/">
+      <li class="sidemenu-recent-tags">testing</li>
+    </a>
+    
+    <a href="/ko/tags/thrift/">
+      <li class="sidemenu-recent-tags">thrift</li>
+    </a>
+    
+    <a href="/ko/tags/tutorial/">
+      <li class="sidemenu-recent-tags">tutorial</li>
+    </a>
+    
+    <a href="/ko/tags/typescript/">
+      <li class="sidemenu-recent-tags">typescript</li>
+    </a>
+    
+    <a href="/ko/tags/ui/">
+      <li class="sidemenu-recent-tags">ui</li>
+    </a>
+    
+    <a href="/ko/tags/vertical-align/">
+      <li class="sidemenu-recent-tags">vertical-align</li>
+    </a>
+    
+    <a href="/ko/tags/webpack/">
+      <li class="sidemenu-recent-tags">webpack</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A1%9C%EA%B7%B8/">
+      <li class="sidemenu-recent-tags">로그</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/">
+      <li class="sidemenu-recent-tags">마이크로서비스</li>
+    </a>
+    
+    <a href="/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/">
+      <li class="sidemenu-recent-tags">튜토리얼</li>
+    </a>
+    
+  </ul>
+</div>
+
+    <div class='col-12'>
+      <hr>
+
+      <div class='float-left'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2023-07-17-1-msk-mock-in-storybook/' title='Storybook의 MSW mock 구조 개선'>&larr; 이전 글</a>
+        
+      </div>
+      <div class='float-right'>
+        
+        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
+        
+      </div>
+      <div class='clearfix'></div>
+      <hr>
+      <div class='text-center'>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "croquiscom-devblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='container'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2021 kakaostyle.com
+      <span class='float-right text-muted'>
+        powered by
+        <a href='https://gohugo.io/' target='_blank'>Hugo</a>
+        and
+        <a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-48716672-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+  integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+  integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
