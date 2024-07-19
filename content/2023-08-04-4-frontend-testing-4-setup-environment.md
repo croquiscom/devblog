@@ -201,7 +201,7 @@ module.exports = {
 
 이제, 앱에서 사용하는 다른 API 목들과, 필요한 설정들을 `setupJest.ts` 안에 구성합니다. 아래는 프로젝트에서 필요한 내용을 하나씩 구성한 것이기 때문에, 만약 아래 내용이 없어도 정상적으로 동작한다면 빼도 무방합니다.
 
-- ‣https://github.com/trurl-master/jsdom-testing-mocks
+- https://github.com/trurl-master/jsdom-testing-mocks
 - https://github.com/hustcc/jest-canvas-mock
 - https://github.com/dumbmatter/fakeIndexedDB
 - `npm install jsdom-testing-mocks jest-canvas-mock fake-indexeddb --save-dev`
