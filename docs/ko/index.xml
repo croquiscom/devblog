@@ -5,7 +5,18 @@
     <link>https://devblog.kakaostyle.com/ko/</link>
     <description>Recent content on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 04 Aug 2023 01:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 04 Aug 2023 02:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>프론트엔드 테스트 자동화 전략 - 2. 요구사항 분석</title>
+      <link>https://devblog.kakaostyle.com/ko/2023-08-04-2-frontend-testing-2-requirement/</link>
+      <pubDate>Fri, 04 Aug 2023 02:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/2023-08-04-2-frontend-testing-2-requirement/</guid>
+      <description>&lt;p&gt;저번 글에서는 프론트엔드의 테스트 자동화에 대해서 소개하고, 테스트 전략에 대해서 간단하게 다뤄봤습니다.&lt;/p&gt;
+&lt;p&gt;테스트 자동화가 아무리 중요하다고 해도, 테스트 작성을 시작하는 것은 쉽지 않습니다. 설정해야 하는 것들이 많고, 효과적인 테스트 작성 방법을 찾는 것도 어렵습니다.&lt;/p&gt;
+&lt;p&gt;이 문서에서는 프론트엔드에 맞춘 테스트 작성 방법을 고민해봤습니다. 물론 프로젝트마다 상황은 다를 수 있으며, 나중에는 더 나은 방법을 발견할 수도 있습니다. 그래도 이 문서가 테스트를 시작하는 데 도움이 됐으면 좋겠습니다.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>프론트엔드 테스트 자동화 전략 - 1. 테스트 자동화란?</title>
       <link>https://devblog.kakaostyle.com/ko/2023-08-04-1-frontend-testing-1-what-is-it/</link>
