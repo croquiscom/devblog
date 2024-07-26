@@ -7,6 +7,20 @@ img {
   max-width: 100%;
 }
 
+video {
+  max-width: 100%;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 4px 12px;
+}
+
 .hp-nav {
   display: inline-block;
   padding: 0;

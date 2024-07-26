@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+  <meta charset='utf-8'>
+
+  <title>웹폰트 최적화를 통한 CDN 비용절감</title>
+  
+  <meta name='author' content='kakaostyle.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <meta property='og:title' content='웹폰트 최적화를 통한 CDN 비용절감' />
+  <meta property='og:description' content='근래의 많은 기업과 마찬가지로 카카오스타일도 불필요한 비용 낭비가 발생하지 않도록 많은 노력을 기울이고 있습니다. 물론 이전이라고 사용하지 않는 리소스를 방치하며 비용을 낭비한 것은 아니고, 좀 더 세밀한 부분까지 주의를 기울이기 시작했다고 생각해주시면 됩니다. 이번 글은 그 중 하나를 소개해보려고 합니다.' />
+  <meta property='og:type' content='article' />
+  <meta property='og:url' content='https://devblog.kakaostyle.com/ko/2024-06-28-1-optimize-font-traffic/' />
+  
+  <meta property='og:image' content='https://devblog.kakaostyle.com/img/og-image.png' />  
+  
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link href='/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='/css/syntax.css?body=1' rel='stylesheet' type='text/css' media='all'>
+</head>
+
+<body>
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='float-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon' src='/img/github-icon.svg'>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>웹폰트 최적화를 통한 CDN 비용절감</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class='container'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='post-header'>
+        <div class='post-tags'>
+          
+
+        </div>
+        <div class='float-right'>
+          
+          <div class='post-author'>
+            <i class='fas fa-pencil-alt'></i>
+            <span>Orca(장종오)</span>
+          </div>
+          
+          <div class='post-date'>
+            <i class='fas fa-calendar-alt'></i>
+            <span>28 June 2024</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-12 col-lg-9'>
+      <p>근래의 많은 기업과 마찬가지로 카카오스타일도 불필요한 비용 낭비가 발생하지 않도록 많은 노력을 기울이고 있습니다. 물론 이전이라고 사용하지 않는 리소스를 방치하며 비용을 낭비한 것은 아니고, 좀 더 세밀한 부분까지 주의를 기울이기 시작했다고 생각해주시면 됩니다. 이번 글은 그 중 하나를 소개해보려고 합니다.</p>
+<h2 id="작업배경">작업배경</h2>
+<p>최근 지그재그서비스 프론트엔드팀에서는 프론트엔드 리소스 관련 인프라 비용을 절감하기 위해 개선점을 찾고있습니다. 그 과정에서 AWS CloudFront의 사용량을 분석하던 중, 다른 리소스들에 비해 폰트의 호출량이 비정상적으로 높다는 것을 발견했습니다. 일반적으로 브라우저는 폰트를 요청을 할 때 메모리 캐시가 적용 되기 때문에, 측정된 호출 수치는 이상하다고 생각되었습니다. 또 WOFF2 포맷의 폰트 뿐만이 아니라, WOFF 포맷의 폰트 까지 꽤 많은 수의 호출이 생기는것을 보고, 깊게 살펴보기 시작했습니다.</p>
+<p>무엇보다, CloudFront의 비용은 <strong>사용한 데이터 용량과 요청수에 의해 산정되기 때문에, 이를 개선한다면, 많은 절감효과가 있을거라고 예상했습니다.</strong></p>
+<p><img src="/img/content/2024-06-28-1/01.png" alt="01.png"></p>
+<p><img src="/img/content/2024-06-28-1/02.png" alt="02.png"></p>
+<p>당시 폰트의 호출량은 한달 기준으로 6억 4천만건이었으며, 데이터 전송량은 457TB였습니다.</p>
+<p><img src="/img/content/2024-06-28-1/03.png" alt="03.png"></p>
+<p>이 수치를 기반으로 <a href="https://calculator.aws/">AWS 요금 계산기</a>를 통해 한달 비용을 계산해보면</p>
+<pre tabindex="0"><code>Tiered price for: 457,006 GB
+10,240 GB x 0.12 USD = 1,228.80 USD
+40,960 GB x 0.10 USD = 4,096.00 USD
+102,400 GB x 0.095 USD = 9,728.00 USD
+303,406 GB x 0.09 USD = 27,306.54 USD
+총 티어 비용: 1,228.80 USD + 4,096.00 USD + 9,728.00 USD + 27,306.54 USD = 42,359.34 USD(아시아 태평양에서 인터넷으로 데이터 전송)
+인터넷으로 데이터 전송 비용: 42,359.34 USD
+오리진으로 데이터 전송 비용: 0 USD
+639,405,635 요청 x 0.0000012 USD = 767.29 USD(아시아 태평양으로부터의 HTTPS 요청)
+요청 비용: 767.29 USD
+42,359.34 USD + 767.29 USD = 43,126.63 USD(총 비용 아시아 태평양)
+CloudFront 가격 아시아 태평양 (월별): 43,126.63 USD
+</code></pre><p>한달에 $43,000이고, 이를 연단위로 환산하면, $516,000입니다. 이를 글을쓰는 현재(6/28)기준 환율 1380원을 반영하면 한화로 1년에 7억원 이상을 지출하게 됩니다. (실제로는 약정이 있어 이정도까지는 안 됩니다 😅)</p>
+<h2 id="해결해야-할-문제">해결해야 할 문제</h2>
+<p>우리가 해결해야할 문제는 다음과 같이 두가지입니다.</p>
+<ol>
+<li>과도한 폰트 호출량 줄이기</li>
+<li>무거운 폰트 용량 경량화 하기</li>
+</ol>
+<p>이 두가지를 순서대로 해결해보겠습니다.</p>
+<h2 id="과도한-폰트-호출량">과도한 폰트 호출량</h2>
+<h3 id="문제분석">문제분석</h3>
+<p>이제부터 문제가 되는 상황을 분석 해보겠습니다.
+유의미한 양의 폰트호출이 일어나는 곳으로는 크게 아래와 같이 분류됩니다.</p>
+<ul>
+<li>Android Webview</li>
+<li>IOS Webview</li>
+<li>Chrome, Safari, etc…</li>
+</ul>
+<p>지그재그의 경우 과반수의 사용자가 애플 제품을 이용하므로 Safari를 의심했으나, 먼저 Chromium 기반의 브라우저 부터 살펴보기로했습니다.</p>
+<h3 id="문제상황-재현">문제상황 재현</h3>
+<ol>
+<li>Chromium</li>
+</ol>
+
+<video src='/img/content/2024-06-28-1/04.mov' controls></video>
+
+
+<p>영상을 보면, 첫 페이지 진입 때, 폰트를 호출하고, 새로고침을 할 때마다, 메모리캐시가 잘 적용되는 것을 알 수 있습니다. ****</p>
+<ol start="2">
+<li>Safari</li>
+</ol>
+
+<video src='/img/content/2024-06-28-1/05.mov' controls></video>
+
+
+<p>하지만, Safari 에서는 첫 페이지 진입 때 폰트를 가져왔음에도 불구하고, 새로고침을 할 때마다 새로이 폰트 요청을 하고, 또한 캐싱된 폰트도 가져오는 현상이 일어나고 있습니다.</p>
+<p>이를 통해 Safari 브라우저에서, 문제가 발생했다는것을 알 수 있었습니다.</p>
+<h3 id="why">Why?</h3>
+<p>그렇다면 왜 Safari에서는 캐시가 제대로 적용되지 않고, Chrome에서는 잘 적용이 되는것이며, 특히 Safari는 폰트 요청을 두번이나 하게 되는것일까요?</p>
+<p>이것에 대해서 생각을 하던 중, 머릿속에 팀에서 서비스 UX 개선작업을 위해 했던 작업중에, 폰트 리소스 요청을 최우선순위로 처리하는 작업이 떠올랐습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span>
+</span></span><span class="line"><span class="cl">    <span class="na">rel</span><span class="o">=</span><span class="s">&#39;preload&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">href</span><span class="o">=</span><span class="s">{`${fontURL}`}</span>
+</span></span><span class="line"><span class="cl">    <span class="na">as</span><span class="o">=</span><span class="s">&#39;font&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">type</span><span class="o">=</span><span class="s">&#39;font/woff2&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="na">crossorigin</span><span class="o">=</span><span class="s">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="p">/&gt;</span>
+</span></span></code></pre></div><p>폰트는 서비스 글꼴에 가장 먼저 반영이 되어야 하기에 네트워크 요청 우선순위를 높여야, FOUT 현상이 일어나지 않습니다.</p>
+<blockquote>
+<p>FOUT란?</p>
+<p>브라우저가 웹 글꼴을 다운로드하기 전에 텍스트가 대체 글꼴로 렌더링되는 현상을 말합니다.</p>
+</blockquote>
+<blockquote>
+<p>참고로 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload#what_types_of_content_can_be_preloaded">MDN 문서</a>에 따르면 preload를 통해 폰트를 요청하는 경우 CORS 활성화가 필요하다고 해서 crossorigin 옵션을 설정해줬습니다.</p>
+</blockquote>
+<p>아래 첨부된 영상을 보면 텍스트가 꿀렁이는 모습을 볼 수 있습니다. <strong>숫자가 바뀔 때마다 새로고침이 동작하고 있는 것입니다.</strong></p>
+
+<video src='/img/content/2024-06-28-1/06.mov' controls></video>
+
+
+<p>폰트의 우선순위를 높인다면, 아래의 영상과 같이 개선할 수 있습니다. 텍스트의 꿀렁거림이 사라졌습니다!</p>
+
+<video src='/img/content/2024-06-28-1/07.mov' controls></video>
+
+
+<p>그렇다면 정말로 이 preload힌트 때문에, 폰트 요청이 두번이나 일어나는 것일까요? 그래서 preload 힌트를 제거하고 다시 테스트 해봤습니다.</p>
+
+<video src='/img/content/2024-06-28-1/08.mov' controls></video>
+
+
+<p>제거하고 테스트를 했더니 놀랍게도, 메모리 캐시까지 잘 적용되는것을 확인 할 수 있었습니다. 하지만, 그렇다고 사용성을 위해 폰트 우선순위를 높인 결과물을 되돌릴 수는 없었습니다.</p>
+<p>그렇다면 다시, preload를 제거했을때의 상황을 좀 더 알아보겠습니다.</p>
+<p><img src="/img/content/2024-06-28-1/09.png" alt="09.png"></p>
+<p>Safari 브라우저에서 preload를 제거하고 오직 CSS의 font-face url을 통한 폰트 요청에 대해서 요청 헤더를 보니, Safari 브라우저에서는 no-cors로 요청을 하고 있다는 점을 알게 되었습니다.</p>
+<p>그렇다면 Chrome 브라우저에서는 어떨까요?</p>
+<p><img src="/img/content/2024-06-28-1/10.png" alt="10.png"></p>
+<p>Chrome 브라우저에서는 cors 요청을 하고 있고, cors 요청을 하기에 Origin 헤더가 요청헤더에 포함됩니다.</p>
+<p><a href="https://developer.mozilla.org/ko/docs/Web/HTTP/Headers/Origin">Origin MDN 문서</a>에서도 설명 되어 있듯이 Origin 요청 헤더는 cors 요청과 함께 전송되기에 no cors 요청에는 Origin 헤더가 요청헤더에 포함되지 않습니다.</p>
+<p>다시 원래의 문제상황으로 돌아와 보겠습니다.</p>
+<p>Safari 브라우저에서의 헤더를 살펴보겠습니다.</p>
+<p><strong>첫 페이지 로드</strong></p>
+<p><img src="/img/content/2024-06-28-1/11.png" alt="11.png"></p>
+<p><strong>새로고침 후</strong></p>
+<p><img src="/img/content/2024-06-28-1/12.png" alt="12.png"></p>
+<p><img src="/img/content/2024-06-28-1/13.png" alt="13.png"></p>
+<p>위 이미지를 보면, 첫 페이지 진입과, 새로고침 후의 폰트 요청 방식이 서로 cors와 no-cors로 다르다는것을 알 수 있습니다.</p>
+<p>위에서 알아본 결과를 바탕으로 추측해보자면, cors 요청은 link태그의 preload 힌트를 통한 요청, no-cors는 Safari 브라우저의 폰트요청 동작방식임을 유추해 볼 수 있습니다.</p>
+<table>
+<thead>
+<tr>
+<th>cors / no-cors</th>
+<th>Safari</th>
+<th>Chrome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>font-face url 요청</td>
+<td>no-cors</td>
+<td>cors</td>
+</tr>
+<tr>
+<td>link preload 요청</td>
+<td>cors</td>
+<td>cors</td>
+</tr>
+</tbody>
+</table>
+<p>간단히 차이점을 정리해보면 위 테이블과 같습니다.</p>
+<p>no-cors와 cors의 차이점은 Origin 헤더의 차이로도 연결 될 수 있습니다. 그렇다면, 이 차이가 어떻게 캐시 문제로 이어지는 걸까요?</p>
+<p><img src="/img/content/2024-06-28-1/14.png" alt="14.png"></p>
+<p><img src="/img/content/2024-06-28-1/15.png" alt="15.png"></p>
+<p>바로, 첨부된 이미지에서도 나와 있듯이, Vary 응답헤더에 Origin이라는 값이 설정되어 있어서입니다.</p>
+<p>같은 URL로 요청을 하더라도 이 Vary 헤더에 설정된 헤더 종류에 따라서, URL과 헤더의 조합으로 캐시가 다르게 될 수도 있다고 합니다. (<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching#vary">#</a>) 우리 서비스의 경우에는, Vary 헤더에 Origin 헤더가 등록되어 있어, URL과 Origin헤더 값의 조합으로 캐시키가 설정됩니다.</p>
+<p>Chrome 브라우저인 경우, link태그의 preload의 요청과 font-face url을 통한 요청 모두 cors요청이라 요청 헤더에  Origin 헤더가 둘다 포함되어 있었기에, 캐시키가 동일하여 캐시가 제대로 동작하지만, Safari 브라우저의 경우, link태그의 preload의 요청은 cors 요청이라 Origin 헤더가 포함되어있고, font-face의 url을 통한 요청은 no-cors 요청이라 Origin 헤더가 포함되어 있지 않아, URL + Origin값이 다르다보니 캐시가 의도한대로 동작하지 않았던 것이였습니다.</p>
+<h2 id="문제-해결">문제 해결</h2>
+<p>우리는 Safari 브라우저의 폰트 요청 방식이 Chrome 브라우저와 다소 차이가 있다는 점을 알아내고, 근본적으로 무엇이 원인인지 알게 되었습니다.</p>
+<p>위에서 알아본 바에 따르면, 응답헤더로 오는 Vary 헤더로 인해 문제가 생겼다는 것을 알 수 있으므로, Vary 헤더를 어떻게 설정할 수 있는지 방법에 대해서 알아보겠습니다.</p>
+<h3 id="vary-헤더-값-설정">Vary 헤더 값 설정</h3>
+<p>먼저 이 Vary 헤더는 어떻게 지정을 해줄 수 있을까요?</p>
+<p>폰트에 대한 CloudFront 동작을 확인해보니, 적용되어있는 캐시정책을 살펴보니 캐시키에 Origin이 설정되어있었습니다.</p>
+<p><img src="/img/content/2024-06-28-1/16.png" alt="16.png"></p>
+<p>이걸 Origin을 제거해보고 다른 헤더를 넣어보겠습니다.</p>
+<p><img src="/img/content/2024-06-28-1/17.png" alt="17.png"></p>
+<p>Access-Control-Request-Method, Access-Control-Request-Headers 이 두개의 헤더를 캐시키로 설정해줬습니다.</p>
+<p><img src="/img/content/2024-06-28-1/18.png" alt="18.png"></p>
+<p>그랬더니, Vary 헤더에 설정 된 값이 방금 설정 했던 두개의 헤더가 적용되어 있는것을 알 수 있습니다. Vary 헤더에 Origin이 설정되어있어, Origin 값 기반으로 캐시가 되어 문제가 생겼으므로 Vary 헤더에 Origin을 제거해보겠습니다.</p>
+<p>방법은 두가지가 있습니다. 두 방법 모두 Origin 값을 캐시키로 사용하지 않는 것처럼 동작합니다.</p>
+<ol>
+<li>
+<p>캐시 정책에서 캐시키로 설정된 Origin 을 제거하는 방법</p>
+<p><img src="/img/content/2024-06-28-1/19.png" alt="19.png"></p>
+<p><img src="/img/content/2024-06-28-1/20.png" alt="20.png"></p>
+<p>Vary 헤더는 응답헤더에서 사라졌습니다.</p>
+<p>그렇다면, 캐시키가 사라진 Cloudfront는 무엇을 기반으로 캐싱을 할까요? <a href="https://docs.aws.amazon.com/ko_kr/AmazonCloudFront/latest/DeveloperGuide/understanding-the-cache-key.html">AWS의 캐시 키 이해 문서</a>에 따르면 CloudFront 배포 도메인과, 요청 URL이 기본캐시키로 지정되어 있다고 합니다.</p>
+</li>
+<li>
+<p>CloudFront 응답헤더 정책에서 헤더 제거하기</p>
+<p><img src="/img/content/2024-06-28-1/21.png" alt="21.png"></p>
+<p>Cloudfront 응답헤더 정책에서 Vary헤더를 명시적으로 제거할 수 있습니다.</p>
+<p><img src="/img/content/2024-06-28-1/22.png" alt="22.png"></p>
+</li>
+</ol>
+<p>저는 캐시키에 설정된 헤더가 Origin 밖에 없어서, Vary 헤더를 제거하는 방식인 2번을 선택했습니다. 만약 캐시키에 설정된 다른 값들이 있다면, 캐시키에 Origin 헤더를 제거하는것이 안전하다고 생각됩니다.</p>
+<h3 id="결과">결과</h3>
+
+<video src='/img/content/2024-06-28-1/23.mov' controls></video>
+
+
+<p>적용 한 후 폰트 캐싱이 잘 되는것을 알 수 있습니다.</p>
+<h2 id="무거운-폰트-용량">무거운 폰트 용량</h2>
+<p>한글의 경우 조합가능한 모든 글자인 11172자가 모두 폰트에 포함되어 있어서 용량이 무겁습니다. 하지만, 대부분의 경우 이 글자들을 모두 사용하는 것은 아니기 때문에, 사용하지 않는 글자를 제거하고 폰트를 다시 만들기로 했습니다. 이렇게 사용할 글자만 남겨 둔 폰트를 서브셋 폰트라고 합니다.</p>
+<h3 id="ks-x-1001"><strong>KS X 1001</strong></h3>
+<p>한국어 문자집합 중 <a href="https://ko.wikipedia.org/wiki/KS_X_1001">KS X 1001</a>이란 것이 있습니다. 한글을 2350자만 포함하고 있다보니 모든 한글을 표현할 수 없어 비판을 받았지만, 자주 쓰이는 글자만 포함하고 있다보니 아이러니하게 폰트 용량을 줄일 때 기준으로 삼기 좋습니다.</p>
+<h3 id="서브셋-폰트-만들기">서브셋 폰트 만들기</h3>
+<p>서브셋 폰트를 만드는 도구에는 여러가지가 있는데, 처음에는 <a href="https://d2.naver.com/helloworld/4969726">네이버 D2</a> 에서도 소개하고 있는 <a href="https://opentype.jp/subsetfontmk.htm">서브셋 폰트메이커</a> 를 사용해서 서브셋 폰트를 적용했었습니다. 하지만 폰트가 이상하게 나오는 현상이 있다는 보고가 들어왔습니다.</p>
+<p><img src="/img/content/2024-06-28-1/24.png" alt="24.png"></p>
+<p>동료분께서 바로 윈도우 7을 설치하셔서 확인해보니, 위 이미지 처럼 재현되는 것을 확인해주셨고,</p>
+<p><img src="/img/content/2024-06-28-1/25.png" alt="25.png"></p>
+<p>위와 같이 생성된 폰트에 값이 누락되어서 생성 되었다는것을 알 수 있었습니다. 이런 이유로, 다른 것을 이용하여 서브셋 폰트를 생성하는 것을 추천 합니다.</p>
+<ul>
+<li><a href="https://www.lddgo.net/en/convert/font-subset">Font Subset Generate Online</a></li>
+<li><a href="https://fontforge.org/en-US/">FontForge Open Source Font Editor</a></li>
+</ul>
+<p>이 중 Font Subset Generate Online를 사용해서 생성했습니다. 이 도구로 생성한 서브셋 폰트는 윈도우 7에서도 제대로 폰트가 적용되는 것을 확인 할 수 있었습니다.</p>
+<h3 id="폰트-용량-비교">폰트 용량 비교</h3>
+<p>일반 폰트와 서브셋 폰트의 용량을 비교해보겠습니다.</p>
+<p><img src="/img/content/2024-06-28-1/26.png" alt="26.png"></p>
+<p><strong>일반 폰트</strong></p>
+<ul>
+<li>Woff2 : 0.76MB</li>
+<li>Woff: 1.1MB</li>
+</ul>
+<p><strong>서브셋 폰트</strong></p>
+<ul>
+<li>Woff2: 0.16MB</li>
+<li>Woff: 0.21MB</li>
+</ul>
+<p><strong>대략 80%정도 용량이 줄어든것을 확인할 수 있습니다.</strong></p>
+<h2 id="개선결과-비용-비교">개선결과 비용 비교</h2>
+<p>이제 개선을 모두 완료했으니, 개선 이전과 이후의 비용을 비교해보겠습니다.</p>
+<p><img src="/img/content/2024-06-28-1/27.png" alt="27.png"></p>
+<pre tabindex="0"><code>Tiered price for: 39,407 GB
+10,240 GB x 0.12 USD = 1,228.80 USD
+29,167 GB x 0.10 USD = 2,916.70 USD
+Total tier cost: 1,228.80 USD + 2,916.70 USD = 4,145.50 USD (Data transfer out to internet from Asia Pacific)
+Data transfer out to internet cost: 4,145.50 USD
+Data transfer out to origin cost: 0 USD
+250,883,581 requests x 0.0000012 USD = 301.06 USD (HTTPS requests from Asia Pacific)
+Requests cost: 301.06 USD
+4,145.50 USD + 301.06 USD = 4,446.56 USD (Total cost Asia Pacific)
+CloudFront price Asia Pacific (monthly): 4,446.56 USD
+</code></pre><p>비교 시점의 트래픽이 다르므로 완전히 동일한 상황은 아니지만 약 1/10로 줄어든 것을 확인할 수 있습니다. 1년으로 하면 약 46만 달러, 환율 1380원을 적용하면 6억이 넘는 돈입니다. 물론 약정할인이 있어 이 정도로 드라마틱 하지는 않겠지만 충분히 유의미한 차이가 있었습니다.</p>
+<p>비지니스 로직의 경우 QA 프로세스도 있고, 테스트 코드를 작성해서 통과하면 별 문제 없을 것을 어느 정도 확신해도 되지만, 캐싱 같은 경우 눈에 보이는 동작이 다르지 않으므로 문제가 있음에도 모르고 넘어가기 쉬운 부분인 것 같습니다. 이런 부분은 프로덕션 환경에 배포 후 사후 검증, 모니터링을 더 철저히 해야 한다는 것을 다시 한번 확인하는 계기가 된 것 같습니다.</p>
+<h2 id="참고">참고</h2>
+<ul>
+<li><a href="https://blog.banksalad.com/tech/font-preload-on-safari/">https://blog.banksalad.com/tech/font-preload-on-safari/</a></li>
+<li><a href="https://d2.naver.com/helloworld/4969726">https://d2.naver.com/helloworld/4969726</a></li>
+<li><a href="https://boramyy.github.io/dev/front-end/etc/font/">https://boramyy.github.io/dev/front-end/etc/font/</a></li>
+<li><a href="https://docs.aws.amazon.com/ko_kr/AmazonCloudFront/latest/DeveloperGuide/Introduction.html">https://docs.aws.amazon.com/ko_kr/AmazonCloudFront/latest/DeveloperGuide/Introduction.html</a></li>
+<li><a href="https://docs.aws.amazon.com/AmazonS3/latest/API/RESTCommonResponseHeaders.html">https://docs.aws.amazon.com/AmazonS3/latest/API/RESTCommonResponseHeaders.html</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Vary">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Vary</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Origin</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload#what_types_of_content_can_be_preloaded">https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload#what_types_of_content_can_be_preloaded</a></li>
+</ul>
+      
+    </div>
+
+    <div class='col-lg-3 sidemenu'>
+  <h4>Recent Posts</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2024-06-28-1-optimize-font-traffic/'>
+      <li class="sidemenu-recent-item">웹폰트 최적화를 통한 CDN 비용절감</li>
+    </a>
+    
+    <a href='/ko/2023-11-02-1-null-pointer-exception/'>
+      <li class="sidemenu-recent-item">내가 만든 non-null 변수에서 NullPointerException이 발생할 리가 없어!</li>
+    </a>
+    
+    <a href='/ko/2023-08-04-4-frontend-testing-4-setup-environment/'>
+      <li class="sidemenu-recent-item">프론트엔드 테스트 자동화 전략 - 4. 테스트 환경 구성</li>
+    </a>
+    
+    <a href='/ko/2023-08-04-3-frontend-testing-3-implement/'>
+      <li class="sidemenu-recent-item">프론트엔드 테스트 자동화 전략 - 3. 구현하기</li>
+    </a>
+    
+  </ul>
+  <hr>
+  <h4>Tags</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href="/ko/tags/amazon-sqs/">
+      <li class="sidemenu-recent-tags">amazon-sqs</li>
+    </a>
+    
+    <a href="/ko/tags/analytics/">
+      <li class="sidemenu-recent-tags">analytics</li>
+    </a>
+    
+    <a href="/ko/tags/android/">
+      <li class="sidemenu-recent-tags">android</li>
+    </a>
+    
+    <a href="/ko/tags/aws/">
+      <li class="sidemenu-recent-tags">aws</li>
+    </a>
+    
+    <a href="/ko/tags/aws-batch/">
+      <li class="sidemenu-recent-tags">aws-batch</li>
+    </a>
+    
+    <a href="/ko/tags/aws-lambda/">
+      <li class="sidemenu-recent-tags">aws-lambda</li>
+    </a>
+    
+    <a href="/ko/tags/botkit/">
+      <li class="sidemenu-recent-tags">botkit</li>
+    </a>
+    
+    <a href="/ko/tags/croquis/">
+      <li class="sidemenu-recent-tags">croquis</li>
+    </a>
+    
+    <a href="/ko/tags/css/">
+      <li class="sidemenu-recent-tags">css</li>
+    </a>
+    
+    <a href="/ko/tags/data/">
+      <li class="sidemenu-recent-tags">data</li>
+    </a>
+    
+    <a href="/ko/tags/event/">
+      <li class="sidemenu-recent-tags">event</li>
+    </a>
+    
+    <a href="/ko/tags/front-end/">
+      <li class="sidemenu-recent-tags">front-end</li>
+    </a>
+    
+    <a href="/ko/tags/frontend/">
+      <li class="sidemenu-recent-tags">frontend</li>
+    </a>
+    
+    <a href="/ko/tags/git/">
+      <li class="sidemenu-recent-tags">git</li>
+    </a>
+    
+    <a href="/ko/tags/github/">
+      <li class="sidemenu-recent-tags">github</li>
+    </a>
+    
+    <a href="/ko/tags/graphql/">
+      <li class="sidemenu-recent-tags">graphql</li>
+    </a>
+    
+    <a href="/ko/tags/ios/">
+      <li class="sidemenu-recent-tags">ios</li>
+    </a>
+    
+    <a href="/ko/tags/jenkins/">
+      <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/jotai/">
+      <li class="sidemenu-recent-tags">jotai</li>
+    </a>
+    
+    <a href="/ko/tags/kubernetes/">
+      <li class="sidemenu-recent-tags">kubernetes</li>
+    </a>
+    
+    <a href="/ko/tags/log/">
+      <li class="sidemenu-recent-tags">log</li>
+    </a>
+    
+    <a href="/ko/tags/microservice/">
+      <li class="sidemenu-recent-tags">microservice</li>
+    </a>
+    
+    <a href="/ko/tags/mithril/">
+      <li class="sidemenu-recent-tags">mithril</li>
+    </a>
+    
+    <a href="/ko/tags/node.js/">
+      <li class="sidemenu-recent-tags">node.js</li>
+    </a>
+    
+    <a href="/ko/tags/nodejs/">
+      <li class="sidemenu-recent-tags">nodejs</li>
+    </a>
+    
+    <a href="/ko/tags/npm/">
+      <li class="sidemenu-recent-tags">npm</li>
+    </a>
+    
+    <a href="/ko/tags/react/">
+      <li class="sidemenu-recent-tags">react</li>
+    </a>
+    
+    <a href="/ko/tags/rest-api/">
+      <li class="sidemenu-recent-tags">rest-api</li>
+    </a>
+    
+    <a href="/ko/tags/serverless-architecture/">
+      <li class="sidemenu-recent-tags">serverless-architecture</li>
+    </a>
+    
+    <a href="/ko/tags/slack/">
+      <li class="sidemenu-recent-tags">slack</li>
+    </a>
+    
+    <a href="/ko/tags/stack/">
+      <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/storybook/">
+      <li class="sidemenu-recent-tags">storybook</li>
+    </a>
+    
+    <a href="/ko/tags/task-queue/">
+      <li class="sidemenu-recent-tags">task-queue</li>
+    </a>
+    
+    <a href="/ko/tags/testing/">
+      <li class="sidemenu-recent-tags">testing</li>
+    </a>
+    
+    <a href="/ko/tags/thrift/">
+      <li class="sidemenu-recent-tags">thrift</li>
+    </a>
+    
+    <a href="/ko/tags/tutorial/">
+      <li class="sidemenu-recent-tags">tutorial</li>
+    </a>
+    
+    <a href="/ko/tags/typescript/">
+      <li class="sidemenu-recent-tags">typescript</li>
+    </a>
+    
+    <a href="/ko/tags/ui/">
+      <li class="sidemenu-recent-tags">ui</li>
+    </a>
+    
+    <a href="/ko/tags/vertical-align/">
+      <li class="sidemenu-recent-tags">vertical-align</li>
+    </a>
+    
+    <a href="/ko/tags/webpack/">
+      <li class="sidemenu-recent-tags">webpack</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A1%9C%EA%B7%B8/">
+      <li class="sidemenu-recent-tags">로그</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/">
+      <li class="sidemenu-recent-tags">마이크로서비스</li>
+    </a>
+    
+    <a href="/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/">
+      <li class="sidemenu-recent-tags">튜토리얼</li>
+    </a>
+    
+  </ul>
+</div>
+
+    <div class='col-12'>
+      <hr>
+
+      <div class='float-left'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2023-11-02-1-null-pointer-exception/' title='내가 만든 non-null 변수에서 NullPointerException이 발생할 리가 없어!'>&larr; 이전 글</a>
+        
+      </div>
+      <div class='float-right'>
+        
+        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
+        
+      </div>
+      <div class='clearfix'></div>
+      <hr>
+      <div class='text-center'>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "croquiscom-devblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='container'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2021 kakaostyle.com
+      <span class='float-right text-muted'>
+        powered by
+        <a href='https://gohugo.io/' target='_blank'>Hugo</a>
+        and
+        <a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-48716672-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+  integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+  integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

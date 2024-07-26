@@ -7,6 +7,15 @@
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 04 Aug 2023 04:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>웹폰트 최적화를 통한 CDN 비용절감</title>
+      <link>https://devblog.kakaostyle.com/ko/2024-06-28-1-optimize-font-traffic/</link>
+      <pubDate>Fri, 28 Jun 2024 01:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/2024-06-28-1-optimize-font-traffic/</guid>
+      <description>&lt;p&gt;근래의 많은 기업과 마찬가지로 카카오스타일도 불필요한 비용 낭비가 발생하지 않도록 많은 노력을 기울이고 있습니다. 물론 이전이라고 사용하지 않는 리소스를 방치하며 비용을 낭비한 것은 아니고, 좀 더 세밀한 부분까지 주의를 기울이기 시작했다고 생각해주시면 됩니다. 이번 글은 그 중 하나를 소개해보려고 합니다.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>내가 만든 non-null 변수에서 NullPointerException이 발생할 리가 없어!</title>
       <link>https://devblog.kakaostyle.com/ko/2023-11-02-1-null-pointer-exception/</link>
       <pubDate>Thu, 02 Nov 2023 01:00:00 +0000</pubDate>
