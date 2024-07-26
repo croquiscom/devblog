@@ -7,6 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <lastBuildDate>Fri, 04 Aug 2023 04:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>내가 만든 non-null 변수에서 NullPointerException이 발생할 리가 없어!</title>
+      <link>https://devblog.kakaostyle.com/ko/2023-11-02-1-null-pointer-exception/</link>
+      <pubDate>Thu, 02 Nov 2023 01:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/2023-11-02-1-null-pointer-exception/</guid>
+      <description>&lt;p&gt;안녕하세요, 카카오스타일 전시 UX팀의 샌즈입니다.&lt;/p&gt;
+&lt;p&gt;모두들 알고 계시듯 null(널)은 값이 없음을 나타냅니다. 그리고 null 값인 객체에 접근하려고 하면 그 유명한 NullPointerException(NPE)이 발생합니다. 그런데 null 값을 가지지 않는 다고 설정한 변수에서 NPE가 발생하는 현상을 겪어 그 내용을 공유해보려고 합니다.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
       <title>프론트엔드 테스트 자동화 전략 - 4. 테스트 환경 구성</title>
       <link>https://devblog.kakaostyle.com/ko/2023-08-04-4-frontend-testing-4-setup-environment/</link>
       <pubDate>Fri, 04 Aug 2023 04:00:00 +0000</pubDate>

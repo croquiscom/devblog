@@ -74,6 +74,26 @@
       <div>
         <div class='posts-head'>
           <span class='posts-title'>
+            <a href='/ko/2023-07-17-1-msk-mock-in-storybook/'>Storybook의 MSW mock 구조 개선</a>
+          </span>
+          <div class='posts-info text-right'>
+            <span class='posts-date'>17 Jul 2023 | </span>
+            
+            <span class='posts-author'>by Martin(유덕남)</span>
+            
+          </div>
+        </div>
+        <div class='card-body'>
+          <a href='/ko/2023-07-17-1-msk-mock-in-storybook/' class='posts-content'>
+            <p>카카오스타일의 파트너센터 서비스에서는 UI 테스트와 문서화를 위해서 Storybook과 MSW를 사용하고 있습니다. Storybook의 각 스토리마다 MSW GraphQL mock을 개별로 정의해서 사용하고 있었는데, 이로 인해 코드가 중복되고 mock 누락으로 인한 오류가 자주 발생했습니다. 이런 문제를 해결하기 위해, 스토리마다 따로 정의된 MSW mock을 한 군데로 모아서 관리할 수 있는 새로운 구조를 제안하고, recast를 사용한 변환 스크립트를 작성하여 마이그레이션 하는 과정까지 다뤄봤습니다.</p>
+            <div class='posts-readmore'>&hellip; read more </div>
+          </a>
+        </div>
+      </div>
+      
+      <div>
+        <div class='posts-head'>
+          <span class='posts-title'>
             <a href='/ko/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/'>GraphQL 이해하기: (4) 리졸버 인자 - 4. info</a>
           </span>
           <div class='posts-info text-right'>
@@ -151,31 +171,15 @@
         </div>
       </div>
       
-      <div>
-        <div class='posts-head'>
-          <span class='posts-title'>
-            <a href='/ko/2022-11-09-1-understanding-graphql-3-understanding-resolver/'>GraphQL 이해하기: (3) 리졸버의 이해</a>
-          </span>
-          <div class='posts-info text-right'>
-            <span class='posts-date'>09 Nov 2022 | </span>
-            
-            <span class='posts-author'>by Simon(윤상민)</span>
-            
-          </div>
-        </div>
-        <div class='card-body'>
-          <a href='/ko/2022-11-09-1-understanding-graphql-3-understanding-resolver/' class='posts-content'>
-            <p>GraphQL 스키마를 정의했고, 클라이언트에서 온 요청을 서버가 처리하기 위해 필요한 기술을 알아봤습니다. 이제 클라이언트에서 온 요청에 따라 적절한 데이터를 반환하는 과정이 남았습니다. 이는 리졸버(resolver)라는 것이 담당합니다. Java쪽에서는 데이터 페처(data fetcher)라고도 부릅니다. 리졸버를 완전히 이해하면 GraphQL을 전부를 알았다고 할만큼 GraphQL의 핵심이라고 볼 수 있습니다.</p>
-            <div class='posts-readmore'>&hellip; read more </div>
-          </a>
-        </div>
-      </div>
-      
     </div>
 
     <div class='col-lg-3 sidemenu'>
   <h4>Recent Posts</h4>
   <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2023-11-02-1-null-pointer-exception/'>
+      <li class="sidemenu-recent-item">내가 만든 non-null 변수에서 NullPointerException이 발생할 리가 없어!</li>
+    </a>
     
     <a href='/ko/2023-08-04-4-frontend-testing-4-setup-environment/'>
       <li class="sidemenu-recent-item">프론트엔드 테스트 자동화 전략 - 4. 테스트 환경 구성</li>
@@ -187,10 +191,6 @@
     
     <a href='/ko/2023-08-04-2-frontend-testing-2-requirement/'>
       <li class="sidemenu-recent-item">프론트엔드 테스트 자동화 전략 - 2. 요구사항 분석</li>
-    </a>
-    
-    <a href='/ko/2023-08-04-1-frontend-testing-1-what-is-it/'>
-      <li class="sidemenu-recent-item">프론트엔드 테스트 자동화 전략 - 1. 테스트 자동화란?</li>
     </a>
     
   </ul>
@@ -437,6 +437,11 @@
     
     
     
+    
+    
+    
+    
+    
 
     
     
@@ -444,7 +449,7 @@
     
 
     
-    <li><a href='/ko/page/10/'>&raquo;</a></li>
+    <li><a href='/ko/page/11/'>&raquo;</a></li>
     
   </ul>
   
