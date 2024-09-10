@@ -5,7 +5,17 @@
     <link>https://devblog.kakaostyle.com/ko/tags/graphql/</link>
     <description>Recent content in GraphQL on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 15 Nov 2022 03:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/graphql/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 Aug 2024 01:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/graphql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Server Driven UI 호출 구조 개선</title>
+      <link>https://devblog.kakaostyle.com/ko/2024-08-04-1-improve-server-driven-ui/</link>
+      <pubDate>Sun, 04 Aug 2024 01:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/2024-08-04-1-improve-server-driven-ui/</guid>
+      <description>&lt;p&gt;카카오스타일에서는 &lt;a href=&#34;https://devblog.kakaostyle.com/ko/2021-12-16-1-server-driven-ui&#34;&gt;서버 드리븐 UI(Server Driven UI, 이하 SDUI)&lt;/a&gt;를 통해 UI의 유연성을 가져가고 있습니다. 서버가 클라이언트 UI를 동적으로 제어하므로써 빌드 및 배포 없이도 UI 업데이트를 할 수 있고, A/B 테스트도 효율적으로 수행할 수 있었습니다. 다만 이렇게 구축된 시스템을 몇년간 운영하다보니 몇가지 문제점이 발생했습니다.&lt;/p&gt;
+&lt;p&gt;이 글에서는 초기 구조에서 어떤 문제가 발생했는지 살펴보고, 전시팀에서 어떤 방식으로 개선해 나갔는지에 대해 이야기 해보려고 합니다.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>GraphQL 이해하기: (4) 리졸버 인자 - 4. info</title>
       <link>https://devblog.kakaostyle.com/ko/2022-11-15-3-understanding-graphql-4-resolver-arguments-4-info/</link>
