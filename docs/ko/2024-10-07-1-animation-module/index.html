@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+  <meta charset='utf-8'>
+
+  <title>기획전 애니메이션 모듈 개발</title>
+  
+  <meta name='author' content='kakaostyle.com'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+  <meta property='og:title' content='기획전 애니메이션 모듈 개발' />
+  <meta property='og:description' content='지그재그는 상품 판매를 촉진하기 위해 이벤트나 기획전을 주요 마케팅 수단으로 활용합니다. 기획전은 한정된 기간 동안 고객에게 특정 상품 정보와 추가적인 할인 혜택을' />
+  <meta property='og:type' content='article' />
+  <meta property='og:url' content='https://devblog.kakaostyle.com/ko/2024-10-07-1-animation-module/' />
+  
+  <meta property='og:image' content='https://devblog.kakaostyle.com/img/og-image.png' />  
+  
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+    integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link href='/css/style.css?body=1' rel='stylesheet' type='text/css' media='all'>
+  <link href='/css/syntax.css?body=1' rel='stylesheet' type='text/css' media='all'>
+</head>
+
+<body>
+<div class='hp-navbar-top'>
+  <div class='container'>
+    <div class='row'>
+      <div class='col-12'>
+        <nav class='hp-nav'>
+          <span>
+            <a href='/' class='logo-a-tag'>
+              <img class='hp-navbar-logo' src='/img/logo-kakaostyle.png'>
+              <span class='hp-navbar-logo-font'>기술 블로그</span>
+            </a>
+          </span>
+        </nav>
+        <div class='float-right hp-navbar-top-link'>
+          <a class='hp-nav-item' href='https://kakaostyle.com' target='_blank'>
+            <img class='icon' src='/img/kakaostyle-icon.png'>
+          </a>
+          <a class='hp-nav-item' href='https://github.com/croquiscom' target='_blank'>
+            <img class='icon' src='/img/github-icon.svg'>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class='hp-navbar'>
+  <div class='hp-navbar-bgcolor'>
+    <div class='container'>
+      <div class='text-center'>
+        <div class='hp-navbar-title'>기획전 애니메이션 모듈 개발</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class='container'>
+
+  <div class='row'>
+    <div class='col-12'>
+      <div class='post-header'>
+        <div class='post-tags'>
+          
+
+<ul class='tag_box inline'>
+  <li><i class='fas fa-tags'></i></li>
+  
+  <li>
+    <a href='/ko/tags/frontend'>
+      Frontend
+      <span>8</span>
+    </a>
+  </li>
+  
+</ul>
+
+        </div>
+        <div class='float-right'>
+          
+          <div class='post-author'>
+            <i class='fas fa-pencil-alt'></i>
+            <span>Marcel(문태민)</span>
+          </div>
+          
+          <div class='post-date'>
+            <i class='fas fa-calendar-alt'></i>
+            <span>07 October 2024</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-12 col-lg-9'>
+      <p>지그재그는 상품 판매를 촉진하기 위해 이벤트나 기획전을 주요 마케팅 수단으로 활용합니다. 기획전은 한정된 기간 동안 고객에게 특정 상품 정보와 추가적인 할인 혜택을 명확하게 제시하여 판매를 유도하는 역할을 합니다. 따라서 다양한 기획전을 지속적으로 발행해 고객의 관심을 유도하고, 브랜드 충성도를 높이며, 구매율을 증가시키고 있습니다. 또한, 다양한 테마와 카테고리별 기획전을 통해 고객의 소비 패턴과 선호도에 맞춘 맞춤형 쇼핑 경험을 제공합니다. 이러한 전략은 이커머스 사이트의 경쟁력을 강화하고 지속적인 성장을 도모하는 데 중요한 역할을 합니다.</p>
+<p>지그재그 앱에서는 다양한 지면에 기획전을 노출시키고 있어요!</p>
+<p><img src="/img/content/2024-10-07-1/01.png" alt="01.png"></p>
+<h2 id="우리는-이미-cms로-개발자가-아닌-분들이-직접-기획전을-만들고-있어요">우리는 이미 CMS로 개발자가 아닌 분들이 직접 기획전을 만들고 있어요.</h2>
+<p>기획전 제작에는 여러 고려사항과 어려움이 따랐습니다.</p>
+<p>첫째, 기획전은 대부분 특정 기간에만 활용됩니다. 패션 산업의 특성상, 시즌별로 특정 상품이 강조되며 그에 맞는 혜택이 제공됩니다. 이러한 특성 때문에 기획전은 일회성이 강하며, 매 시즌마다 새로운 기획전을 준비해야 했습니다.</p>
+<p>둘째, 각 기획전은 고유의 컨셉과 다양한 콘텐츠 형태를 요구합니다. 상품의 판매 상태, 재고 변동, 고객 반응 등 동적인 요소가 기획전 콘텐츠에 반영되므로 매번 요구사항이 다를 수밖에 없습니다. 이로 인해 개발 기간과 범위를 명확히 설정하고 효율적으로 개발을 진행해야 합니다.</p>
+<p>셋째, 기획전 제작에는 다양한 전문가들의 협업이 필수적입니다. 상품 기획, 디자인, 개발, 품질 테스트 등 여러 분야의 전문가들이 함께 작업해야 합니다. 예를 들어, MD는 상품 선택과 정렬을, 디자이너는 시각적 표현을, 개발자는 기능 구현을, QA는 최종 검증을 담당합니다. 이러한 협업은 기획전의 완성도를 높이는 중요한 과정입니다.</p>
+<p>마지막으로, 기획전의 성과를 평가하기 위해 방문자 수, 판매량, 클릭률 등의 지표를 추적하고 분석해야 합니다. 이 데이터를 바탕으로 다음 기획전을 최적화하거나 전략을 재조정할 수 있습니다. 이 과정은 지속적인 관리와 업데이트를 필요로 합니다.</p>
+<p>우리 팀은 이러한 어려움을 해결하기 위해 CMS(Content Management System)를 도입했습니다. 이를 통해 개발자가 매번 기획전을 직접 만드는 대신, 기획자가 스스로 콘텐츠를 입력하고 기획전을 구성할 수 있게 되었습니다. 특별한 컨셉이나 디자인이 필요할 때만 디자이너의 도움을 받는 방식으로, 개발자의 작업 부담을 줄이면서 기획전 운영의 유연성을 높였습니다. 우리는 이 도구를 &lsquo;콘텐츠 에디터&rsquo;라고 부르고 있습니다.</p>
+<p><img src="/img/content/2024-10-07-1/02.png" alt="02.png"></p>
+<h2 id="콘텐츠-에디터가-있지만-개발자의-손을-타는-곳이-있다">‘콘텐츠 에디터’가 있지만, 개발자의 손을 타는 곳이 있다?</h2>
+<p>기획전 페이지는 평균적으로 2주에 260여 개의 기획전이 생성되며, 대부분의 경우 CMS를 통해 제작할 수 있었습니다. 그러나 일반 기획전과 달리 동적인 콘텐츠로 사용자에게 강렬한 인상을 남기고 후킹 요소를 포함하는 ‘프로모션 기획전’이 분기별로 7~8회 정도 진행됐고, 이 기획전을 위한 콘텐츠는 개발자가 직접 작업해야 했습니다.</p>
+<p><img src="/img/content/2024-10-07-1/03.gif" alt="03.gif"></p>
+<p>따라서, 콘텐츠 에디터에서 다양한 애니메이션 효과를 간편하게 설정할 수 있도록 하는 것이 필요했습니다. 이를 통해 모든 종류의 기획전을 개발자에게 의존하지 않고, 기획자들이 직접 제작할 수 있는 환경을 구축하고자 했습니다. 이 목표를 달성하기 위해, 우리는 애니메이션 설정을 직관적이고 쉽게 사용할 수 있는 방식으로 콘텐츠 에디터에 통합하는 작업을 진행했습니다.</p>
+<h2 id="애니메이션-모듈을-개발해보자">애니메이션 모듈을 개발해보자!</h2>
+<p>사실, 요구된 애니메이션 효과는 그다지 복잡하지 않았습니다. 대부분의 쇼케이스 애니메이션은 화면에 등장할 때 페이드 인(fade in) 되면서 자연스럽게 위로 이동하는 정도의 애니메이션이었습니다. 그러나 여러 요소가 그룹으로 묶여 동시 또는 시차를 두고 발생하는 애니메이션이 필요했습니다.</p>
+<p><img src="/img/content/2024-10-07-1/04.gif" alt="애니메이션 그룹 예시"></p>
+<p><img src="/img/content/2024-10-07-1/05.gif" alt="애니메이션 크기 변경 예시"></p>
+<p><img src="/img/content/2024-10-07-1/06.gif" alt="애니메이션 예시"></p>
+<p>애니메이션 편집 모듈을 개발하는데, 몇 가지 고민사항이 있었습니다.</p>
+<ol>
+<li><strong>콘텐츠 에디터 내에서의 편집 가능성</strong>: 애니메이션 설정이 복잡하지 않으며, 단순하고 직관적인 사용성을 제공해야 했습니다.
+<img src="/img/content/2024-10-07-1/07.png" alt="07.png"></li>
+<li><strong>애니메이션 발생 타이밍</strong>: 애니메이션은 <code>intersectionObserver</code>를 통해 발생하는데, 개발자가 아닌 사람이 이를 어떻게 직관적으로 이해할 수 있을지 고민이 있었습니다.</li>
+<li><strong>복합 애니메이션 구현</strong>: <code>framer-motion</code>을 이용해 여러 애니메이션 효과를 어떻게 독립적으로 적용할 수 있을지 고민했습니다.</li>
+</ol>
+<h2 id="구현-아이디어">구현 아이디어</h2>
+<p>당시에는 기획은 있었으나, 별도의 디자이너 없이 메뉴 구성을 고민해야 했습니다. 원래는 모달 창을 사용하여 편집하는 방식을 계획했지만, 이미 이미지 선택과 액션 설정 등에서 모달이 사용되고 있어 중복으로 모달 창이 열리는 UI 문제가 발생할 수 있었습니다. 따라서, 다른 편집 요소와 조화롭게 통합될 수 있도록 더 매끄러운 디자인을 구현하는 데 주력했습니다.</p>
+<h3 id="1-애니메이션-모듈의-계층화">1. 애니메이션 모듈의 계층화</h3>
+<p><img src="/img/content/2024-10-07-1/08.gif" alt="08.gif"></p>
+<p>위 애니메이션은 기존 쇼케이스에서 사용된 샘플로, 배경 이미지 위에 4개의 요소가 약간의 시차를 두고 동시에 등장하는 방식입니다. 이 샘플을 바탕으로 애니메이션을 어떻게 계층화했는지 소개하겠습니다.</p>
+<p><code>애니메이션 씬</code> (Scene) &gt; <code>애니메이션</code> (Group) &gt; <code>클립</code> (이미지, 문자, 모듈)&gt; <code>효과</code> (나타나기, 사라지기)</p>
+<p><img src="/img/content/2024-10-07-1/09.png" alt="09.png"></p>
+<p><img src="/img/content/2024-10-07-1/10.png" alt="10.png"></p>
+<ul>
+<li>애니메이션 씬: 애니메이션 요소들이 배치되는 공간입니다. 보통 배경 이미지를 사용합니다.</li>
+<li>애니메이션: 스크롤 시 화면에 들어올 때 클립들에서 동시에 애니메이션이 발생합니다. 클립을 그룹화하고, 애니메이션 발생 타이밍을 조정합니다. 애니메이션은 애니메이션 씬 안에 여러개를 배치할 수 있습니다.</li>
+<li>애니메이션 클립: 예시에 보이는 4개의 작은 이미지 요소입니다. 기본적으로 이미지 요소를 사용하며, 기획전에서 사용하는 일부 모듈을 배치해서 사용할 수 있습니다. 애니메이션의 효과(fade, move 등)를 적용가능하며, 다수의 효과도 지원합니다.</li>
+<li>효과: 클립에 동적인 요소를 부여하며, <code>Fade In/Out</code>, <code>Move In/Out</code>, <code>Floating</code>, <code>Swipe In/Out</code>, <code>Scale In/Out</code> 등의 효과를 적용할 수 있습니다. 효과는 중복 적용이 가능합니다.</li>
+</ul>
+<p>하나의 설정 영역에서 모든 애니메이션을 편집하려 했다면, 복잡한 UI 요소와 많은 공간이 필요했을 것입니다. 그러나 애니메이션 씬과 애니메이션 그룹을 분리함으로써, 배경 설정과 다수의 애니메이션을 효과적으로 배치할 수 있었습니다. 이렇게 분리된 편집 영역 덕분에, 각 애니메이션의 구성 요소가 한눈에 파악 가능해졌습니다.</p>
+<p><img src="/img/content/2024-10-07-1/11.png" alt="11.png"></p>
+<h3 id="2-직관적인-애니메이션-타이밍-설정">2. 직관적인 애니메이션 타이밍 설정</h3>
+<p>애니메이션은 스크롤하다가 화면에 보일 때 발생을 해야 합니다. 그리고 발생하는 위치는 요구사항에 따라 조금씩 변경이 필요합니다. 콘텐츠 에디터에서는 미리보기 영역이 존재하여 현재 콘텐츠의 편집 내용을 바로 확인할 수 있습니다. 여기서 애니메이션에는 하단에 굵은 선이 있어서, 해당 선이 보이는 타이밍에 애니메이션이 발생하도록 설정되어 있어서 직관적으로 설정할 수 있게 했습니다.</p>
+<p><img src="/img/content/2024-10-07-1/12.gif" alt="12.gif"></p>
+<h3 id="3-framer-motion을-활용한-독립적인-애니메이션-효과-적용">3. Framer Motion을 활용한 독립적인 애니메이션 효과 적용</h3>
+<p><code>Framer Motion</code>은 <code>React</code> 기반 애니메이션 라이브러리로, 복잡한 애니메이션을 쉽게 구현할 수 있도록 도와줍니다. 기존 쇼케이스에서도 이를 사용해 다양한 애니메이션을 제작해왔으며, <code>Framer Motion</code>을 통해 사용자들이 어떻게 쉽게 애니메이션을 설정하고, 여러 애니메이션을 서로 독립적으로 적용할 수 있는지에 대해 다루어 보겠습니다.</p>
+<p><img src="/img/content/2024-10-07-1/13.gif" alt="13.gif"></p>
+<p>위 애니메이션은 오른쪽으로 이동하면서, 불투명도가 높아지는 애니메이션이고, 코드로 나타내면 다음과 같습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-jsx" data-lang="jsx"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">moveEffect</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">before</span><span class="o">:</span> <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">opacity</span><span class="o">:</span> <span class="mf">0.3</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">after</span><span class="o">:</span> <span class="p">{</span> <span class="nx">x</span><span class="o">:</span> <span class="mi">13</span><span class="p">,</span> <span class="nx">y</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">opacity</span><span class="o">:</span> <span class="mi">1</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">transition</span><span class="o">:</span> <span class="p">{</span> <span class="nx">duration</span><span class="o">:</span> <span class="mi">300</span><span class="p">,</span> <span class="nx">delay</span><span class="o">:</span> <span class="mi">0</span> <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><p>이 코드는 애니메이션 시작과 끝에서의 값을 지정하며, x 값이 0에서 13으로 변하고, 불투명도(opacity)가 0.3에서 1로 변화하는 애니메이션입니다. 300ms 동안 지연 없이 애니메이션이 실행됩니다.</p>
+<p>애니메이션 설정 시, 구체적인 수치보다는 추상화된 옵션을 제공하는 것이 좋습니다. 예를 들어, 이동 방향을 x축 값으로 지정하기보다는 상/하/좌/우로 설정하고, 이동 거리를 <code>보통</code>, <code>조금</code>, <code>많이</code> 등으로 구분해 제공하는 방식이 더 유용합니다.</p>
+<p>이제 애니메이션 효과를 중복 적용할 때 발생할 수 있는 문제를 살펴보겠습니다. 서로 다른 애니메이션 효과가 동일한 속성을 변경하려 할 경우, 예상치 못한 충돌이 발생할 수 있습니다.</p>
+<p>예를 들어, <code>Fade In</code>과 <code>Move In</code> 애니메이션이 동시에 적용된 경우, <code>Fade In</code>은 <code>opacity</code>만 변경하고, <code>Move In</code>은 <code>x</code> 값만 변경하므로 충돌이 발생하지 않습니다.</p>
+<p><img src="/img/content/2024-10-07-1/14.gif" alt="14.gif"></p>
+<p>그러나 다음의 상황에서는 문제가 있을 수 있습니다.</p>
+<p>아래 클립에 적용된 효과는 <code>Floating</code> 효과입니다. <code>x</code>축 또는 <code>y</code>축으로 진자 운동을 표현합니다. 이 경우에 Move In 효과와 함께 사용되면 같은 x 또는 y 속성을 서로 변경하려고 할것 입니다. 이 경우에 서로 어떤 영향을 미칠지 쉽게 예측이 안됩니다.</p>
+<p><img src="/img/content/2024-10-07-1/15.gif" alt="15.gif"></p>
+<p>애니메이션 효과의 시작 값과 끝나는 값 사이의 변화를 델타(<code>delta</code>)라고 할 때, 중복 애니메이션 효과를 적용하기 위해 처음에는 모든 애니메이션 효과의 델타를 각 속성별로 일일이 계산하려 했습니다. 예를 들어, <code>y</code>와 <code>x</code> 값은 더하고, <code>opacity</code>는 곱하는 방식이었습니다. 그러나 곧 이것이 너무 복잡하다는 것을 깨달았습니다. 이렇게 하면 테스트 코드의 양이 크게 증가할 뿐만 아니라, 새로운 효과가 추가될 때마다 계속해서 검증 코드를 작성해야 하고, 다른 효과까지 영향을 미칠 가능성이 높았습니다. 이 방법이 정말 옳은 방향일까 고민하게 되었습니다.</p>
+<p><img src="/img/content/2024-10-07-1/16.png" alt="16.png"></p>
+<p>모든 애니메이션 효과의 상호작용을 다 테스트하려면 너무나 복잡해질 뿐만 아니라, 애니메이션 효과의 수가 증가할수록 테스트 난이도도 급격히 올라갈 것입니다.</p>
+<p>이 문제를 해결하기 위해, 애니메이션 효과를 여러 레이어로 나누어 각각의 레이어가 독립적으로 애니메이션 효과를 계산하고 렌더링하도록 했습니다. 이렇게 하면 개별 애니메이션 효과가 검증되면, 다른 효과에 영향을 미치지 않도록 할 수 있습니다.</p>
+<p>다음은 간단하게 도식화한 코드입니다.</p>
+<p><img src="/img/content/2024-10-07-1/17.png" alt="17.png"></p>
+<p><code>AnimationClip</code>에서 실제로 <code>Clip</code>을 렌더링하며, <code>FilterOverlap</code>과 <code>MotionOverlap</code>이 각각 애니메이션 효과를 발생시킵니다. <code>MotionOverlap</code>은 위치와 크기를 변경하는 애니메이션 효과를, <code>FilterOverlap</code>은 클립의 크기는 유지하면서 투명도나 그레이스케일, 색상 보정, 부분 노출 등의 애니메이션 효과를 처리합니다.</p>
+<p><code>FilterOverlap</code>을 조금 더 상세히 보면, 내부적으로 <code>fade_in/out</code>, <code>scale_in/out</code> 등의 애니메이션 효과가 중첩되어 있으며, <code>Filter</code> 효과끼리도 서로 간섭 없이 독립적으로 작동하는 구조를 가지고 있습니다. 다만, <code>fade_in/out</code>처럼 한 효과의 끝이 다른 효과의 시작이 되는 쌍은 하나의 효과로 관리됩니다.</p>
+<p><img src="/img/content/2024-10-07-1/18.png" alt="18.png"></p>
+<p><img src="/img/content/2024-10-07-1/19.gif" alt="FilterOverlap의 예시로, 부분 노출 관련 등장 효과"></p>
+<p><img src="/img/content/2024-10-07-1/20.png" alt="20.png"></p>
+<h2 id="맺음말">맺음말</h2>
+<p>지금까지 지그재그에서 기획전 페이지의 애니메이션 편집 기능을 개발한 과정을 다루었습니다. 이 기능이 개발된 후로, 프로모션용 페이지 제작에 소요되던 시간이 크게 절약되었습니다. 그 결과, 급작스러운 업무 증가를 줄이고 인적 자원을 많이 절감할 수 있었으며, 지속적으로 요구되는 애니메이션 효과를 안정적으로 추가할 수 있는 구조를 갖추게 되었습니다.</p>
+
+      
+    </div>
+
+    <div class='col-lg-3 sidemenu'>
+  <h4>Recent Posts</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href='/ko/2024-10-07-1-animation-module/'>
+      <li class="sidemenu-recent-item">기획전 애니메이션 모듈 개발</li>
+    </a>
+    
+    <a href='/ko/2024-08-09-1-ui-testing-automation/'>
+      <li class="sidemenu-recent-item">UI 테스트 자동화</li>
+    </a>
+    
+    <a href='/ko/2024-08-04-1-improve-server-driven-ui/'>
+      <li class="sidemenu-recent-item">Server Driven UI 호출 구조 개선</li>
+    </a>
+    
+    <a href='/ko/2024-06-28-1-optimize-font-traffic/'>
+      <li class="sidemenu-recent-item">웹폰트 최적화를 통한 CDN 비용절감</li>
+    </a>
+    
+  </ul>
+  <hr>
+  <h4>Tags</h4>
+  <ul class="sidemenu-recent-list">
+    
+    <a href="/ko/tags/amazon-sqs/">
+      <li class="sidemenu-recent-tags">amazon-sqs</li>
+    </a>
+    
+    <a href="/ko/tags/analytics/">
+      <li class="sidemenu-recent-tags">analytics</li>
+    </a>
+    
+    <a href="/ko/tags/android/">
+      <li class="sidemenu-recent-tags">android</li>
+    </a>
+    
+    <a href="/ko/tags/aws/">
+      <li class="sidemenu-recent-tags">aws</li>
+    </a>
+    
+    <a href="/ko/tags/aws-batch/">
+      <li class="sidemenu-recent-tags">aws-batch</li>
+    </a>
+    
+    <a href="/ko/tags/aws-lambda/">
+      <li class="sidemenu-recent-tags">aws-lambda</li>
+    </a>
+    
+    <a href="/ko/tags/botkit/">
+      <li class="sidemenu-recent-tags">botkit</li>
+    </a>
+    
+    <a href="/ko/tags/croquis/">
+      <li class="sidemenu-recent-tags">croquis</li>
+    </a>
+    
+    <a href="/ko/tags/css/">
+      <li class="sidemenu-recent-tags">css</li>
+    </a>
+    
+    <a href="/ko/tags/data/">
+      <li class="sidemenu-recent-tags">data</li>
+    </a>
+    
+    <a href="/ko/tags/event/">
+      <li class="sidemenu-recent-tags">event</li>
+    </a>
+    
+    <a href="/ko/tags/front-end/">
+      <li class="sidemenu-recent-tags">front-end</li>
+    </a>
+    
+    <a href="/ko/tags/frontend/">
+      <li class="sidemenu-recent-tags">frontend</li>
+    </a>
+    
+    <a href="/ko/tags/git/">
+      <li class="sidemenu-recent-tags">git</li>
+    </a>
+    
+    <a href="/ko/tags/github/">
+      <li class="sidemenu-recent-tags">github</li>
+    </a>
+    
+    <a href="/ko/tags/graphql/">
+      <li class="sidemenu-recent-tags">graphql</li>
+    </a>
+    
+    <a href="/ko/tags/ios/">
+      <li class="sidemenu-recent-tags">ios</li>
+    </a>
+    
+    <a href="/ko/tags/jenkins/">
+      <li class="sidemenu-recent-tags">jenkins</li>
+    </a>
+    
+    <a href="/ko/tags/jotai/">
+      <li class="sidemenu-recent-tags">jotai</li>
+    </a>
+    
+    <a href="/ko/tags/kubernetes/">
+      <li class="sidemenu-recent-tags">kubernetes</li>
+    </a>
+    
+    <a href="/ko/tags/log/">
+      <li class="sidemenu-recent-tags">log</li>
+    </a>
+    
+    <a href="/ko/tags/microservice/">
+      <li class="sidemenu-recent-tags">microservice</li>
+    </a>
+    
+    <a href="/ko/tags/mithril/">
+      <li class="sidemenu-recent-tags">mithril</li>
+    </a>
+    
+    <a href="/ko/tags/node.js/">
+      <li class="sidemenu-recent-tags">node.js</li>
+    </a>
+    
+    <a href="/ko/tags/nodejs/">
+      <li class="sidemenu-recent-tags">nodejs</li>
+    </a>
+    
+    <a href="/ko/tags/npm/">
+      <li class="sidemenu-recent-tags">npm</li>
+    </a>
+    
+    <a href="/ko/tags/react/">
+      <li class="sidemenu-recent-tags">react</li>
+    </a>
+    
+    <a href="/ko/tags/rest-api/">
+      <li class="sidemenu-recent-tags">rest-api</li>
+    </a>
+    
+    <a href="/ko/tags/serverless-architecture/">
+      <li class="sidemenu-recent-tags">serverless-architecture</li>
+    </a>
+    
+    <a href="/ko/tags/slack/">
+      <li class="sidemenu-recent-tags">slack</li>
+    </a>
+    
+    <a href="/ko/tags/stack/">
+      <li class="sidemenu-recent-tags">stack</li>
+    </a>
+    
+    <a href="/ko/tags/storybook/">
+      <li class="sidemenu-recent-tags">storybook</li>
+    </a>
+    
+    <a href="/ko/tags/task-queue/">
+      <li class="sidemenu-recent-tags">task-queue</li>
+    </a>
+    
+    <a href="/ko/tags/testing/">
+      <li class="sidemenu-recent-tags">testing</li>
+    </a>
+    
+    <a href="/ko/tags/thrift/">
+      <li class="sidemenu-recent-tags">thrift</li>
+    </a>
+    
+    <a href="/ko/tags/tutorial/">
+      <li class="sidemenu-recent-tags">tutorial</li>
+    </a>
+    
+    <a href="/ko/tags/typescript/">
+      <li class="sidemenu-recent-tags">typescript</li>
+    </a>
+    
+    <a href="/ko/tags/ui/">
+      <li class="sidemenu-recent-tags">ui</li>
+    </a>
+    
+    <a href="/ko/tags/vertical-align/">
+      <li class="sidemenu-recent-tags">vertical-align</li>
+    </a>
+    
+    <a href="/ko/tags/webpack/">
+      <li class="sidemenu-recent-tags">webpack</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A1%9C%EA%B7%B8/">
+      <li class="sidemenu-recent-tags">로그</li>
+    </a>
+    
+    <a href="/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/">
+      <li class="sidemenu-recent-tags">마이크로서비스</li>
+    </a>
+    
+    <a href="/ko/tags/%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC/">
+      <li class="sidemenu-recent-tags">튜토리얼</li>
+    </a>
+    
+  </ul>
+</div>
+
+    <div class='col-12'>
+      <hr>
+
+      <div class='float-left'>
+        
+        <a class='btn btn-outline-primary' href='/ko/2024-08-09-1-ui-testing-automation/' title='UI 테스트 자동화'>&larr; 이전 글</a>
+        
+      </div>
+      <div class='float-right'>
+        
+        <a class='btn btn-outline-primary disabled'>다음 글 &rarr;</a>
+        
+      </div>
+      <div class='clearfix'></div>
+      <hr>
+      <div class='text-center'>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "croquiscom-devblog" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class='container'>
+  <hr>
+  <footer>
+    <p>
+      &copy; 2012-2021 kakaostyle.com
+      <span class='float-right text-muted'>
+        powered by
+        <a href='https://gohugo.io/' target='_blank'>Hugo</a>
+        and
+        <a href='https://getbootstrap.com/' target='_blank'>Bootstrap</a>
+      </span>
+    </p>
+  </footer>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-48716672-3', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+  integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/releases/v5.0.13/js/all.js"
+  integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

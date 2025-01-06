@@ -2,8 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://devblog.kakaostyle.com/ko/tags/frontend/</loc>
+    <lastmod>2024-10-07T01:00:00+00:00</lastmod>
+  </url><url>
     <loc>https://devblog.kakaostyle.com/ko/tags/</loc>
-    <lastmod>2024-08-09T01:00:00+00:00</lastmod>
+    <lastmod>2024-10-07T01:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -15,14 +18,11 @@
                 href="https://devblog.kakaostyle.com/ko/tags/"
                 />
   </url><url>
-    <loc>https://devblog.kakaostyle.com/ko/tags/testing/</loc>
-    <lastmod>2024-08-09T01:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://devblog.kakaostyle.com/ko/2024-08-09-1-ui-testing-automation/</loc>
-    <lastmod>2024-08-09T01:00:00+00:00</lastmod>
+    <loc>https://devblog.kakaostyle.com/ko/2024-10-07-1-animation-module/</loc>
+    <lastmod>2024-10-07T01:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devblog.kakaostyle.com/ko/</loc>
-    <lastmod>2024-08-09T01:00:00+00:00</lastmod>
+    <lastmod>2024-10-07T01:00:00+00:00</lastmod>
     <xhtml:link
                 rel="alternate"
                 hreflang="en"
@@ -33,6 +33,12 @@
                 hreflang="ko"
                 href="https://devblog.kakaostyle.com/ko/"
                 />
+  </url><url>
+    <loc>https://devblog.kakaostyle.com/ko/tags/testing/</loc>
+    <lastmod>2024-08-09T01:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://devblog.kakaostyle.com/ko/2024-08-09-1-ui-testing-automation/</loc>
+    <lastmod>2024-08-09T01:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devblog.kakaostyle.com/ko/tags/graphql/</loc>
     <lastmod>2024-08-04T01:00:00+00:00</lastmod>
@@ -48,9 +54,6 @@
   </url><url>
     <loc>https://devblog.kakaostyle.com/ko/2023-11-02-1-null-pointer-exception/</loc>
     <lastmod>2023-11-02T01:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://devblog.kakaostyle.com/ko/tags/frontend/</loc>
-    <lastmod>2023-08-04T04:00:00+00:00</lastmod>
   </url><url>
     <loc>https://devblog.kakaostyle.com/ko/2023-08-04-4-frontend-testing-4-setup-environment/</loc>
     <lastmod>2023-08-04T04:00:00+00:00</lastmod>

@@ -5,7 +5,16 @@
     <link>https://devblog.kakaostyle.com/ko/</link>
     <description>Recent content on 카카오스타일 기술 블로그</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 09 Aug 2024 01:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Oct 2024 01:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>기획전 애니메이션 모듈 개발</title>
+      <link>https://devblog.kakaostyle.com/ko/2024-10-07-1-animation-module/</link>
+      <pubDate>Mon, 07 Oct 2024 01:00:00 +0000</pubDate>
+      
+      <guid>https://devblog.kakaostyle.com/ko/2024-10-07-1-animation-module/</guid>
+      <description>지그재그는 상품 판매를 촉진하기 위해 이벤트나 기획전을 주요 마케팅 수단으로 활용합니다. 기획전은 한정된 기간 동안 고객에게 특정 상품 정보와 추가적인 할인 혜택을</description>
+    </item>
+    
     <item>
       <title>UI 테스트 자동화</title>
       <link>https://devblog.kakaostyle.com/ko/2024-08-09-1-ui-testing-automation/</link>
