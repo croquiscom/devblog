@@ -132,7 +132,7 @@ Mithril 환경에 맞는 webpack 설정을 갖추는 과정을
 <p>이번 글에서는 크로키에서 사용하는 <a href="https://www.typescriptlang.org/">TypeScript</a>,
 <a href="https://mithril.js.org/">Mithril</a> 환경에 맞는 webpack 설정을 갖추는 과정을
 단계별로 설명합니다.</p>
-<h1 id="기본이-되는-웹-페이지-생성-3f7ac54httpsgithubcomsixmenmithril-examplescommit3f7ac5420af5dd705f8f1488b338b77112ae6716">기본이 되는 웹 페이지 생성 (<a href="https://github.com/sixmen/mithril-examples/commit/3f7ac5420af5dd705f8f1488b338b77112ae6716">3f7ac54</a>)</h1>
+<h1 id="기본이-되는-웹-페이지-생성-3f7ac54">기본이 되는 웹 페이지 생성 (<a href="https://github.com/sixmen/mithril-examples/commit/3f7ac5420af5dd705f8f1488b338b77112ae6716">3f7ac54</a>)</h1>
 <p>우선 다른 툴/라이브러리/프레임워크를 배제한 기본 파일로 부터 시작합니다.</p>
 <p><strong><em>app/index.html</em></strong>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
@@ -151,14 +151,14 @@ Mithril 환경에 맞는 webpack 설정을 갖추는 과정을
 <p><strong><em>app/index.js</em></strong>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hello&#39;</span><span class="p">);</span></span></span></code></pre></div></p>
 <p><code>app/index.html</code> 파일을 브라우저로 열면 콘솔에 Hello가 출력됩니다.</p>
-<h1 id="npm-개발-환경-설정-50fd3c0httpsgithubcomsixmenmithril-examplescommit50fd3c0cd4f44f22f5f532ad849befef5bfae37f">npm 개발 환경 설정 (<a href="https://github.com/sixmen/mithril-examples/commit/50fd3c0cd4f44f22f5f532ad849befef5bfae37f">50fd3c0</a>)</h1>
+<h1 id="npm-개발-환경-설정-50fd3c0">npm 개발 환경 설정 (<a href="https://github.com/sixmen/mithril-examples/commit/50fd3c0cd4f44f22f5f532ad849befef5bfae37f">50fd3c0</a>)</h1>
 <p>webpack, Mithril 라이브러리는 npm을 통해 사용하므로 npm 개발환경을 갖춰야 합니다.
 <code>package.json</code> 파일을 생성하고 <code>node_modules</code> 디렉토리를 Git 무시 목록에 추가합니다.</p>
 <p><strong><em>package.json</em></strong>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;setup-from-scratch&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span></span></span></code></pre></div></p>
-<h1 id="webpack을-통해-js-번들을-생성하기-8978b0ehttpsgithubcomsixmenmithril-examplescommit8978b0e6032007729b75021074ba2b015934c33b">webpack을 통해 js 번들을 생성하기 (<a href="https://github.com/sixmen/mithril-examples/commit/8978b0e6032007729b75021074ba2b015934c33b">8978b0e</a>)</h1>
+<h1 id="webpack을-통해-js-번들을-생성하기-8978b0e">webpack을 통해 js 번들을 생성하기 (<a href="https://github.com/sixmen/mithril-examples/commit/8978b0e6032007729b75021074ba2b015934c33b">8978b0e</a>)</h1>
 <p>webpack을 사용하면 원본 js 파일을 잘 묶어서 최종 js 파일을 만들어 내도록 할 수 있습니다.</p>
 <p>우선 webpack을 설치합니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ npm install --save-dev webpack</span></span></code></pre></div>
@@ -184,7 +184,7 @@ Mithril 환경에 맞는 webpack 설정을 갖추는 과정을
 </span></span><span class="line"><span class="cl">main.js</span></span></code></pre></div>
 <p>예제에서는 원본 js 파일이 하나뿐이라 묶으나 안 묶으나 큰 차이가 없지만,
 import나 require등의 구문을 사용하면 요구하는 js 파일의 내용이 모두 main.js에 포함되는 것을 확인할 수 있습니다.</p>
-<h1 id="html-webpack-plugin을-이용해서-html-파일을-생성하기-3b037f7httpsgithubcomsixmenmithril-examplescommit3b037f7716822f9b8779fab7a4e6375586c72b5d">html-webpack-plugin을 이용해서 HTML 파일을 생성하기 (<a href="https://github.com/sixmen/mithril-examples/commit/3b037f7716822f9b8779fab7a4e6375586c72b5d">3b037f7</a>)</h1>
+<h1 id="html-webpack-plugin을-이용해서-html-파일을-생성하기-3b037f7">html-webpack-plugin을 이용해서 HTML 파일을 생성하기 (<a href="https://github.com/sixmen/mithril-examples/commit/3b037f7716822f9b8779fab7a4e6375586c72b5d">3b037f7</a>)</h1>
 <p>결과물이 동작하려면 HTML 파일도 있어야 합니다. 단순히 <code>app/index.html</code>을 <code>dist/index.html</code>로 복사하는 방법도 있지만,
 <a href="https://github.com/jantimon/html-webpack-plugin">html-webpack-plugin</a>을 사용하면 HTML 파일을 적절히 생성해 줍니다.</p>
 <p>우선 html-webpack-plugin을 설치합니다.</p>
@@ -218,7 +218,7 @@ import나 require등의 구문을 사용하면 요구하는 js 파일의 내용�
 </span></span></code></pre></div></p>
 <p>다시 webpack을 실행하면 <code>dist/index.html</code> 파일이 생성된 것을 볼 수 있습니다.
 이 파일을 브라우저로 열면 이전과 마찬가지로 콘솔에 Hello가 출력됩니다.</p>
-<h1 id="webpack-dev-server-사용하기-71e7af3httpsgithubcomsixmenmithril-examplescommit71e7af35e1e26bfd184655edfbd6365fb2389c91">webpack-dev-server 사용하기 (<a href="https://github.com/sixmen/mithril-examples/commit/71e7af35e1e26bfd184655edfbd6365fb2389c91">71e7af3</a>)</h1>
+<h1 id="webpack-dev-server-사용하기-71e7af3">webpack-dev-server 사용하기 (<a href="https://github.com/sixmen/mithril-examples/commit/71e7af35e1e26bfd184655edfbd6365fb2389c91">71e7af3</a>)</h1>
 <p>파일을 수정할 때마다 webpack을 실행하는 것을 비효율적입니다. 한번 실행해놓고 파일을 수정하면 자동으로 브라우저에 반영되면 좋을 것 같습니다.
 이럴 때 사용하는 것이 <a href="https://webpack.js.org/configuration/dev-server/">webpack-dev-server</a>입니다.</p>
 <p>webpack-dev-server를 설치하고 실행하면 파일을 수정할 때마다 브라우저가 릴로드됩니다.
@@ -241,7 +241,7 @@ import나 require등의 구문을 사용하면 요구하는 js 파일의 내용�
 <p>위와 같이 추가해주면 다음부터는 다음과 같이 실행할 수 있습니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ npm start <span class="c1"># 개발시</span>
 </span></span><span class="line"><span class="cl">$ npm run bild <span class="c1"># 배포 파일 생성시</span></span></span></code></pre></div>
-<h1 id="typescript-설정하기-5bb9d39httpsgithubcomsixmenmithril-examplescommit5bb9d3901e427b595e2744811cd9103184c510de">TypeScript 설정하기 (<a href="https://github.com/sixmen/mithril-examples/commit/5bb9d3901e427b595e2744811cd9103184c510de">5bb9d39</a>)</h1>
+<h1 id="typescript-설정하기-5bb9d39">TypeScript 설정하기 (<a href="https://github.com/sixmen/mithril-examples/commit/5bb9d3901e427b595e2744811cd9103184c510de">5bb9d39</a>)</h1>
 <p>TypeScript를 사용하도록 설정하는 것은 <a href="https://webpack.js.org/guides/webpack-and-typescript/">webpack &amp; TypeScript</a> 문서를 참고하면 쉽게 할 수 있습니다.
 TypeScript 지원을 위한 loader가 두가지가 있는데 여기서는 <a href="https://github.com/s-panferov/awesome-typescript-loader">awesome-typescript-loader</a>를 사용합니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ npm install --save-dev typescript awesome-typescript-loader</span></span></code></pre></div>
@@ -266,7 +266,7 @@ TypeScript 지원을 위한 loader가 두가지가 있는데 여기서는 <a hre
 </span></span><span class="line"><span class="cl">       template: &#39;index.html&#39;
 </span></span></code></pre></div></p>
 <p>원본 js 파일의 확장자를 ts로 변경하고 webpack을 실행하면 awesome-typescript-loader 에 의해서 js로 변경되어 최종 js로 합쳐집니다.</p>
-<h1 id="mithril-설정하기-d24f1achttpsgithubcomsixmenmithril-examplescommitd24f1ac43aed3c0acf7a6e01ae54743e419afada">Mithril 설정하기 (<a href="https://github.com/sixmen/mithril-examples/commit/d24f1ac43aed3c0acf7a6e01ae54743e419afada">d24f1ac</a>)</h1>
+<h1 id="mithril-설정하기-d24f1ac">Mithril 설정하기 (<a href="https://github.com/sixmen/mithril-examples/commit/d24f1ac43aed3c0acf7a6e01ae54743e419afada">d24f1ac</a>)</h1>
 <p>사전작업이 끝났으니 이제 사용하려는 프레임워크를 추가하고 본격적인 코드를 작성해 보겠습니다.</p>
 <p>최종 결과물에 포함될 프레임워크는 일반 의존 모듈로 추가하고, TypeScript를 위한 타입 정의 파일은 개발 의존 모듈로 추가합니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ npm install --save mithril
@@ -287,7 +287,7 @@ TypeScript 지원을 위한 loader가 두가지가 있는데 여기서는 <a hre
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nx">m</span><span class="p">.</span><span class="nx">mount</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;app&#39;</span><span class="p">),</span> <span class="nx">App</span><span class="p">);</span></span></span></code></pre></div></p>
-<h1 id="jsx-설정하기-a106af0httpsgithubcomsixmenmithril-examplescommita106af0ff92ed872231705d614289ea1cf65d36d">JSX 설정하기 (<a href="https://github.com/sixmen/mithril-examples/commit/a106af0ff92ed872231705d614289ea1cf65d36d">a106af0</a>)</h1>
+<h1 id="jsx-설정하기-a106af0">JSX 설정하기 (<a href="https://github.com/sixmen/mithril-examples/commit/a106af0ff92ed872231705d614289ea1cf65d36d">a106af0</a>)</h1>
 <p>Mithril도 React에서 나온 JSX 문법을 사용할 수 있습니다. 이를 설정해봅니다.
 (저는 JSX를 선호하는데 Mithril 사용자들은 m() 형태를 더 선호하는 것으로 보입니다. <a href="https://github.com/lhorie/mithril.js/issues/1619">https://github.com/lhorie/mithril.js/issues/1619</a>)</p>
 <p><a href="https://www.typescriptlang.org/docs/handbook/jsx.html">TypeScript의 JSX 지원 기능</a>을 사용하고, factory 함수를 Mithril에 맞게 설정하면 됩니다.</p>
@@ -307,7 +307,7 @@ TypeScript 지원을 위한 loader가 두가지가 있는데 여기서는 <a hre
 </span></span></span><span class="line"><span class="cl"><span class="gi"></span>     }
 </span></span><span class="line"><span class="cl"> }
 </span></span></code></pre></div></p>
-<h1 id="css-추가하기-53518eahttpsgithubcomsixmenmithril-examplescommit53518eac007afdca4dbfadecbea2eea8b18ee8e8">CSS 추가하기 (<a href="https://github.com/sixmen/mithril-examples/commit/53518eac007afdca4dbfadecbea2eea8b18ee8e8">53518ea</a>)</h1>
+<h1 id="css-추가하기-53518ea">CSS 추가하기 (<a href="https://github.com/sixmen/mithril-examples/commit/53518eac007afdca4dbfadecbea2eea8b18ee8e8">53518ea</a>)</h1>
 <p>이제 웹 페이지에 스타일을 적용해보겠습니다.
 이는 <a href="https://github.com/webpack-contrib/css-loader">css-loader</a>와 <a href="https://github.com/webpack-contrib/style-loader">style-loader</a>를 사용해서 이루어집니다.
 모듈을 설치하고 css 파일에 대해서 두 loader를 사용하도록 설정합니다.</p>
@@ -342,7 +342,7 @@ TypeScript 지원을 위한 loader가 두가지가 있는데 여기서는 <a hre
 </span></span><span class="line"><span class="cl"> }
 </span></span></code></pre></div></p>
 <p>웹 페이지의 텍스트에 크기와 색상이 적용된 것을 볼 수 있습니다.</p>
-<h1 id="지역-범위의-css-적용하기-6105a82httpsgithubcomsixmenmithril-examplescommit6105a821f6d05527c8f60964ab86d6fed45e937d">지역 범위의 CSS 적용하기 (<a href="https://github.com/sixmen/mithril-examples/commit/6105a821f6d05527c8f60964ab86d6fed45e937d">6105a82</a>)</h1>
+<h1 id="지역-범위의-css-적용하기-6105a82">지역 범위의 CSS 적용하기 (<a href="https://github.com/sixmen/mithril-examples/commit/6105a821f6d05527c8f60964ab86d6fed45e937d">6105a82</a>)</h1>
 <p>컴포넌트별로 나누어서 개발을 하는 경우 CSS도 각 컴포넌트별로 가지는 것이 편리합니다.
 이 경우 다른 컴포넌트와 클래스 이름이 겹쳐서 컴포넌트 조합후 전체 스타일이 엉망이 될 가능성이 있습니다.
 이를 해결하기 위해서 <a href="https://en.bem.info/">BEM</a>과 같은 네이밍 컨벤션을 사용하기도 하고,
@@ -385,7 +385,7 @@ TypeScript 지원을 위한 loader가 두가지가 있는데 여기서는 <a hre
 <p>다만 이렇게 하면 CSS의 클래스명에 대한 검증을 하지 못합니다. (styles.massage로 오타를 내도 알 수 없음)
 이에 대한 타입 정의 파일을 만들어 주는 <a href="https://github.com/Quramy/typed-css-modules">typed-css-modules</a> 모듈은 있지만,
 webpack과 부드럽게 연동하는 방법은 찾지 못했습니다.</p>
-<h1 id="스타일을-별도-css-파일로-내보내기-37a2741httpsgithubcomsixmenmithril-examplescommit37a274103a51309d05cb7dceaf7f99cc6951f57f">스타일을 별도 CSS 파일로 내보내기 (<a href="https://github.com/sixmen/mithril-examples/commit/37a274103a51309d05cb7dceaf7f99cc6951f57f">37a2741</a>)</h1>
+<h1 id="스타일을-별도-css-파일로-내보내기-37a2741">스타일을 별도 CSS 파일로 내보내기 (<a href="https://github.com/sixmen/mithril-examples/commit/37a274103a51309d05cb7dceaf7f99cc6951f57f">37a2741</a>)</h1>
 <p>위와 같이 CSS를 작업한 경우 실행시간에 style 원소로 추가됩니다.</p>
 <p><img src="/img/content/2017-04-11-1-01.jpg" alt="Runtime DOM"></p>
 <p>저는 이것보다는 별도의 CSS 파일로 내보내고 싶었습니다.
@@ -419,7 +419,7 @@ extract-text-webpack-plugin 모듈을 추가하고, 적절한 설정을 해주�
 </span></span></span><span class="line"><span class="cl"><span class="gi"></span>     })
 </span></span><span class="line"><span class="cl">   ]
 </span></span></code></pre></div></p>
-<h1 id="마무리-f596154httpsgithubcomsixmenmithril-examplescommitf5961546ccdd444da68c8c6bf518948b3527d8c1">마무리 (<a href="https://github.com/sixmen/mithril-examples/commit/f5961546ccdd444da68c8c6bf518948b3527d8c1">f596154</a>)</h1>
+<h1 id="마무리-f596154">마무리 (<a href="https://github.com/sixmen/mithril-examples/commit/f5961546ccdd444da68c8c6bf518948b3527d8c1">f596154</a>)</h1>
 <p>마지막으로 배포를 위한 코드 최적화 버전을 생성합니다.
 webpack은 이를 위한 간단한 옵션을 제공합니다. <code>-p</code> 만 붙여주면 js 파일과 css 파일이 최소화됩니다.</p>
 <p><strong><em>package.json</em></strong>
@@ -472,7 +472,7 @@ webpack은 이를 위한 간단한 옵션을 제공합니다. <code>-p</code> �
   <ul class="sidemenu-recent-list">
     
     <a href="/ko/tags/amazon-sqs/">
-      <li class="sidemenu-recent-tags">amazon-sqs</li>
+      <li class="sidemenu-recent-tags">amazon sqs</li>
     </a>
     
     <a href="/ko/tags/analytics/">
@@ -488,11 +488,11 @@ webpack은 이를 위한 간단한 옵션을 제공합니다. <code>-p</code> �
     </a>
     
     <a href="/ko/tags/aws-batch/">
-      <li class="sidemenu-recent-tags">aws-batch</li>
+      <li class="sidemenu-recent-tags">aws batch</li>
     </a>
     
     <a href="/ko/tags/aws-lambda/">
-      <li class="sidemenu-recent-tags">aws-lambda</li>
+      <li class="sidemenu-recent-tags">aws lambda</li>
     </a>
     
     <a href="/ko/tags/botkit/">
@@ -580,11 +580,11 @@ webpack은 이를 위한 간단한 옵션을 제공합니다. <code>-p</code> �
     </a>
     
     <a href="/ko/tags/rest-api/">
-      <li class="sidemenu-recent-tags">rest-api</li>
+      <li class="sidemenu-recent-tags">rest api</li>
     </a>
     
     <a href="/ko/tags/serverless-architecture/">
-      <li class="sidemenu-recent-tags">serverless-architecture</li>
+      <li class="sidemenu-recent-tags">serverless architecture</li>
     </a>
     
     <a href="/ko/tags/slack/">
@@ -600,7 +600,7 @@ webpack은 이를 위한 간단한 옵션을 제공합니다. <code>-p</code> �
     </a>
     
     <a href="/ko/tags/task-queue/">
-      <li class="sidemenu-recent-tags">task-queue</li>
+      <li class="sidemenu-recent-tags">task queue</li>
     </a>
     
     <a href="/ko/tags/testing/">
@@ -663,7 +663,7 @@ webpack은 이를 위한 간단한 옵션을 제공합니다. <code>-p</code> �
       <hr>
       <div class='text-center'>
         <div id="disqus_thread"></div>
-<script type="application/javascript">
+<script>
     window.disqus_config = function () {
     
     
@@ -704,18 +704,20 @@ webpack은 이를 위한 간단한 옵션을 제공합니다. <code>-p</code> �
 </div>
 
 
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-48716672-3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HBL5QKGKNR"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-HBL5QKGKNR');
+        }
+      </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

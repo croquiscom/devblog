@@ -4,16 +4,16 @@
     <title>Git on 카카오스타일 기술 블로그</title>
     <link>https://devblog.kakaostyle.com/ko/tags/git/</link>
     <description>Recent content in Git on 카카오스타일 기술 블로그</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 28 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>ko</language>
+    <lastBuildDate>Sun, 28 Aug 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://devblog.kakaostyle.com/ko/tags/git/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>잘못된 브랜치 배포를 방지하기</title>
       <link>https://devblog.kakaostyle.com/ko/2022-08-28-1-prevent-deploy-invalid-branch/</link>
       <pubDate>Sun, 28 Aug 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2022-08-28-1-prevent-deploy-invalid-branch/</guid>
       <description>&lt;p&gt;반복해서 실수가 발생해서 수많은 사람들의 시간을 낭비하는데, 사실 시스템 개선에 조금만 시간을 썼으면 발생하지 않았을, 그런 문제들이 있습니다. 이런 상황을 알면서도 바쁘다는 핑계로 넘어가곤 하는데, 이번에 1년 이상 머리 한 구석에만 뒀던 이슈를 해결해 공유해볼까 합니다.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

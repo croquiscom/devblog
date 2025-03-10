@@ -115,17 +115,14 @@
 </span></span><span class="line"><span class="cl"><span class="p">});</span>
 </span></span></code></pre></div><p>이런 구성은 todos 변수(모델)와 #list 원소의 내용(뷰)을 동기화 시키는 것이 굉장히 어렵습니다. 그래서 React를 비롯한 대부분의 현대식 프레임워크는 모델과 뷰의 관계를 선언형(declarative)으로 정의하면 알아서 모델의 변경 사항을 뷰에 반영해주어서 뷰 코드를 단순하게 만들어줍니다.</p>
 <blockquote>
-<p>최근에는 네이티브 앱 개발에서도 SwiftUI나 Jetpack compose 처럼 선언형 UI 프레임워크가 나오고 있습니다.</p>
-</blockquote>
+<p>최근에는 네이티브 앱 개발에서도 SwiftUI나 Jetpack compose 처럼 선언형 UI 프레임워크가 나오고 있습니다.</p></blockquote>
 <p>저는 어떤 화면을 표현하기 위한 데이터와 뷰와의 관계(매핑) 대부분은 직관적으로 정의할 수 있다고 생각합니다. 이렇게 구성한 뷰를 React가 효율적으로 최종 DOM에 반영해주기 때문에, 결국 우리가 가장 신경써야 할 부분은 데이터 모델링과 사용자 행위에 따라 데이터가 어떻게 바뀌는지에 대한 것입니다. 이 데이터를 React에서는 상태라 부르고, 극단적으로 (렌더링은 React가 책임져주므로) 상태 관리만 잘 하면 좋은 어플리케이션이 만들어진다고 생각합니다. 이게 중요하지만 그만큼 어렵다 보니 상태 관리 라이브러리가 다양하게 나온 것이라고 생각합니다.</p>
 <blockquote>
-<p>이 데이터에는 UI를 위한 데이터(예를 들어 Collapse 컴포넌트의 접기 상태)도 있다는 것에서 일반적인 모델과 구분됩니다. 저는 이게 MVVM 패턴의 ViewModel이라고 생각합니다. 현재 네이티브 앱에서 선언형 UI까지는 하지 못햇지만 MVVM 패턴을 사용해 뷰와 데이터를 분리하고 있습니다.</p>
-</blockquote>
+<p>이 데이터에는 UI를 위한 데이터(예를 들어 Collapse 컴포넌트의 접기 상태)도 있다는 것에서 일반적인 모델과 구분됩니다. 저는 이게 MVVM 패턴의 ViewModel이라고 생각합니다. 현재 네이티브 앱에서 선언형 UI까지는 하지 못햇지만 MVVM 패턴을 사용해 뷰와 데이터를 분리하고 있습니다.</p></blockquote>
 <h2 id="mithril">Mithril</h2>
 <p>지그재그 초기에는 내부 툴을 위해 <a href="https://mithril.js.org/">Mithril</a>을 사용했는데 몇단계의 개선을 통해 최종적으로는 다음과 같이 MVVM 구성을 했습니다.</p>
 <blockquote>
-<p>당시에는 제 기준으로 React와 큰 차이가 없었는데, 이후 React는 <a href="https://ko.reactjs.org/docs/hooks-intro.html">훅</a>이라는 큰 변화가 생겼고, Mithril은 큰 변화없이 정체되다가 현재는 완전히 멈추었습니다. 2019년 이후 React를 사용하는 것으로 정책이 바뀌었지만, 일부 프로젝트(예 FAQ)에 아직 흔적이 남아있습니다.</p>
-</blockquote>
+<p>당시에는 제 기준으로 React와 큰 차이가 없었는데, 이후 React는 <a href="https://ko.reactjs.org/docs/hooks-intro.html">훅</a>이라는 큰 변화가 생겼고, Mithril은 큰 변화없이 정체되다가 현재는 완전히 멈추었습니다. 2019년 이후 React를 사용하는 것으로 정책이 바뀌었지만, 일부 프로젝트(예 FAQ)에 아직 흔적이 남아있습니다.</p></blockquote>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">interface</span> <span class="nx">SignupViewAttrs</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">token?</span>: <span class="kt">string</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
@@ -342,18 +339,18 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;react&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">AnyAction</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;redux&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">type</span> <span class="nx">AsyncAction</span><span class="p">&lt;</span><span class="nt">S</span><span class="err">,</span> <span class="na">A </span><span class="o">=</span> <span class="na">AnyAction</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">dispatch</span>: <span class="kt">AsyncDispatch</span><span class="p">&lt;</span><span class="nt">S</span><span class="err">,</span> <span class="na">A</span><span class="p">&gt;,</span> <span class="nx">getState</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">S</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">type</span> <span class="nx">AsyncAction</span><span class="p">&lt;</span><span class="nt">S</span><span class="p">,</span> <span class="na">A </span><span class="o">=</span> <span class="na">AnyAction</span><span class="p">&gt;</span> <span class="o">=</span> <span class="p">(</span><span class="nx">dispatch</span>: <span class="kt">AsyncDispatch</span><span class="p">&lt;</span><span class="nt">S</span><span class="p">,</span> <span class="na">A</span><span class="p">&gt;,</span> <span class="nx">getState</span><span class="o">:</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="nx">S</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">type</span> <span class="nx">AsyncDispatch</span><span class="p">&lt;</span><span class="nt">S</span><span class="err">,</span> <span class="na">A</span><span class="p">&gt;</span> <span class="o">=</span> <span class="nx">Dispatch</span><span class="p">&lt;</span><span class="nt">A</span> <span class="err">|</span> <span class="na">AsyncAction</span><span class="err">&lt;</span><span class="na">S</span><span class="err">,</span> <span class="na">A</span><span class="p">&gt;</span><span class="o">&gt;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">type</span> <span class="nx">AsyncDispatch</span><span class="p">&lt;</span><span class="nt">S</span><span class="p">,</span> <span class="na">A</span><span class="p">&gt;</span> <span class="o">=</span> <span class="nx">Dispatch</span><span class="p">&lt;</span><span class="nt">A</span> <span class="err">|</span> <span class="na">AsyncAction</span><span class="p">&lt;</span><span class="nt">S</span><span class="p">,</span> <span class="na">A</span><span class="p">&gt;&gt;;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">isBrowser</span> <span class="o">=</span> <span class="k">typeof</span> <span class="nb">window</span> <span class="o">!==</span> <span class="s1">&#39;undefined&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">useIsomorphicLayoutEffect</span> <span class="o">=</span> <span class="nx">isBrowser</span> <span class="o">?</span> <span class="nx">useLayoutEffect</span> : <span class="kt">useEffect</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">useAsyncReducer</span><span class="p">&lt;</span><span class="nt">R</span> <span class="na">extends</span> <span class="na">Reducer</span><span class="err">&lt;</span><span class="na">any</span><span class="err">,</span> <span class="na">any</span><span class="p">&gt;</span><span class="o">&gt;</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">useAsyncReducer</span><span class="p">&lt;</span><span class="nt">R</span> <span class="na">extends</span> <span class="na">Reducer</span><span class="p">&lt;</span><span class="nt">any</span><span class="p">,</span> <span class="na">any</span><span class="p">&gt;&gt;(</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">reducer</span>: <span class="kt">R</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">initialState</span>: <span class="kt">ReducerState</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;,</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">initState</span><span class="o">?:</span> <span class="p">(</span><span class="nx">state</span>: <span class="kt">ReducerState</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;)</span> <span class="o">=&gt;</span> <span class="nx">ReducerState</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;,</span>
-</span></span><span class="line"><span class="cl"><span class="p">)</span><span class="o">:</span> <span class="p">[</span><span class="nx">ReducerState</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;,</span> <span class="nx">AsyncDispatch</span><span class="p">&lt;</span><span class="nt">ReducerState</span><span class="err">&lt;</span><span class="na">R</span><span class="p">&gt;,</span> <span class="nx">ReducerAction</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;</span><span class="o">&gt;</span><span class="p">]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span><span class="o">:</span> <span class="p">[</span><span class="nx">ReducerState</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;,</span> <span class="nx">AsyncDispatch</span><span class="p">&lt;</span><span class="nt">ReducerState</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;,</span> <span class="na">ReducerAction</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;&gt;]</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="p">[</span><span class="nx">state</span><span class="p">,</span> <span class="nx">dispatch</span><span class="p">]</span> <span class="o">=</span> <span class="nx">useReducer</span><span class="p">(</span><span class="nx">reducer</span><span class="p">,</span> <span class="nx">initialState</span><span class="p">,</span> <span class="nx">initState</span> <span class="kr">as</span> <span class="kt">any</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">last_state</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">(</span><span class="nx">state</span><span class="p">);</span>
@@ -363,9 +360,9 @@
 </span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">getState</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">last_state</span><span class="p">.</span><span class="nx">current</span><span class="p">,</span> <span class="p">[]);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">async_dispatch</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nx">action</span>: <span class="kt">ReducerAction</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;</span> <span class="o">|</span> <span class="nx">AsyncAction</span><span class="p">&lt;</span><span class="nt">ReducerState</span><span class="err">&lt;</span><span class="na">R</span><span class="p">&gt;,</span> <span class="nx">ReducerAction</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="p">(</span><span class="nx">action</span>: <span class="kt">ReducerAction</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;</span> <span class="o">|</span> <span class="nx">AsyncAction</span><span class="p">&lt;</span><span class="nt">ReducerState</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;,</span> <span class="na">ReducerAction</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;&gt;)</span> <span class="o">=&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">      <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">action</span> <span class="o">===</span> <span class="s1">&#39;function&#39;</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nx">action</span> <span class="kr">as</span> <span class="nx">AsyncAction</span><span class="p">&lt;</span><span class="nt">ReducerState</span><span class="err">&lt;</span><span class="na">R</span><span class="p">&gt;,</span> <span class="nx">ReducerAction</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;</span><span class="o">&gt;</span><span class="p">)(</span><span class="nx">async_dispatch</span><span class="p">,</span> <span class="nx">getState</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">(</span><span class="nx">action</span> <span class="kr">as</span> <span class="nx">AsyncAction</span><span class="p">&lt;</span><span class="nt">ReducerState</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;,</span> <span class="na">ReducerAction</span><span class="p">&lt;</span><span class="nt">R</span><span class="p">&gt;&gt;)(</span><span class="nx">async_dispatch</span><span class="p">,</span> <span class="nx">getState</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="nx">dispatch</span><span class="p">(</span><span class="nx">action</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">      <span class="p">}</span>
@@ -454,7 +451,7 @@
   <ul class="sidemenu-recent-list">
     
     <a href="/ko/tags/amazon-sqs/">
-      <li class="sidemenu-recent-tags">amazon-sqs</li>
+      <li class="sidemenu-recent-tags">amazon sqs</li>
     </a>
     
     <a href="/ko/tags/analytics/">
@@ -470,11 +467,11 @@
     </a>
     
     <a href="/ko/tags/aws-batch/">
-      <li class="sidemenu-recent-tags">aws-batch</li>
+      <li class="sidemenu-recent-tags">aws batch</li>
     </a>
     
     <a href="/ko/tags/aws-lambda/">
-      <li class="sidemenu-recent-tags">aws-lambda</li>
+      <li class="sidemenu-recent-tags">aws lambda</li>
     </a>
     
     <a href="/ko/tags/botkit/">
@@ -562,11 +559,11 @@
     </a>
     
     <a href="/ko/tags/rest-api/">
-      <li class="sidemenu-recent-tags">rest-api</li>
+      <li class="sidemenu-recent-tags">rest api</li>
     </a>
     
     <a href="/ko/tags/serverless-architecture/">
-      <li class="sidemenu-recent-tags">serverless-architecture</li>
+      <li class="sidemenu-recent-tags">serverless architecture</li>
     </a>
     
     <a href="/ko/tags/slack/">
@@ -582,7 +579,7 @@
     </a>
     
     <a href="/ko/tags/task-queue/">
-      <li class="sidemenu-recent-tags">task-queue</li>
+      <li class="sidemenu-recent-tags">task queue</li>
     </a>
     
     <a href="/ko/tags/testing/">
@@ -645,7 +642,7 @@
       <hr>
       <div class='text-center'>
         <div id="disqus_thread"></div>
-<script type="application/javascript">
+<script>
     window.disqus_config = function () {
     
     
@@ -686,18 +683,20 @@
 </div>
 
 
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-48716672-3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HBL5QKGKNR"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-HBL5QKGKNR');
+        }
+      </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

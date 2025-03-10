@@ -126,8 +126,7 @@
 </span></span></span></code></pre></div><p>라는 결과만 내놓으면 됩니다.</p>
 <p>하지만 개념이 간단하다고 그것을 동작하도록 구현하는 것까지 간단한 것은 아닙니다. GraphQL을 실제 제품에 적용하기까지는 많은 것들을 이해해야 합니다. 이에 대해 차례로 설명해보려고 합니다. 첫번째로 다뤄볼 내용은 스키마 정의입니다.</p>
 <blockquote>
-<p>언어나 구현체 별로 세부 내용이 다를 수도 있습니다. 따라서 앞으로 설명할 내용은 주로 참조 구현인 <a href="https://github.com/graphql/graphql-js">GraphQL.js</a>에 대한 내용이 됩니다. 여기에 더해서 대중적으로 많이 쓰이는 Java 계열의 라이브러리(<a href="https://www.graphql-java.com/">graphql-java</a>, <a href="https://netflix.github.io/dgs/">DGS Framework</a>등)를 일부 포함합니다. 다른 언어에서 사용하는 다른 라이브러리는 다른 생김새를 가지고 있을 수 있겠지만, 개념이 크게 다르지 않을 것으로 생각합니다.</p>
-</blockquote>
+<p>언어나 구현체 별로 세부 내용이 다를 수도 있습니다. 따라서 앞으로 설명할 내용은 주로 참조 구현인 <a href="https://github.com/graphql/graphql-js">GraphQL.js</a>에 대한 내용이 됩니다. 여기에 더해서 대중적으로 많이 쓰이는 Java 계열의 라이브러리(<a href="https://www.graphql-java.com/">graphql-java</a>, <a href="https://netflix.github.io/dgs/">DGS Framework</a>등)를 일부 포함합니다. 다른 언어에서 사용하는 다른 라이브러리는 다른 생김새를 가지고 있을 수 있겠지만, 개념이 크게 다르지 않을 것으로 생각합니다.</p></blockquote>
 <h2 id="날raw-객체를-사용해서-정의하기">날(raw) 객체를 사용해서 정의하기</h2>
 <p>GraphQL 스키마는 GraphQLSchema 클래스의 인스턴스입니다. 이런 클래스들을 이용해 직접 정의할 수 있습니다. <a href="https://github.com/graphql/graphql-js#using-graphqljs">GraphQL.js의 코드</a>를 가져와 보겠습니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">GraphQLObjectType</span><span class="p">,</span> <span class="nx">GraphQLSchema</span><span class="p">,</span> <span class="nx">GraphQLString</span><span class="p">,</span> <span class="nx">printSchema</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;graphql&#39;</span><span class="p">;</span>
@@ -293,7 +292,7 @@
   <ul class="sidemenu-recent-list">
     
     <a href="/ko/tags/amazon-sqs/">
-      <li class="sidemenu-recent-tags">amazon-sqs</li>
+      <li class="sidemenu-recent-tags">amazon sqs</li>
     </a>
     
     <a href="/ko/tags/analytics/">
@@ -309,11 +308,11 @@
     </a>
     
     <a href="/ko/tags/aws-batch/">
-      <li class="sidemenu-recent-tags">aws-batch</li>
+      <li class="sidemenu-recent-tags">aws batch</li>
     </a>
     
     <a href="/ko/tags/aws-lambda/">
-      <li class="sidemenu-recent-tags">aws-lambda</li>
+      <li class="sidemenu-recent-tags">aws lambda</li>
     </a>
     
     <a href="/ko/tags/botkit/">
@@ -401,11 +400,11 @@
     </a>
     
     <a href="/ko/tags/rest-api/">
-      <li class="sidemenu-recent-tags">rest-api</li>
+      <li class="sidemenu-recent-tags">rest api</li>
     </a>
     
     <a href="/ko/tags/serverless-architecture/">
-      <li class="sidemenu-recent-tags">serverless-architecture</li>
+      <li class="sidemenu-recent-tags">serverless architecture</li>
     </a>
     
     <a href="/ko/tags/slack/">
@@ -421,7 +420,7 @@
     </a>
     
     <a href="/ko/tags/task-queue/">
-      <li class="sidemenu-recent-tags">task-queue</li>
+      <li class="sidemenu-recent-tags">task queue</li>
     </a>
     
     <a href="/ko/tags/testing/">
@@ -484,7 +483,7 @@
       <hr>
       <div class='text-center'>
         <div id="disqus_thread"></div>
-<script type="application/javascript">
+<script>
     window.disqus_config = function () {
     
     
@@ -525,18 +524,20 @@
 </div>
 
 
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-48716672-3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HBL5QKGKNR"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-HBL5QKGKNR');
+        }
+      </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

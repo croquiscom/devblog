@@ -190,12 +190,12 @@ GraphQL 생태계가 Node.js를 중심으로 발전하고 있어서 크게 망�
 <h2 id="클라이언트-호출-코드">클라이언트 호출 코드</h2>
 <p>클라어인트에서는 <a href="https://www.apollographql.com/">apollo 툴</a>을 사용해 코드를 생성해 호출하고 있습니다.</p>
 <p><strong><em>안드로이드</em></strong>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">LoginInput</span> <span class="n">input</span> <span class="o">=</span> <span class="n">LoginInput</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">email</span><span class="o">(</span><span class="n">email</span><span class="o">).</span><span class="na">password</span><span class="o">(</span><span class="n">password</span><span class="o">).</span><span class="na">build</span><span class="o">();</span>
-</span></span><span class="line"><span class="cl"><span class="n">apolloClient</span><span class="o">.</span><span class="na">mutate</span><span class="o">(</span>
-</span></span><span class="line"><span class="cl">    <span class="n">LoginMutation</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">input</span><span class="o">(</span><span class="n">input</span><span class="o">).</span><span class="na">build</span><span class="o">()</span>
-</span></span><span class="line"><span class="cl"><span class="o">).</span><span class="na">enqueue</span><span class="o">(</span><span class="k">new</span> <span class="n">ApolloCall</span><span class="o">.</span><span class="na">Callback</span><span class="o">&lt;</span><span class="n">LoginMutation</span><span class="o">.</span><span class="na">Data</span><span class="o">&gt;()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="o">...</span>
-</span></span><span class="line"><span class="cl"><span class="o">});</span></span></span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">LoginInput</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoginInput</span><span class="p">.</span><span class="na">builder</span><span class="p">().</span><span class="na">email</span><span class="p">(</span><span class="n">email</span><span class="p">).</span><span class="na">password</span><span class="p">(</span><span class="n">password</span><span class="p">).</span><span class="na">build</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">apolloClient</span><span class="p">.</span><span class="na">mutate</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">LoginMutation</span><span class="p">.</span><span class="na">builder</span><span class="p">().</span><span class="na">input</span><span class="p">(</span><span class="n">input</span><span class="p">).</span><span class="na">build</span><span class="p">()</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">).</span><span class="na">enqueue</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ApolloCall</span><span class="p">.</span><span class="na">Callback</span><span class="o">&lt;</span><span class="n">LoginMutation</span><span class="p">.</span><span class="na">Data</span><span class="o">&gt;</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">});</span></span></span></code></pre></div></p>
 <p><strong><em>iOS</em></strong>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-swift" data-lang="swift"><span class="line"><span class="cl"><span class="kd">let</span> <span class="nv">input</span> <span class="p">=</span> <span class="n">LoginInput</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">:</span> <span class="n">password</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="n">apolloClient</span><span class="p">.</span><span class="n">perform</span><span class="p">(</span><span class="n">mutation</span><span class="p">:</span> <span class="n">LoginMutation</span><span class="p">(</span><span class="n">input</span><span class="p">:</span> <span class="n">input</span><span class="p">))</span> <span class="p">{</span> <span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span> <span class="k">in</span>
@@ -257,7 +257,7 @@ GraphQL 생태계가 Node.js를 중심으로 발전하고 있어서 크게 망�
   <ul class="sidemenu-recent-list">
     
     <a href="/ko/tags/amazon-sqs/">
-      <li class="sidemenu-recent-tags">amazon-sqs</li>
+      <li class="sidemenu-recent-tags">amazon sqs</li>
     </a>
     
     <a href="/ko/tags/analytics/">
@@ -273,11 +273,11 @@ GraphQL 생태계가 Node.js를 중심으로 발전하고 있어서 크게 망�
     </a>
     
     <a href="/ko/tags/aws-batch/">
-      <li class="sidemenu-recent-tags">aws-batch</li>
+      <li class="sidemenu-recent-tags">aws batch</li>
     </a>
     
     <a href="/ko/tags/aws-lambda/">
-      <li class="sidemenu-recent-tags">aws-lambda</li>
+      <li class="sidemenu-recent-tags">aws lambda</li>
     </a>
     
     <a href="/ko/tags/botkit/">
@@ -365,11 +365,11 @@ GraphQL 생태계가 Node.js를 중심으로 발전하고 있어서 크게 망�
     </a>
     
     <a href="/ko/tags/rest-api/">
-      <li class="sidemenu-recent-tags">rest-api</li>
+      <li class="sidemenu-recent-tags">rest api</li>
     </a>
     
     <a href="/ko/tags/serverless-architecture/">
-      <li class="sidemenu-recent-tags">serverless-architecture</li>
+      <li class="sidemenu-recent-tags">serverless architecture</li>
     </a>
     
     <a href="/ko/tags/slack/">
@@ -385,7 +385,7 @@ GraphQL 생태계가 Node.js를 중심으로 발전하고 있어서 크게 망�
     </a>
     
     <a href="/ko/tags/task-queue/">
-      <li class="sidemenu-recent-tags">task-queue</li>
+      <li class="sidemenu-recent-tags">task queue</li>
     </a>
     
     <a href="/ko/tags/testing/">
@@ -448,7 +448,7 @@ GraphQL 생태계가 Node.js를 중심으로 발전하고 있어서 크게 망�
       <hr>
       <div class='text-center'>
         <div id="disqus_thread"></div>
-<script type="application/javascript">
+<script>
     window.disqus_config = function () {
     
     
@@ -489,18 +489,20 @@ GraphQL 생태계가 Node.js를 중심으로 발전하고 있어서 크게 망�
 </div>
 
 
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-48716672-3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HBL5QKGKNR"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-HBL5QKGKNR');
+        }
+      </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

@@ -118,8 +118,7 @@
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API">Broadcast Channel API</a>란 동일한 출처에서 서로 다른 브라우징 컨텍스트(탭, 윈도우, iframe 등)들이 채널을 개설하거나 참여하여 해당 채널에서 메시지를 전송하거나 받는 등 양방향 통신을 가능하게 해줍니다.</p>
 <p><img src="/img/content/2022-10-12-1/broadcast_channel.png" alt="Broadcast Channel.png"></p>
 <blockquote>
-<p>참조: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API">https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API</a></p>
-</blockquote>
+<p>참조: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API">https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API</a></p></blockquote>
 <p>공식 문서의 예시도 나와 있듯 사용법이 정말 간단한데요.</p>
 <p>먼저 새로운 BroadcastChannel 인터페이스를 생성해주면서 임의의 채널 이름을 인자로 넣어주게 되면 내부에서 해당 채널을 생성하거나 이미 열려있는 경우 해당 채널에 참여하게 됩니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">bc</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BroadcastChannel</span><span class="p">(</span><span class="s1">&#39;test_app&#39;</span><span class="p">);</span>
@@ -139,8 +138,7 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="nx">bc</span><span class="p">.</span><span class="nx">postMessage</span><span class="p">(</span><span class="s2">&#34;Hello! I&#39;m here!&#34;</span><span class="p">);</span>
 </span></span></code></pre></div><p><img src="/img/content/2022-10-12-1/code1.png" alt="code1.png"></p>
 <blockquote>
-<p>서로 다른 윈도우에서 왼쪽은 메시지를 수신. 오른쪽은 메시지를 전달.</p>
-</blockquote>
+<p>서로 다른 윈도우에서 왼쪽은 메시지를 수신. 오른쪽은 메시지를 전달.</p></blockquote>
 <h3 id="채널-닫기">채널 닫기</h3>
 <p><code>close</code> 메서드를 호출해서 채널을 닫게 되면 이후 <code>postMessage</code>를 통해 메시지를 전달해도 수신하지 않게 됩니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="nx">bc</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
@@ -218,14 +216,14 @@
 </span></span><span class="line"><span class="cl"><span class="kr">import</span> <span class="p">{</span> <span class="nx">BroadcastChannel</span><span class="p">,</span> <span class="nx">BroadcastChannelOptions</span> <span class="p">}</span> <span class="kr">from</span> <span class="s1">&#39;broadcast-channel&#39;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kr">interface</span> <span class="nx">UseBroadcastChannelOptions</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">extends</span> <span class="nx">Omit</span><span class="p">&lt;</span><span class="nt">BroadcastChannelOptions</span><span class="err">,</span> <span class="err">&#39;</span><span class="na">node</span><span class="err">&#39;</span><span class="p">&gt;</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">extends</span> <span class="nx">Omit</span><span class="p">&lt;</span><span class="nt">BroadcastChannelOptions</span><span class="p">,</span> <span class="s1">&#39;node&#39;</span><span class="p">&gt;</span> <span class="p">{}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="kd">function</span> <span class="nx">useBroadcastChannel</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;(</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">channelName</span>: <span class="kt">string</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">onMessage</span><span class="o">:</span> <span class="p">(</span><span class="nx">message</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">options?</span>: <span class="kt">UseBroadcastChannelOptions</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">broadcastChannelRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">&lt;</span><span class="nt">BroadcastChannel</span><span class="err">&lt;</span><span class="na">T</span><span class="p">&gt;</span> <span class="o">|</span> <span class="kc">null</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">broadcastChannelRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="p">&lt;</span><span class="nt">BroadcastChannel</span><span class="p">&lt;</span><span class="nt">T</span><span class="p">&gt;</span> <span class="err">|</span> <span class="na">null</span><span class="p">&gt;(</span><span class="kc">null</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">onMessageRef</span> <span class="o">=</span> <span class="nx">useRef</span><span class="o">&lt;</span><span class="p">((</span><span class="nx">message</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="k">void</span><span class="p">)</span> <span class="o">|</span> <span class="kc">null</span><span class="o">&gt;</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">handlePostMessage</span> <span class="o">=</span> <span class="nx">useCallback</span><span class="p">((</span><span class="nx">message</span>: <span class="kt">T</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -334,7 +332,7 @@
   <ul class="sidemenu-recent-list">
     
     <a href="/ko/tags/amazon-sqs/">
-      <li class="sidemenu-recent-tags">amazon-sqs</li>
+      <li class="sidemenu-recent-tags">amazon sqs</li>
     </a>
     
     <a href="/ko/tags/analytics/">
@@ -350,11 +348,11 @@
     </a>
     
     <a href="/ko/tags/aws-batch/">
-      <li class="sidemenu-recent-tags">aws-batch</li>
+      <li class="sidemenu-recent-tags">aws batch</li>
     </a>
     
     <a href="/ko/tags/aws-lambda/">
-      <li class="sidemenu-recent-tags">aws-lambda</li>
+      <li class="sidemenu-recent-tags">aws lambda</li>
     </a>
     
     <a href="/ko/tags/botkit/">
@@ -442,11 +440,11 @@
     </a>
     
     <a href="/ko/tags/rest-api/">
-      <li class="sidemenu-recent-tags">rest-api</li>
+      <li class="sidemenu-recent-tags">rest api</li>
     </a>
     
     <a href="/ko/tags/serverless-architecture/">
-      <li class="sidemenu-recent-tags">serverless-architecture</li>
+      <li class="sidemenu-recent-tags">serverless architecture</li>
     </a>
     
     <a href="/ko/tags/slack/">
@@ -462,7 +460,7 @@
     </a>
     
     <a href="/ko/tags/task-queue/">
-      <li class="sidemenu-recent-tags">task-queue</li>
+      <li class="sidemenu-recent-tags">task queue</li>
     </a>
     
     <a href="/ko/tags/testing/">
@@ -525,7 +523,7 @@
       <hr>
       <div class='text-center'>
         <div id="disqus_thread"></div>
-<script type="application/javascript">
+<script>
     window.disqus_config = function () {
     
     
@@ -566,18 +564,20 @@
 </div>
 
 
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-48716672-3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HBL5QKGKNR"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-HBL5QKGKNR');
+        }
+      </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

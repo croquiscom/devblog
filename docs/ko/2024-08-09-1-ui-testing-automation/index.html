@@ -10,7 +10,9 @@
   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
 
   <meta property='og:title' content='UI 테스트 자동화' />
-  <meta property='og:description' content='테스트를 거치지 않은 소프트웨어는 없습니다. 하지만 많은 기능을 가져 복잡해진 현대의 소프트웨어를 온전히 테스트하는 것은 굉장히 어려운 일입니다. 이러한 테스트' />
+  <meta property='og:description' content='테스트를 거치지 않은 소프트웨어는 없습니다. 하지만 많은 기능을 가져 복잡해진 현대의 소프트웨어를 온전히 테스트하는 것은 굉장히 어려운 일입니다.
+이러한 테스트를 자동화하지 않은 채 소프트웨어를 지속적으로 배포하는 것은 불가능에 가깝다고 할 수 있습니다.
+이번 글에서는 카카오스타일에서 진행하는 UI 테스트 자동화 시스템에 대해 설명해보겠습니다.' />
   <meta property='og:type' content='article' />
   <meta property='og:url' content='https://devblog.kakaostyle.com/ko/2024-08-09-1-ui-testing-automation/' />
   
@@ -100,8 +102,7 @@
 <p>이러한 테스트를 자동화하지 않은 채 소프트웨어를 지속적으로 배포하는 것은 불가능에 가깝다고 할 수 있습니다.
 이번 글에서는 카카오스타일에서 진행하는 UI 테스트 자동화 시스템에 대해 설명해보겠습니다.</p>
 <blockquote>
-<p>테스트는 범위에 따라 보통 단위 테스트(unit testing), 통합 테스트(integration testing), E2E 테스트(end-to-end testing)로 나눠집니다. 여기서 얘기하는 UI 테스트는 E2E 테스트에 해당합니다.</p>
-</blockquote>
+<p>테스트는 범위에 따라 보통 단위 테스트(unit testing), 통합 테스트(integration testing), E2E 테스트(end-to-end testing)로 나눠집니다. 여기서 얘기하는 UI 테스트는 E2E 테스트에 해당합니다.</p></blockquote>
 <h2 id="ui-테스트-자동화-목표">UI 테스트 자동화 목표</h2>
 <ul>
 <li>주요 기능 검증: 회귀 테스트(regression testing), 스모크 테스트(smoke testing)를 포함한 단순하고 반복적인 테스트를 대체해, 수동 테스트를 진행하는 QA 인원은 좀 더 복잡하고 찾기 어려운 문제에 집중할 수 있게 합니다</li>
@@ -120,57 +121,57 @@
 <p>지그재그 애플리케이션은 네이티브와 웹을 혼합한 하이브리드 구조를 채택하고 있습니다. Appium을 사용하여 주요 기능 및 네이티브와 웹 간의 상호작용을 테스트하여 전체 사용자 경험을 검증하고, 조화롭게 작동하는지 확인합니다.</p>
 <h3 id="사용자-시나리오-기반-테스트"><strong>사용자 시나리오 기반 테스트</strong></h3>
 <p>실제 사용자가 애플리케이션을 사용할 때의 시나리오를 기반으로 테스트를 진행합니다. 사용자의 경로를 따라 애플리케이션의 주요 기능이 의도대로 작동하는지 확인합니다. 예를 들어, 로그인, 데이터 입력, 결과 확인 등의 사용자 흐름을 포함합니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span>
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testUserLoginAndInput</span><span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// Login process
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">WebElement</span> <span class="n">usernameField</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="na">findElement</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="s">&#34;username&#34;</span><span class="o">));</span>
-</span></span><span class="line"><span class="cl">    <span class="n">WebElement</span> <span class="n">passwordField</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="na">findElement</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="s">&#34;password&#34;</span><span class="o">));</span>
-</span></span><span class="line"><span class="cl">    <span class="n">WebElement</span> <span class="n">loginButton</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="na">findElement</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="s">&#34;login_button&#34;</span><span class="o">));</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">usernameField</span><span class="o">.</span><span class="na">sendKeys</span><span class="o">(</span><span class="s">&#34;testuser&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">passwordField</span><span class="o">.</span><span class="na">sendKeys</span><span class="o">(</span><span class="s">&#34;password123&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">loginButton</span><span class="o">.</span><span class="na">click</span><span class="o">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// Validate successful login
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">WebElement</span> <span class="n">homeScreen</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="na">findElement</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="s">&#34;home_screen&#34;</span><span class="o">));</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">homeScreen</span><span class="o">.</span><span class="na">isDisplayed</span><span class="o">(),</span> <span class="s">&#34;Home screen should be displayed after login.&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// Data input
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">WebElement</span> <span class="n">inputField</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="na">findElement</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="s">&#34;input_field&#34;</span><span class="o">));</span>
-</span></span><span class="line"><span class="cl">    <span class="n">WebElement</span> <span class="n">submitButton</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="na">findElement</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="s">&#34;submit_button&#34;</span><span class="o">));</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="n">inputField</span><span class="o">.</span><span class="na">sendKeys</span><span class="o">(</span><span class="s">&#34;Test Data&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">    <span class="n">submitButton</span><span class="o">.</span><span class="na">click</span><span class="o">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// Validate data submission
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">WebElement</span> <span class="n">resultScreen</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="na">findElement</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="s">&#34;result_screen&#34;</span><span class="o">));</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">resultScreen</span><span class="o">.</span><span class="na">isDisplayed</span><span class="o">(),</span> <span class="s">&#34;Result screen should be displayed after data submission.&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h3 id="네이티브와-웹-간의-상호작용을-테스트">네이티브와 웹 간의 상호작용을 테스트</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testUserLoginAndInput</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Login process</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">WebElement</span><span class="w"> </span><span class="n">usernameField</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="na">findElement</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">id</span><span class="p">(</span><span class="s">&#34;username&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">WebElement</span><span class="w"> </span><span class="n">passwordField</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="na">findElement</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">id</span><span class="p">(</span><span class="s">&#34;password&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">WebElement</span><span class="w"> </span><span class="n">loginButton</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="na">findElement</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">id</span><span class="p">(</span><span class="s">&#34;login_button&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">usernameField</span><span class="p">.</span><span class="na">sendKeys</span><span class="p">(</span><span class="s">&#34;testuser&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">passwordField</span><span class="p">.</span><span class="na">sendKeys</span><span class="p">(</span><span class="s">&#34;password123&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">loginButton</span><span class="p">.</span><span class="na">click</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Validate successful login</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">WebElement</span><span class="w"> </span><span class="n">homeScreen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="na">findElement</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">id</span><span class="p">(</span><span class="s">&#34;home_screen&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">homeScreen</span><span class="p">.</span><span class="na">isDisplayed</span><span class="p">(),</span><span class="w"> </span><span class="s">&#34;Home screen should be displayed after login.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Data input</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">WebElement</span><span class="w"> </span><span class="n">inputField</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="na">findElement</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">id</span><span class="p">(</span><span class="s">&#34;input_field&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">WebElement</span><span class="w"> </span><span class="n">submitButton</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="na">findElement</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">id</span><span class="p">(</span><span class="s">&#34;submit_button&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">inputField</span><span class="p">.</span><span class="na">sendKeys</span><span class="p">(</span><span class="s">&#34;Test Data&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">submitButton</span><span class="p">.</span><span class="na">click</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Validate data submission</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">WebElement</span><span class="w"> </span><span class="n">resultScreen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="na">findElement</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">id</span><span class="p">(</span><span class="s">&#34;result_screen&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">resultScreen</span><span class="p">.</span><span class="na">isDisplayed</span><span class="p">(),</span><span class="w"> </span><span class="s">&#34;Result screen should be displayed after data submission.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="네이티브와-웹-간의-상호작용을-테스트">네이티브와 웹 간의 상호작용을 테스트</h3>
 <p>애플리케이션의 하이브리드 구조에서 네이티브와 웹 간의 상호작용이 올바르게 이루어지는지 검증합니다. 이 과정에서는 웹 콘텐츠와 네이티브 컴포넌트 간의 데이터 전달과 이벤트 처리가 정확한지 확인합니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span>
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testNativeAndWebviewInteraction</span><span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// Switch to Webview context
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">contexts</span> <span class="o">=</span> <span class="o">((</span><span class="n">RemoteWebDriver</span><span class="o">)</span> <span class="n">driver</span><span class="o">).</span><span class="na">getContextHandles</span><span class="o">();</span>
-</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">context</span> <span class="o">:</span> <span class="n">contexts</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="o">(</span><span class="n">context</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">&#34;WEBVIEW&#34;</span><span class="o">))</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">driver</span><span class="o">.</span><span class="na">context</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">            <span class="k">break</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">        <span class="o">}</span>
-</span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// Interact with Webview content
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">WebElement</span> <span class="n">webElement</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="na">findElement</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="s">&#34;webview_element_id&#34;</span><span class="o">));</span>
-</span></span><span class="line"><span class="cl">    <span class="n">webElement</span><span class="o">.</span><span class="na">sendKeys</span><span class="o">(</span><span class="s">&#34;Test Input&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// Switch back to Native context
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">driver</span><span class="o">.</span><span class="na">context</span><span class="o">(</span><span class="s">&#34;NATIVE_APP&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="c1">// Validate interaction result
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">WebElement</span> <span class="n">resultElement</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="na">findElement</span><span class="o">(</span><span class="n">By</span><span class="o">.</span><span class="na">id</span><span class="o">(</span><span class="s">&#34;native_element_id&#34;</span><span class="o">));</span>
-</span></span><span class="line"><span class="cl">    <span class="n">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">resultElement</span><span class="o">.</span><span class="na">isDisplayed</span><span class="o">(),</span> <span class="s">&#34;Result element should be visible after Webview interaction.&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><h2 id="jenkins">Jenkins</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="nd">@Test</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">testNativeAndWebviewInteraction</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Switch to Webview context</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">contexts</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">((</span><span class="n">RemoteWebDriver</span><span class="p">)</span><span class="w"> </span><span class="n">driver</span><span class="p">).</span><span class="na">getContextHandles</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">contexts</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">context</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">&#34;WEBVIEW&#34;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">driver</span><span class="p">.</span><span class="na">context</span><span class="p">(</span><span class="n">context</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Interact with Webview content</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">WebElement</span><span class="w"> </span><span class="n">webElement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="na">findElement</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">id</span><span class="p">(</span><span class="s">&#34;webview_element_id&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">webElement</span><span class="p">.</span><span class="na">sendKeys</span><span class="p">(</span><span class="s">&#34;Test Input&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Switch back to Native context</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">driver</span><span class="p">.</span><span class="na">context</span><span class="p">(</span><span class="s">&#34;NATIVE_APP&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// Validate interaction result</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">WebElement</span><span class="w"> </span><span class="n">resultElement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">driver</span><span class="p">.</span><span class="na">findElement</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="na">id</span><span class="p">(</span><span class="s">&#34;native_element_id&#34;</span><span class="p">));</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">Assert</span><span class="p">.</span><span class="na">assertTrue</span><span class="p">(</span><span class="n">resultElement</span><span class="p">.</span><span class="na">isDisplayed</span><span class="p">(),</span><span class="w"> </span><span class="s">&#34;Result element should be visible after Webview interaction.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h2 id="jenkins">Jenkins</h2>
 <p>Jenkins를 사용해 코드를 자동으로 빌드하고 테스트를 수행합니다. <a href="https://www.jenkins.io/doc/book/pipeline/">Pipeline</a> 스크립트를 통해 이 과정을 정의합니다.</p>
 <h3 id="코드-체크아웃"><strong>코드 체크아웃</strong></h3>
 <p>Git 저장소에서 최신 코드를 자동으로 체크아웃합니다. 소스 코드 파일이 로컬 작업 디렉토리로 다운로드됩니다.</p>
@@ -212,14 +213,14 @@
 </span></span><span class="line"><span class="cl">    <span class="nt">&lt;version&gt;</span>{version}<span class="nt">&lt;/version&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="nt">&lt;/dependency&gt;</span>
 </span></span></code></pre></div><p>다음과 같이 인스턴스를 만듭니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">const</span> <span class="n">extent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ExtentReports</span><span class="o">();</span>
-</span></span><span class="line"><span class="cl"><span class="n">ExtentHtmlReporter</span> <span class="n">htmlReporter</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ExtentHtmlReporter</span><span class="o">(</span><span class="s">&#34;&lt;directory&gt;&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl"><span class="n">htmlReporter</span><span class="o">.</span><span class="na">config</span><span class="o">().</span><span class="na">setDocumentTitle</span><span class="o">(</span><span class="s">&#34;Test Automation Report&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl"><span class="n">extent</span><span class="o">.</span><span class="na">attachReporter</span><span class="o">(</span><span class="n">htmlReporter</span><span class="o">);</span>
-</span></span></code></pre></div><p>이후 각 테스트마다 테스트 결과를 기록하면 됩니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">ExtentTest</span> <span class="n">test</span> <span class="o">=</span> <span class="n">extent</span><span class="o">.</span><span class="na">createTest</span><span class="o">(</span><span class="s">&#34;MyTest&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl"><span class="n">test</span><span class="o">.</span><span class="na">pass</span><span class="o">(</span><span class="s">&#34;pass&#34;</span><span class="o">);</span>
-</span></span></code></pre></div><p>이렇게 만들어진 HTML 리포트를 <a href="https://plugins.jenkins.io/htmlpublisher/">publishHTML 플러그인</a>을 통해 Jenkins 대시보드에서 표시되도록 만들 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">const</span><span class="w"> </span><span class="n">extent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ExtentReports</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">ExtentHtmlReporter</span><span class="w"> </span><span class="n">htmlReporter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ExtentHtmlReporter</span><span class="p">(</span><span class="s">&#34;&lt;directory&gt;&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">htmlReporter</span><span class="p">.</span><span class="na">config</span><span class="p">().</span><span class="na">setDocumentTitle</span><span class="p">(</span><span class="s">&#34;Test Automation Report&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">extent</span><span class="p">.</span><span class="na">attachReporter</span><span class="p">(</span><span class="n">htmlReporter</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><p>이후 각 테스트마다 테스트 결과를 기록하면 됩니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="n">ExtentTest</span><span class="w"> </span><span class="n">test</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extent</span><span class="p">.</span><span class="na">createTest</span><span class="p">(</span><span class="s">&#34;MyTest&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="n">test</span><span class="p">.</span><span class="na">pass</span><span class="p">(</span><span class="s">&#34;pass&#34;</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><p>이렇게 만들어진 HTML 리포트를 <a href="https://plugins.jenkins.io/htmlpublisher/">publishHTML 플러그인</a>을 통해 Jenkins 대시보드에서 표시되도록 만들 수 있습니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">echo</span> <span class="s2">&#34;-----------------------EXTENT Report-----------------------&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;EXTENT Report&#39;</span><span class="o">)</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">publishHTML</span><span class="o">([</span>
@@ -308,100 +309,100 @@
 </li>
 <li>
 <p><strong>메모리 &amp; 네트워크 사용량 측정</strong>: 애플리케이션의 메모리 및 네트워크 사용량을 분석하여 최적화 포인트를 찾습니다.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.io.BufferedReader</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.io.InputStreamReader</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">java.io.IOException</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NetworkUtils</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// 환경 변수 또는 상수 정의
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ADB_SHELL</span> <span class="o">=</span> <span class="s">&#34;/platform-tools/adb&#34;</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">DEVICE_NAME</span> <span class="o">=</span> <span class="s">&#34;your_device_name&#34;</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">getNetworkInfo</span><span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">String</span> <span class="n">cmd</span> <span class="o">=</span> <span class="n">ADB_SHELL</span> <span class="o">+</span> <span class="s">&#34; -s &#34;</span> <span class="o">+</span> <span class="n">DEVICE_NAME</span> <span class="o">+</span> <span class="s">&#34; shell xxxxxxxxxxxxxxxx&#39;&#34;</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">String</span> <span class="n">contains</span> <span class="o">=</span> <span class="s">&#34;RX bytes&#34;</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="kt">double</span> <span class="n">networkUsageInfo</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Process</span> <span class="n">process</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// 명령어 실행
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">process</span> <span class="o">=</span> <span class="n">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">().</span><span class="na">exec</span><span class="o">(</span><span class="n">cmd</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="c1">// 명령어 실행 결과를 읽기 위한 BufferedReader
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">try</span> <span class="o">(</span><span class="n">BufferedReader</span> <span class="n">bufferedReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">())))</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">String</span> <span class="n">line</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">                <span class="k">while</span> <span class="o">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">bufferedReader</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="o">(</span><span class="n">line</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">contains</span><span class="o">))</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">                        <span class="n">String</span><span class="o">[]</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="na">trim</span><span class="o">().</span><span class="na">split</span><span class="o">(</span><span class="s">&#34;\\s+&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="o">(</span><span class="n">fields</span><span class="o">.</span><span class="na">length</span> <span class="o">&gt;</span> <span class="n">idx</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">                            <span class="c1">// RX bytes 값 추출 및 변환
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                            <span class="n">info</span> <span class="o">=</span> <span class="n">Double</span><span class="o">.</span><span class="na">parseDouble</span><span class="o">(</span><span class="n">fields</span><span class="o">[</span><span class="n">idx</span><span class="o">].</span><span class="na">replace</span><span class="o">(</span><span class="s">&#34;bytes:&#34;</span><span class="o">,</span> <span class="s">&#34;&#34;</span><span class="o">).</span><span class="na">trim</span><span class="o">());</span>
-</span></span><span class="line"><span class="cl">                        <span class="o">}</span>
-</span></span><span class="line"><span class="cl">                        <span class="k">break</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
-</span></span><span class="line"><span class="cl">                <span class="o">}</span>
-</span></span><span class="line"><span class="cl">            <span class="o">}</span>
-</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// 예외 처리
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">consoleLog</span><span class="o">.</span><span class="na">debugWarning</span><span class="o">(</span><span class="s">&#34;Failed to execute command or read output.&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">            <span class="n">consoleLog</span><span class="o">.</span><span class="na">debugException</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NumberFormatException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// 숫자 변환 예외 처리
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">consoleLog</span><span class="o">.</span><span class="na">debugWarning</span><span class="o">(</span><span class="s">&#34;Failed to parse network info.&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">            <span class="n">consoleLog</span><span class="o">.</span><span class="na">debugException</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Process 종료
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">process</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">process</span><span class="o">.</span><span class="na">destroy</span><span class="o">();</span>
-</span></span><span class="line"><span class="cl">            <span class="o">}</span>
-</span></span><span class="line"><span class="cl">        <span class="o">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">networkUsageInfo</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">     <span class="kd">public</span> <span class="kt">double</span> <span class="nf">getMemoryInfo</span><span class="o">()</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">String</span> <span class="n">cmd</span> <span class="o">=</span> <span class="n">ADB_SHELL</span> <span class="o">+</span> <span class="s">&#34; -s &#34;</span> <span class="o">+</span> <span class="n">DEVICE_NAME</span> <span class="o">+</span> <span class="s">&#34; shell xxxxxxxxxxxxxxxx&#34;</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">String</span> <span class="n">contains</span> <span class="o">=</span> <span class="s">&#34;TOTAL&#34;</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">idx</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="kt">double</span> <span class="n">memoryUsageInfo</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">Process</span> <span class="n">process</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">        <span class="k">try</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// 명령어 실행
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">process</span> <span class="o">=</span> <span class="n">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">().</span><span class="na">exec</span><span class="o">(</span><span class="n">cmd</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="c1">// 명령어 실행 결과를 읽기 위한 BufferedReader
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">try</span> <span class="o">(</span><span class="n">BufferedReader</span> <span class="n">bufferedReader</span> <span class="o">=</span> <span class="k">new</span> <span class="n">BufferedReader</span><span class="o">(</span><span class="k">new</span> <span class="n">InputStreamReader</span><span class="o">(</span><span class="n">process</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">())))</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">String</span> <span class="n">line</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">                <span class="k">while</span> <span class="o">((</span><span class="n">line</span> <span class="o">=</span> <span class="n">bufferedReader</span><span class="o">.</span><span class="na">readLine</span><span class="o">())</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="o">(</span><span class="n">line</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">contains</span><span class="o">))</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">                        <span class="n">String</span><span class="o">[]</span> <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="na">trim</span><span class="o">().</span><span class="na">split</span><span class="o">(</span><span class="s">&#34;\\s+&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="o">(</span><span class="n">fields</span><span class="o">.</span><span class="na">length</span> <span class="o">&gt;</span> <span class="n">idx</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">                            <span class="c1">// TOTAL 값 추출 및 변환
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                            <span class="n">memoryUsageInfo</span> <span class="o">=</span> <span class="n">Double</span><span class="o">.</span><span class="na">parseDouble</span><span class="o">(</span><span class="n">fields</span><span class="o">[</span><span class="n">idx</span><span class="o">].</span><span class="na">replaceAll</span><span class="o">(</span><span class="s">&#34;[^0-9.]&#34;</span><span class="o">,</span> <span class="s">&#34;&#34;</span><span class="o">).</span><span class="na">trim</span><span class="o">());</span>
-</span></span><span class="line"><span class="cl">                        <span class="o">}</span>
-</span></span><span class="line"><span class="cl">                        <span class="k">break</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
-</span></span><span class="line"><span class="cl">                <span class="o">}</span>
-</span></span><span class="line"><span class="cl">            <span class="o">}</span>
-</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// 예외 처리
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">consoleLog</span><span class="o">.</span><span class="na">debugWarning</span><span class="o">(</span><span class="s">&#34;Failed to execute command or read output.&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">            <span class="n">consoleLog</span><span class="o">.</span><span class="na">debugException</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NumberFormatException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// 숫자 변환 예외 처리
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="n">consoleLog</span><span class="o">.</span><span class="na">debugWarning</span><span class="o">(</span><span class="s">&#34;Failed to parse memory info.&#34;</span><span class="o">);</span>
-</span></span><span class="line"><span class="cl">            <span class="n">consoleLog</span><span class="o">.</span><span class="na">debugException</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-</span></span><span class="line"><span class="cl">        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">// Process 종료
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="o">(</span><span class="n">process</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">process</span><span class="o">.</span><span class="na">destroy</span><span class="o">();</span>
-</span></span><span class="line"><span class="cl">            <span class="o">}</span>
-</span></span><span class="line"><span class="cl">        <span class="o">}</span>
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">memoryUsageInfo</span><span class="o">;</span>
-</span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div></li>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.BufferedReader</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.InputStreamReader</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.IOException</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">NetworkUtils</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="c1">// 환경 변수 또는 상수 정의</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">ADB_SHELL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;/platform-tools/adb&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">DEVICE_NAME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;your_device_name&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">getNetworkInfo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADB_SHELL</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; -s &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">DEVICE_NAME</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; shell xxxxxxxxxxxxxxxx&#39;&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">contains</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;RX bytes&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">1</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">networkUsageInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Process</span><span class="w"> </span><span class="n">process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 명령어 실행</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">().</span><span class="na">exec</span><span class="p">(</span><span class="n">cmd</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 명령어 실행 결과를 읽기 위한 BufferedReader</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">BufferedReader</span><span class="w"> </span><span class="n">bufferedReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BufferedReader</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InputStreamReader</span><span class="p">(</span><span class="n">process</span><span class="p">.</span><span class="na">getInputStream</span><span class="p">())))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">String</span><span class="w"> </span><span class="n">line</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">while</span><span class="w"> </span><span class="p">((</span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bufferedReader</span><span class="p">.</span><span class="na">readLine</span><span class="p">())</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">line</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="n">contains</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">split</span><span class="p">(</span><span class="s">&#34;\\s+&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fields</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">idx</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="c1">// RX bytes 값 추출 및 변환</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Double</span><span class="p">.</span><span class="na">parseDouble</span><span class="p">(</span><span class="n">fields</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="p">.</span><span class="na">replace</span><span class="p">(</span><span class="s">&#34;bytes:&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">).</span><span class="na">trim</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 예외 처리</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">consoleLog</span><span class="p">.</span><span class="na">debugWarning</span><span class="p">(</span><span class="s">&#34;Failed to execute command or read output.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">consoleLog</span><span class="p">.</span><span class="na">debugException</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">NumberFormatException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 숫자 변환 예외 처리</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">consoleLog</span><span class="p">.</span><span class="na">debugWarning</span><span class="p">(</span><span class="s">&#34;Failed to parse network info.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">consoleLog</span><span class="p">.</span><span class="na">debugException</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// Process 종료</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">process</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">process</span><span class="p">.</span><span class="na">destroy</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">networkUsageInfo</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="kd">public</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="nf">getMemoryInfo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">cmd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ADB_SHELL</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; -s &#34;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">DEVICE_NAME</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&#34; shell xxxxxxxxxxxxxxxx&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">contains</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;TOTAL&#34;</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">idx</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">2</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">memoryUsageInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">0</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">Process</span><span class="w"> </span><span class="n">process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 명령어 실행</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">process</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">().</span><span class="na">exec</span><span class="p">(</span><span class="n">cmd</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 명령어 실행 결과를 읽기 위한 BufferedReader</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">BufferedReader</span><span class="w"> </span><span class="n">bufferedReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BufferedReader</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">InputStreamReader</span><span class="p">(</span><span class="n">process</span><span class="p">.</span><span class="na">getInputStream</span><span class="p">())))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">String</span><span class="w"> </span><span class="n">line</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="k">while</span><span class="w"> </span><span class="p">((</span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bufferedReader</span><span class="p">.</span><span class="na">readLine</span><span class="p">())</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">line</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="n">contains</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">fields</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="na">trim</span><span class="p">().</span><span class="na">split</span><span class="p">(</span><span class="s">&#34;\\s+&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fields</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">idx</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="c1">// TOTAL 값 추출 및 변환</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                            </span><span class="n">memoryUsageInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Double</span><span class="p">.</span><span class="na">parseDouble</span><span class="p">(</span><span class="n">fields</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="p">.</span><span class="na">replaceAll</span><span class="p">(</span><span class="s">&#34;[^0-9.]&#34;</span><span class="p">,</span><span class="w"> </span><span class="s">&#34;&#34;</span><span class="p">).</span><span class="na">trim</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                        </span><span class="k">break</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 예외 처리</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">consoleLog</span><span class="p">.</span><span class="na">debugWarning</span><span class="p">(</span><span class="s">&#34;Failed to execute command or read output.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">consoleLog</span><span class="p">.</span><span class="na">debugException</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">NumberFormatException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// 숫자 변환 예외 처리</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">consoleLog</span><span class="p">.</span><span class="na">debugWarning</span><span class="p">(</span><span class="s">&#34;Failed to parse memory info.&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="n">consoleLog</span><span class="p">.</span><span class="na">debugException</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="c1">// Process 종료</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">process</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">                </span><span class="n">process</span><span class="p">.</span><span class="na">destroy</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">memoryUsageInfo</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div></li>
 </ul>
 <h2 id="마치며">마치며</h2>
 <p>테스트 자동화는 많은 이점이 있지만, 한계점과 어려움도 존재합니다.</p>
@@ -441,7 +442,7 @@
   <ul class="sidemenu-recent-list">
     
     <a href="/ko/tags/amazon-sqs/">
-      <li class="sidemenu-recent-tags">amazon-sqs</li>
+      <li class="sidemenu-recent-tags">amazon sqs</li>
     </a>
     
     <a href="/ko/tags/analytics/">
@@ -457,11 +458,11 @@
     </a>
     
     <a href="/ko/tags/aws-batch/">
-      <li class="sidemenu-recent-tags">aws-batch</li>
+      <li class="sidemenu-recent-tags">aws batch</li>
     </a>
     
     <a href="/ko/tags/aws-lambda/">
-      <li class="sidemenu-recent-tags">aws-lambda</li>
+      <li class="sidemenu-recent-tags">aws lambda</li>
     </a>
     
     <a href="/ko/tags/botkit/">
@@ -549,11 +550,11 @@
     </a>
     
     <a href="/ko/tags/rest-api/">
-      <li class="sidemenu-recent-tags">rest-api</li>
+      <li class="sidemenu-recent-tags">rest api</li>
     </a>
     
     <a href="/ko/tags/serverless-architecture/">
-      <li class="sidemenu-recent-tags">serverless-architecture</li>
+      <li class="sidemenu-recent-tags">serverless architecture</li>
     </a>
     
     <a href="/ko/tags/slack/">
@@ -569,7 +570,7 @@
     </a>
     
     <a href="/ko/tags/task-queue/">
-      <li class="sidemenu-recent-tags">task-queue</li>
+      <li class="sidemenu-recent-tags">task queue</li>
     </a>
     
     <a href="/ko/tags/testing/">
@@ -632,7 +633,7 @@
       <hr>
       <div class='text-center'>
         <div id="disqus_thread"></div>
-<script type="application/javascript">
+<script>
     window.disqus_config = function () {
     
     
@@ -673,18 +674,20 @@
 </div>
 
 
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-48716672-3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HBL5QKGKNR"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-HBL5QKGKNR');
+        }
+      </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

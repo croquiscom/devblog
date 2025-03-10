@@ -4,6 +4,8 @@
     <title>카카오스타일 기술 블로그</title>
     <link>https://devblog.kakaostyle.com/en/</link>
     <description>Recent content on 카카오스타일 기술 블로그</description>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://devblog.kakaostyle.com/en/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>en</language>
+    <atom:link href="https://devblog.kakaostyle.com/en/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

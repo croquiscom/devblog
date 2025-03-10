@@ -230,8 +230,7 @@
 <p>한 페이지 컴포넌트를 작게 쪼갠 경우 그 컴포넌트 사이에는 상대 경로로 참조하면 되지만, pages → components 처럼 멀리 떨어진 컴포넌트를 참조할 경우에는 절대 경로로 참조하는게 좋습니다. 이렇게 구성해야 파일을 <code>/pages/qna/questions/index.tsx</code> 에서 <code>/pages/questions/index.tsx</code>로 옮겨도 import 변경이 필요없습니다. 상대 경로로 참조 가능한 범위에 대해서는 사람마다 다르게 판단하기도 합니다.</p>
 <p>절대 경로로는 src 밑의 디렉토리들(예 components, pages, hooks)을 사용하고 있습니다. 저는 <code>@/components/qna/question/main</code> 형태를 제안했는데, <code>components/qna/question/main</code>를 쓰는 것으로 정해졌습니다.</p>
 <blockquote>
-<p>[추가] 새로운 논의를 통해 2022년 3월에 <code>@/</code> 를 사용하는 것으로 규칙이 바뀌었습니다.</p>
-</blockquote>
+<p>[추가] 새로운 논의를 통해 2022년 3월에 <code>@/</code> 를 사용하는 것으로 규칙이 바뀌었습니다.</p></blockquote>
       
       <hr>
       <div class='post-original'>
@@ -266,7 +265,7 @@
   <ul class="sidemenu-recent-list">
     
     <a href="/ko/tags/amazon-sqs/">
-      <li class="sidemenu-recent-tags">amazon-sqs</li>
+      <li class="sidemenu-recent-tags">amazon sqs</li>
     </a>
     
     <a href="/ko/tags/analytics/">
@@ -282,11 +281,11 @@
     </a>
     
     <a href="/ko/tags/aws-batch/">
-      <li class="sidemenu-recent-tags">aws-batch</li>
+      <li class="sidemenu-recent-tags">aws batch</li>
     </a>
     
     <a href="/ko/tags/aws-lambda/">
-      <li class="sidemenu-recent-tags">aws-lambda</li>
+      <li class="sidemenu-recent-tags">aws lambda</li>
     </a>
     
     <a href="/ko/tags/botkit/">
@@ -374,11 +373,11 @@
     </a>
     
     <a href="/ko/tags/rest-api/">
-      <li class="sidemenu-recent-tags">rest-api</li>
+      <li class="sidemenu-recent-tags">rest api</li>
     </a>
     
     <a href="/ko/tags/serverless-architecture/">
-      <li class="sidemenu-recent-tags">serverless-architecture</li>
+      <li class="sidemenu-recent-tags">serverless architecture</li>
     </a>
     
     <a href="/ko/tags/slack/">
@@ -394,7 +393,7 @@
     </a>
     
     <a href="/ko/tags/task-queue/">
-      <li class="sidemenu-recent-tags">task-queue</li>
+      <li class="sidemenu-recent-tags">task queue</li>
     </a>
     
     <a href="/ko/tags/testing/">
@@ -457,7 +456,7 @@
       <hr>
       <div class='text-center'>
         <div id="disqus_thread"></div>
-<script type="application/javascript">
+<script>
     window.disqus_config = function () {
     
     
@@ -498,18 +497,20 @@
 </div>
 
 
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-48716672-3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HBL5QKGKNR"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-HBL5QKGKNR');
+        }
+      </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

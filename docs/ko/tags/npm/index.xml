@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>npm on 카카오스타일 기술 블로그</title>
+    <title>Npm on 카카오스타일 기술 블로그</title>
     <link>https://devblog.kakaostyle.com/ko/tags/npm/</link>
-    <description>Recent content in npm on 카카오스타일 기술 블로그</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 07 Mar 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/npm/index.xml" rel="self" type="application/rss+xml" />
+    <description>Recent content in Npm on 카카오스타일 기술 블로그</description>
+    <generator>Hugo</generator>
+    <language>ko</language>
+    <lastBuildDate>Mon, 07 Mar 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://devblog.kakaostyle.com/ko/tags/npm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>사내 npm 패키지 저장소를 구축하기 위해 겪었던 과정들</title>
       <link>https://devblog.kakaostyle.com/ko/2022-03-07-1-npm-private-repository/</link>
       <pubDate>Mon, 07 Mar 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2022-03-07-1-npm-private-repository/</guid>
       <description>회사나 팀에서 개발하다 보면 한 번쯤은 거의 필연적으로 내부에서 사용하기 위한 패키지 저장소에 대해 고민해보게 됩니다. 오늘은 그 고민을 통해 사내에서 사용할 수 있는 NPM 패키지 저장소를 구축하기 위해 겪었던 부분들에 대해 짧게나마 공유하려고 합니다.</description>
     </item>
-    
   </channel>
 </rss>

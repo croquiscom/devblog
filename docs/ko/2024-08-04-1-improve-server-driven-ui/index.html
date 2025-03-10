@@ -108,8 +108,7 @@
 <p>이 글에서는 초기 구조에서 어떤 문제가 발생했는지 살펴보고, 전시팀에서 어떤 방식으로 개선해 나갔는지에 대해 이야기 해보려고 합니다.</p>
 <blockquote>
 <p><a href="https://devblog.kakaostyle.com/ko/2021-12-16-1-server-driven-ui">이전 포스팅</a>을 먼저 읽으시면 좋습니다. 기존 SDUI는 하나의 쿼리로 한 화면에 그려지는 모든 데이터를 내려받는 구조입니다.
-<img src="/img/content/2024-08-04-1/1.png" alt="1.png"></p>
-</blockquote>
+<img src="/img/content/2024-08-04-1/1.png" alt="1.png"></p></blockquote>
 <h2 id="기존-sdui의-문제점">기존 SDUI의 문제점</h2>
 <ol>
 <li><strong>컴포넌트 간 의존성</strong></li>
@@ -148,7 +147,7 @@
 <p>서버에서는 template 쿼리를 통해 화면에 그려져야할 컴포넌트의 최소 정보(type, id)를 제공합니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-graphql" data-lang="graphql"><span class="line"><span class="cl"><span class="kd">type</span><span class="w"> </span><span class="nc">Query</span><span class="w"> </span><span class="p">{</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="sc">&#34;&#34;&#34;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">page_id</span><span class="err">에</span><span class="w"> </span><span class="err">맵핑되는</span><span class="w"> </span><span class="err">현재</span><span class="w"> </span><span class="err">컴포넌트</span><span class="w"> </span><span class="err">순서를</span><span class="w"> </span><span class="err">리턴한다.</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">page_id에</span><span class="w"> </span><span class="py">맵핑되는</span><span class="w"> </span><span class="py">현재</span><span class="w"> </span><span class="py">컴포넌트</span><span class="w"> </span><span class="py">순서를</span><span class="w"> </span><span class="py">리턴한다</span><span class="err">.</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="sc">&#34;&#34;&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="py">template</span><span class="p">(</span><span class="py">page_id</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">!):</span><span class="w"> </span><span class="p">[</span><span class="nc">Component</span><span class="p">!]!</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">}</span><span class="w">
@@ -264,7 +263,7 @@
   <ul class="sidemenu-recent-list">
     
     <a href="/ko/tags/amazon-sqs/">
-      <li class="sidemenu-recent-tags">amazon-sqs</li>
+      <li class="sidemenu-recent-tags">amazon sqs</li>
     </a>
     
     <a href="/ko/tags/analytics/">
@@ -280,11 +279,11 @@
     </a>
     
     <a href="/ko/tags/aws-batch/">
-      <li class="sidemenu-recent-tags">aws-batch</li>
+      <li class="sidemenu-recent-tags">aws batch</li>
     </a>
     
     <a href="/ko/tags/aws-lambda/">
-      <li class="sidemenu-recent-tags">aws-lambda</li>
+      <li class="sidemenu-recent-tags">aws lambda</li>
     </a>
     
     <a href="/ko/tags/botkit/">
@@ -372,11 +371,11 @@
     </a>
     
     <a href="/ko/tags/rest-api/">
-      <li class="sidemenu-recent-tags">rest-api</li>
+      <li class="sidemenu-recent-tags">rest api</li>
     </a>
     
     <a href="/ko/tags/serverless-architecture/">
-      <li class="sidemenu-recent-tags">serverless-architecture</li>
+      <li class="sidemenu-recent-tags">serverless architecture</li>
     </a>
     
     <a href="/ko/tags/slack/">
@@ -392,7 +391,7 @@
     </a>
     
     <a href="/ko/tags/task-queue/">
-      <li class="sidemenu-recent-tags">task-queue</li>
+      <li class="sidemenu-recent-tags">task queue</li>
     </a>
     
     <a href="/ko/tags/testing/">
@@ -455,7 +454,7 @@
       <hr>
       <div class='text-center'>
         <div id="disqus_thread"></div>
-<script type="application/javascript">
+<script>
     window.disqus_config = function () {
     
     
@@ -496,18 +495,20 @@
 </div>
 
 
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-48716672-3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HBL5QKGKNR"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-HBL5QKGKNR');
+        }
+      </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

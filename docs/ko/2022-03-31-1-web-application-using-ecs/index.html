@@ -128,8 +128,7 @@
 </span></span></span></code></pre></div><p><a href="https://docs.docker.com/engine/reference/commandline/build/">docker build</a>로 도커 이미지를 만들 수 있습니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ docker build . -t simon-sample
 </span></span></code></pre></div><blockquote>
-<p>Apple Silicon을 사용한 컴퓨터에서는 platform을 지정해 빌드해야 ECS에서 정상동작합니다. <code>docker build . -t simon-sample --platform=linux/amd64</code></p>
-</blockquote>
+<p>Apple Silicon을 사용한 컴퓨터에서는 platform을 지정해 빌드해야 ECS에서 정상동작합니다. <code>docker build . -t simon-sample --platform=linux/amd64</code></p></blockquote>
 <p><a href="https://docs.docker.com/engine/reference/commandline/run/">docker run</a>을 이용해 이미지로 부터 프로세스를 실행할 수 있습니다. 외부에서 서버에 접근하기 위해 3000번 포트를 열어야 하고, 데몬 모드로 실행합니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ docker run -p <span class="m">3000</span> -d simon-sample
 </span></span></code></pre></div><p><a href="https://curl.se/">curl</a>을 사용해 잘 동작하는지 확인 가능합니다.</p>
@@ -456,8 +455,7 @@
 <ul>
 <li>예제 파일: <a href="/file/2022-03-31-1-simon-sample.zip">simon-sample.zip</a>
 <blockquote>
-<p>전체 Terraform 파일에서 한번에 스택을 생성할 때는 먼저 ECR만 생성해(<code>terraform apply --target aws_ecr_repository.simon_sample</code>) 이미지를 올린 후 나머지를 생성해주는게 깔끔합니다.</p>
-</blockquote>
+<p>전체 Terraform 파일에서 한번에 스택을 생성할 때는 먼저 ECR만 생성해(<code>terraform apply --target aws_ecr_repository.simon_sample</code>) 이미지를 올린 후 나머지를 생성해주는게 깔끔합니다.</p></blockquote>
 </li>
 <li><a href="https://docs.aws.amazon.com/ko_kr/vpc/latest/userguide/VPC_Scenario2.html">퍼블릭 및 프라이빗 서브넷이 있는 VPC(NAT)</a></li>
 <li><a href="https://docs.aws.amazon.com/ko_kr/ecs/index.html">Amazon Elastic Container Service 설명서</a></li>
@@ -498,7 +496,7 @@
   <ul class="sidemenu-recent-list">
     
     <a href="/ko/tags/amazon-sqs/">
-      <li class="sidemenu-recent-tags">amazon-sqs</li>
+      <li class="sidemenu-recent-tags">amazon sqs</li>
     </a>
     
     <a href="/ko/tags/analytics/">
@@ -514,11 +512,11 @@
     </a>
     
     <a href="/ko/tags/aws-batch/">
-      <li class="sidemenu-recent-tags">aws-batch</li>
+      <li class="sidemenu-recent-tags">aws batch</li>
     </a>
     
     <a href="/ko/tags/aws-lambda/">
-      <li class="sidemenu-recent-tags">aws-lambda</li>
+      <li class="sidemenu-recent-tags">aws lambda</li>
     </a>
     
     <a href="/ko/tags/botkit/">
@@ -606,11 +604,11 @@
     </a>
     
     <a href="/ko/tags/rest-api/">
-      <li class="sidemenu-recent-tags">rest-api</li>
+      <li class="sidemenu-recent-tags">rest api</li>
     </a>
     
     <a href="/ko/tags/serverless-architecture/">
-      <li class="sidemenu-recent-tags">serverless-architecture</li>
+      <li class="sidemenu-recent-tags">serverless architecture</li>
     </a>
     
     <a href="/ko/tags/slack/">
@@ -626,7 +624,7 @@
     </a>
     
     <a href="/ko/tags/task-queue/">
-      <li class="sidemenu-recent-tags">task-queue</li>
+      <li class="sidemenu-recent-tags">task queue</li>
     </a>
     
     <a href="/ko/tags/testing/">
@@ -689,7 +687,7 @@
       <hr>
       <div class='text-center'>
         <div id="disqus_thread"></div>
-<script type="application/javascript">
+<script>
     window.disqus_config = function () {
     
     
@@ -730,18 +728,20 @@
 </div>
 
 
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-48716672-3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HBL5QKGKNR"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-HBL5QKGKNR');
+        }
+      </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

@@ -154,11 +154,9 @@ CloudFront 가격 아시아 태평양 (월별): 43,126.63 USD
 </span></span></code></pre></div><p>폰트는 서비스 글꼴에 가장 먼저 반영이 되어야 하기에 네트워크 요청 우선순위를 높여야, FOUT 현상이 일어나지 않습니다.</p>
 <blockquote>
 <p>FOUT란?</p>
-<p>브라우저가 웹 글꼴을 다운로드하기 전에 텍스트가 대체 글꼴로 렌더링되는 현상을 말합니다.</p>
-</blockquote>
+<p>브라우저가 웹 글꼴을 다운로드하기 전에 텍스트가 대체 글꼴로 렌더링되는 현상을 말합니다.</p></blockquote>
 <blockquote>
-<p>참고로 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload#what_types_of_content_can_be_preloaded">MDN 문서</a>에 따르면 preload를 통해 폰트를 요청하는 경우 CORS 활성화가 필요하다고 해서 crossorigin 옵션을 설정해줬습니다.</p>
-</blockquote>
+<p>참고로 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload#what_types_of_content_can_be_preloaded">MDN 문서</a>에 따르면 preload를 통해 폰트를 요청하는 경우 CORS 활성화가 필요하다고 해서 crossorigin 옵션을 설정해줬습니다.</p></blockquote>
 <p>아래 첨부된 영상을 보면 텍스트가 꿀렁이는 모습을 볼 수 있습니다. <strong>숫자가 바뀔 때마다 새로고침이 동작하고 있는 것입니다.</strong></p>
 
 <video src='/img/content/2024-06-28-1/06.mov' controls></video>
@@ -192,25 +190,25 @@ CloudFront 가격 아시아 태평양 (월별): 43,126.63 USD
 <p>위 이미지를 보면, 첫 페이지 진입과, 새로고침 후의 폰트 요청 방식이 서로 cors와 no-cors로 다르다는것을 알 수 있습니다.</p>
 <p>위에서 알아본 결과를 바탕으로 추측해보자면, cors 요청은 link태그의 preload 힌트를 통한 요청, no-cors는 Safari 브라우저의 폰트요청 동작방식임을 유추해 볼 수 있습니다.</p>
 <table>
-<thead>
-<tr>
-<th>cors / no-cors</th>
-<th>Safari</th>
-<th>Chrome</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>font-face url 요청</td>
-<td>no-cors</td>
-<td>cors</td>
-</tr>
-<tr>
-<td>link preload 요청</td>
-<td>cors</td>
-<td>cors</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>cors / no-cors</th>
+          <th>Safari</th>
+          <th>Chrome</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>font-face url 요청</td>
+          <td>no-cors</td>
+          <td>cors</td>
+      </tr>
+      <tr>
+          <td>link preload 요청</td>
+          <td>cors</td>
+          <td>cors</td>
+      </tr>
+  </tbody>
 </table>
 <p>간단히 차이점을 정리해보면 위 테이블과 같습니다.</p>
 <p>no-cors와 cors의 차이점은 Origin 헤더의 차이로도 연결 될 수 있습니다. 그렇다면, 이 차이가 어떻게 캐시 문제로 이어지는 걸까요?</p>
@@ -339,7 +337,7 @@ CloudFront price Asia Pacific (monthly): 4,446.56 USD
   <ul class="sidemenu-recent-list">
     
     <a href="/ko/tags/amazon-sqs/">
-      <li class="sidemenu-recent-tags">amazon-sqs</li>
+      <li class="sidemenu-recent-tags">amazon sqs</li>
     </a>
     
     <a href="/ko/tags/analytics/">
@@ -355,11 +353,11 @@ CloudFront price Asia Pacific (monthly): 4,446.56 USD
     </a>
     
     <a href="/ko/tags/aws-batch/">
-      <li class="sidemenu-recent-tags">aws-batch</li>
+      <li class="sidemenu-recent-tags">aws batch</li>
     </a>
     
     <a href="/ko/tags/aws-lambda/">
-      <li class="sidemenu-recent-tags">aws-lambda</li>
+      <li class="sidemenu-recent-tags">aws lambda</li>
     </a>
     
     <a href="/ko/tags/botkit/">
@@ -447,11 +445,11 @@ CloudFront price Asia Pacific (monthly): 4,446.56 USD
     </a>
     
     <a href="/ko/tags/rest-api/">
-      <li class="sidemenu-recent-tags">rest-api</li>
+      <li class="sidemenu-recent-tags">rest api</li>
     </a>
     
     <a href="/ko/tags/serverless-architecture/">
-      <li class="sidemenu-recent-tags">serverless-architecture</li>
+      <li class="sidemenu-recent-tags">serverless architecture</li>
     </a>
     
     <a href="/ko/tags/slack/">
@@ -467,7 +465,7 @@ CloudFront price Asia Pacific (monthly): 4,446.56 USD
     </a>
     
     <a href="/ko/tags/task-queue/">
-      <li class="sidemenu-recent-tags">task-queue</li>
+      <li class="sidemenu-recent-tags">task queue</li>
     </a>
     
     <a href="/ko/tags/testing/">
@@ -530,7 +528,7 @@ CloudFront price Asia Pacific (monthly): 4,446.56 USD
       <hr>
       <div class='text-center'>
         <div id="disqus_thread"></div>
-<script type="application/javascript">
+<script>
     window.disqus_config = function () {
     
     
@@ -571,18 +569,20 @@ CloudFront price Asia Pacific (monthly): 4,446.56 USD
 </div>
 
 
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-48716672-3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HBL5QKGKNR"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-HBL5QKGKNR');
+        }
+      </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

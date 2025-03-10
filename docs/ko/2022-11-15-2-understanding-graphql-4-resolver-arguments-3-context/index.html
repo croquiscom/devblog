@@ -183,11 +183,10 @@ name { foo: 100, bar: 12 }
 <h2 id="dataloader와-컨텍스트">DataLoader와 컨텍스트</h2>
 <p>앞선 글에서 얘기했듯이 리졸버는 독립적으로 동작하는 것이 좋습니다. 그렇다보니 한번에 요청할 수 있는 것을 나눠서 요청하는 N+1 쿼리 문제가 발생합니다. 이를 해결해주는 라이브러리로 <a href="https://github.com/graphql/dataloader">DataLoader</a>가 있습니다. 그런데 이 DataLoader는 요청별로 생성하는 것이 좋습니다. 즉 요청별로 다른 값을 가지는 컨텍스트를 사용할 필요가 있습니다.</p>
 <blockquote>
-<p>In many applications, a web server using DataLoader serves requests to many different users with different access permissions. It may be dangerous to use one cache across many users, and is encouraged to create a new DataLoader per request:</p>
-</blockquote>
+<p>In many applications, a web server using DataLoader serves requests to many different users with different access permissions. It may be dangerous to use one cache across many users, and is encouraged to create a new DataLoader per request:</p></blockquote>
 <p>필요할 때 DataLoader 인스턴스를 생성하기 위해 카카오스타일에서는 컨텍스트를 활용한 다음 패턴을 주로 사용합니다.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-tsx" data-lang="tsx"><span class="line"><span class="cl"><span class="kr">interface</span> <span class="nx">Context</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">loader</span><span class="o">:</span> <span class="p">{</span> <span class="p">[</span><span class="nx">loader_name</span>: <span class="kt">string</span><span class="p">]</span><span class="o">:</span> <span class="nx">DataLoader</span><span class="p">&lt;</span><span class="nt">any</span><span class="err">,</span> <span class="na">any</span><span class="p">&gt;</span> <span class="o">|</span> <span class="kc">undefined</span> <span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">loader</span><span class="o">:</span> <span class="p">{</span> <span class="p">[</span><span class="nx">loader_name</span>: <span class="kt">string</span><span class="p">]</span><span class="o">:</span> <span class="nx">DataLoader</span><span class="p">&lt;</span><span class="nt">any</span><span class="p">,</span> <span class="na">any</span><span class="p">&gt;</span> <span class="o">|</span> <span class="kc">undefined</span> <span class="p">};</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">// for Apollo Server
@@ -198,9 +197,9 @@ name { foo: 100, bar: 12 }
 </span></span><span class="line"><span class="cl"><span class="c1">// resolver
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">my_field</span><span class="p">(</span><span class="nx">soruce</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">context</span>: <span class="kt">Context</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="kr">const</span> <span class="nx">loader_name</span> <span class="o">=</span> <span class="s1">&#39;MyType.my_field&#39;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">  <span class="kd">let</span> <span class="nx">loader</span>: <span class="kt">DataLoader</span><span class="p">&lt;</span><span class="nt">string</span><span class="err">,</span> <span class="na">MyFieldType</span><span class="p">&gt;</span> <span class="o">|</span> <span class="kc">undefined</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">loader</span><span class="p">[</span><span class="nx">loader_name</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">  <span class="kd">let</span> <span class="nx">loader</span>: <span class="kt">DataLoader</span><span class="p">&lt;</span><span class="nt">string</span><span class="p">,</span> <span class="na">MyFieldType</span><span class="p">&gt;</span> <span class="o">|</span> <span class="kc">undefined</span> <span class="o">=</span> <span class="nx">context</span><span class="p">.</span><span class="nx">loader</span><span class="p">[</span><span class="nx">loader_name</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">loader</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DataLoader</span><span class="p">&lt;</span><span class="nt">string</span><span class="err">,</span> <span class="na">MyFieldType</span><span class="p">&gt;(</span><span class="kr">async</span> <span class="p">(</span><span class="nx">keys</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DataLoader</span><span class="p">&lt;</span><span class="nt">string</span><span class="p">,</span> <span class="na">MyFieldType</span><span class="p">&gt;(</span><span class="kr">async</span> <span class="p">(</span><span class="nx">keys</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">			<span class="c1">// return Array&lt;MyFieldType&gt; for keys
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="p">});</span>
 </span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="nx">context</span><span class="p">)</span> <span class="p">{</span>
@@ -244,7 +243,7 @@ name { foo: 100, bar: 12 }
   <ul class="sidemenu-recent-list">
     
     <a href="/ko/tags/amazon-sqs/">
-      <li class="sidemenu-recent-tags">amazon-sqs</li>
+      <li class="sidemenu-recent-tags">amazon sqs</li>
     </a>
     
     <a href="/ko/tags/analytics/">
@@ -260,11 +259,11 @@ name { foo: 100, bar: 12 }
     </a>
     
     <a href="/ko/tags/aws-batch/">
-      <li class="sidemenu-recent-tags">aws-batch</li>
+      <li class="sidemenu-recent-tags">aws batch</li>
     </a>
     
     <a href="/ko/tags/aws-lambda/">
-      <li class="sidemenu-recent-tags">aws-lambda</li>
+      <li class="sidemenu-recent-tags">aws lambda</li>
     </a>
     
     <a href="/ko/tags/botkit/">
@@ -352,11 +351,11 @@ name { foo: 100, bar: 12 }
     </a>
     
     <a href="/ko/tags/rest-api/">
-      <li class="sidemenu-recent-tags">rest-api</li>
+      <li class="sidemenu-recent-tags">rest api</li>
     </a>
     
     <a href="/ko/tags/serverless-architecture/">
-      <li class="sidemenu-recent-tags">serverless-architecture</li>
+      <li class="sidemenu-recent-tags">serverless architecture</li>
     </a>
     
     <a href="/ko/tags/slack/">
@@ -372,7 +371,7 @@ name { foo: 100, bar: 12 }
     </a>
     
     <a href="/ko/tags/task-queue/">
-      <li class="sidemenu-recent-tags">task-queue</li>
+      <li class="sidemenu-recent-tags">task queue</li>
     </a>
     
     <a href="/ko/tags/testing/">
@@ -435,7 +434,7 @@ name { foo: 100, bar: 12 }
       <hr>
       <div class='text-center'>
         <div id="disqus_thread"></div>
-<script type="application/javascript">
+<script>
     window.disqus_config = function () {
     
     
@@ -476,18 +475,20 @@ name { foo: 100, bar: 12 }
 </div>
 
 
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-48716672-3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HBL5QKGKNR"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-HBL5QKGKNR');
+        }
+      </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

@@ -6,9 +6,12 @@ defaultContentLanguageInSubdir: true
 
 hasCJKLanguage: true
 
-googleAnalytics: UA-48716672-3
+services:
+  googleAnalytics:
+    id: G-HBL5QKGKNR
 
-paginate: 5
+pagination:
+  pagerSize: 5
 
 pygmentsuseclasses: true
 
@@ -24,3 +27,6 @@ blackfriday:
   smartypants: false
 
 buildFuture: true
+
+ignoreLogs:
+  - warning-goldmark-raw-html

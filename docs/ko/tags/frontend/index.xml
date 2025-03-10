@@ -4,83 +4,65 @@
     <title>Frontend on 카카오스타일 기술 블로그</title>
     <link>https://devblog.kakaostyle.com/ko/tags/frontend/</link>
     <description>Recent content in Frontend on 카카오스타일 기술 블로그</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 07 Oct 2024 01:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/frontend/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>ko</language>
+    <lastBuildDate>Mon, 07 Oct 2024 01:00:00 +0000</lastBuildDate>
+    <atom:link href="https://devblog.kakaostyle.com/ko/tags/frontend/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>기획전 애니메이션 모듈 개발</title>
       <link>https://devblog.kakaostyle.com/ko/2024-10-07-1-animation-module/</link>
       <pubDate>Mon, 07 Oct 2024 01:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2024-10-07-1-animation-module/</guid>
-      <description>지그재그는 상품 판매를 촉진하기 위해 이벤트나 기획전을 주요 마케팅 수단으로 활용합니다. 기획전은 한정된 기간 동안 고객에게 특정 상품 정보와 추가적인 할인 혜택을</description>
+      <description>&lt;p&gt;지그재그는 상품 판매를 촉진하기 위해 이벤트나 기획전을 주요 마케팅 수단으로 활용합니다. 기획전은 한정된 기간 동안 고객에게 특정 상품 정보와 추가적인 할인 혜택을 명확하게 제시하여 판매를 유도하는 역할을 합니다. 따라서 다양한 기획전을 지속적으로 발행해 고객의 관심을 유도하고, 브랜드 충성도를 높이며, 구매율을 증가시키고 있습니다. 또한, 다양한 테마와 카테고리별 기획전을 통해 고객의 소비 패턴과 선호도에 맞춘 맞춤형 쇼핑 경험을 제공합니다. 이러한 전략은 이커머스 사이트의 경쟁력을 강화하고 지속적인 성장을 도모하는 데 중요한 역할을 합니다.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>프론트엔드 테스트 자동화 전략 - 4. 테스트 환경 구성</title>
       <link>https://devblog.kakaostyle.com/ko/2023-08-04-4-frontend-testing-4-setup-environment/</link>
       <pubDate>Fri, 04 Aug 2023 04:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2023-08-04-4-frontend-testing-4-setup-environment/</guid>
-      <description>&lt;p&gt;이전 글에서는 테스트 전략과, 테스트를 작성하는 방법들에 대해서 알아봤습니다. 하지만, 테스트를 실행하는 환경에 대해서는 스토리북을 사용한다고 가정했을 뿐, 구체적인 이야기를 진행하지는 않았습니다.&lt;/p&gt;
-&lt;p&gt;이번 글에서는, 테스트 프레임워크를 활용해서 테스트를 자동으로 실행할 수 있는 환경을 구성하는 방법에 대해 알아보겠습니다.&lt;/p&gt;
-&lt;p&gt;설명하는 내용의 특성상, 개념적인 이야기보다는 설정 파일에 대한 내용이 더 많습니다. 정독하는 것보다는, 실제로 테스트 환경을 구성하면서 매뉴얼 개념으로 읽어보시는게 더 효과적일 것이라 생각합니다.&lt;/p&gt;</description>
+      <description>&lt;p&gt;이전 글에서는 테스트 전략과, 테스트를 작성하는 방법들에 대해서 알아봤습니다. 하지만, 테스트를 실행하는 환경에 대해서는 스토리북을 사용한다고 가정했을 뿐, 구체적인 이야기를 진행하지는 않았습니다.&lt;/p&gt;&#xA;&lt;p&gt;이번 글에서는, 테스트 프레임워크를 활용해서 테스트를 자동으로 실행할 수 있는 환경을 구성하는 방법에 대해 알아보겠습니다.&lt;/p&gt;&#xA;&lt;p&gt;설명하는 내용의 특성상, 개념적인 이야기보다는 설정 파일에 대한 내용이 더 많습니다. 정독하는 것보다는, 실제로 테스트 환경을 구성하면서 매뉴얼 개념으로 읽어보시는게 더 효과적일 것이라 생각합니다.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>프론트엔드 테스트 자동화 전략 - 3. 구현하기</title>
       <link>https://devblog.kakaostyle.com/ko/2023-08-04-3-frontend-testing-3-implement/</link>
       <pubDate>Fri, 04 Aug 2023 03:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2023-08-04-3-frontend-testing-3-implement/</guid>
       <description>&lt;p&gt;이전 글에서는 제품의 요구사항을 분석하며, 테스트 케이스를 산출하는 방법에 대해 알아봤습니다. 이 글에서는 구체적으로 어떻게 테스트 코드를 작성할 수 있는지에 대해 알아봅니다.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>프론트엔드 테스트 자동화 전략 - 2. 요구사항 분석</title>
       <link>https://devblog.kakaostyle.com/ko/2023-08-04-2-frontend-testing-2-requirement/</link>
       <pubDate>Fri, 04 Aug 2023 02:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2023-08-04-2-frontend-testing-2-requirement/</guid>
-      <description>&lt;p&gt;저번 글에서는 프론트엔드의 테스트 자동화에 대해서 소개하고, 테스트 전략에 대해서 간단하게 다뤄봤습니다.&lt;/p&gt;
-&lt;p&gt;테스트 자동화가 아무리 중요하다고 해도, 테스트 작성을 시작하는 것은 쉽지 않습니다. 설정해야 하는 것들이 많고, 효과적인 테스트 작성 방법을 찾는 것도 어렵습니다.&lt;/p&gt;
-&lt;p&gt;이 문서에서는 프론트엔드에 맞춘 테스트 작성 방법을 고민해봤습니다. 물론 프로젝트마다 상황은 다를 수 있으며, 나중에는 더 나은 방법을 발견할 수도 있습니다. 그래도 이 문서가 테스트를 시작하는 데 도움이 됐으면 좋겠습니다.&lt;/p&gt;</description>
+      <description>&lt;p&gt;저번 글에서는 프론트엔드의 테스트 자동화에 대해서 소개하고, 테스트 전략에 대해서 간단하게 다뤄봤습니다.&lt;/p&gt;&#xA;&lt;p&gt;테스트 자동화가 아무리 중요하다고 해도, 테스트 작성을 시작하는 것은 쉽지 않습니다. 설정해야 하는 것들이 많고, 효과적인 테스트 작성 방법을 찾는 것도 어렵습니다.&lt;/p&gt;&#xA;&lt;p&gt;이 문서에서는 프론트엔드에 맞춘 테스트 작성 방법을 고민해봤습니다. 물론 프로젝트마다 상황은 다를 수 있으며, 나중에는 더 나은 방법을 발견할 수도 있습니다. 그래도 이 문서가 테스트를 시작하는 데 도움이 됐으면 좋겠습니다.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>프론트엔드 테스트 자동화 전략 - 1. 테스트 자동화란?</title>
       <link>https://devblog.kakaostyle.com/ko/2023-08-04-1-frontend-testing-1-what-is-it/</link>
       <pubDate>Fri, 04 Aug 2023 01:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2023-08-04-1-frontend-testing-1-what-is-it/</guid>
       <description>&lt;p&gt;프론트엔드는 입력/출력이 명확하지 않기 때문에 테스트를 작성하면서 고민해봐야 할 내용이 많습니다. 프론트엔드 관점에 맞춰 테스트 자동화, 테스트의 정의와 방향성에 대해서 다뤄봤습니다.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>웹뷰 액티비티간 데이터 동기화하기</title>
       <link>https://devblog.kakaostyle.com/ko/2022-10-12-1-sync-data-between-activities/</link>
       <pubDate>Wed, 12 Oct 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2022-10-12-1-sync-data-between-activities/</guid>
       <description>지그재그 에픽 서비스는 여러 웹뷰를 사용하도록 구성되어 있습니다. 한 화면에서 변동된 데이터를 다른 화면에 반영해야 하는 기술 이슈가 발생했는데 이를 해결한 방법에 대해 설명합니다.</description>
     </item>
-    
     <item>
       <title>Jotai 레시피</title>
       <link>https://devblog.kakaostyle.com/ko/2022-01-13-2-jotai-recipe/</link>
       <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2022-01-13-2-jotai-recipe/</guid>
       <description>&lt;p&gt;이번 글에서는 카카오스타일에서 Jotai를 어떤 식으로 사용하고 있는지 여러가지 패턴에 대해 설명하려고 합니다.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>프론트엔드 상태 관리에 대한 여정</title>
       <link>https://devblog.kakaostyle.com/ko/2022-01-13-1-frontend-state-management/</link>
       <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2022-01-13-1-frontend-state-management/</guid>
       <description>&lt;p&gt;카카오스타일은 React에서 상태 관리를 위해 최근에 Jotai를 도입했습니다. Jotai에 대해 소개하기에 앞서 Jotai에 다다르기까지의 과정에 대해 설명해보려고 합니다.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

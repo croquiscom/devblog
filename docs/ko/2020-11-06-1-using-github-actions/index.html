@@ -164,7 +164,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">~/.npm</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">${{ runner.os }}-node-${{ hashFiles(&#39;**/package-lock.json&#39;) }}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">restore-keys</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
-</span></span></span><span class="line"><span class="cl"><span class="sd">            </span><span class="w">            </span><span class="l">${{ runner.os }}-node-</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="sd">            ${{ runner.os }}-node-</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># Node 14.x를 사용합니다.</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Use Node.js</span><span class="w">
@@ -231,7 +231,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">~/.npm</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">${{ runner.os }}-node-${{ hashFiles(&#39;**/package-lock.json&#39;) }}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">restore-keys</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
-</span></span></span><span class="line"><span class="cl"><span class="sd">            </span><span class="w">            </span><span class="l">${{ runner.os }}-node-</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="sd">            ${{ runner.os }}-node-</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># Node 14.x를 사용합니다.</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Use Node.js</span><span class="w">
@@ -252,7 +252,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># 문서를 업로드합니다. (PR인 경우)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Upload documentation (PR)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
-</span></span></span><span class="line"><span class="cl"><span class="sd">          </span><span class="w">          </span><span class="l">aws s3 sync out-doc s3://doc.mysite.com/branches/${SERVICE}/${BRANCH} --delete --cache-control max-age=0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="sd">          aws s3 sync out-doc s3://doc.mysite.com/branches/${SERVICE}/${BRANCH} --delete --cache-control max-age=0</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">github.ref != &#39;refs/heads/master&#39;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># 생성된 주소를 커밋 상태에 설정해서 바로 열어볼 수 있도록 합니다. (PR인 경우)</span><span class="w">
@@ -268,7 +268,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="sd">              sha: context.eventName === &#39;pull_request&#39; ? context.payload.pull_request.head.sha : context.sha,
 </span></span></span><span class="line"><span class="cl"><span class="sd">              state: &#39;success&#39;,
 </span></span></span><span class="line"><span class="cl"><span class="sd">              target_url: `https://doc.mysite.com/branches/${process.env.SERVICE}/${process.env.BRANCH}/index.html`,
-</span></span></span><span class="line"><span class="cl"><span class="sd">            });</span><span class="w">            
+</span></span></span><span class="line"><span class="cl"><span class="sd">            });</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">github.ref != &#39;refs/heads/master&#39;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># 문서를 빌드합니다. (주 브랜치에 푸시한 경우)</span><span class="w">
@@ -279,7 +279,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># 문서를 업로드합니다. (주 브랜치에 푸시한 경우)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Upload documentation (master)</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
-</span></span></span><span class="line"><span class="cl"><span class="sd">          </span><span class="w">          </span><span class="l">aws s3 sync out-doc s3://doc.mysite.com/${SERVICE} --delete --cache-control max-age=0</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="sd">          aws s3 sync out-doc s3://doc.mysite.com/${SERVICE} --delete --cache-control max-age=0</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">github.ref == &#39;refs/heads/master&#39;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># 생성된 주소를 커밋 상태에 설정해서 바로 열어볼 수 있도록 합니다. (주 브랜치에 푸시한 경우)</span><span class="w">
@@ -295,7 +295,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="sd">              sha: context.eventName === &#39;pull_request&#39; ? context.payload.pull_request.head.sha : context.sha,
 </span></span></span><span class="line"><span class="cl"><span class="sd">              state: &#39;success&#39;,
 </span></span></span><span class="line"><span class="cl"><span class="sd">              target_url: `https://doc.mysite.com/${process.env.SERVICE}/index.html`,
-</span></span></span><span class="line"><span class="cl"><span class="sd">            });</span><span class="w">            
+</span></span></span><span class="line"><span class="cl"><span class="sd">            });</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l">github.ref == &#39;refs/heads/master&#39;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># 중간에 실패한 경우 슬랙으로 알려줍니다.</span><span class="w">
@@ -334,7 +334,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l">~/.npm</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l">${{ runner.os }}-node-${{ hashFiles(&#39;**/package-lock.json&#39;) }}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">restore-keys</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
-</span></span></span><span class="line"><span class="cl"><span class="sd">            </span><span class="w">            </span><span class="l">${{ runner.os }}-node-</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="sd">            ${{ runner.os }}-node-</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># Node 14.x를 사용합니다.</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Use Node.js</span><span class="w">
@@ -356,7 +356,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">AWS_ACCESS_KEY_ID</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.AWS_DEPLOY_FRONT_ACCESS_KEY }}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">AWS_SECRET_ACCESS_KEY</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.AWS_DEPLOY_FRONT_SECRET_KEY }}</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
-</span></span></span><span class="line"><span class="cl"><span class="sd">          </span><span class="w">          </span><span class="l">aws s3 sync dist s3://backoffice.website.mysite.com/</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="sd">          aws s3 sync dist s3://backoffice.website.mysite.com/</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># 배포가 성공한 경우 알립니다.</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># Secrets 항목에 슬랙 Webhook URL을 등록해야 합니다.</span><span class="w">
@@ -429,7 +429,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="sd">              return `${context.repo.repo} 저장소에 대해 ${title} RC PR을 생성했습니다. ${result.data.html_url}`;
 </span></span></span><span class="line"><span class="cl"><span class="sd">            } catch (error) {
 </span></span></span><span class="line"><span class="cl"><span class="sd">              return `${context.repo.repo} 저장소에 대해 변경 내용이 없어서 RC PR을 생성하지 않았습니다.`;
-</span></span></span><span class="line"><span class="cl"><span class="sd">            }</span><span class="w">            
+</span></span></span><span class="line"><span class="cl"><span class="sd">            }</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="c"># 슬랙 채널에 내용을 공유합니다.</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Slack notification success</span><span class="w">
@@ -475,7 +475,7 @@
   <ul class="sidemenu-recent-list">
     
     <a href="/ko/tags/amazon-sqs/">
-      <li class="sidemenu-recent-tags">amazon-sqs</li>
+      <li class="sidemenu-recent-tags">amazon sqs</li>
     </a>
     
     <a href="/ko/tags/analytics/">
@@ -491,11 +491,11 @@
     </a>
     
     <a href="/ko/tags/aws-batch/">
-      <li class="sidemenu-recent-tags">aws-batch</li>
+      <li class="sidemenu-recent-tags">aws batch</li>
     </a>
     
     <a href="/ko/tags/aws-lambda/">
-      <li class="sidemenu-recent-tags">aws-lambda</li>
+      <li class="sidemenu-recent-tags">aws lambda</li>
     </a>
     
     <a href="/ko/tags/botkit/">
@@ -583,11 +583,11 @@
     </a>
     
     <a href="/ko/tags/rest-api/">
-      <li class="sidemenu-recent-tags">rest-api</li>
+      <li class="sidemenu-recent-tags">rest api</li>
     </a>
     
     <a href="/ko/tags/serverless-architecture/">
-      <li class="sidemenu-recent-tags">serverless-architecture</li>
+      <li class="sidemenu-recent-tags">serverless architecture</li>
     </a>
     
     <a href="/ko/tags/slack/">
@@ -603,7 +603,7 @@
     </a>
     
     <a href="/ko/tags/task-queue/">
-      <li class="sidemenu-recent-tags">task-queue</li>
+      <li class="sidemenu-recent-tags">task queue</li>
     </a>
     
     <a href="/ko/tags/testing/">
@@ -666,7 +666,7 @@
       <hr>
       <div class='text-center'>
         <div id="disqus_thread"></div>
-<script type="application/javascript">
+<script>
     window.disqus_config = function () {
     
     
@@ -707,18 +707,20 @@
 </div>
 
 
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-	ga('create', 'UA-48716672-3', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HBL5QKGKNR"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-HBL5QKGKNR');
+        }
+      </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"

@@ -4,41 +4,30 @@
     <title>마이크로서비스 on 카카오스타일 기술 블로그</title>
     <link>https://devblog.kakaostyle.com/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/</link>
     <description>Recent content in 마이크로서비스 on 카카오스타일 기술 블로그</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Wed, 22 May 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>ko</language>
+    <lastBuildDate>Wed, 22 May 2019 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://devblog.kakaostyle.com/ko/tags/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>크로키의 스택 - GraphQL</title>
       <link>https://devblog.kakaostyle.com/ko/2019-05-22-1-croquis-stack-graphql/</link>
       <pubDate>Wed, 22 May 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2019-05-22-1-croquis-stack-graphql/</guid>
-      <description>&lt;p&gt;현재 크로키는 API를 &lt;a href=&#34;https://graphql.org/&#34;&gt;GraphQL&lt;/a&gt;로 만들고 있습니다.
-아직 많은 부분에 대해서 연구 중이어서 현재 상황만 간단하게 정리해 보겠습니다.&lt;/p&gt;</description>
+      <description>&lt;p&gt;현재 크로키는 API를 &lt;a href=&#34;https://graphql.org/&#34;&gt;GraphQL&lt;/a&gt;로 만들고 있습니다.&#xA;아직 많은 부분에 대해서 연구 중이어서 현재 상황만 간단하게 정리해 보겠습니다.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>크로키의 스택 - Thrift</title>
       <link>https://devblog.kakaostyle.com/ko/2019-04-28-1-croquis-stack-thrift/</link>
       <pubDate>Sun, 28 Apr 2019 00:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2019-04-28-1-croquis-stack-thrift/</guid>
-      <description>&lt;p&gt;2016년 중반 마이크로서비스로의 전환을 결정했습니다.
-마이크로서비스는 이론상 다른 서비스에 영향을 주지 않고 내부 기술을 바꿀 수 있습니다.
-하지만 마이크로서비스 간의 통신 방법은 한번 결정하면 쉽게 바뀌기 어려울 것 같아서 가장 많이 고민했습니다.
-그리고 Thrift를 선택했습니다.
-이번 글에서는 그 이유와 이후의 상황에 관해 설명하겠습니다.&lt;/p&gt;</description>
+      <description>&lt;p&gt;2016년 중반 마이크로서비스로의 전환을 결정했습니다.&#xA;마이크로서비스는 이론상 다른 서비스에 영향을 주지 않고 내부 기술을 바꿀 수 있습니다.&#xA;하지만 마이크로서비스 간의 통신 방법은 한번 결정하면 쉽게 바뀌기 어려울 것 같아서 가장 많이 고민했습니다.&#xA;그리고 Thrift를 선택했습니다.&#xA;이번 글에서는 그 이유와 이후의 상황에 관해 설명하겠습니다.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>크로키의 스택 - 마이크로서비스</title>
       <link>https://devblog.kakaostyle.com/ko/2017-10-15-1-croquis-stack-microservice/</link>
       <pubDate>Sun, 15 Oct 2017 00:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2017-10-15-1-croquis-stack-microservice/</guid>
-      <description>&lt;p&gt;지그재그 서비스는 모놀리식 아키텍처(Monolithic Architecture)에서
-마이크로서비스 아키텍처(Microservice Architecture)로 전환중에 있습니다.
-이번 글에서는 그 과정을 설명하려고 합니다.&lt;/p&gt;</description>
+      <description>&lt;p&gt;지그재그 서비스는 모놀리식 아키텍처(Monolithic Architecture)에서&#xA;마이크로서비스 아키텍처(Microservice Architecture)로 전환중에 있습니다.&#xA;이번 글에서는 그 과정을 설명하려고 합니다.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

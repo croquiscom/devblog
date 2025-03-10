@@ -4,25 +4,23 @@
     <title>Jotai on 카카오스타일 기술 블로그</title>
     <link>https://devblog.kakaostyle.com/ko/tags/jotai/</link>
     <description>Recent content in Jotai on 카카오스타일 기술 블로그</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://devblog.kakaostyle.com/ko/tags/jotai/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo</generator>
+    <language>ko</language>
+    <lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://devblog.kakaostyle.com/ko/tags/jotai/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Jotai 레시피</title>
       <link>https://devblog.kakaostyle.com/ko/2022-01-13-2-jotai-recipe/</link>
       <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2022-01-13-2-jotai-recipe/</guid>
       <description>&lt;p&gt;이번 글에서는 카카오스타일에서 Jotai를 어떤 식으로 사용하고 있는지 여러가지 패턴에 대해 설명하려고 합니다.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>프론트엔드 상태 관리에 대한 여정</title>
       <link>https://devblog.kakaostyle.com/ko/2022-01-13-1-frontend-state-management/</link>
       <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
-      
       <guid>https://devblog.kakaostyle.com/ko/2022-01-13-1-frontend-state-management/</guid>
       <description>&lt;p&gt;카카오스타일은 React에서 상태 관리를 위해 최근에 Jotai를 도입했습니다. Jotai에 대해 소개하기에 앞서 Jotai에 다다르기까지의 과정에 대해 설명해보려고 합니다.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>
