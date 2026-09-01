@@ -1,24 +1,46 @@
 body {
   line-height: 1.8;
   font-size: 16px;
+  /* 한글은 단어 중간에서 줄이 끊기면 가독성이 크게 떨어져서 어절 단위로 끊습니다.
+     대신 긴 URL 같은 건 overflow-wrap 으로 흘려보냅니다. */
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 img {
   max-width: 100%;
+  height: auto;
 }
 
 video {
   max-width: 100%;
 }
 
+/* display:block 이라야 넓은 표가 모바일에서 넘치지 않고 가로 스크롤이 됩니다.
+   대신 블록이라 폭이 꽉 차버리므로 fit-content 로 내용 폭에 맞추고,
+   바깥 테두리는 셀 테두리와 겹쳐 빈 칸처럼 보여서 뺐습니다. */
 table {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 1.75rem 0;
   border-collapse: collapse;
-  border: 1px solid black;
+  font-size: 94%;
 }
 
 th, td {
-  border: 1px solid black;
-  padding: 4px 12px;
+  border: 1px solid #dee2e6;
+  padding: 8px 14px;
+}
+
+thead th {
+  background-color: #f8f9fa;
+  white-space: nowrap;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #fbfbfc;
 }
 
 .hp-nav {
@@ -354,20 +376,85 @@ th, td {
 }
 
 blockquote {
-  padding-left: 16px;
-  padding-right: 16px;
-  font-size: 90%;
-  border-left: 10px solid #27a9e3;
+  margin: 2rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid #27a9e3;
+  background-color: #f8f9fa;
 }
 
-.chroma {
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* 언어를 지정하지 않은 코드블록은 .chroma 가 붙지 않아 배경도 여백도 없이 나옵니다.
+   그래서 .chroma 가 아니라 pre 에 겁니다. */
+pre {
   padding: 16px;
+  border-radius: 6px;
+  background-color: #f0f0f0;
+  overflow-x: auto;
+  font-size: 88%;
+  line-height: 1.55;
 }
 
+.col-lg-9 :not(pre) > code {
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+  background-color: #f1f3f5;
+  font-size: 90%;
+}
+
+/* 부트스트랩 기본값은 h2 2rem, h3 1.75rem 이라 대주제와 소주제가 거의 같은 크기로 보입니다.
+   크기 차이와 h2 위 구분선으로 위계를 만듭니다. */
 h2 {
-  margin-top: 2rem;
+  margin-top: 3.5rem;
+  margin-bottom: 1.25rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid #e9ecef;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 h3 {
-  margin-top: 1rem;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #343a40;
+  letter-spacing: -0.01em;
+}
+
+/* 사이드바가 h4 를 쓰고 있어서 본문 영역으로 한정합니다. */
+.col-lg-9 h4 {
+  margin-top: 2rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.col-lg-9 p {
+  margin-bottom: 1.2rem;
+}
+
+.col-lg-9 li {
+  margin-bottom: 0.4rem;
+}
+
+figure {
+  margin: 2.25rem 0;
+  text-align: center;
+}
+
+figure img {
+  max-height: 520px;
+  width: auto;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+}
+
+figcaption {
+  margin-top: 0.7rem;
+  font-size: 87.5%;
+  line-height: 1.6;
+  color: #868e96;
 }
