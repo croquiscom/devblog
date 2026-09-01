@@ -15,7 +15,12 @@ pagination:
 
 pygmentsuseclasses: true
 
-disqusShortname: croquiscom-devblog
+params:
+  giscus:
+    repo: croquiscom/devblog
+    repoId: MDEwOlJlcG9zaXRvcnk0MzU1NjEx
+    category: General
+    categoryId: DIC_kwDOAEJ2G84DEo2t
 
 languages:
   en:
