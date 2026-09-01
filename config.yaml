@@ -15,7 +15,13 @@ pagination:
 
 pygmentsuseclasses: true
 
-disqusShortname: croquiscom-devblog
+params:
+  giscus:
+    repo: croquiscom/devblog
+    repoId: MDEwOlJlcG9zaXRvcnk0MzU1NjEx
+    category: Announcements
+    # Discussions 활성화 후 발급되는 값 (https://giscus.app 에서 확인)
+    categoryId: ''
 
 languages:
   en:

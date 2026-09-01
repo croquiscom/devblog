@@ -55,9 +55,7 @@
       </div>
       <div class='clearfix'></div>
       <hr>
-      <div class='text-center'>
-        {{ template "_internal/disqus.html" . }}
-      </div>
+      {{ partial "giscus.html" . }}
     </div>
   </div>
 
